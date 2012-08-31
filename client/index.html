@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>XLBao Lab</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+          <a class="brand" href="#">Million Heart Challenge</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active">
+                <a href="#">Home</a>
+              </li>
+              <li>
+                <a href="#about">About</a>
+              </li>
+              <li>
+                <a href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="row">
+        <div class="span10">
+          <form action="#" id="survey_form">
+            <div id="survey_carousel" class="carousel slide">
+              <div class="carousel-inner">
+
+                <div class="active item">
+                  <label for="input_age">How old are you?</label>
+                  <input type="text" id="input_age" name="age" placeholder="your age in years" />
+                </div>
+
+                <div class="item">
+                  <label>Are you male or female?</label>
+                  <input type="radio" id="input_genderm" name="gender" value="M" />
+                  <label class="check_or_radio_label" for="input_genderm">male</label>
+                  <input type="radio" id="input_genderf" name="gender" value="F" />
+                  <label class="check_or_radio_label" for="input_genderf">female</label>
+                </div>
+
+                <div class="item">
+                  <label for="input_height_feet">How tall are you?</label>
+                  <select id="input_height_feet" name="height_feet">
+                    <option>Feet</option>
+                    <option>3'</option>
+                    <option>4'</option>
+                    <option>5'</option>
+                    <option>6'</option>
+                    <option>7'</option>
+                  </select>
+                  <select id="input_height_inches" name="height_inches">
+                    <option>Inches</option>
+                    <option>0"</option>
+                    <option>1"</option>
+                    <option>2"</option>
+                    <option>3"</option>
+                    <option>4"</option>
+                    <option>5"</option>
+                    <option>6"</option>
+                    <option>7"</option>
+                    <option>8"</option>
+                    <option>9"</option>
+                    <option>10"</option>
+                    <option>11"</option>
+                  </select>
+                </div>
+
+                <div class="item">
+                  <label for="input_weight">How much do you weigh?</label>
+                  <input type="text" id="input_weight" name="weight" placeholder="your weight in lbs" />
+                </div>
+
+                <div class="item">
+                  <label>Do you currently smoke?</label>
+                  <span class="help-block">In the past month?</span>
+
+                  <input type="radio" id="input_smoker" name="smoker" value="T" />
+                  <label class="check_or_radio_label" for="input_smoker">yes</label>
+                  <input type="radio" id="input_non_smoker" name="smoker" value="F" />
+                  <label class="check_or_radio_label" for="input_non_smoker">no</label>
+                </div>
+
+                <div class="item">
+                  <label>Have you ever had &#8230</label>
+                  <ul class="unstyled">
+                    <li>
+                      <input type="checkbox" id="input_mi" name="mi" value="T" />
+                      <label class="check_or_radio_label">a heart attack?</label>
+                    </li>
+                    <li>
+                      <input type="checkbox" id="input_stroke" name="stroke" value="T" />
+                      <label class="check_or_radio_label">a stroke?</label>
+                    </li>
+                    <li>
+                      <input type="checkbox" id="input_diabetes" name="diabetes" value="T" />
+                      <label class="check_or_radio_label">diabetes?</label>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="item">
+                  <label for="input_systolic">What is your blood pressure?</label>
+                  <input type="text" id="input_systolic" name="systolic" placeholder="systolic" />
+                  <input type="text" id="input_diastolic" name="diastolic" placeholder="diastolic" />
+                </div>
+
+                <div class="item">
+                  <label for="input_cholesterol">What is your blood cholesterol?</label>
+                  <input type="text" id="input_cholesterol" name="cholesterol" placeholder="cholesterol" />
+                  <input type="text" id="input_hdl" name="hdl" placeholder="HDL" />
+                  <input type="text" id="input_ldl" name="ldl" placeholder="LDL" />
+                </div>
+
+                <!-- TODO combine with diabetes question -->
+                <div class="item">
+                  <label for="input_hba1c">What is your HbA1c?</label>
+                  <input type="text" id="input_hba1c" name="hba1c" placeholder="HbA1c" />
+                </div>
+
+              </div>
+              <a class="carousel-control right" href="#survey_carousel" data-slide="next">&rsaquo;</a>
+            </div>
+          </form>
+          <p>
+            <a id="archimedesTest" class="btn btn-primary btn-large">Send Form</a>
+          </p>
+          <p id="result"></p>
+          <!-- <div class="hero-unit">
+          <h1>Output!</h1>
+          <p>
+          This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+          </p>
+          <p>
+          <a class="btn btn-primary btn-large">Learn more &raquo;</a>
+          </p>
+          </div> -->
+        </div>
+        <div class="span2">
+          <ul id="carouselNav" class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a href="javascript:void(0)">Age</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Gender</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Height</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Weight</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Smoke</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Health History</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Blood Pressure</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Cholesterol</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">HbA1c</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Recommendation</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>
+          &copy; <a href="http://xlbaolab.com">XLBao Lab</a>
+        </p>
+      </footer>
+
+    </div>
+    <!-- /container -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.8.0.js"><\/script>')
+    </script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        var _gaq = [['_setAccount', 'UA-XXXXX-X'], ['_trackPageview']];
+        ( function(d, t) {
+                var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
+                g.src = ('https:' == location.protocol ? '//ssl' : '//www') + '.google-analytics.com/ga.js';
+                s.parentNode.insertBefore(g, s)
+            }(document, 'script'));
+    </script>
+  </body>
+</html>
