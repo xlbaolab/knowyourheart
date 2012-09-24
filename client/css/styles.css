@@ -207,54 +207,42 @@ a:hover {
     *margin-left: 2.07447%; }
   .row-fluid [class*="span"]:first-child {
     margin-left: 0; }
-
-.row-fluid > .span1 {
-  width: 6.38298%;
-  *width: 6.32979%; }
-
-.row-fluid > .span2 {
-  width: 14.89362%;
-  *width: 14.84043%; }
-
-.row-fluid > .span3 {
-  width: 23.40426%;
-  *width: 23.35106%; }
-
-.row-fluid > .span4 {
-  width: 31.91489%;
-  *width: 31.8617%; }
-
-.row-fluid > .span5 {
-  width: 40.42553%;
-  *width: 40.37234%; }
-
-.row-fluid > .span6 {
-  width: 48.93617%;
-  *width: 48.88298%; }
-
-.row-fluid > .span7 {
-  width: 57.44681%;
-  *width: 57.39362%; }
-
-.row-fluid > .span8 {
-  width: 65.95745%;
-  *width: 65.90426%; }
-
-.row-fluid > .span9 {
-  width: 74.46809%;
-  *width: 74.41489%; }
-
-.row-fluid > .span10 {
-  width: 82.97872%;
-  *width: 82.92553%; }
-
-.row-fluid > .span11 {
-  width: 91.48936%;
-  *width: 91.43617%; }
-
-.row-fluid > .span12 {
-  width: 100.0%;
-  *width: 99.94681%; }
+  .row-fluid .span1 {
+    width: 6.38298%;
+    *width: 6.32979%; }
+  .row-fluid .span2 {
+    width: 14.89362%;
+    *width: 14.84043%; }
+  .row-fluid .span3 {
+    width: 23.40426%;
+    *width: 23.35106%; }
+  .row-fluid .span4 {
+    width: 31.91489%;
+    *width: 31.8617%; }
+  .row-fluid .span5 {
+    width: 40.42553%;
+    *width: 40.37234%; }
+  .row-fluid .span6 {
+    width: 48.93617%;
+    *width: 48.88298%; }
+  .row-fluid .span7 {
+    width: 57.44681%;
+    *width: 57.39362%; }
+  .row-fluid .span8 {
+    width: 65.95745%;
+    *width: 65.90426%; }
+  .row-fluid .span9 {
+    width: 74.46809%;
+    *width: 74.41489%; }
+  .row-fluid .span10 {
+    width: 82.97872%;
+    *width: 82.92553%; }
+  .row-fluid .span11 {
+    width: 91.48936%;
+    *width: 91.43617%; }
+  .row-fluid .span12 {
+    width: 100.0%;
+    *width: 99.94681%; }
 
 .container {
   margin-right: auto;
@@ -3708,54 +3696,42 @@ a.label:hover, a.badge:hover {
       *margin-left: 2.70924%; }
     .row-fluid [class*="span"]:first-child {
       margin-left: 0; }
-
-  .row-fluid > .span1 {
-    width: 5.8011%;
-    *width: 5.74791%; }
-
-  .row-fluid > .span2 {
-    width: 14.36464%;
-    *width: 14.31145%; }
-
-  .row-fluid > .span3 {
-    width: 22.92818%;
-    *width: 22.87499%; }
-
-  .row-fluid > .span4 {
-    width: 31.49171%;
-    *width: 31.43852%; }
-
-  .row-fluid > .span5 {
-    width: 40.05525%;
-    *width: 40.00206%; }
-
-  .row-fluid > .span6 {
-    width: 48.61878%;
-    *width: 48.56559%; }
-
-  .row-fluid > .span7 {
-    width: 57.18232%;
-    *width: 57.12913%; }
-
-  .row-fluid > .span8 {
-    width: 65.74586%;
-    *width: 65.69266%; }
-
-  .row-fluid > .span9 {
-    width: 74.30939%;
-    *width: 74.2562%; }
-
-  .row-fluid > .span10 {
-    width: 82.87293%;
-    *width: 82.81974%; }
-
-  .row-fluid > .span11 {
-    width: 91.43646%;
-    *width: 91.38327%; }
-
-  .row-fluid > .span12 {
-    width: 100.0%;
-    *width: 99.94681%; }
+    .row-fluid .span1 {
+      width: 5.8011%;
+      *width: 5.74791%; }
+    .row-fluid .span2 {
+      width: 14.36464%;
+      *width: 14.31145%; }
+    .row-fluid .span3 {
+      width: 22.92818%;
+      *width: 22.87499%; }
+    .row-fluid .span4 {
+      width: 31.49171%;
+      *width: 31.43852%; }
+    .row-fluid .span5 {
+      width: 40.05525%;
+      *width: 40.00206%; }
+    .row-fluid .span6 {
+      width: 48.61878%;
+      *width: 48.56559%; }
+    .row-fluid .span7 {
+      width: 57.18232%;
+      *width: 57.12913%; }
+    .row-fluid .span8 {
+      width: 65.74586%;
+      *width: 65.69266%; }
+    .row-fluid .span9 {
+      width: 74.30939%;
+      *width: 74.2562%; }
+    .row-fluid .span10 {
+      width: 82.87293%;
+      *width: 82.81974%; }
+    .row-fluid .span11 {
+      width: 91.43646%;
+      *width: 91.38327%; }
+    .row-fluid .span12 {
+      width: 100.0%;
+      *width: 99.94681%; }
 
   input, textarea, .uneditable-input {
     margin-left: 0; }
@@ -3905,54 +3881,42 @@ a.label:hover, a.badge:hover {
       *margin-left: 2.51091%; }
     .row-fluid [class*="span"]:first-child {
       margin-left: 0; }
-
-  .row-fluid > .span1 {
-    width: 5.98291%;
-    *width: 5.92971%; }
-
-  .row-fluid > .span2 {
-    width: 14.52991%;
-    *width: 14.47672%; }
-
-  .row-fluid > .span3 {
-    width: 23.07692%;
-    *width: 23.02373%; }
-
-  .row-fluid > .span4 {
-    width: 31.62393%;
-    *width: 31.57074%; }
-
-  .row-fluid > .span5 {
-    width: 40.17094%;
-    *width: 40.11775%; }
-
-  .row-fluid > .span6 {
-    width: 48.71795%;
-    *width: 48.66476%; }
-
-  .row-fluid > .span7 {
-    width: 57.26496%;
-    *width: 57.21177%; }
-
-  .row-fluid > .span8 {
-    width: 65.81197%;
-    *width: 65.75877%; }
-
-  .row-fluid > .span9 {
-    width: 74.35897%;
-    *width: 74.30578%; }
-
-  .row-fluid > .span10 {
-    width: 82.90598%;
-    *width: 82.85279%; }
-
-  .row-fluid > .span11 {
-    width: 91.45299%;
-    *width: 91.3998%; }
-
-  .row-fluid > .span12 {
-    width: 100%;
-    *width: 99.94681%; }
+    .row-fluid .span1 {
+      width: 5.98291%;
+      *width: 5.92971%; }
+    .row-fluid .span2 {
+      width: 14.52991%;
+      *width: 14.47672%; }
+    .row-fluid .span3 {
+      width: 23.07692%;
+      *width: 23.02373%; }
+    .row-fluid .span4 {
+      width: 31.62393%;
+      *width: 31.57074%; }
+    .row-fluid .span5 {
+      width: 40.17094%;
+      *width: 40.11775%; }
+    .row-fluid .span6 {
+      width: 48.71795%;
+      *width: 48.66476%; }
+    .row-fluid .span7 {
+      width: 57.26496%;
+      *width: 57.21177%; }
+    .row-fluid .span8 {
+      width: 65.81197%;
+      *width: 65.75877%; }
+    .row-fluid .span9 {
+      width: 74.35897%;
+      *width: 74.30578%; }
+    .row-fluid .span10 {
+      width: 82.90598%;
+      *width: 82.85279%; }
+    .row-fluid .span11 {
+      width: 91.45299%;
+      *width: 91.3998%; }
+    .row-fluid .span12 {
+      width: 100%;
+      *width: 99.94681%; }
 
   input, textarea, .uneditable-input {
     margin-left: 0; }
