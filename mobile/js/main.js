@@ -22,11 +22,11 @@ if ( typeof console === "undefined" || !console.log) {
 console.debug("loading main.js")
 
 /*
- * Globals
- */
+* Constants
+*/
 
-var gCurrentUser = null;
-var gUiMap = {
+// survey pages and their inputs, mapped to user attrs
+var UI_MAP = {
     "page2" : {
         "textinput2" : "age"
     },
@@ -61,6 +61,36 @@ var gUiMap = {
     }
 };
 
+// archimedes attrs mapped to user attrs
+var ARCHIMEDES_ATTRS = {
+    "age" : "age",
+    "gender" : "gender",
+    "height" : "height",
+    "weight" : "weight",
+    "smoker" : "smoker",
+    "mi" : "ami",
+    "stroke" : "stroke",
+    "diabetes" : "diabetes",
+    "systolic" : "systolic",
+    "diastolic" : "diastolic",
+    "cholesterol" : "cholesterol",
+    "hdl" : "hdl",
+    "ldl" : "ldl",
+    "hba1c" : "hba1c",
+    "cholesterolmeds" : "cholesterolmeds",
+    "bloodpressuremeds" : "bloodpressuremeds",
+    "bloodpressuremedcount" : "bloodpressuremedcount",
+    "aspirin" : "aspirin",
+    "moderateexercise" : "moderateexercise",
+    "vigorousexercise" : "vigorousexercise",
+    "familymihistory" : "familymihistory"
+}
+
+/*
+ * Globals
+ */
+var gCurrentUser = null;
+
 /*
  * Functions
  */
@@ -84,63 +114,24 @@ function createUser(user, callbacks) {
         }
     }
     if (_.isUndefined(user)) {
-        user = new StackMob.User({
+        var attrs = {
             username : generateRandomString(),
-            password : generateRandomString(),
-            name : "",
-            age : "",
-            gender : "",
-            height : "",
-            height_ft : "",
-            height_in : "",
-            weight : "",
-            smoker : "",
-            ami : "",
-            stroke : "",
-            diabetes : "",
-            systolic : "",
-            diastolic : "",
-            cholesterol : "",
-            hdl : "",
-            ldl : "",
-            hba1c : "",
-            cholesterolmeds : "",
-            bloodpressuremeds : "",
-            bloodpressuremedcount : "",
-            aspirin : "",
-            moderateexercise : "",
-            vigorousexercise : "",
-            familymihistory : ""
-        });
+            password : generateRandomString()
+        };
+        for (var attr in ARCHIMEDES_ATTRS) {
+            attrs[ARCHIMEDES_ATTRS[attr]] = "";
+        }
+        user = new StackMob.User(attrs);
     }
+
     user.create(callbacks);
     return user;
 }
 
 function calculateRisk(user) {
-    var attr = user.attributes;
-    var requestData = {
-        age : attr.age,
-        gender : attr.gender,
-        height : attr.height,
-        weight : attr.weight,
-        smoker : attr.smoker,
-        mi : attr.ami,
-        stroke : attr.stroke,
-        diabetes : attr.diabetes,
-        systolic : attr.systolic,
-        diastolic : attr.diastolic,
-        cholesterol : attr.cholesterol,
-        hdl : attr.hdl,
-        ldl : attr.ldl,
-        hba1c : attr.hba1c,
-        cholesterolmeds : attr.cholesterolmeds,
-        bloodpressuremeds : attr.bloodpressuremeds,
-        bloodpressuremedcount : attr.bloodpressuremedcount,
-        aspirin : attr.aspirin,
-        moderateexercise : attr.moderateexercise,
-        vigorousexercise : attr.vigorousexercise,
-        familymihistory : attr.familymihistory
+    var requestData = {};
+    for (attr in ARCHIMEDES_ATTRS) {
+        requestData[attr] = user.attributes[ARCHIMEDES_ATTRS[attr]];
     }
     $.post("https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health", requestData, function(data) {
         console.dir(data);
@@ -155,6 +146,7 @@ function loadSurveyPage(page, user, uiMap) {
         var $input = $("#" + input);
         console.debug("loaded " + userField + "=" + val);
 
+        // remember what we loaded so we know if it changes
         $input.prop("loadedValue", val);
 
         if (val === "") {
@@ -252,10 +244,10 @@ $(document).ready(function() {
     console.debug("ready");
 
     // create a view for each survey page to handle user input
-    for (var pageId in gUiMap) {
+    for (var pageId in UI_MAP) {
         new SurveyView({
             el : $("#" + pageId),
-            inputMap : gUiMap[pageId],
+            inputMap : UI_MAP[pageId],
             model : gCurrentUser
         });
     }
@@ -292,14 +284,23 @@ $(document).on("pagebeforehide", function(event, data) {
     console.debug("pagebeforehide - " + event.target.id + " to " + data.nextPage.attr("id"));
 
     var page = event.target;
-    var inputMap = gUiMap[page.id];
+    var inputMap = UI_MAP[page.id];
+    // save if input changed
+    var changed = false;
     for (var input in inputMap) {
-        if (gCurrentUser.get(inputMap[input]) !== $(page).find("#" + input).prop("loadedValue")) {
-            console.info("saving user");
-            gCurrentUser.save();
-            break;
+        var $input = $(page).find("#" + input);
+        var inputVal = gCurrentUser.get(inputMap[input]);
+        if (inputVal !== $input.prop("loadedValue")) {
+            changed = true;
+            $input.prop("loadedValue", inputVal);
         }
     }
+    if (changed) {
+        console.info("saving user");
+        gCurrentUser.save();
+    }
+
+    // calculateRisk(gCurrentUser);
 });
 $(document).on("pageshow", function(event, data) {
     var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
@@ -322,7 +323,7 @@ $(document).on("pagecreate", function(event) {
 $(document).on("pageinit", function(event) {
     console.debug("pageinit - " + event.target.id);
 
-    loadSurveyPage(event.target, gCurrentUser, gUiMap);
+    loadSurveyPage(event.target, gCurrentUser, UI_MAP);
 });
 $(document).on("pageremove", function(event) {
     console.debug("pageremove - " + event.target.id);
