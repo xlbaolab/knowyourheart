@@ -9,7 +9,7 @@ $(function(){
 	var localslab = "MuseoSlab500Regular";
 	var remotefont = "museo-slab";
 
-	
+/*	
 	if (host == "local") {
 		$('body').css("font-family", localslab);
 		$('h2, h3').css("font-family", localslab);
@@ -28,7 +28,7 @@ $(function(){
 		$('.header').css("font-family", remotefont);
 		$('.ui-btn-inner').css("font-family", remotefont);
 		};
-
+*/
 	/* Clear placeholder text upon focus */
     $('input').data('holder',$('input').attr('placeholder'));
     $('input').focusin(function(){
