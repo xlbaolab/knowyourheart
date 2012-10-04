@@ -92,7 +92,7 @@ var ARCHIMEDES_ATTRS = {
     "moderateexercise" : "moderateexercise",
     "vigorousexercise" : "vigorousexercise",
     "familymihistory" : "familymihistory"
-}
+};
 var ARCHIMEDES_DEFAULTS = {
     age : 18, // 18 to 130 years
     gender : "M", // M/F
@@ -115,7 +115,7 @@ var ARCHIMEDES_DEFAULTS = {
     moderateexercise : 4, // 0 to 60 hours
     vigorousexercise : 2, // 0 to 30 hours
     familymihistory : false
-}
+};
 var ARCHIMEDES_REQUIRED = {
     age : true,
     gender : true,
@@ -138,7 +138,20 @@ var ARCHIMEDES_REQUIRED = {
     moderateexercise : false,
     vigorousexercise : false,
     familymihistory : false
-}
+};
+var USER_DEFAULTS = {
+    smoker : "false",
+    ami : "false",
+    stroke : "false",
+    diabetes : "false",
+    cholesterolmeds : "false",
+    bloodpressuremeds : "false",
+    aspirin : "false",
+    familymihistory : "false",
+    knows_bp : "false",
+    knows_chol : "false",
+    last_survey_page : ""
+};
 
 /*
  * Globals
@@ -168,12 +181,16 @@ function createUser(user, callbacks) {
         }
     }
     if (_.isUndefined(user)) {
+        var attr;
         var attrs = {
             username : generateRandomString(),
             password : generateRandomString()
         };
-        for (var attr in ARCHIMEDES_ATTRS) {
+        for (attr in ARCHIMEDES_ATTRS) {
             attrs[ARCHIMEDES_ATTRS[attr]] = "";
+        }
+        for (attr in USER_DEFAULTS) {
+            attrs[attr] = USER_DEFAULTS[attr];
         }
         user = new StackMob.User(attrs);
     }
@@ -198,6 +215,7 @@ function calculateRisk(user) {
 }
 
 function loadSurveyPage(page, user, uiMap) {
+    var missingInput = false;
     var inputMap = uiMap[page.id];
     for (var input in inputMap) {
         var userField = inputMap[input];
@@ -209,6 +227,7 @@ function loadSurveyPage(page, user, uiMap) {
         $input.prop("loadedValue", val);
 
         if (val === "") {
+            missingInput = true;
             continue;
         }
 
@@ -226,6 +245,10 @@ function loadSurveyPage(page, user, uiMap) {
             $input.val(val);
         }
     }
+
+    if (missingInput) {
+        $(page).find(".nextbtn").addClass("ui-disabled");
+    }
 }
 
 /*
@@ -235,7 +258,7 @@ var SurveyView = Backbone.View.extend({
     events : {
         "change input[type=radio]" : "handleChange",
         "change input[type=number]" : "handleChange",
-        "change input[type=text]" : "handleChange",
+        "keyup input[type=text]" : "handleChange",
         "change select" : "handleChange"
     },
     handleChange : function(event, data) {
@@ -247,6 +270,22 @@ var SurveyView = Backbone.View.extend({
         var o = {};
         o[userField] = $input.val();
         this.model.set(o);
+
+        var missingInput = false;
+        for (var inputId in this.options.inputMap) {
+            var val = this.model.get(this.options.inputMap[inputId]);
+            if (_.isUndefined(val) || val === "") {
+                missingInput = true;
+                break;
+            }
+        }
+        
+        var $nextBtn = $.mobile.activePage.find(".nextbtn"); 
+        if (!missingInput) {
+            $nextBtn.removeClass("ui-disabled");
+        } else if (!$nextBtn.hasClass("ui-disabled")) {
+            $nextBtn.addClass("ui-disabled");
+        }
     },
     initialize : function() {
         // handle init outside because it's easier
@@ -356,18 +395,21 @@ $(document).on("pagebeforehide", function(event, data) {
     }
     if (changed) {
         console.info("saving user");
-        gCurrentUser.save();
+        gCurrentUser.save({
+            last_survey_page : data.nextPage.attr("id")
+        });
     }
 
-    calculateRisk(gCurrentUser);
+    // calculateRisk(gCurrentUser);
 });
 $(document).on("pageshow", function(event, data) {
     var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
     console.debug("pageshow - " + prevPage + " to " + event.target.id);
 
-    $(event.target).find("input[type=radio]").checkboxradio("refresh");
-    $(event.target).find("input[type=number], select[data-role=slider]").slider("refresh");
-    $(event.target).find("select[data-role!=slider]").selectmenu("refresh");
+    var $nextPage = $(event.target);
+    $nextPage.find("input[type=radio]").checkboxradio("refresh");
+    $nextPage.find("input[type=number], select[data-role=slider]").slider("refresh");
+    $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
 });
 $(document).on("pagehide", function(event, data) {
     console.debug("pagehide - " + event.target.id + " to " + data.nextPage.attr("id"));
