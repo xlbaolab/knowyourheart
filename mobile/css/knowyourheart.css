@@ -72,7 +72,8 @@ font-family: "museo-slab",serif;
 	display: block;
 }
 
-.ui-grid-a {
+
+#page15 .ui-grid-a {
 	width: 80%;
 	margin: 0 auto;
 }
@@ -287,6 +288,13 @@ a.nextbtn.ui-btn-corner-all{
 	padding: 1em;
 }
 
+/*remove blue background of tab bar */
+#page34 .ui-footer.ui-bar-a,
+#page37 .ui-footer.ui-bar-a {
+border: 0px;
+}
+
+
 .profileData {
 position: relative;
 color: #32a7da;
@@ -334,7 +342,8 @@ fieldset .ui-btn-inner {
 
 /*HEALTH HISTORY Screen */
 #page15 .ui-content,
-#page26 .ui-content {
+#page26 .ui-content,
+#page33 .ui-content {
 	text-align: left;	
 	margin: 	auto;
 }
@@ -352,24 +361,13 @@ top: 50%;
 .coupon {
 -webkit-background-clip: padding-box;
 background-color: rgb(255, 203, 61);
-background-image: -webkit-linear-gradient(top, rgb(255, 203, 61), rgb(255, 203, 61));
+background-image: -webkit-linear-gradient(top, rgb(248, 185, 0), rgb(255, 140, 0));
 background-origin: padding-box;
-border-bottom-color: rgb(46, 159, 215);
+border: 1px solid rgb(255, 203, 61);
 border-bottom-left-radius: 14px;
 border-bottom-right-radius: 14px;
-border-bottom-style: solid;
-border-bottom-width: 1px;
-border-left-color: rgb(46, 159, 215);
-border-left-style: solid;
-border-left-width: 1px;
-border-right-color: rgb(46, 159, 215);
-border-right-style: solid;
-border-right-width: 1px;
-border-top-color: rgb(46, 159, 215);
 border-top-left-radius: 14px;
 border-top-right-radius: 14px;
-border-top-style: solid;
-border-top-width: 1px;
 color: rgb(255, 255, 255);
 font-size: 11px;
 height: 13px;	
@@ -385,3 +383,49 @@ top: 50%;
 width: 62px;
 zoom: 1;
 }
+
+/* TOOLTIP */
+#tooltip
+{
+    text-align: center;
+    color: #fff;
+    background: #111;
+    position: absolute;
+    z-index: 100;
+    padding: 15px;
+}
+ 
+    #tooltip:after /* triangle decoration */
+    {
+        width: 0;
+        height: 0;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid #111;
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: -10px;
+        margin-left: -10px;
+    }
+ 
+        #tooltip.top:after
+        {
+            border-top-color: transparent;
+            border-bottom: 10px solid #111;
+            top: -20px;
+            bottom: auto;
+        }
+ 
+        #tooltip.left:after
+        {
+            left: 10px;
+            margin: 0;
+        }
+ 
+        #tooltip.right:after
+        {
+            right: 10px;
+            left: auto;
+            margin: 0;
+        }
