@@ -85,6 +85,52 @@ var ARCHIMEDES_ATTRS = {
     "vigorousexercise" : "vigorousexercise",
     "familymihistory" : "familymihistory"
 }
+var ARCHIMEDES_DEFAULTS = {
+    age : 18, // 18 to 130 years
+    gender : "M", // M/F
+    height : 70, // 44 to 87 inches
+    weight : 160, // 80 to 600 pounds
+    smoker : false,
+    mi : false,
+    stroke : false,
+    diabetes : false,
+    systolic : 120, // 80 to 200 mm/Hg
+    diastolic : 80, // 40 to 130 mm/Hg
+    cholesterol : 200, // 70 to 500 mg/dL
+    hdl : 60, // 20 to 130 mg/dL
+    ldl : 100, // 40 to 400 mg/dL
+    hba1c : 4.8, // %
+    cholesterolmeds : false,
+    bloodpressuremeds : false,
+    bloodpressuremedcount : 0, // 0 to 4
+    aspirin : false,
+    moderateexercise : 4, // 0 to 60 hours
+    vigorousexercise : 2, // 0 to 30 hours
+    familymihistory : false
+}
+var ARCHIMEDES_REQUIRED = {
+    age : true,
+    gender : true,
+    height : true,
+    weight : true,
+    smoker : true,
+    mi : true,
+    stroke : true,
+    diabetes : true,
+    systolic : false,
+    diastolic : false,
+    cholesterol : false,
+    hdl : false,
+    ldl : false,
+    hba1c : false,
+    cholesterolmeds : false,
+    bloodpressuremeds : false,
+    bloodpressuremedcount : false,
+    aspirin : false,
+    moderateexercise : false,
+    vigorousexercise : false,
+    familymihistory : false
+}
 
 /*
  * Globals
@@ -131,7 +177,12 @@ function createUser(user, callbacks) {
 function calculateRisk(user) {
     var requestData = {};
     for (attr in ARCHIMEDES_ATTRS) {
-        requestData[attr] = user.attributes[ARCHIMEDES_ATTRS[attr]];
+        var val = user.attributes[ARCHIMEDES_ATTRS[attr]];
+        if (val != "") {
+            requestData[attr] = val;
+        } else if (ARCHIMEDES_REQUIRED[attr]) {
+            requestData[attr] = ARCHIMEDES_DEFAULTS[attr];
+        }
     }
     $.post("https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health", requestData, function(data) {
         console.dir(data);
@@ -300,7 +351,7 @@ $(document).on("pagebeforehide", function(event, data) {
         gCurrentUser.save();
     }
 
-    // calculateRisk(gCurrentUser);
+    calculateRisk(gCurrentUser);
 });
 $(document).on("pageshow", function(event, data) {
     var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
