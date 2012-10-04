@@ -142,6 +142,60 @@
                   <input type="text" id="input_hba1c" name="hba1c" placeholder="HbA1c" />
                 </div>
 
+                <div class="item">
+                	The following are additional inputs that can refine your risk estimate.
+
+                  <label>Are you currently on any medication to treat high blood pressure?</label>
+                  <span class="help-block">If you are unsure, then answer no.</span>
+                  <input type="radio" id="input_bpmeds" name="bpmeds" value="T" />
+                  <label class="check_or_radio_label" for="input_bpmeds">yes</label>
+                  <input type="radio" id="input_non_bpmeds" name="bpmeds" value="F" />
+                  <label class="check_or_radio_label" for="input_non_bpmeds">no</label>                	
+
+                <!-- TODO if answer to meds is TRUE -->
+                  <label for="input_height_feet">How many different medications do you take for your blood pressure?</label>
+                  <select id="input_height_feet" name="height_feet">
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4+</option>
+                  </select>
+
+                  <label>Are you currently on medication to lower your cholesterol?</label>
+                  <span class="help-block">If you are unsure, then answer no.</span>
+                  <input type="radio" id="input_cholmeds" name="cholmeds" value="T" />
+                  <label class="check_or_radio_label" for="input_cholmeds">yes</label>
+                  <input type="radio" id="input_non_cholmeds" name="cholmeds" value="F" />
+                  <label class="check_or_radio_label" for="input_non_cholmeds">no</label>  
+
+                  <label>Do you take aspirin daily for your heart?</label>
+                  <span class="help-block">Answer YES if you take either full strength or junior aspirin.</span>
+                  <input type="radio" id="input_aspirin" name="aspirin" value="T" />
+                  <label class="check_or_radio_label" for="input_aspirin">yes</label>
+                  <input type="radio" id="input_non_aspirin" name="aspirin" value="F" />
+                  <label class="check_or_radio_label" for="input_non_aspirin">no</label>  
+
+
+                  <label for="input_moderate">How many hours do you spend doing moderate physical activities in a typical week?</label>
+                  <span class="help-block">Moderate physical exercises are ones that cause a slight elevation in heart rate or breathing such as raking leaves, mowing the lawn, or heavy cleaning</span>
+                  <input type="text" id="input_moderate" name="moderate" placeholder="moderate" />
+
+                  <label for="input_vigorous">How many hours do you spend doing vigorous physical activities in a typical week?</label>
+                  <span class="help-block">Vigoruos physical exercises are ones that cause heavy sweating or large increaeses in breathing or heart rate for at least 10 minutes at a time.  Some examples are running, lap swimming, aerobics classes or fast bicycling</span>
+                  <input type="text" id="input_vigorous" name="vigorous" placeholder="vigorous" />
+
+                  <label>Have any of your first-degree relatives (parent, full-blooded brother or sister, or child) had a heart attack before the age of 55??</label>
+                  <span class="help-block">A heart attack is also called a myocardial infarction.</span>
+                  <input type="radio" id="input_heartattack" name="heartattack" value="T" />
+                  <label class="check_or_radio_label" for="input_heartattack">yes</label>
+                  <input type="radio" id="input_non_heartattack" name="heartattack" value="F" />
+                  <label class="check_or_radio_label" for="input_non_heartattack">no</label>  
+
+
+                </div>
+
+
+
               </div>
               <a class="carousel-control right" href="#survey_carousel" data-slide="next">&rsaquo;</a>
             </div>
@@ -188,6 +242,9 @@
             </li>
             <li>
               <a href="javascript:void(0)">HbA1c</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Optional</a>
             </li>
             <li>
               <a href="javascript:void(0)">Recommendation</a>

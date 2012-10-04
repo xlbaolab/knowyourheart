@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- TODO: no caching for development, remove for production -->
+        <meta http-equiv="Cache-control" content="no-cache">
+
+        <title></title>
+        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
+        />
+        <link rel="stylesheet" href="css/my.css" />
+        <style>
+            /* App custom styles */
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+        <script src="js/my.js"></script>
+
+        <script type="text/javascript" src="http://static.stackmob.com/js/json2-min.js"></script>
+        <script type="text/javascript" src="http://static.stackmob.com/js/underscore-1.3.3-min.js"></script>
+        <!--<script type="text/javascript" src="http://static.stackmob.com/js/backbone-0.9.2-min.js"></script>-->
+        <script type="text/javascript" src="js/backbone.js"></script>
+        <script type="text/javascript" src="js/backbone.localStorage.js"></script>
+        <script type="text/javascript" src="http://static.stackmob.com/js/2.5.3-crypto-sha1-hmac.js"></script>
+        <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.5.5-min.js"></script>
+
+        <script type="text/javascript" src="js/main.js"></script>
+    </head>
+
+
+    <body>
+        <!-- New User Start -->
+        <div data-role="page" data-theme="a" id="page1" style="background: url('http://assets.codiqa.com/ps/32701/3e97a9f3a92992e4background.jpg') repeat-y">
+            <div data-theme="a" data-role="header">
+                <h3> KnowYourHeart </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h3> Calculate your risk of heart disease </h3>
+                <div>
+                    <p>
+                        1 in 3 adults have some form of cardiovascular disease
+                    </p>
+                    <p>
+                        80% of heart disease and stroke can be prevented!
+                    </p>
+                    <p>
+                        <br>
+                    </p>
+                    <p></p>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page2"> Start Assessment </a>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend></legend>
+                        <input name="" id="checkbox2" type="checkbox">
+                        <label for="checkbox2"> Agree with Terms and Conditions </label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <!-- Dashboard -->
+        <div data-role="page" data-theme="a" id="page18" style="background: url('http://assets.codiqa.com/ps/32701/0f03d92823937a85background.jpg') repeat-y">
+            <div data-role="content" style="padding: 15px">
+                <div style=" text-align:center">
+                    <img style="width: 300px; height: 200px" src="http://assets.codiqa.com/ps/32701/8edcfdf46d5b9895knowyourheart.png">
+                </div>
+                <div class="ui-grid-b">
+                    <div class="ui-block-a">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page34"
+                        data-icon="home" data-iconpos="top"> </a>
+                        <div>
+                            <p style="text-align: center; ">
+                                Profile
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-block-b"></div>
+                    <div class="ui-block-c">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page21"
+                        data-icon="check" data-iconpos="top"> </a>
+                        <div>
+                            <p style="text-align: center; " data-mce-style="text-align: center;">
+                                Result
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-block-a">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page21"
+                        data-icon="search" data-iconpos="top"> </a>
+                        <div>
+                            <p style="text-align: center; " data-mce-style="text-align: center;">
+                                Location
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page31"
+                        data-icon="info" data-iconpos="top"> </a>
+                        <div>
+                            <p style="text-align: center; " data-mce-style="text-align: center;">
+                                Resources
+                            </p>
+                        </div>
+                    </div>
+                    <div class="ui-block-c">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page18"
+                        data-icon="plus" data-iconpos="top"> </a>
+                        <div>
+                            <p style="text-align: center; " data-mce-style="text-align: center;">
+                                Share
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Profile BASIC -->
+        <div data-role="page" data-theme="a" id="page34" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="a" data-role="header">
+                <h2> About You </h2>
+                <a data-role="button" data-transition="fade" data-theme="c" href="#page18"
+                data-icon="home" data-iconpos="notext" class="ui-btn-right"> </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div style="">
+                            <img style="width: 135px; height: 100px" src="http://assets.codiqa.com/ps/32701/80c719ec9098eb86heart-meter.png">
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page21"> Get Result </a>
+                    </div>
+                </div>
+                <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                    <li data-theme="">
+                        <a href="#page2" data-transition="slide"> Age <span class="ui-li-count"> 28 </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page9" data-transition="slide"> Gender <span class="ui-li-count"> Male </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page10" data-transition="slide"> Height <span class="ui-li-count"> 5' 10" </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page12" data-transition="slide"> Weight <span class="ui-li-count"> 150 lbs </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page13" data-transition="slide"> Smoker? <span class="ui-li-count"> No </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page15" data-transition="slide"> Health History </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page16" data-transition="slide"> Blood Pressure <span class="ui-li-count"> 120 / 80 </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page17" data-transition="slide"> Cholesterol <span class="ui-li-count"> 100 / 40 / 80 </span> </a>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="d">
+                <ul>
+                    <li>
+                        <a href="#page34" data-theme="" data-icon="info"> Profile </a>
+                    </li>
+                    <li>
+                        <a href="#page37" data-theme="" data-icon="gear"> Advanced </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Profile ADVANCED -->
+        <div data-role="page" data-theme="a" id="page37" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="a" data-role="header">
+                <h3> About You </h3>
+                <a data-role="button" data-transition="fade" data-theme="c" href="#page18"
+                data-icon="home" data-iconpos="notext" class="ui-btn-right"> Home </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div style="">
+                            <img style="width: 135px; height: 100px" src="http://assets.codiqa.com/ps/32701/80c719ec9098eb86heart-meter.png">
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <a data-role="button" data-transition="fade" data-theme="b" href="#page21"> Get Result </a>
+                    </div>
+                </div>
+                <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                    <li data-theme="">
+                        <a href="#page38" data-transition="slide"> Blood Pressure Meds? <span class="ui-li-count"> No </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page36" data-transition="slide"> # of Blood Pressure Meds <span class="ui-li-count"> 0 </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page39" data-transition="slide"> Cholesterol Meds? <span class="ui-li-count"> No </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page40" data-transition="slide"> Daily Aspirin? <span class="ui-li-count"> No </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page41" data-transition="slide"> Hours of Moderate Exercise <span class="ui-li-count"> 5 </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page42" data-transition="slide"> Hours of Vigorous Exercise <span class="ui-li-count"> 10 </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page43" data-transition="slide"> Relatives w/ Heart Disease <span class="ui-li-count"> Yes </span> </a>
+                    </li>
+                </ul>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="d">
+                <ul>
+                    <li>
+                        <a href="#page34" data-theme="" data-icon="info"> Profile </a>
+                    </li>
+                    <li>
+                        <a href="#page37" data-theme="" data-icon="gear"> Advanced </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Survey_Age -->
+        <div data-role="page" data-theme="a" id="page2" style="background: url('http://assets.codiqa.com/ps/32701/8dfddd5254879fccbackground.jpg') repeat-y">
+            <div data-theme="a" data-role="header">
+                <h3> Age </h3>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Profile </a>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="none"
+                data-theme="c" href="#page2" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+            </div>
+            <div data-role="content" style="padding: 15%">
+                <h2> How old are you? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="textinput2"> </label>
+                        <input name="" id="textinput2" placeholder="Enter your age here" value=""
+                        type="text">
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page9"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+                <div>
+                    <p>
+                        <br>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!-- Survey_Gender -->
+        <div data-role="page" data-theme="a" id="page9" style="background: url('http://assets.codiqa.com/ps/32701/f9589757b83dd9abbackground.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <h3> Gender </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="c"
+                href="#page9" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> About Me </a>
+            </div>
+            <div data-role="content" style="padding: %">
+                <h2> Are you male or female? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup" data-type="horizontal">
+                        <legend></legend>
+                        <input name="" id="radio3" value="M" type="radio">
+                        <label for="radio3"> Male </label>
+                        <input name="" id="radio4" value="F" type="radio">
+                        <label for="radio4"> Female </label>
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page10"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Survey_Height -->
+        <div data-role="page" data-theme="a" id="page10" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <h3> Height </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="c"
+                href="#page10" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> How tall are you? </h2>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div data-role="fieldcontain">
+                            <label for="selectmenu3"> </label>
+                            <select name="selectmenu3" id="selectmenu3" data-theme="d">
+                                <option value="option1"> Feet </option>
+                                <option value="3"> 3' </option>
+                                <option value="4"> 4' </option>
+                                <option value="5"> 5' </option>
+                                <option value="6"> 6' </option>
+                                <option value="7"> 7' </option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div data-role="fieldcontain">
+                            <label for="selectmenu4"> </label>
+                            <select name="selectmenu4" id="selectmenu4" data-theme="d">
+                                <option value="option1"> Inches </option>
+                                <option value="0"> 0" </option>
+                                <option value="1"> 1" </option>
+                                <option value="2"> 2" </option>
+                                <option value="3"> 3" </option>
+                                <option value="4"> 4" </option>
+                                <option value="5"> 5" </option>
+                                <option value="6"> 6" </option>
+                                <option value="7"> 7" </option>
+                                <option value="8"> 8" </option>
+                                <option value="9"> 9" </option>
+                                <option value="10"> 10" </option>
+                                <option value="11"> 11" </option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page12"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Survey_Weight -->
+        <div data-role="page" data-theme="a" id="page12" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="c"
+                href="#page12" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-transition="flip" href="#page35" data-icon="home"
+                data-iconpos="notext" class="ui-btn-right"> Button </a>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+                <h3> Weight </h3>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> How much do you weigh? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider4"> In lbs </label>
+                        <input type="range" name="slider" id="slider4" value="150" min="50" max="400"
+                        data-highlight="true">
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page13"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Survey_Smoke -->
+        <div data-role="page" data-theme="a" id="page13" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-transition="fade" data-theme="c" href="#page19"
+                data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h3> Smoking Status </h3>
+                <a data-role="button" data-rel="back" data-transition="flip" data-theme="c"
+                href="#page34" data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> Do you currently smoke? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch5"> Have you smoked in the past month? </label>
+                        <select name="toggleswitch5" id="toggleswitch5" data-theme="" data-role="slider">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page15"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Survey_History -->
+        <div data-role="page" data-theme="a" id="page15" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+                <h3> Health History </h3>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page15" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h4> Has a doctor ever told you that you have any of the following? </h4>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch1"> Heart attack </label>
+                        <select name="toggleswitch1" id="toggleswitch1" data-theme="" data-role="slider"
+                        data-mini="true">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch2"> Stroke </label>
+                        <select name="toggleswitch2" id="toggleswitch2" data-theme="" data-role="slider"
+                        data-mini="true">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup">
+                                <label for="toggleswitch10"> Diabetes </label>
+                                <select name="toggleswitch10" id="toggleswitch10" data-theme="" data-role="slider">
+                                    <option value="off"> No </option>
+                                    <option value="on"> Yes </option>
+                                </select>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="ui-block-b">
+                        <div data-role="fieldcontain">
+                            <fieldset data-role="controlgroup">
+                                <label for="textinput6"> If yes, HbA1c level (%) </label>
+                                <input name="" id="textinput6" placeholder="e.g. 4.5" value="" type="text">
+                            </fieldset>
+                        </div>
+                    </div>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page16"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Survey_BP -->
+        <div data-role="page" data-theme="a" id="page16" style="background: url('http://assets.codiqa.com/ps/32701/c8653bcef467086dbackground.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <h3> Blood Pressure </h3>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page16" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h3> What is your blood pressure? </h3>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider5"> Systolic Blood Pressure </label>
+                        <input type="range" name="slider" id="slider5" value="120" min="80" max="220"
+                        data-highlight="true">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider6"> Diastolic Blood Pressure </label>
+                        <input type="range" name="slider" id="slider6" value="80" min="40" max="130"
+                        data-highlight="true">
+                    </fieldset>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a data-role="button" data-transition="slide" data-theme="b" href="#page17"
+                        data-icon="forward" data-iconpos="left"> Skip </a>
+                    </div>
+                    <div class="ui-block-b">
+                        <a data-role="button" data-transition="slide" data-theme="b" href="#page17"
+                        data-icon="arrow-r" data-iconpos="right"> Next </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Survey_Cholesterol -->
+        <div data-role="page" data-theme="a" id="page17">
+            <div data-theme="" data-role="header">
+                <h3> Cholesterol </h3>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page17" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h3> What is your cholesterol level? </h3>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider7"> Total Cholesterol </label>
+                        <input type="range" name="slider" id="slider7" value="200" min="70" max="500"
+                        data-highlight="true">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider8"> HDL Cholesterol </label>
+                        <input type="range" name="slider" id="slider8" value="40" min="20" max="130"
+                        data-highlight="true">
+                    </fieldset>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider9"> LDL Cholesterol </label>
+                        <input type="range" name="slider" id="slider9" value="100" min="40" max="400"
+                        data-highlight="true" data-track-theme="">
+                    </fieldset>
+                </div>
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <a data-role="button" data-transition="slide" data-theme="b" href="#page34"
+                        data-icon="forward" data-iconpos="left"> Skip </a>
+                    </div>
+                    <div class="ui-block-b">
+                        <a data-role="button" data-transition="slide" data-theme="b" href="#page34"
+                        data-icon="arrow-r" data-iconpos="right"> Next </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Results - Aggregate -->
+        <div data-role="page" data-theme="a" id="page21">
+            <div data-theme="a" data-role="header">
+                <h3></h3>
+                <a data-role="button" data-transition="fade" data-theme="c" href="#page18"
+                data-icon="home" data-iconpos="notext" class="ui-btn-right"> Home </a>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page21" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="collapsible-set" data-theme="" data-content-theme="">
+                    <div data-role="collapsible" data-collapsed="false">
+                        <h3> Your Assessment </h3>
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <div>
+                                    <p style="text-align: center; ">
+                                        <b> Your risk is HIGH </b>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ui-block-b">
+                                <div style=" text-align:center">
+                                    <img style="width: 135px; height: 100px" src="http://assets.codiqa.com/ps/32701/189d5b36ff057db4heart-meter.png">
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <p>
+                                <b> Recommendation: Get Screened </b>
+                            </p>
+                            <p>
+                                75% chance of getting heart attack
+                            </p>
+                            <p>
+                                54 percentile in age group
+                            </p>
+                            <p>
+                                2.5 times likely to get heart disease
+                            </p>
+                            <p>
+                                <b>
+                                <br>
+                                </b>
+                            </p>
+                        </div>
+                        <div>
+                            <p>
+                                Get a more accurate assessment by answering some more questions
+                            </p>
+                        </div>
+                        <a data-role="button" data-transition="fade" href="#page37"> Additional Questions </a>
+                    </div>
+                    <div data-role="collapsible" data-collapsed="false">
+                        <h3> Screening Locations </h3>
+                        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false"
+                        width="288" height="200">
+                        <div class="ui-grid-a">
+                            <div class="ui-block-a">
+                                <div data-role="fieldcontain">
+                                    <fieldset data-role="controlgroup">
+                                        <label for="textinput3"> </label>
+                                        <input name="" id="textinput3" placeholder="Enter Zipcode" value="" type="text">
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="ui-block-b">
+                                <div>
+                                    <p style="margin-left: 30px; ">
+                                        $10 Coupon available for Walgreens
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-role="collapsible" data-collapsed="false">
+                        <h3> How to Lower Your Risk </h3>
+                        <div>
+                            <p>
+                                Heart disease is preventable, try these activities to lower your risk
+                            </p>
+                        </div>
+                        <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                            <li data-theme="">
+                                <a href="#page24" data-transition="slidefade"> 10% Exercising </a>
+                            </li>
+                            <li data-theme="">
+                                <a href="#page24" data-transition="slidefade"> 5% Dieting </a>
+                            </li>
+                            <li data-theme="">
+                                <a href="#page24" data-transition="slidefade"> 3% Stop smoking </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Action Suggestion -->
+        <div data-role="page" data-theme="a" id="page24">
+            <div data-theme="a" data-role="header">
+                <h3> Exercising </h3>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page24" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-transition="fade" data-theme="c" href="#page24"
+                data-icon="plus" data-iconpos="right" class="ui-btn-right"> Suggest </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div data-role="navbar" data-iconpos="top">
+                    <ul>
+                        <li>
+                            <a href="#page24" data-theme="" data-icon=""> Most Popular </a>
+                        </li>
+                        <li>
+                            <a href="#page24" data-theme="" data-icon=""> Most Recent </a>
+                        </li>
+                    </ul>
+                </div>
+                <ul data-role="listview" data-divider-theme="b" data-inset="true">
+                    <li data-theme="">
+                        <a href="#page1" data-transition="slide"> Running along the river <span class="ui-li-count"> 25 likes </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page1" data-transition="slide"> Rollerblading <span class="ui-li-count"> 10 likes </span> </a>
+                    </li>
+                    <li data-theme="">
+                        <a href="#page1" data-transition="slide"> Walking backwards <span class="ui-li-count"> 1 like </span> </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- Advanced_BP Meds -->
+        <div data-role="page" data-theme="a" id="page38" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page38" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h3> BP Meds </h3>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> Are you currently on any medication to treat high blood pressure? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch13"> </label>
+                        <select name="toggleswitch13" id="toggleswitch13" data-theme="" data-role="slider">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page36"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Advanced_BP Meds # -->
+        <div data-role="page" data-theme="a" id="page36" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page36" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h3> # of BP Meds </h3>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> How many different medications do you take for your blood pressure? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider14"> </label>
+                        <input type="range" name="slider" id="slider14" value="0" min="0" max="10"
+                        data-highlight="false">
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page39"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Advanced_Chol Meds -->
+        <div data-role="page" data-theme="a" id="page39" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page38" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h3> Cholesterol Med </h3>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> Are you currently on medication to lower your cholesterol? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch14"> </label>
+                        <select name="toggleswitch14" id="toggleswitch14" data-theme="" data-role="slider">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page40"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Advanced_Aspirin -->
+        <div data-role="page" data-theme="a" id="page40" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page40" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h3> Aspirin </h3>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> Do you take aspirin daily for your heart? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch17"> </label>
+                        <select name="toggleswitch17" id="toggleswitch17" data-theme="" data-role="slider">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page41"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Advanced_Vigorous Ex -->
+        <div data-role="page" data-theme="a" id="page42" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page41" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h4> Vigorous Exercise </h4>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> How many hours do you spend doing vigorous physical activities in a typical
+                week? </h2>
+                <div>
+                    <a href="" data-transition="fade"> What is vigorous exercise? </a>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider18"> Hours </label>
+                        <input type="range" name="slider" id="slider18" value="0" min="0" max="20"
+                        data-highlight="false">
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Advanced_Moderate Ex -->
+        <div data-role="page" data-theme="a" id="page41" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page41" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h4> Moderate Exercise </h4>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> How many hours do you spend doing moderate physical activities in a typical
+                week? </h2>
+                <div>
+                    <a href="" data-transition="fade"> What is moderate exercise? </a>
+                </div>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="slider17"> Hours </label>
+                        <input type="range" name="slider" id="slider17" value="0" min="0" max="20"
+                        data-highlight="false">
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page42"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Advanced_Family -->
+        <div data-role="page" data-theme="a" id="page43" style="background: url('http://assets.codiqa.com/ps/32701/6d7b30007f69d675background.jpg') repeat-y">
+            <div data-theme="" data-role="header">
+                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="fade"
+                data-theme="c" href="#page43" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h3> Family History </h3>
+                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <h2> Have any of your first-degree relatives (parent, full-blooded brother
+                or sister, or child) had a heart attack before the age of 55? </h2>
+                <div data-role="fieldcontain">
+                    <fieldset data-role="controlgroup">
+                        <label for="toggleswitch19"> </label>
+                        <select name="toggleswitch19" id="toggleswitch19" data-theme="" data-role="slider">
+                            <option value="off"> No </option>
+                            <option value="on"> Yes </option>
+                        </select>
+                    </fieldset>
+                </div>
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page19"
+                data-icon="arrow-r" data-iconpos="right"> Next </a>
+            </div>
+        </div>
+        <!-- Resources -->
+        <div data-role="page" data-theme="a" id="page31">
+            <div data-theme="a" data-role="header">
+                <h3> Resources </h3>
+                <a data-role="button" data-rel="back" data-transition="fade" data-theme="c"
+                href="#page31" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+            </div>
+            <div data-role="content" style="padding: 15px">
+                <div>
+                    <p>
+                        <b> Learn more about heart disease, hypertension, and stroke </b>
+                    </p>
+                </div>
+                <div style=" text-align:center">
+                    <img style="width: 250px; height: 130px" src="http://millionhearts.hhs.gov/images/logo_MH.png">
+                </div>
+                <div style=" text-align:center">
+                    <img style="width: 250px; height: 100px" src="http://branding.heart.org/new_aha_logos/spot/ucm_317435.jpg">
+                </div>
+            </div>
+        </div>
+        <script>
+            //App custom javascript
+        </script>
+        <style>
+            /* * jQuery Mobile Framework 1.1.1 1981b3f5ec22675ae47df8f0bdf9622e7780e90e
+             * http://jquerymobile.com * * Copyright 2012 jQuery Foundation and other
+             contributors * Dual licensed under the MIT or GPL Version 2 licenses. *
+             http://jquery.org/license * */ /* Swatches */ /* A -----------------------------------------------------------------------------------------------------------*/
+            .ui-bar-a {
+                border: 1px solid #32a8da/*{a-bar-border}*/;
+                background: #32a8da
+                /*{a-bar-background-color}*/;
+                color: #ffffff/*{a-bar-color}*/;
+                font-weight: bold;
+                text-shadow: 0/*{a-bar-shadow-x}*/1px/*{a-bar-shadow-y}*/1px
+                /*{a-bar-shadow-radius}*/#444444/*{a-bar-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #37b8ef /*{a-bar-background-start}*/),
+                to( #2d97c4 /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #37b8ef /*{a-bar-background-start}*/, #2d97c4
+                /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #37b8ef /*{a-bar-background-start}*/, #2d97c4 /*{a-bar-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #37b8ef /*{a-bar-background-start}*/,
+                #2d97c4 /*{a-bar-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #37b8ef /*{a-bar-background-start}*/, #2d97c4 /*{a-bar-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #37b8ef /*{a-bar-background-start}*/,
+                #2d97c4 /*{a-bar-background-end}*/);
+            }
+            .ui-bar-a .ui-link-inherit {
+                color: #ffffff/*{a-bar-color}*/;
+            }
+            .ui-bar-a a.ui-link {
+                color: #7cc4e7/*{a-bar-link-color}*/;
+                font-weight: bold;
+            }
+            .ui-bar-a a.ui-link:visited {
+                color: #2489CE/*{a-bar-link-visited}*/;
+            }
+            .ui-bar-a a.ui-link:hover {
+                color: #2489CE/*{a-bar-link-hover}*/;
+            }
+            .ui-bar-a a.ui-link:active {
+                color: #2489CE/*{a-bar-link-active}*/;
+            }
+            .ui-bar-a, .ui-bar-a input, .ui-bar-a select, .ui-bar-a textarea, .ui-bar-a
+            button {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-body-a, .ui-overlay-a {
+                border: 1px solid #aaaaaa/*{a-body-border}*/;
+                color: #333333/*{a-body-color}*/;
+                text-shadow: 0/*{a-body-shadow-x}*/1px/*{a-body-shadow-y}*/0/*{a-body-shadow-radius}*/#ffffff/*{a-body-shadow-color}*/;
+                background: #f9f9f9/*{a-body-background-color}*/;
+                background-image: -webkit-gradient(linear,
+                left top, left bottom, from( #f9f9f9 /*{a-body-background-start}*/), to(
+                #eeeeee /*{a-body-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee
+                /*{a-body-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #f9f9f9 /*{a-body-background-start}*/,
+                #eeeeee /*{a-body-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #f9f9f9 /*{a-body-background-start}*/, #eeeeee /*{a-body-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #f9f9f9 /*{a-body-background-start}*/,
+                #eeeeee /*{a-body-background-end}*/);
+            }
+            .ui-overlay-a {
+                background-image: none;
+                border-width: 0;
+            }
+            .ui-body-a, .ui-body-a input, .ui-body-a select, .ui-body-a textarea, .ui-body-a button {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-body-a .ui-link-inherit {
+                color: #333333/*{a-body-color}*/;
+            }
+            .ui-body-a .ui-link {
+                color: #2489CE/*{a-body-link-color}*/;
+                font-weight: bold;
+            }
+            .ui-body-a .ui-link:visited {
+                color: #2489CE/*{a-body-link-visited}*/;
+            }
+            .ui-body-a .ui-link:hover {
+                color: #2489CE/*{a-body-link-hover}*/;
+            }
+            .ui-body-a .ui-link:active {
+                color: #2489CE/*{a-body-link-active}*/;
+            }
+            .ui-btn-up-a {
+                border: 1px solid #cccccc/*{a-bup-border}*/;
+                background: #eeeeee/*{a-bup-background-color}*/;
+                font-weight: bold;
+                color: #2F3E46
+                /*{a-bup-color}*/;
+                text-shadow: 0/*{a-bup-shadow-x}*/1px/*{a-bup-shadow-y}*/0/*{a-bup-shadow-radius}*/#ffffff/*{a-bup-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff /*{a-bup-background-start}*/),
+                to( #f1f1f1 /*{a-bup-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #ffffff /*{a-bup-background-start}*/, #f1f1f1
+                /*{a-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #ffffff /*{a-bup-background-start}*/, #f1f1f1 /*{a-bup-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #ffffff /*{a-bup-background-start}*/,
+                #f1f1f1 /*{a-bup-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #ffffff /*{a-bup-background-start}*/, #f1f1f1 /*{a-bup-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #ffffff /*{a-bup-background-start}*/,
+                #f1f1f1 /*{a-bup-background-end}*/);
+            }
+            .ui-btn-up-a:visited, .ui-btn-up-a
+            a.ui-link-inherit {
+                color: #2F3E46/*{a-bup-color}*/;
+            }
+            .ui-btn-hover-a {
+                border: 1px solid #bbbbbb/*{a-bhover-border}*/;
+                background: #dfdfdf
+                /*{a-bhover-background-color}*/;
+                font-weight: bold;
+                color: #2F3E46/*{a-bhover-color}*/;
+                text-shadow: 0/*{a-bhover-shadow-x}*/1px/*{a-bhover-shadow-y}*/0/*{a-bhover-shadow-radius}*/#ffffff/*{a-bhover-shadow-color}*/;
+                background-image: -webkit-gradient(linear,
+                left top, left bottom, from( #f6f6f6 /*{a-bhover-background-start}*/),
+                to( #e0e0e0 /*{a-bhover-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #f6f6f6 /*{a-bhover-background-start}*/, #e0e0e0
+                /*{a-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #f6f6f6 /*{a-bhover-background-start}*/, #e0e0e0
+                /*{a-bhover-background-end}*/); /* FF3.6 */
+                background-image: -ms-linear-gradient(
+                #f6f6f6 /*{a-bhover-background-start}*/, #e0e0e0 /*{a-bhover-background-end}*/);
+                /* IE10 */
+                background-image: -o-linear-gradient( #f6f6f6 /*{a-bhover-background-start}*/,
+                #e0e0e0 /*{a-bhover-background-end}*/); /* Opera 11.10+ */
+                background-image: linear-gradient( #f6f6f6 /*{a-bhover-background-start}*/, #e0e0e0 /*{a-bhover-background-end}*/);
+            }
+            .ui-btn-hover-a:visited, .ui-btn-hover-a:hover, .ui-btn-hover-a a.ui-link-inherit {
+                color: #2F3E46/*{a-bhover-color}*/;
+            }
+            .ui-btn-down-a {
+                border: 1px solid #bbbbbb/*{a-bdown-border}*/;
+                background: #d6d6d6/*{a-bdown-background-color}*/;
+                font-weight: bold;
+                color: #2F3E46/*{a-bdown-color}*/;
+                text-shadow: 0/*{a-bdown-shadow-x}*/1px/*{a-bdown-shadow-y}*/0/*{a-bdown-shadow-radius}*/#ffffff/*{a-bdown-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from(
+                #d0d0d0 /*{a-bdown-background-start}*/), to( #dfdfdf /*{a-bdown-background-end}*/));
+                /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #d0d0d0
+                /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/);
+                /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #d0d0d0
+                /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/,
+                #dfdfdf /*{a-bdown-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #d0d0d0 /*{a-bdown-background-start}*/, #dfdfdf /*{a-bdown-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #d0d0d0 /*{a-bdown-background-start}*/,
+                #dfdfdf /*{a-bdown-background-end}*/);
+            }
+            .ui-btn-down-a:visited, .ui-btn-down-a:hover, .ui-btn-down-a a.ui-link-inherit {
+                color: #2F3E46/*{a-bdown-color}*/;
+            }
+            .ui-btn-up-a, .ui-btn-hover-a, .ui-btn-down-a {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+                text-decoration: none;
+            }/*
+             B -----------------------------------------------------------------------------------------------------------*/
+            .ui-bar-b {
+                border: 1px solid #B3B3B3/*{b-bar-border}*/;
+                background: #eeeeee
+                /*{b-bar-background-color}*/;
+                color: #3E3E3E/*{b-bar-color}*/;
+                font-weight: bold;
+                text-shadow: 0/*{b-bar-shadow-x}*/1px/*{b-bar-shadow-y}*/1px
+                /*{b-bar-shadow-radius}*/#ffffff/*{b-bar-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #f0f0f0 /*{b-bar-background-start}*/),
+                to( #dddddd /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd
+                /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/,
+                #dddddd /*{b-bar-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #f0f0f0 /*{b-bar-background-start}*/,
+                #dddddd /*{b-bar-background-end}*/);
+            }
+            .ui-bar-b .ui-link-inherit {
+                color: #3E3E3E/*{b-bar-color}*/;
+            }
+            .ui-bar-b a.ui-link {
+                color: #7cc4e7/*{b-bar-link-color}*/;
+                font-weight: bold;
+            }
+            .ui-bar-b a.ui-link:visited {
+                color: #2489CE/*{b-bar-link-visited}*/;
+            }
+            .ui-bar-b a.ui-link:hover {
+                color: #2489CE/*{b-bar-link-hover}*/;
+            }
+            .ui-bar-b a.ui-link:active {
+                color: #2489CE/*{b-bar-link-active}*/;
+            }
+            .ui-bar-b, .ui-bar-b input, .ui-bar-b select, .ui-bar-b textarea, .ui-bar-b
+            button {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-body-b, .ui-overlay-b {
+                border: 1px solid #aaaaaa/*{b-body-border}*/;
+                color: #333333/*{b-body-color}*/;
+                text-shadow: 0/*{b-body-shadow-x}*/1px/*{b-body-shadow-y}*/0/*{b-body-shadow-radius}*/#ffffff/*{b-body-shadow-color}*/;
+                background: #f9f9f9/*{b-body-background-color}*/;
+                background-image: -webkit-gradient(linear,
+                left top, left bottom, from( #f9f9f9 /*{b-body-background-start}*/), to(
+                #eeeeee /*{b-body-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #f9f9f9 /*{b-body-background-start}*/, #eeeeee
+                /*{b-body-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #f9f9f9 /*{b-body-background-start}*/, #eeeeee /*{b-body-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #f9f9f9 /*{b-body-background-start}*/,
+                #eeeeee /*{b-body-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #f9f9f9 /*{b-body-background-start}*/, #eeeeee /*{b-body-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #f9f9f9 /*{b-body-background-start}*/,
+                #eeeeee /*{b-body-background-end}*/);
+            }
+            .ui-overlay-b {
+                background-image: none;
+                border-width: 0;
+            }
+            .ui-body-b, .ui-body-b input, .ui-body-b select, .ui-body-b textarea, .ui-body-b button {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-body-b .ui-link-inherit {
+                color: #333333/*{b-body-color}*/;
+            }
+            .ui-body-b .ui-link {
+                color: #2489CE/*{b-body-link-color}*/;
+                font-weight: bold;
+            }
+            .ui-body-b .ui-link:visited {
+                color: #2489CE/*{b-body-link-visited}*/;
+            }
+            .ui-body-b .ui-link:hover {
+                color: #2489CE/*{b-body-link-hover}*/;
+            }
+            .ui-body-b .ui-link:active {
+                color: #2489CE/*{b-body-link-active}*/;
+            }
+            .ui-btn-up-b {
+                border: 1px solid #71bc53/*{b-bup-border}*/;
+                background: #71bc53/*{b-bup-background-color}*/;
+                font-weight: bold;
+                color: #ffffff
+                /*{b-bup-color}*/;
+                text-shadow: 0/*{b-bup-shadow-x}*/1px/*{b-bup-shadow-y}*/0/*{b-bup-shadow-radius}*/#444444/*{b-bup-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #71bc53 /*{b-bup-background-start}*/),
+                to( #71bc53 /*{b-bup-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #71bc53 /*{b-bup-background-start}*/, #71bc53
+                /*{b-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #71bc53 /*{b-bup-background-start}*/, #71bc53 /*{b-bup-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #71bc53 /*{b-bup-background-start}*/,
+                #71bc53 /*{b-bup-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #71bc53 /*{b-bup-background-start}*/, #71bc53 /*{b-bup-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #71bc53 /*{b-bup-background-start}*/,
+                #71bc53 /*{b-bup-background-end}*/);
+            }
+            .ui-btn-up-b:visited, .ui-btn-up-b
+            a.ui-link-inherit {
+                color: #ffffff/*{b-bup-color}*/;
+            }
+            .ui-btn-hover-b {
+                border: 1px solid #81d85f/*{b-bhover-border}*/;
+                background: #81d85f
+                /*{b-bhover-background-color}*/;
+                font-weight: bold;
+                color: #ffffff/*{b-bhover-color}*/;
+                text-shadow: 0/*{b-bhover-shadow-x}*/1px/*{b-bhover-shadow-y}*/0/*{b-bhover-shadow-radius}*/#444444/*{b-bhover-shadow-color}*/;
+                background-image: -webkit-gradient(linear,
+                left top, left bottom, from( #8ded68 /*{b-bhover-background-start}*/),
+                to( #74c255 /*{b-bhover-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #8ded68 /*{b-bhover-background-start}*/, #74c255
+                /*{b-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #8ded68 /*{b-bhover-background-start}*/, #74c255
+                /*{b-bhover-background-end}*/); /* FF3.6 */
+                background-image: -ms-linear-gradient(
+                #8ded68 /*{b-bhover-background-start}*/, #74c255 /*{b-bhover-background-end}*/);
+                /* IE10 */
+                background-image: -o-linear-gradient( #8ded68 /*{b-bhover-background-start}*/,
+                #74c255 /*{b-bhover-background-end}*/); /* Opera 11.10+ */
+                background-image: linear-gradient( #8ded68 /*{b-bhover-background-start}*/, #74c255 /*{b-bhover-background-end}*/);
+            }
+            .ui-btn-hover-b:visited, .ui-btn-hover-b:hover, .ui-btn-hover-b a.ui-link-inherit {
+                color: #ffffff/*{b-bhover-color}*/;
+            }
+            .ui-btn-down-b {
+                border: 1px solid #81d85f/*{b-bdown-border}*/;
+                background: #81d85f/*{b-bdown-background-color}*/;
+                font-weight: bold;
+                color: #ffffff/*{b-bdown-color}*/;
+                text-shadow: 0/*{b-bdown-shadow-x}*/1px/*{b-bdown-shadow-y}*/0/*{b-bdown-shadow-radius}*/#444444/*{b-bdown-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from(
+                #74c255 /*{b-bdown-background-start}*/), to( #8ded68 /*{b-bdown-background-end}*/));
+                /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #74c255
+                /*{b-bdown-background-start}*/, #8ded68 /*{b-bdown-background-end}*/);
+                /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #74c255
+                /*{b-bdown-background-start}*/, #8ded68 /*{b-bdown-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #74c255 /*{b-bdown-background-start}*/,
+                #8ded68 /*{b-bdown-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #74c255 /*{b-bdown-background-start}*/, #8ded68 /*{b-bdown-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #74c255 /*{b-bdown-background-start}*/,
+                #8ded68 /*{b-bdown-background-end}*/);
+            }
+            .ui-btn-down-b:visited, .ui-btn-down-b:hover, .ui-btn-down-b a.ui-link-inherit {
+                color: #ffffff/*{b-bdown-color}*/;
+            }
+            .ui-btn-up-b, .ui-btn-hover-b, .ui-btn-down-b {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+                text-decoration: none;
+            }/*
+             C -----------------------------------------------------------------------------------------------------------*/
+            .ui-bar-c {
+                border: 1px solid #B3B3B3/*{c-bar-border}*/;
+                background: #eeeeee
+                /*{c-bar-background-color}*/;
+                color: #3E3E3E/*{c-bar-color}*/;
+                font-weight: bold;
+                text-shadow: 0/*{c-bar-shadow-x}*/1px/*{c-bar-shadow-y}*/1px
+                /*{c-bar-shadow-radius}*/#ffffff/*{c-bar-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #f0f0f0 /*{c-bar-background-start}*/),
+                to( #dddddd /*{c-bar-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #f0f0f0 /*{c-bar-background-start}*/, #dddddd
+                /*{c-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #f0f0f0 /*{c-bar-background-start}*/, #dddddd /*{c-bar-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #f0f0f0 /*{c-bar-background-start}*/,
+                #dddddd /*{c-bar-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #f0f0f0 /*{c-bar-background-start}*/, #dddddd /*{c-bar-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #f0f0f0 /*{c-bar-background-start}*/,
+                #dddddd /*{c-bar-background-end}*/);
+            }
+            .ui-bar-c .ui-link-inherit {
+                color: #3E3E3E/*{c-bar-color}*/;
+            }
+            .ui-bar-c a.ui-link {
+                color: #7cc4e7/*{c-bar-link-color}*/;
+                font-weight: bold;
+            }
+            .ui-bar-c a.ui-link:visited {
+                color: #2489CE/*{c-bar-link-visited}*/;
+            }
+            .ui-bar-c a.ui-link:hover {
+                color: #2489CE/*{c-bar-link-hover}*/;
+            }
+            .ui-bar-c a.ui-link:active {
+                color: #2489CE/*{c-bar-link-active}*/;
+            }
+            .ui-bar-c, .ui-bar-c input, .ui-bar-c select, .ui-bar-c textarea, .ui-bar-c
+            button {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-body-c, .ui-overlay-c {
+                border: 1px solid #aaaaaa/*{c-body-border}*/;
+                color: #333333/*{c-body-color}*/;
+                text-shadow: 0/*{c-body-shadow-x}*/1px/*{c-body-shadow-y}*/0/*{c-body-shadow-radius}*/#ffffff/*{c-body-shadow-color}*/;
+                background: #f9f9f9/*{c-body-background-color}*/;
+                background-image: -webkit-gradient(linear,
+                left top, left bottom, from( #f9f9f9 /*{c-body-background-start}*/), to(
+                #eeeeee /*{c-body-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee
+                /*{c-body-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #f9f9f9 /*{c-body-background-start}*/,
+                #eeeeee /*{c-body-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #f9f9f9 /*{c-body-background-start}*/, #eeeeee /*{c-body-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #f9f9f9 /*{c-body-background-start}*/,
+                #eeeeee /*{c-body-background-end}*/);
+            }
+            .ui-overlay-c {
+                background-image: none;
+                border-width: 0;
+            }
+            .ui-body-c, .ui-body-c input, .ui-body-c select, .ui-body-c textarea, .ui-body-c button {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-body-c .ui-link-inherit {
+                color: #333333/*{c-body-color}*/;
+            }
+            .ui-body-c .ui-link {
+                color: #2489CE/*{c-body-link-color}*/;
+                font-weight: bold;
+            }
+            .ui-body-c .ui-link:visited {
+                color: #2489CE/*{c-body-link-visited}*/;
+            }
+            .ui-body-c .ui-link:hover {
+                color: #2489CE/*{c-body-link-hover}*/;
+            }
+            .ui-body-c .ui-link:active {
+                color: #2489CE/*{c-body-link-active}*/;
+            }
+            .ui-btn-up-c {
+                border: 1px solid #32a8da/*{c-bup-border}*/;
+                background: #32a8da/*{c-bup-background-color}*/;
+                font-weight: bold;
+                color: #ffffff
+                /*{c-bup-color}*/;
+                text-shadow: 0/*{c-bup-shadow-x}*/1px/*{c-bup-shadow-y}*/0/*{c-bup-shadow-radius}*/#444444/*{c-bup-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #37b8ef /*{c-bup-background-start}*/),
+                to( #2d97c4 /*{c-bup-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #37b8ef /*{c-bup-background-start}*/, #2d97c4
+                /*{c-bup-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #37b8ef /*{c-bup-background-start}*/, #2d97c4 /*{c-bup-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #37b8ef /*{c-bup-background-start}*/,
+                #2d97c4 /*{c-bup-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #37b8ef /*{c-bup-background-start}*/, #2d97c4 /*{c-bup-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #37b8ef /*{c-bup-background-start}*/,
+                #2d97c4 /*{c-bup-background-end}*/);
+            }
+            .ui-btn-up-c:visited, .ui-btn-up-c
+            a.ui-link-inherit {
+                color: #ffffff/*{c-bup-color}*/;
+            }
+            .ui-btn-hover-c {
+                border: 1px solid #39c1fa/*{c-bhover-border}*/;
+                background: #39c1fa
+                /*{c-bhover-background-color}*/;
+                font-weight: bold;
+                color: #ffffff/*{c-bhover-color}*/;
+                text-shadow: 0/*{c-bhover-shadow-x}*/1px/*{c-bhover-shadow-y}*/0/*{c-bhover-shadow-radius}*/#444444/*{c-bhover-shadow-color}*/;
+                background-image: -webkit-gradient(linear,
+                left top, left bottom, from( #3ed4FF /*{c-bhover-background-start}*/),
+                to( #33ade1 /*{c-bhover-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #3ed4FF /*{c-bhover-background-start}*/, #33ade1
+                /*{c-bhover-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #3ed4FF /*{c-bhover-background-start}*/, #33ade1
+                /*{c-bhover-background-end}*/); /* FF3.6 */
+                background-image: -ms-linear-gradient(
+                #3ed4FF /*{c-bhover-background-start}*/, #33ade1 /*{c-bhover-background-end}*/);
+                /* IE10 */
+                background-image: -o-linear-gradient( #3ed4FF /*{c-bhover-background-start}*/,
+                #33ade1 /*{c-bhover-background-end}*/); /* Opera 11.10+ */
+                background-image: linear-gradient( #3ed4FF /*{c-bhover-background-start}*/, #33ade1 /*{c-bhover-background-end}*/);
+            }
+            .ui-btn-hover-c:visited, .ui-btn-hover-c:hover, .ui-btn-hover-c a.ui-link-inherit {
+                color: #ffffff/*{c-bhover-color}*/;
+            }
+            .ui-btn-down-c {
+                border: 1px solid #39c1fa/*{c-bdown-border}*/;
+                background: #39c1fa/*{c-bdown-background-color}*/;
+                font-weight: bold;
+                color: #000000/*{c-bdown-color}*/;
+                text-shadow: 0/*{c-bdown-shadow-x}*/1px/*{c-bdown-shadow-y}*/0/*{c-bdown-shadow-radius}*/#eeeeee/*{c-bdown-shadow-color}*/;
+                background-image: -webkit-gradient(linear, left top, left bottom, from(
+                #33ade1 /*{c-bdown-background-start}*/), to( #3ed4FF /*{c-bdown-background-end}*/));
+                /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #33ade1
+                /*{c-bdown-background-start}*/, #3ed4FF /*{c-bdown-background-end}*/);
+                /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #33ade1
+                /*{c-bdown-background-start}*/, #3ed4FF /*{c-bdown-background-end}*/);
+                /* FF3.6 */
+                background-image: -ms-linear-gradient( #33ade1 /*{c-bdown-background-start}*/,
+                #3ed4FF /*{c-bdown-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #33ade1 /*{c-bdown-background-start}*/, #3ed4FF /*{c-bdown-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #33ade1 /*{c-bdown-background-start}*/,
+                #3ed4FF /*{c-bdown-background-end}*/);
+            }
+            .ui-btn-down-c:visited, .ui-btn-down-c:hover, .ui-btn-down-c a.ui-link-inherit {
+                color: #000000/*{c-bdown-color}*/;
+            }
+            .ui-btn-up-c, .ui-btn-hover-c, .ui-btn-down-c {
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+                text-decoration: none;
+            }/*
+             Structure */ /* links within "buttons" -----------------------------------------------------------------------------------------------------------*/
+            a.ui-link-inherit {
+                text-decoration: none !important;
+            }/* Active class
+             used as the "on" state across all themes -----------------------------------------------------------------------------------------------------------*/
+            .ui-btn-active {
+                border: 1px solid #737373/*{global-active-border}*/;
+                background: #9e9e9e/*{global-active-background-color}*/;
+                font-weight: bold;
+                color: #ffffff/*{global-active-color}*/;
+                cursor: pointer;
+                text-shadow: 0/*{global-active-shadow-x}*/1px/*{global-active-shadow-y}*/1px/*{global-active-shadow-radius}*/#444444/*{global-active-shadow-color}*/;
+                text-decoration: none;
+                background-image: -webkit-gradient(linear, left top, left bottom, from( #9c9c9c /*{global-active-background-start}*/),
+                to( #9f9f9f /*{global-active-background-end}*/)); /* Saf4+, Chrome */
+                background-image: -webkit-linear-gradient( #9c9c9c /*{global-active-background-start}*/,
+                #9f9f9f /*{global-active-background-end}*/); /* Chrome 10+, Saf5.1+ */
+                background-image: -moz-linear-gradient( #9c9c9c /*{global-active-background-start}*/,
+                #9f9f9f /*{global-active-background-end}*/); /* FF3.6 */
+                background-image: -ms-linear-gradient( #9c9c9c /*{global-active-background-start}*/, #9f9f9f
+                /*{global-active-background-end}*/); /* IE10 */
+                background-image: -o-linear-gradient(
+                #9c9c9c /*{global-active-background-start}*/, #9f9f9f /*{global-active-background-end}*/);
+                /* Opera 11.10+ */
+                background-image: linear-gradient( #9c9c9c /*{global-active-background-start}*/,
+                #9f9f9f /*{global-active-background-end}*/);
+                font-family: Helvetica, Arial, sans-serif/*{global-font-family}*/;
+            }
+            .ui-btn-active:visited, .ui-btn-active:hover, .ui-btn-active a.ui-link-inherit {
+                color: #ffffff/*{global-active-color}*/;
+            }/* button inner top highlight -----------------------------------------------------------------------------------------------------------*/
+            .ui-btn-inner {
+                border-top: 1px solid #fff;
+                border-color: rgba(255,255,255,.3);
+            }/* corner rounding classes -----------------------------------------------------------------------------------------------------------*/
+            .ui-corner-tl {
+                -moz-border-radius-topleft: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-top-left-radius: 0.1em/*{global-radii-blocks}*/;
+                border-top-left-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-tr {
+                -moz-border-radius-topright: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-top-right-radius: 0.1em
+                /*{global-radii-blocks}*/;
+                border-top-right-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-bl {
+                -moz-border-radius-bottomleft: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-bottom-left-radius: 0.1em/*{global-radii-blocks}*/;
+                border-bottom-left-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-br {
+                -moz-border-radius-bottomright: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-bottom-right-radius: 0.1em
+                /*{global-radii-blocks}*/;
+                border-bottom-right-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-top {
+                -moz-border-radius-topleft: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-top-left-radius: 0.1em/*{global-radii-blocks}*/;
+                border-top-left-radius: 0.1em/*{global-radii-blocks}*/;
+                -moz-border-radius-topright: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-top-right-radius: 0.1em/*{global-radii-blocks}*/;
+                border-top-right-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-bottom {
+                -moz-border-radius-bottomleft: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-bottom-left-radius: 0.1em
+                /*{global-radii-blocks}*/;
+                border-bottom-left-radius: 0.1em/*{global-radii-blocks}*/;
+                -moz-border-radius-bottomright: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-bottom-right-radius: 0.1em/*{global-radii-blocks}*/;
+                border-bottom-right-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-right {
+                -moz-border-radius-topright: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-top-right-radius: 0.1em/*{global-radii-blocks}*/;
+                border-top-right-radius: 0.1em/*{global-radii-blocks}*/;
+                -moz-border-radius-bottomright: 0.1em
+                /*{global-radii-blocks}*/;
+                -webkit-border-bottom-right-radius: 0.1em/*{global-radii-blocks}*/;
+                border-bottom-right-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-left {
+                -moz-border-radius-topleft: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-top-left-radius: 0.1em/*{global-radii-blocks}*/;
+                border-top-left-radius: 0.1em/*{global-radii-blocks}*/;
+                -moz-border-radius-bottomleft: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-bottom-left-radius: 0.1em/*{global-radii-blocks}*/;
+                border-bottom-left-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-all {
+                -moz-border-radius: 0.1em/*{global-radii-blocks}*/;
+                -webkit-border-radius: 0.1em/*{global-radii-blocks}*/;
+                border-radius: 0.1em/*{global-radii-blocks}*/;
+            }
+            .ui-corner-none {
+                -moz-border-radius: 0;
+                -webkit-border-radius: 0;
+                border-radius: 0;
+            }/* Form field separator
+             -----------------------------------------------------------------------------------------------------------*/
+            .ui-br {
+                border-bottom: rgb(130,130,130);
+                border-bottom: rgba(130,130,130,.3);
+                border-bottom-width: 1px;
+                border-bottom-style: solid;
+            }/* Interaction
+             cues -----------------------------------------------------------------------------------------------------------*/
+            .ui-disabled {
+                opacity: .3;
+            }
+            .ui-disabled, .ui-disabled a {
+                cursor: default !important;
+                pointer-events: none;
+            }
+            .ui-disabled .ui-btn-text {
+                -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(opacity=30)";
+                filter: alpha(opacity=30);
+                zoom: 1;
+            }/* Icons -----------------------------------------------------------------------------------------------------------*/
+            .ui-icon, .ui-icon-searchfield:after {
+                background: #666666/*{global-icon-color}*/;
+                background: rgba(0,0,0,.4)/*{global-icon-disc}*/;
+                background-image: url(images/icons-18-white.png)
+                /*{global-icon-set}*/;
+                background-repeat: no-repeat;
+                -moz-border-radius: 9px;
+                -webkit-border-radius: 9px;
+                border-radius: 9px;
+            }/* Alt icon color
+             -----------------------------------------------------------------------------------------------------------*/
+            .ui-icon-alt {
+                background: #fff;
+                background: rgba(255,255,255,.3);
+                background-image: url(images/icons-18-black.png);
+                background-repeat: no-repeat;
+            }/* HD/"retina"
+             sprite -----------------------------------------------------------------------------------------------------------*/
+            @media only screen and (-webkit-min-device-pixel-ratio: 1.5) , only screen and (min--moz-device-pixel-ratio: 1.5) , only screen and (min-resolution: 240dpi) {
+                .ui-icon-plus, .ui-icon-minus, .ui-icon-delete, .ui-icon-arrow-r, .ui-icon-arrow-l, .ui-icon-arrow-u, .ui-icon-arrow-d, .ui-icon-check, .ui-icon-gear, .ui-icon-refresh, .ui-icon-forward, .ui-icon-back, .ui-icon-grid, .ui-icon-star, .ui-icon-alert, .ui-icon-info, .ui-icon-home, .ui-icon-search, .ui-icon-searchfield:after, .ui-icon-checkbox-off, .ui-icon-checkbox-on, .ui-icon-radio-off, .ui-icon-radio-on {
+                    background-image: url(images/icons-36-white.png);
+                    -moz-background-size: 776px 18px;
+                    -o-background-size: 776px 18px;
+                    -webkit-background-size: 776px 18px;
+                    background-size: 776px 18px;
+                }
+                .ui-icon-alt {
+                    background-image: url(images/icons-36-black.png);
+                }
+            }/* plus minus */
+            .ui-icon-plus {
+                background-position: -0 50%;
+            }
+            .ui-icon-minus {
+                background-position: -36px 50%;
+            }/* delete/close */
+            .ui-icon-delete {
+                background-position: -72px 50%;
+            }/* arrows */
+            .ui-icon-arrow-r {
+                background-position: -108px 50%;
+            }
+            .ui-icon-arrow-l {
+                background-position: -144px 50%;
+            }
+            .ui-icon-arrow-u {
+                background-position: -180px 50%;
+            }
+            .ui-icon-arrow-d {
+                background-position: -216px 50%;
+            }/* misc */
+            .ui-icon-check {
+                background-position: -252px 50%;
+            }
+            .ui-icon-gear {
+                background-position: -288px 50%;
+            }
+            .ui-icon-refresh {
+                background-position: -324px 50%;
+            }
+            .ui-icon-forward {
+                background-position: -360px 50%;
+            }
+            .ui-icon-back {
+                background-position: -396px 50%;
+            }
+            .ui-icon-grid {
+                background-position: -432px 50%;
+            }
+            .ui-icon-star {
+                background-position: -468px 50%;
+            }
+            .ui-icon-alert {
+                background-position: -504px 50%;
+            }
+            .ui-icon-info {
+                background-position: -540px 50%;
+            }
+            .ui-icon-home {
+                background-position: -576px 50%;
+            }
+            .ui-icon-search, .ui-icon-searchfield:after {
+                background-position: -612px 50%;
+            }
+            .ui-icon-checkbox-off {
+                background-position: -684px 50%;
+            }
+            .ui-icon-checkbox-on {
+                background-position: -648px 50%;
+            }
+            .ui-icon-radio-off {
+                background-position: -756px 50%;
+            }
+            .ui-icon-radio-on {
+                background-position: -720px 50%;
+            }/* checks,radios */
+            .ui-checkbox .ui-icon {
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+                border-radius: 3px;
+            }
+            .ui-icon-checkbox-off, .ui-icon-radio-off {
+                background-color: transparent;
+            }
+            .ui-checkbox-on .ui-icon, .ui-radio-on .ui-icon {
+                background-color: #9e9e9e/*{global-active-background-color}*/;
+                /* NOTE: this hex should match the active state color. It's repeated here
+                 for cascade */
+            }/* loading icon */
+            .ui-icon-loading {
+                background: url(images/ajax-loader.gif);
+                background-size: 46px 46px;
+            }/* Button corner classes -----------------------------------------------------------------------------------------------------------*/
+            .ui-btn-corner-tl {
+                -moz-border-radius-topleft: 1em/*{global-radii-buttons}*/;
+                -webkit-border-top-left-radius: 1em/*{global-radii-buttons}*/;
+                border-top-left-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-tr {
+                -moz-border-radius-topright: 1em/*{global-radii-buttons}*/;
+                -webkit-border-top-right-radius: 1em/*{global-radii-buttons}*/;
+                border-top-right-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-bl {
+                -moz-border-radius-bottomleft: 1em/*{global-radii-buttons}*/;
+                -webkit-border-bottom-left-radius: 1em/*{global-radii-buttons}*/;
+                border-bottom-left-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-br {
+                -moz-border-radius-bottomright: 1em/*{global-radii-buttons}*/;
+                -webkit-border-bottom-right-radius: 1em/*{global-radii-buttons}*/;
+                border-bottom-right-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-top {
+                -moz-border-radius-topleft: 1em/*{global-radii-buttons}*/;
+                -webkit-border-top-left-radius: 1em/*{global-radii-buttons}*/;
+                border-top-left-radius: 1em/*{global-radii-buttons}*/;
+                -moz-border-radius-topright: 1em/*{global-radii-buttons}*/;
+                -webkit-border-top-right-radius: 1em/*{global-radii-buttons}*/;
+                border-top-right-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-bottom {
+                -moz-border-radius-bottomleft: 1em/*{global-radii-buttons}*/;
+                -webkit-border-bottom-left-radius: 1em/*{global-radii-buttons}*/;
+                border-bottom-left-radius: 1em/*{global-radii-buttons}*/;
+                -moz-border-radius-bottomright: 1em/*{global-radii-buttons}*/;
+                -webkit-border-bottom-right-radius: 1em/*{global-radii-buttons}*/;
+                border-bottom-right-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-right {
+                -moz-border-radius-topright: 1em/*{global-radii-buttons}*/;
+                -webkit-border-top-right-radius: 1em/*{global-radii-buttons}*/;
+                border-top-right-radius: 1em/*{global-radii-buttons}*/;
+                -moz-border-radius-bottomright: 1em/*{global-radii-buttons}*/;
+                -webkit-border-bottom-right-radius: 1em/*{global-radii-buttons}*/;
+                border-bottom-right-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-left {
+                -moz-border-radius-topleft: 1em/*{global-radii-buttons}*/;
+                -webkit-border-top-left-radius: 1em/*{global-radii-buttons}*/;
+                border-top-left-radius: 1em/*{global-radii-buttons}*/;
+                -moz-border-radius-bottomleft: 1em/*{global-radii-buttons}*/;
+                -webkit-border-bottom-left-radius: 1em
+                /*{global-radii-buttons}*/;
+                border-bottom-left-radius: 1em/*{global-radii-buttons}*/;
+            }
+            .ui-btn-corner-all {
+                -moz-border-radius: 1em/*{global-radii-buttons}*/;
+                -webkit-border-radius: 1em/*{global-radii-buttons}*/;
+                border-radius: 1em
+                /*{global-radii-buttons}*/;
+            }/* radius clip workaround for cleaning up
+             corner trapping */
+            .ui-corner-tl, .ui-corner-tr, .ui-corner-bl, .ui-corner-br, .ui-corner-top, .ui-corner-bottom, .ui-corner-right, .ui-corner-left, .ui-corner-all, .ui-btn-corner-tl, .ui-btn-corner-tr, .ui-btn-corner-bl, .ui-btn-corner-br, .ui-btn-corner-top, .ui-btn-corner-bottom, .ui-btn-corner-right, .ui-btn-corner-left, .ui-btn-corner-all {
+                -webkit-background-clip: padding-box;
+                -moz-background-clip: padding;
+                background-clip: padding-box;
+            }/* Overlay / modal -----------------------------------------------------------------------------------------------------------*/
+            .ui-overlay {
+                background: #666;
+                opacity: .5;
+                filter: Alpha(Opacity=50);
+                position: absolute;
+                width: 100%;
+                height: 100%;
+            }
+            .ui-overlay-shadow {
+                -moz-box-shadow: 0px 0px 12px rgba(0,0,0,.6);
+                -webkit-box-shadow: 0px 0px 12px rgba(0,0,0,.6);
+                box-shadow: 0px 0px 12px rgba(0,0,0,.6);
+            }
+            .ui-shadow {
+                -moz-box-shadow: 0px 1px 4px/*{global-box-shadow-size}*/rgba(0,0,0,.3)/*{global-box-shadow-color}*/;
+                -webkit-box-shadow: 0px 1px 4px/*{global-box-shadow-size}*/rgba(0,0,0,.3)
+                /*{global-box-shadow-color}*/;
+                box-shadow: 0px 1px 4px/*{global-box-shadow-size}*/rgba(0,0,0,.3)/*{global-box-shadow-color}*/;
+            }
+            .ui-bar-a .ui-shadow, .ui-bar-b
+            .ui-shadow, .ui-bar-c .ui-shadow {
+                -moz-box-shadow: 0px 1px 0 rgba(255,255,255,.3);
+                -webkit-box-shadow: 0px 1px 0 rgba(255,255,255,.3);
+                box-shadow: 0px 1px0 rgba(255,255,255,.3);
+            }
+            .ui-shadow-inset {
+                -moz-box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+                -webkit-box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+                box-shadow: inset 0px 1px 4px rgba(0,0,0,.2);
+            }
+            .ui-icon-shadow {
+                -moz-box-shadow: 0px 1px 0 rgba(255,255,255,.4)/*{global-icon-shadow}*/;
+                -webkit-box-shadow: 0px 1px 0 rgba(255,255,255,.4)/*{global-icon-shadow}*/;
+                box-shadow: 0px1px 0 rgba(255,255,255,.4)/*{global-icon-shadow}*/;
+            }/* Focus state -
+             set here for specificity (note: these classes are added by JavaScript)
+             -----------------------------------------------------------------------------------------------------------*/
+            .ui-btn:focus, .ui-link-inherit:focus {
+                outline: 0;
+            }
+            .ui-btn.ui-focus {
+                z-index: 1;
+            }
+            .ui-focus, .ui-btn:focus {
+                -moz-box-shadow: inset 0px 0px 3px #9e9e9e/*{global-active-background-color}*/,0px 0px 9px #9e9e9e/*{global-active-background-color}*/;
+                -webkit-box-shadow: inset 0px 0px 3px #9e9e9e/*{global-active-background-color}*/,0px 0px 9px #9e9e9e/*{global-active-background-color}*/;
+                box-shadow: inset0px 0px 3px #9e9e9e/*{global-active-background-color}*/,0px 0px 9px #9e9e9e
+                /*{global-active-background-color}*/;
+            }
+            .ui-input-text.ui-focus, .ui-input-search.ui-focus {
+                -moz-box-shadow: 0px 0px 12px #9e9e9e/*{global-active-background-color}*/;
+                -webkit-box-shadow: 0px 0px 12px #9e9e9e/*{global-active-background-color}*/;
+                box-shadow: 0px 0px 12px #9e9e9e/*{global-active-background-color}*/;
+            }/* unset box shadow in browsers that don't do it right -----------------------------------------------------------------------------------------------------------*/
+            .ui-mobile-nosupport-boxshadow * {
+                -moz-box-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important;
+            }/* ...and bring back focus
+             */
+            .ui-mobile-nosupport-boxshadow .ui-focus, .ui-mobile-nosupport-boxshadow
+            .ui-btn:focus, .ui-mobile-nosupport-boxshadow .ui-link-inherit:focus {
+                outline-width: 1px;
+                outline-style: auto;
+            }
+        </style>
+    </body>
+
+</html>
