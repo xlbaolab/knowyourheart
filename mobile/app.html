@@ -360,10 +360,9 @@
             </div>
             <div data-role="content">
                 <h3> How tall are you? </h3>
-
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal">
-                        <select name="select-feet" id="select-feet">
+                        <select name="height-feet" id="select_height_feet">
                             <option value="">Feet</option>
                             <option value="3"> 3' </option>
                             <option value="4"> 4' </option>
@@ -371,8 +370,8 @@
                             <option value="6"> 6' </option>
                             <option value="7"> 7' </option>
                         </select>
-                        <label for="select-choice-day">Inches</label>
-                        <select name="select-choice-day" id="select-choice-day">
+                        <label for="select_height_inches">Inches</label>
+                        <select name="height-inches" id="select_height_inches">
                             <option>Inches</option>
                             <option value="0"> 0" </option>
                             <option value="1"> 1" </option>
@@ -386,9 +385,7 @@
                             <option value="9"> 9" </option>
                             <option value="10"> 10" </option>
                             <option value="11"> 11" </option>
-
                         </select>
-
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page12"
@@ -424,8 +421,8 @@
                 <h3> How much do you weigh? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="slider4"> In pounds </label>
-                        <input type="range" name="slider" value="150" min="50" max="400" data-highlight="true">
+                        <label for="weight_slider"> In pounds </label>
+                        <input id="weight_slider" type="range" name="slider" value="150" min="50" max="400" data-highlight="true">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page13"
@@ -461,7 +458,7 @@
                     <div class="ui-block-a">
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <select name="toggleswitch9" id="toggleswitch9" data-theme="" data-role="slider">
+                                <select name="smoker" id="smoker_toggle" data-theme="" data-role="slider">
                                     <option value="false"> No </option>
                                     <option value="true"> Yes </option>
                                 </select>
@@ -516,8 +513,8 @@
                     <div class="ui-block-b">
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label for="toggleswitch11"> </label>
-                                <select name="toggleswitch11" id="toggleswitch11" data-theme="" data-role="slider"
+                                <label for="mi_toggle"> </label>
+                                <select name="mi" id="mi_toggle" data-theme="" data-role="slider"
                                 data-mini="true">
                                     <option value="false"> No </option>
                                     <option value="true"> Yes </option>
@@ -535,8 +532,8 @@
                     <div class="ui-block-b">
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label for="toggleswitch15"> </label>
-                                <select name="toggleswitch15" id="toggleswitch15" data-theme="" data-role="slider"
+                                <label for="stroke_toggle"> </label>
+                                <select name="stroke" id="stroke_toggle" data-theme="" data-role="slider"
                                 data-mini="true">
                                     <option value="false"> No </option>
                                     <option value="true"> Yes </option>
@@ -554,8 +551,8 @@
                     <div class="ui-block-b">
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup">
-                                <label for="toggleswitch12"> </label>
-                                <select name="toggleswitch12" id="toggleswitch12" data-theme="" data-role="slider"
+                                <label for="diabetes_toggle"> </label>
+                                <select name="diabetes" id="diabetes_toggle" data-theme="" data-role="slider"
                                 data-mini="true">
                                     <option value="false"> No </option>
                                     <option value="true"> Yes </option>
@@ -573,13 +570,12 @@
                     <div class="ui-block-b">
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup" data-mini="true">
-                                <label for="hba1c"> </label>
-                                <input name="" id="hba1c" placeholder="Enter HbA1c %" value="" type="text">
+                                <label for="hba1c_field"> </label>
+                                <input name="hba1c" id="hba1c_field" placeholder="Enter HbA1c %" value="" type="text">
                             </fieldset>
                         </div>
                     </div>
                 </div>
-
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page28"
                 data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -622,10 +618,10 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend></legend>
-                        <input id="radio5" name="" value="Y" type="radio">
-                        <label for="radio5"> Yes </label>
-                        <input id="radio6" name="" value="N" type="radio">
-                        <label for="radio6"> No </label>
+                        <input id="knows_bp_radio_t" name="knows_bp" value="true" type="radio">
+                        <label for="knows_bp_radio_t"> Yes </label>
+                        <input id="knows_bp_radio_f" name="knows_bp" value="false" type="radio">
+                        <label for="knows_bp_radio_f"> No </label>
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page16"
@@ -659,14 +655,14 @@
                 <h3> What is your blood pressure? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="slider5"> Systolic Blood Pressure </label>
-                        <input type="range" name="slider" value="120" min="80" max="220" data-highlight="true">
+                        <label for="systolic_bp_slider"> Systolic Blood Pressure </label>
+                        <input id="systolic_bp_slider" type="range" name="systolic_bp" value="120" min="80" max="220" data-highlight="true">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="slider6"> Diastolic Blood Pressure </label>
-                        <input type="range" name="slider" value="80" min="40" max="130" data-highlight="true">
+                        <label for="diastolic_bp_slider"> Diastolic Blood Pressure </label>
+                        <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page29" data-icon="arrow-r"
@@ -711,10 +707,10 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend></legend>
-                        <input id="radio7" name="" value="Y" type="radio">
-                        <label for="radio7"> Yes </label>
-                        <input id="radio8" name="" value="N" type="radio">
-                        <label for="radio8"> No </label>
+                        <input id="knows_chol_t" name="knows_chol" value="true" type="radio">
+                        <label for="knows_chol_t"> Yes </label>
+                        <input id="knows_chol_f" name="knows_chol" value="false" type="radio">
+                        <label for="knows_chol_f"> No </label>
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page17"
@@ -748,20 +744,20 @@
                 <h3> What is your cholesterol level? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
-                        <label for="slider7"> Total Cholesterol </label>
-                        <input type="range" name="slider" value="200" min="70" max="500" data-highlight="true">
+                        <label for="total_chol_slider"> Total Cholesterol </label>
+                        <input id="total_chol_slider" type="range" name="cholesterol" value="200" min="70" max="500" data-highlight="true">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
-                        <label for="slider8"> HDL Cholesterol </label>
-                        <input type="range" name="slider" value="40" min="20" max="130" data-highlight="true">
+                        <label for="hdl_slider"> HDL Cholesterol </label>
+                        <input id="hdl_slider" type="range" name="hdl" value="40" min="20" max="130" data-highlight="true">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
-                        <label for="slider9"> LDL Cholesterol </label>
-                        <input type="range" name="slider" value="100" min="40" max="400" data-highlight="true"
+                        <label for="ldl_slider"> LDL Cholesterol </label>
+                        <input id="ldl_slider" type="range" name="ldl" value="100" min="40" max="400" data-highlight="true"
                         data-track-theme="">
                     </fieldset>
                 </div>

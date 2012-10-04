@@ -35,29 +35,37 @@ var UI_MAP = {
         "radio4" : "gender"
     },
     "page10" : {
-        "selectmenu3" : "height_ft",
-        "selectmenu4" : "height_in"
+        "select_height_feet" : "height_ft",
+        "select_height_inches" : "height_in"
     },
     "page12" : {
-        "slider4" : "weight"
+        "weight_slider" : "weight"
     },
     "page13" : {
-        "toggleswitch5" : "smoker"
+        "smoker_toggle" : "smoker"
     },
     "page15" : {
-        "toggleswitch1" : "ami",
-        "toggleswitch2" : "stroke",
-        "toggleswitch10" : "diabetes",
-        "textinput6" : "hba1c"
+        "mi_toggle" : "ami",
+        "stroke_toggle" : "stroke",
+        "diabetes_toggle" : "diabetes",
+        "hba1c_field" : "hba1c"
+    },
+    "page28" : {
+        "knows_bp_radio_t" : "knows_bp",
+        "knows_bp_radio_f" : "knows_bp"
     },
     "page16" : {
-        "slider5" : "systolic",
-        "slider6" : "diastolic"
+        "systolic_bp_slider" : "systolic",
+        "diastolic_bp_slider" : "diastolic"
+    },
+    "page29" : {
+        "knows_chol_t" : "knows_chol",
+        "knows_chol_f" : "knows_chol"
     },
     "page17" : {
-        "slider7" : "cholesterol",
-        "slider8" : "hdl",
-        "slider9" : "ldl"
+        "total_chol_slider" : "cholesterol",
+        "hdl_slider" : "hdl",
+        "ldl_slider" : "ldl"
     }
 };
 
