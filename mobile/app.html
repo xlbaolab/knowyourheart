@@ -7,7 +7,7 @@
         <!-- TODO: no caching for development, remove for production -->
         <meta http-equiv="Cache-control" content="no-cache">
 
-        <title></title>
+        <title>Know Your Heart</title>
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
         />
         <link rel="stylesheet" href="css/my.css" />
@@ -86,7 +86,7 @@
             <div data-theme="a" data-role="header">
                 <h2> Terms and Conditions </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page32" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page32" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <div>
@@ -96,31 +96,70 @@
                 </div>
             </div>
         </div>
-        <!-- Dashboard -->
-        <div data-role="page" data-theme="a" id="page18">
-            <div data-role="content">
-                <div style=" text-align:center">
-                    <img style="width: 250px; height: 96px" src="http://assets.codiqa.com/ps/34409/8cda648c3bfbae86knh-logo.png">
-                </div>
-                <div id="checklist">
-                    <p>
-                        Welcome back, do you need to
-                    </p>
-                    <p>
-                        o Find a health test clinic
-                    </p>
-                    <p>
-                        o Update your blood pressure
-                    </p>
-                    <p>
-                        o Update your cholesterol
-                    </p>
-                </div>
-                <a data-role="button" data-theme="b" data-transition="slide" href="#page21" data-icon="arrow-r"
-                data-iconpos="right"> Continue Assessment </a>
-                <a data-role="button" data-theme="c" data-transition="slide" href="#page26"> Find Health Test Clinics </a>
+<!-- Dashboard -->
+<div data-role="page" data-theme="a" id="page18">
+    <div data-role="content">
+        <div style=" text-align:center">
+            <img style="width: 250px; height: 96px" src="http://assets.codiqa.com/ps/34409/8cda648c3bfbae86knh-logo.png">
+        </div>
+        <div>
+            <p>
+                <br>
+            </p>
+        </div>
+        <ul data-role="listview" data-divider-theme="b" data-inset="false">
+            <li data-role="list-divider" role="heading">
+                Next Steps:
+            </li>
+            <li data-theme="f">
+                <a href="#page26" data-transition="slide">
+                    Find a health test clinic
+                </a>
+            </li>
+            <li data-theme="e">
+                <a href="#page16" data-transition="slide">
+                    Update your blood pressure
+                    <span class="ui-li-count">
+                        !
+                    </span>
+                </a>
+            </li>
+            <li data-theme="f">
+                <a href="#page17" data-transition="slide">
+                    Update your cholesterol
+                    <span class="ui-li-count">
+                        !
+                    </span>
+                </a>
+            </li>
+        </ul>
+        <div>
+            <p>
+                <b>
+                    <br>
+                </b>
+            </p>
+
+        </div>
+        <div class="ui-grid-b">
+            <div class="ui-block-a" style="text-align: center;">
+                <a data-role="button" data-transition="slide" href="#page34" data-theme="dashboard-profile" data-icon="dashboard-profile" data-iconshadow="false" data-corners="false" data-iconpos="notext">
+                </a>
+				<span>Profile</span>
+            </div>
+            <div class="ui-block-b">
+                <a data-role="button" data-transition="slide" href="#page21" data-theme="dashboard-assessment" data-icon="dashboard-assessment" data-iconshadow="false" data-corners="false" data-iconpos="notext">
+                </a>
+                Assessment
+            </div>
+            <div class="ui-block-c">
+                <a data-role="button" data-transition="slide" href="#page18" data-theme="dashboard-share" data-icon="dashboard-share" data-iconshadow="false" data-corners="false" data-iconpos="notext">
+                </a>
+				Share
             </div>
         </div>
+    </div>
+</div>
         <!-- Profile BASIC STRIPED-->
         <div data-role="page" data-theme="a" id="page34">
             <div data-theme="a" data-role="header">
@@ -206,7 +245,7 @@
                 <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext"
                 class="ui-btn-right"> Home </a>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page37" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page37" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <ul data-role="listview" data-divider-theme="b" data-inset="false">
@@ -277,10 +316,12 @@
 
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h2> Age </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
-                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Profile </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="profile" data-iconpos="notext" class="ui-btn-right"> Profile </a> 
+-->                
                 <a data-role="button" data-direction="reverse" data-rel="back" data-transition="none"
-                data-theme="c" href="#page2" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                data-theme="c" href="#page2" data-icon="newnewarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                
             </div>
             <div data-role="content">
                 <h3> How old are you? </h3>
@@ -291,7 +332,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page9"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newnewarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -312,10 +353,10 @@
         <div data-role="page" data-theme="a" id="page9">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Gender </h2>
-                <a data-role="button" data-rel="back" data-theme="c" href="#page9" data-icon="arrow-l"
+                <a data-role="button" data-rel="back" data-theme="c" href="#page9" data-icon="newarrow-l"
                 data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
-                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> About Me </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> About Me </a>-->
             </div>
             <div data-role="content">
                 <h3> Are you male or female? </h3>
@@ -328,7 +369,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page10"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -349,10 +390,10 @@
         <div data-role="page" data-theme="a" id="page10">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Height </h2>
-                <a data-role="button" data-rel="back" data-theme="c" href="#page10" data-icon="arrow-l"
+                <a data-role="button" data-rel="back" data-theme="c" href="#page10" data-icon="newarrow-l"
                 data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
-                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>-->
             </div>
             <div data-role="content">
                 <h3> How tall are you? </h3>
@@ -360,32 +401,33 @@
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <select name="height-feet" id="select_height_feet">
                             <option value="">Feet</option>
-                            <option value="3"> 3' </option>
-                            <option value="4"> 4' </option>
-                            <option value="5"> 5' </option>
-                            <option value="6"> 6' </option>
-                            <option value="7"> 7' </option>
+                            <option value="2"> 2 ft </option>
+                            <option value="3"> 3 ft </option>
+                            <option value="4"> 4 ft </option>
+                            <option value="5"> 5 ft </option>
+                            <option value="6"> 6 ft </option>
+                            <option value="7"> 7 ft </option>
                         </select>
                         <label for="select_height_inches">Inches</label>
                         <select name="height-inches" id="select_height_inches">
                             <option>Inches</option>
-                            <option value="0"> 0" </option>
-                            <option value="1"> 1" </option>
-                            <option value="2"> 2" </option>
-                            <option value="3"> 3" </option>
-                            <option value="4"> 4" </option>
-                            <option value="5"> 5" </option>
-                            <option value="6"> 6" </option>
-                            <option value="7"> 7" </option>
-                            <option value="8"> 8" </option>
-                            <option value="9"> 9" </option>
-                            <option value="10"> 10" </option>
-                            <option value="11"> 11" </option>
+                            <option value="0"> 0 in </option>
+                            <option value="1"> 1 in </option>
+                            <option value="2"> 2 in </option>
+                            <option value="3"> 3 in </option>
+                            <option value="4"> 4 in </option>
+                            <option value="5"> 5 in </option>
+                            <option value="6"> 6 in </option>
+                            <option value="7"> 7 in </option>
+                            <option value="8"> 8 in </option>
+                            <option value="9"> 9 in </option>
+                            <option value="10"> 10 in </option>
+                            <option value="11"> 11 in </option>
                         </select>
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page12"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -405,13 +447,11 @@
         <!-- Survey_Weight -->
         <div data-role="page" data-theme="a" id="page12">
             <div data-theme="" data-role="header" data-position="fixed">
-                <a data-role="button" data-rel="back" data-theme="c" href="#page12" data-icon="arrow-l"
+                <a data-role="button" data-rel="back" data-theme="c" href="#page12" data-icon="newarrow-l"
                 data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" href="#page35" data-icon="home"
-                data-iconpos="notext" class="ui-btn-right"> Button </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-                <h2> Weight </h2>
+-->                <h2> Weight </h2>
             </div>
             <div data-role="content">
                 <h3> How much do you weigh? </h3>
@@ -422,7 +462,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page13"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -443,11 +483,11 @@
         <div data-role="page" data-theme="a" id="page13">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page13" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page13" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Smoking Status </h2>
-                <a data-role="button" data-rel="back" data-transition="flip" data-theme="c"
+<!--                <a data-role="button" data-rel="back" data-transition="flip" data-theme="c"
                 href="#page34" data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Do you currently smoke? </h3>
                 <div class="ui-grid-a">
@@ -470,7 +510,7 @@
                     </div>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page15"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -490,11 +530,11 @@
         <!-- Survey_History -->
         <div data-role="page" data-theme="a" id="page15">
             <div data-theme="" data-role="header" data-position="fixed">
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Profile </a>
-                <h2> Health History </h2>
+-->                <h2> Health History </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page15" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page15" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <h3> Has a doctor ever told you that you had any of the following? </h3>
@@ -556,14 +596,14 @@
                             </fieldset>
                         </div>
                     </div>
-                    <div class="ui-block-a">
+                    <div class="ui-block-a hba1c" style="display: none;">
                         <div>
                             <p>
                                 If yes, what is your HbA1c level?
                             </p>
                         </div>
                     </div>
-                    <div class="ui-block-b">
+                    <div class="ui-block-b hba1c" style="display:none;">
                         <div data-role="fieldcontain">
                             <fieldset data-role="controlgroup" data-mini="true">
                                 <label for="hba1c_field"> </label>
@@ -573,7 +613,7 @@
                     </div>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page28"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -595,10 +635,10 @@
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Blood Pressure </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page16" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                href="#page16" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Profile </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Do you know your blood pressure? </h3>
                 <div>
@@ -621,7 +661,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page16"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -643,10 +683,10 @@
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Blood Pressure </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page28" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                href="#page28" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> What is your blood pressure? </h3>
                 <div data-role="fieldcontain">
@@ -661,7 +701,7 @@
                         <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true">
                     </fieldset>
                 </div>
-                <a data-role="button" data-transition="slide" data-theme="b" href="#page29" data-icon="arrow-r"
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page29" data-icon="newarrow-r"
                 data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
@@ -684,10 +724,10 @@
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Cholesterol </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page29" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                href="#page29" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Do you know your cholesterol level? </h3>
                 <div>
@@ -710,7 +750,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page17"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -732,10 +772,10 @@
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Cholesterol </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page17" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
+                href="#page17" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> What is your cholesterol level? </h3>
                 <div data-role="fieldcontain">
@@ -758,7 +798,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page21"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn">
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn">
                     Next
                 </a>
 
@@ -781,9 +821,11 @@
         <!-- Results - Incomplete -->
         <div data-role="page" data-theme="a" id="page21">
             <div data-theme="a" data-role="header" data-position="fixed">
+                <a data-role="button" data-theme="c" href="#page34" data-icon="home" data-iconpos="notext" 
+                class="ui-btn-left"> </a>
                 <h2> Your Heart </h2>
-                <a data-role="button" data-theme="c" href="#page34" data-icon="info" data-iconpos="right"
-                class="ui-btn-right"> Edit </a>
+                <a data-role="button" data-theme="c" href="#page34" data-icon="profile" data-iconpos="right"
+                class="ui-btn-right"> Profile </a>
             </div>
             <div data-role="content">
                 <div id="incompleteFlag">
@@ -812,7 +854,7 @@
                     </p>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page26"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn">
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn">
                     Find Screening Clinics
                 </a>
             </div>
@@ -838,18 +880,17 @@
                         do that.
                     </p>
                 </div>
-                <a data-role="button" data-theme="d" href="#page27" data-icon="arrow-r"
+                <a data-role="button" data-theme="d" href="#page27" data-icon="newarrow-r"
                 data-iconpos="right"> Lower Your Risk </a>
                 <div>
                     <p>
                         If you want a more accurate risk assessment, answer some more questions
                     </p>
                 </div>
-                <a data-role="button" data-theme="c" href="#page37" data-icon="arrow-r"
+                <a data-role="button" data-theme="c" href="#page37" data-icon="newarrow-r"
                 data-iconpos="right"> Assess Further </a>
             </div>
         </div>
-<<<<<<< HEAD
 <!-- Location -->
 <div data-role="page" data-theme="a" id="page26">
     <div data-theme="a" data-role="header">
@@ -857,7 +898,7 @@
             Find a Clinic
         </h2>
         <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-        href="#page26" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+        href="#page26" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left">
             Back
         </a>
     </div>
@@ -924,7 +965,7 @@
             <div data-theme="a" data-role="header">
                 <h2> Screening Tips </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page33" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page33" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <div>
@@ -955,7 +996,7 @@
                 <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext"
                 class="ui-btn-right"> Home </a>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page21" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page21" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <h2> Your current risk is 45% </h2>
@@ -1004,7 +1045,7 @@
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h2> Exercising </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page24" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page24" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <a data-role="button" data-theme="c" href="#page24" data-icon="plus" data-iconpos="right"
                 class="ui-btn-right"> Suggest </a>
             </div>
@@ -1036,11 +1077,11 @@
         <div data-role="page" data-theme="a" id="page38">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page38" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page38" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Medication </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Are you currently on any medication to treat high blood pressure? </h3>
                 <div data-role="fieldcontain">
@@ -1052,18 +1093,18 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page36"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Advanced_BP Meds # -->
         <div data-role="page" data-theme="a" id="page36">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page36" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page36" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Medication </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> How many different medications do you take for your blood pressure? </h3>
                 <div data-role="fieldcontain">
@@ -1072,18 +1113,18 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page39"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Advanced_Chol Meds -->
         <div data-role="page" data-theme="a" id="page39">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page38" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page38" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Medication </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Are you currently on medication to lower your cholesterol? </h3>
                 <div data-role="fieldcontain">
@@ -1095,18 +1136,18 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page40"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Advanced_Aspirin -->
         <div data-role="page" data-theme="a" id="page40">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page40" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page40" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Aspirin </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Do you take aspirin daily for your heart? </h3>
                 <div data-role="fieldcontain">
@@ -1118,18 +1159,18 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page41"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Advanced_Vigorous Ex -->
         <div data-role="page" data-theme="a" id="page42">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page41" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page41" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Vigorous Exercise </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> How many hours do you spend doing vigorous physical activities in a typical
                 week? </h3>
@@ -1143,18 +1184,18 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Advanced_Moderate Ex -->
         <div data-role="page" data-theme="a" id="page41">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page41" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page41" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Moderate Exercise </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> How many hours do you spend doing moderate physical activities in a typical
                 week? </h3>
@@ -1168,18 +1209,18 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page42"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Advanced_Family -->
         <div data-role="page" data-theme="a" id="page43">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page43" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#page43" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 <h2> Family History </h2>
-                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
+<!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
-            </div>
+-->            </div>
             <div data-role="content">
                 <h3> Have any of your first-degree relatives (parent, full-blooded brother
                 or sister, or child) had a heart attack before the age of 55? </h3>
@@ -1193,14 +1234,14 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page37"
-                data-icon="arrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
         </div>
         <!-- Resources -->
         <div data-role="page" data-theme="a" id="page31">
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h2> Resources </h2>
-                <a data-role="button" data-rel="back" data-theme="c" href="#page31" data-icon="arrow-l"
+                <a data-role="button" data-rel="back" data-theme="c" href="#page31" data-icon="newarrow-l"
                 data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">

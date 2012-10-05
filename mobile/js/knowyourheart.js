@@ -41,11 +41,19 @@ $(function(){
     /* Add header class to buttons */
     $('div.ui-header').addClass("header");
     
-    /* Add nextbtn class to buttons */
 
-
-    
-});
+	/* Show HbA1c entry if DIABETES is YES */ 
+	$('select#diabetes_toggle').change(function() {
+	    if($(this).val() == "true"){
+	        $('.hba1c').show();
+	        val = $(this).val();
+	    }
+	    else {
+	   	$('.hba1c').hide();
+		}
+	 });
+	    
+	});
 
 $( document ).ready( function()
 {
