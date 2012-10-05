@@ -35,29 +35,37 @@ var UI_MAP = {
         "radio4" : "gender"
     },
     "page10" : {
-        "selectmenu3" : "height_ft",
-        "selectmenu4" : "height_in"
+        "select_height_feet" : "height_ft",
+        "select_height_inches" : "height_in"
     },
     "page12" : {
-        "slider4" : "weight"
+        "weight_slider" : "weight"
     },
     "page13" : {
-        "toggleswitch5" : "smoker"
+        "smoker_toggle" : "smoker"
     },
     "page15" : {
-        "toggleswitch1" : "ami",
-        "toggleswitch2" : "stroke",
-        "toggleswitch10" : "diabetes",
-        "textinput6" : "hba1c"
+        "mi_toggle" : "ami",
+        "stroke_toggle" : "stroke",
+        "diabetes_toggle" : "diabetes",
+        "hba1c_field" : "hba1c"
+    },
+    "page28" : {
+        "knows_bp_radio_t" : "knows_bp",
+        "knows_bp_radio_f" : "knows_bp"
     },
     "page16" : {
-        "slider5" : "systolic",
-        "slider6" : "diastolic"
+        "systolic_bp_slider" : "systolic",
+        "diastolic_bp_slider" : "diastolic"
+    },
+    "page29" : {
+        "knows_chol_t" : "knows_chol",
+        "knows_chol_f" : "knows_chol"
     },
     "page17" : {
-        "slider7" : "cholesterol",
-        "slider8" : "hdl",
-        "slider9" : "ldl"
+        "total_chol_slider" : "cholesterol",
+        "hdl_slider" : "hdl",
+        "ldl_slider" : "ldl"
     }
 };
 
@@ -84,7 +92,66 @@ var ARCHIMEDES_ATTRS = {
     "moderateexercise" : "moderateexercise",
     "vigorousexercise" : "vigorousexercise",
     "familymihistory" : "familymihistory"
-}
+};
+var ARCHIMEDES_DEFAULTS = {
+    age : 18, // 18 to 130 years
+    gender : "M", // M/F
+    height : 70, // 44 to 87 inches
+    weight : 160, // 80 to 600 pounds
+    smoker : false,
+    mi : false,
+    stroke : false,
+    diabetes : false,
+    systolic : 120, // 80 to 200 mm/Hg
+    diastolic : 80, // 40 to 130 mm/Hg
+    cholesterol : 200, // 70 to 500 mg/dL
+    hdl : 60, // 20 to 130 mg/dL
+    ldl : 100, // 40 to 400 mg/dL
+    hba1c : 4.8, // %
+    cholesterolmeds : false,
+    bloodpressuremeds : false,
+    bloodpressuremedcount : 0, // 0 to 4
+    aspirin : false,
+    moderateexercise : 4, // 0 to 60 hours
+    vigorousexercise : 2, // 0 to 30 hours
+    familymihistory : false
+};
+var ARCHIMEDES_REQUIRED = {
+    age : true,
+    gender : true,
+    height : true,
+    weight : true,
+    smoker : true,
+    mi : true,
+    stroke : true,
+    diabetes : true,
+    systolic : false,
+    diastolic : false,
+    cholesterol : false,
+    hdl : false,
+    ldl : false,
+    hba1c : false,
+    cholesterolmeds : false,
+    bloodpressuremeds : false,
+    bloodpressuremedcount : false,
+    aspirin : false,
+    moderateexercise : false,
+    vigorousexercise : false,
+    familymihistory : false
+};
+var USER_DEFAULTS = {
+    smoker : "false",
+    ami : "false",
+    stroke : "false",
+    diabetes : "false",
+    cholesterolmeds : "false",
+    bloodpressuremeds : "false",
+    aspirin : "false",
+    familymihistory : "false",
+    knows_bp : "false",
+    knows_chol : "false",
+    last_survey_page : ""
+};
 
 /*
  * Globals
@@ -114,12 +181,16 @@ function createUser(user, callbacks) {
         }
     }
     if (_.isUndefined(user)) {
+        var attr;
         var attrs = {
             username : generateRandomString(),
             password : generateRandomString()
         };
-        for (var attr in ARCHIMEDES_ATTRS) {
+        for (attr in ARCHIMEDES_ATTRS) {
             attrs[ARCHIMEDES_ATTRS[attr]] = "";
+        }
+        for (attr in USER_DEFAULTS) {
+            attrs[attr] = USER_DEFAULTS[attr];
         }
         user = new StackMob.User(attrs);
     }
@@ -131,7 +202,12 @@ function createUser(user, callbacks) {
 function calculateRisk(user) {
     var requestData = {};
     for (attr in ARCHIMEDES_ATTRS) {
-        requestData[attr] = user.attributes[ARCHIMEDES_ATTRS[attr]];
+        var val = user.attributes[ARCHIMEDES_ATTRS[attr]];
+        if (val != "") {
+            requestData[attr] = val;
+        } else if (ARCHIMEDES_REQUIRED[attr]) {
+            requestData[attr] = ARCHIMEDES_DEFAULTS[attr];
+        }
     }
     $.post("https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health", requestData, function(data) {
         console.dir(data);
@@ -139,6 +215,7 @@ function calculateRisk(user) {
 }
 
 function loadSurveyPage(page, user, uiMap) {
+    var missingInput = false;
     var inputMap = uiMap[page.id];
     for (var input in inputMap) {
         var userField = inputMap[input];
@@ -150,6 +227,7 @@ function loadSurveyPage(page, user, uiMap) {
         $input.prop("loadedValue", val);
 
         if (val === "") {
+            missingInput = true;
             continue;
         }
 
@@ -167,6 +245,10 @@ function loadSurveyPage(page, user, uiMap) {
             $input.val(val);
         }
     }
+
+    if (missingInput) {
+        $(page).find(".nextbtn").addClass("ui-disabled");
+    }
 }
 
 /*
@@ -176,7 +258,7 @@ var SurveyView = Backbone.View.extend({
     events : {
         "change input[type=radio]" : "handleChange",
         "change input[type=number]" : "handleChange",
-        "change input[type=text]" : "handleChange",
+        "keyup input[type=text]" : "handleChange",
         "change select" : "handleChange"
     },
     handleChange : function(event, data) {
@@ -188,6 +270,22 @@ var SurveyView = Backbone.View.extend({
         var o = {};
         o[userField] = $input.val();
         this.model.set(o);
+
+        var missingInput = false;
+        for (var inputId in this.options.inputMap) {
+            var val = this.model.get(this.options.inputMap[inputId]);
+            if (_.isUndefined(val) || val === "") {
+                missingInput = true;
+                break;
+            }
+        }
+        
+        var $nextBtn = $.mobile.activePage.find(".nextbtn"); 
+        if (!missingInput) {
+            $nextBtn.removeClass("ui-disabled");
+        } else if (!$nextBtn.hasClass("ui-disabled")) {
+            $nextBtn.addClass("ui-disabled");
+        }
     },
     initialize : function() {
         // handle init outside because it's easier
@@ -297,7 +395,9 @@ $(document).on("pagebeforehide", function(event, data) {
     }
     if (changed) {
         console.info("saving user");
-        gCurrentUser.save();
+        gCurrentUser.save({
+            last_survey_page : data.nextPage.attr("id")
+        });
     }
 
     // calculateRisk(gCurrentUser);
@@ -306,9 +406,10 @@ $(document).on("pageshow", function(event, data) {
     var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
     console.debug("pageshow - " + prevPage + " to " + event.target.id);
 
-    $(event.target).find("input[type=radio]").checkboxradio("refresh");
-    $(event.target).find("input[type=number], select[data-role=slider]").slider("refresh");
-    $(event.target).find("select[data-role!=slider]").selectmenu("refresh");
+    var $nextPage = $(event.target);
+    $nextPage.find("input[type=radio]").checkboxradio("refresh");
+    $nextPage.find("input[type=number], select[data-role=slider]").slider("refresh");
+    $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
 });
 $(document).on("pagehide", function(event, data) {
     console.debug("pagehide - " + event.target.id + " to " + data.nextPage.attr("id"));
