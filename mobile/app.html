@@ -46,13 +46,9 @@
         <!-- New User Start -->
         <div data-role="page" data-theme="a" id="page1">
             <div data-role="content">
-                <div style=" text-align:center">
-                    <img style="width: 288px; height: 100px" src="http://assets.codiqa.com/ps/34409/8cda648c3bfbae86knh-logo.png">
-                </div>
+                <div class="knh-logo"></div>
                 <div>
-                    <p style="text-align: left; " data-mce-style="text-align: left;">
-                        <br>
-                    </p>
+
                     <p style="text-align: left; " data-mce-style="text-align: left;">
                         Heart disease can affect anyone.
                     </p>
@@ -99,14 +95,22 @@
 <!-- Dashboard -->
 <div data-role="page" data-theme="a" id="page18">
     <div data-role="content">
-        <div style=" text-align:center">
-            <img style="width: 250px; height: 96px" src="http://assets.codiqa.com/ps/34409/8cda648c3bfbae86knh-logo.png">
+    	<div class="knh-logo"></div>
+        <div class="ui-grid-b">
+            <div class="ui-block-a" style="text-align: center;">
+                <a id="dashboardProfileBtn" data-transition="slide" href="#page34">&nbsp;</a>
+				<span>Profile</span>
+            </div>
+            <div class="ui-block-b">
+                <a id="dashboardAssessmentBtn" data-transition="slide" href="#page21"></a>
+                Assessment
+            </div>
+            <div class="ui-block-c" style="text-align: center;">
+                <a id="dashboardShareBtn" data-transition="slide" href="#page18"></a>
+				Share
+            </div>
         </div>
-        <div>
-            <p>
-                <br>
-            </p>
-        </div>
+
         <ul data-role="listview" data-divider-theme="b" data-inset="false">
             <li data-role="list-divider" role="heading">
                 Next Steps:
@@ -133,31 +137,6 @@
                 </a>
             </li>
         </ul>
-        <div>
-            <p>
-                <b>
-                    <br>
-                </b>
-            </p>
-
-        </div>
-        <div class="ui-grid-b">
-            <div class="ui-block-a" style="text-align: center;">
-                <a data-role="button" data-transition="slide" href="#page34" data-theme="dashboard-profile" data-icon="dashboard-profile" data-iconshadow="false" data-corners="false" data-iconpos="notext">
-                </a>
-				<span>Profile</span>
-            </div>
-            <div class="ui-block-b">
-                <a data-role="button" data-transition="slide" href="#page21" data-theme="dashboard-assessment" data-icon="dashboard-assessment" data-iconshadow="false" data-corners="false" data-iconpos="notext">
-                </a>
-                Assessment
-            </div>
-            <div class="ui-block-c">
-                <a data-role="button" data-transition="slide" href="#page18" data-theme="dashboard-share" data-icon="dashboard-share" data-iconshadow="false" data-corners="false" data-iconpos="notext">
-                </a>
-				Share
-            </div>
-        </div>
     </div>
 </div>
         <!-- Profile BASIC STRIPED-->
@@ -320,7 +299,7 @@
                 data-icon="profile" data-iconpos="notext" class="ui-btn-right"> Profile </a> 
 -->                
                 <a data-role="button" data-direction="reverse" data-rel="back" data-transition="none"
-                data-theme="c" href="#page2" data-icon="newnewarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                data-theme="c" href="#page2" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
                 
             </div>
             <div data-role="content">
@@ -332,7 +311,7 @@
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page9"
-                data-icon="newnewarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
             <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
                 <div class="progressBar">
@@ -818,7 +797,7 @@
                 </div>
             </div>
         </div>
-        <!-- Results - Incomplete -->
+        <!-- Results -->
         <div data-role="page" data-theme="a" id="page21">
             <div data-theme="a" data-role="header" data-position="fixed">
                 <a data-role="button" data-theme="c" href="#page34" data-icon="home" data-iconpos="notext" 
@@ -835,8 +814,7 @@
                 </div>
 
                 <div style="">
-                    <em>Display absolute rating of heart attack: low, medium, high, very high, critical</em>
-                    <img style="width: 288px; height: 150px" src="http://assets.codiqa.com/ps/32701/80c719ec9098eb86heart-meter.png">
+                    <img src="images/heart_thermometer_moderate2.png">
                     <br/>
                     Your risk for heart disease could be as high as 45% over the next 5 years
                 </div>
@@ -857,23 +835,17 @@
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn">
                     Find Screening Clinics
                 </a>
-            </div>
-        </div>
-        <!-- Results - Complete -->
-        <div data-role="page" data-theme="a" id="page30">
-            <div data-theme="a" data-role="header" data-position="fixed">
-                <h2> Your Heart </h2>
-                <a data-role="button" data-theme="c" href="#page34" data-icon="info" data-iconpos="right"
-                class="ui-btn-right"> Edit </a>
-            </div>
-            <div data-role="content">
+<!-- END Incomplete Result -->
+			<hr>
+<!-- START Complete Result -->
+
                 <div style="">
-                    <img style="width: 288px; height: 150px" src="http://assets.codiqa.com/ps/32701/80c719ec9098eb86heart-meter.png">
+                    <img src="images/heart_thermometer_moderate2.png">
                 </div>
                 <div>
                     <p>
-                        Your risk is HIGH. &nbsp;It is 3.1 times what is considered healthy for
-                        your age
+                    Your risk for heart disease is 45% over the next 5 years
+
                     </p>
                     <p>
                         You could lower your risk by 25% starting today. &nbsp;See how you can
@@ -890,7 +862,9 @@
                 <a data-role="button" data-theme="c" href="#page37" data-icon="newarrow-r"
                 data-iconpos="right"> Assess Further </a>
             </div>
+
         </div>
+
 <!-- Location -->
 <div data-role="page" data-theme="a" id="page26">
     <div data-theme="a" data-role="header">
@@ -931,7 +905,7 @@
                 Nearby locations
             </li>
             <li data-theme="e">
-                <a href="#page26" data-transition="slide">
+                <a href="#page35" data-transition="slide">
                     Mt Auburn Hospital
                     <div class="locationData">
                         <span>1.2 miles</span>
@@ -940,7 +914,7 @@
                 </a>
             </li>
             <li data-theme="f">
-                <a href="#page1" data-transition="slide">
+                <a href="#page35" data-transition="slide">
                     Children's Hospital of Boston
                     <div class="locationData">
 						<span>2.0 miles</span>
@@ -949,7 +923,7 @@
                 </a>
             </li>
             <li data-theme="e">
-                <a href="#page1" data-transition="slide">
+                <a href="#page35" data-transition="slide">
                     Walgreens
                     <div class="locationData">
                         <span>2.5 miles</span>
@@ -986,6 +960,40 @@
                     <p class="p1">
                         - Cost: about $35 without a coupon
                     </p>
+                </div>
+            </div>
+        </div>
+       <!-- A sample location -->
+        <div data-role="page" id="page35">
+            <div data-theme="a" data-role="header">
+                <h2> Screening Location </h2>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
+                href="#page33" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+            </div>
+            <div data-role="content">
+                <div>
+                    <p class="p1">
+                        Name: [name] </br>
+                        Description: [description] </br>
+                        Website: [urlCaption][url]
+                                            </p>
+                    
+					<p class="p1">
+						Call [phone]
+					</p>
+
+                 
+                    <p class="p1">
+                        Directions [address1] </br>
+                        		 [address2] </br>
+                        		 [city], [state] [zip]
+                    </p>
+
+                <a data-role="button" data-transition="slide" data-theme="b" href="#page35"
+                data-icon="newarrow-r" data-iconpos="right" class="nextbtn">
+                    Get Directions <!--Launch map app -->
+                </a>
+
                 </div>
             </div>
         </div>
