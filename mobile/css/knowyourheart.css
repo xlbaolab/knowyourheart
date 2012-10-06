@@ -84,7 +84,7 @@ h3 {
 }
 
 
-#page15 .ui-grid-a {
+#history .ui-grid-a {
 	width: 80%;
 	margin: 0 auto;
 }
@@ -456,7 +456,7 @@ fieldset .ui-btn-inner {
 }
 
 /*HEALTH HISTORY Screen */
-#page15 .ui-content,
+#history .ui-content,
 #page26 .ui-content,
 #page33 .ui-content,
 #page35 .ui-content {

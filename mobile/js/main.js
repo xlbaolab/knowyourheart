@@ -44,7 +44,7 @@ var UI_MAP = {
     "page13" : {
         "smoker_toggle" : "smoker"
     },
-    "page15" : {
+    "history" : {
         "mi_toggle" : "ami",
         "stroke_toggle" : "stroke",
         "diabetes_toggle" : "diabetes",
@@ -255,6 +255,10 @@ function loadSurveyPage(page, user, uiMap) {
  * Views
  */
 var SurveyView = Backbone.View.extend({
+    initialize : function() {
+        // handle init outside because it's easier
+        // this.$("#textinput2").val(this.model.get("age"));
+    },
     events : {
         "change input[type=radio]" : "handleChange",
         "change input[type=number]" : "handleChange",
@@ -263,6 +267,7 @@ var SurveyView = Backbone.View.extend({
     },
     handleChange : function(event, data) {
         var $input = $(event.currentTarget);
+        // console.log($input.prop("nodeName"));
         if ($input.prop("type") === "radio" && !$input.prop("checked")) {
             return;
         }
@@ -279,17 +284,26 @@ var SurveyView = Backbone.View.extend({
                 break;
             }
         }
-        
-        var $nextBtn = $.mobile.activePage.find(".nextbtn"); 
+
+        var $nextBtn = $.mobile.activePage.find(".nextbtn");
         if (!missingInput) {
             $nextBtn.removeClass("ui-disabled");
         } else if (!$nextBtn.hasClass("ui-disabled")) {
             $nextBtn.addClass("ui-disabled");
         }
-    },
+    }
+});
+
+var SurveyHistoryView = SurveyView.extend({
     initialize : function() {
-        // handle init outside because it's easier
-        // this.$("#textinput2").val(this.model.get("age"));
+        this.events = _.extend({}, this.moreEvents, this.events);
+        this.delegateEvents();
+    },
+    moreEvents : {
+        "change #diabetes_toggle" : "handleDiabetesToggle"
+    },
+    handleDiabetesToggle : function(event, data) {
+        console.log("toggle!");
     }
 });
 
@@ -343,11 +357,19 @@ $(document).ready(function() {
 
     // create a view for each survey page to handle user input
     for (var pageId in UI_MAP) {
-        new SurveyView({
-            el : $("#" + pageId),
-            inputMap : UI_MAP[pageId],
-            model : gCurrentUser
-        });
+        if (pageId === "history") {
+            new SurveyHistoryView({
+                el : $("#" + pageId),
+                inputMap : UI_MAP[pageId],
+                model : gCurrentUser
+            });
+        } else {
+            new SurveyView({
+                el : $("#" + pageId),
+                inputMap : UI_MAP[pageId],
+                model : gCurrentUser
+            });
+        }
     }
 });
 
@@ -400,7 +422,7 @@ $(document).on("pagebeforehide", function(event, data) {
         });
     }
 
-    // calculateRisk(gCurrentUser);
+    calculateRisk(gCurrentUser);
 });
 $(document).on("pageshow", function(event, data) {
     var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
