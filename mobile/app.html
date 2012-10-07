@@ -16,9 +16,10 @@
         <link rel="stylesheet" href="css/codiqa-custom.css" />
         <link rel="stylesheet" href="css/knowyourheart.css" />
 
-        <style>
-            /* App custom styles */
-        </style>
+        <!-- <style>
+        /* App custom styles */
+        </style> -->
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
         <script src="js/my.js"></script>
@@ -459,21 +460,20 @@
             <div data-role="content">
                 <h3> Do you currently smoke? </h3>
 
-
                 <div class="qanda">
-                	<p>
-                    	<span style="font-size: small; " data-mce-style="font-size: small;"> Answer 'Yes' if you have smoked any cigarettes in the past month </span>
+                    <p>
+                        <span style="font-size: small; " data-mce-style="font-size: small;"> Answer 'Yes' if you have smoked any cigarettes in the past month </span>
                     </p>
 
-                <div data-role="fieldcontain">
-                             <fieldset data-role="controlgroup">
-                                <select name="smoker" id="smoker_toggle" data-theme="" data-role="slider">
-                                    <option value="false"> No </option>
-                                    <option value="true"> Yes </option>
-                                </select>
-                            </fieldset>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup">
+                            <select name="smoker" id="smoker_toggle" data-theme="" data-role="slider">
+                                <option value="false"> No </option>
+                                <option value="true"> Yes </option>
+                            </select>
+                        </fieldset>
+                    </div>
                 </div>
-				</div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#history"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -504,87 +504,86 @@
             </div>
             <div data-role="content">
                 <h3> Has a doctor ever told you that you had any of the following? </h3>
-                
+
                 <div class="qanda">
 
-                
-                <div class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <div>
-                            <p>
-                                Heart attack <span class="help-icon" rel="tooltip" title="Also called myocardial infarction (MI)"></span>
-                            </p>
+                    <div class="ui-grid-a">
+                        <div class="ui-block-a">
+                            <div>
+                                <p>
+                                    Heart attack <span class="help-icon" rel="tooltip" title="Also called myocardial infarction (MI)"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                            <div data-role="fieldcontain">
+                                <fieldset data-role="controlgroup">
+                                    <label for="mi_toggle"> </label>
+                                    <select name="mi" id="mi_toggle" data-theme="" data-role="slider"
+                                    data-mini="true">
+                                        <option value="false"> No </option>
+                                        <option value="true"> Yes </option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="ui-block-a">
+                            <div>
+                                <p>
+                                    Stroke
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                            <div data-role="fieldcontain">
+                                <fieldset data-role="controlgroup">
+                                    <label for="stroke_toggle"> </label>
+                                    <select name="stroke" id="stroke_toggle" data-theme="" data-role="slider"
+                                    data-mini="true">
+                                        <option value="false"> No </option>
+                                        <option value="true"> Yes </option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="ui-block-a">
+                            <div>
+                                <p>
+                                    Diabetes <span class="help-icon" rel="tooltip" title="Includes Type I and Type II"></span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ui-block-b">
+                            <div data-role="fieldcontain">
+                                <fieldset data-role="controlgroup">
+                                    <label for="diabetes_toggle"> </label>
+                                    <select name="diabetes" id="diabetes_toggle" data-theme="" data-role="slider"
+                                    data-mini="true">
+                                        <option value="false"> No </option>
+                                        <option value="true"> Yes </option>
+                                    </select>
+                                </fieldset>
+                            </div>
+                        </div>
+                        <div class="ui-block-a hba1c" style="display: none;">
+                            <div>
+                                <p>
+                                    If yes, what is your HbA1c level?
+                                </p>
+                            </div>
+                        </div>
+                        <div class="ui-block-b hba1c" style="display:none;">
+                            <div data-role="fieldcontain">
+                                <fieldset data-role="controlgroup" data-mini="true">
+                                    <label for="hba1c_field"> </label>
+                                    <input name="hba1c" id="hba1c_field" placeholder="Enter HbA1c %" value="" type="text">
+                                </fieldset>
+                            </div>
                         </div>
                     </div>
-                    <div class="ui-block-b">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup">
-                                <label for="mi_toggle"> </label>
-                                <select name="mi" id="mi_toggle" data-theme="" data-role="slider"
-                                data-mini="true">
-                                    <option value="false"> No </option>
-                                    <option value="true"> Yes </option>
-                                </select>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="ui-block-a">
-                        <div>
-                            <p>
-                                Stroke
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ui-block-b">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup">
-                                <label for="stroke_toggle"> </label>
-                                <select name="stroke" id="stroke_toggle" data-theme="" data-role="slider"
-                                data-mini="true">
-                                    <option value="false"> No </option>
-                                    <option value="true"> Yes </option>
-                                </select>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="ui-block-a">
-                        <div>
-                            <p>
-                                Diabetes <span class="help-icon" rel="tooltip" title="Includes Type I and Type II"></span>
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ui-block-b">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup">
-                                <label for="diabetes_toggle"> </label>
-                                <select name="diabetes" id="diabetes_toggle" data-theme="" data-role="slider"
-                                data-mini="true">
-                                    <option value="false"> No </option>
-                                    <option value="true"> Yes </option>
-                                </select>
-                            </fieldset>
-                        </div>
-                    </div>
-                    <div class="ui-block-a hba1c" style="display: none;">
-                        <div>
-                            <p>
-                                If yes, what is your HbA1c level?
-                            </p>
-                        </div>
-                    </div>
-                    <div class="ui-block-b hba1c" style="display:none;">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup" data-mini="true">
-                                <label for="hba1c_field"> </label>
-                                <input name="hba1c" id="hba1c_field" placeholder="Enter HbA1c %" value="" type="text">
-                            </fieldset>
-                        </div>
-                    </div>
+
                 </div>
-                
-               </div>
-                
+
                 <a data-role="button" data-transition="slide" data-theme="b" href="#knows_bp"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -623,17 +622,17 @@
                         <span class="helper_text"> If you don't know it at this time, KYH can help you find a clinic or pharmacy
                             that can assist you. </span>
                     </p>
-                <div data-role="fieldcontain">
-                    <fieldset data-role="controlgroup" data-type="horizontal">
-                        <legend></legend>
-                        <input id="knows_bp_radio_t" name="knows_bp" value="true" type="radio">
-                        <label for="knows_bp_radio_t"> Yes </label>
-                        <input id="knows_bp_radio_f" name="knows_bp" value="false" type="radio">
-                        <label for="knows_bp_radio_f"> No </label>
-                    </fieldset>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <legend></legend>
+                            <input id="knows_bp_radio_t" name="knows_bp" value="true" type="radio">
+                            <label for="knows_bp_radio_t"> Yes </label>
+                            <input id="knows_bp_radio_f" name="knows_bp" value="false" type="radio">
+                            <label for="knows_bp_radio_f"> No </label>
+                        </fieldset>
+                    </div>
                 </div>
-                </div>
-                
+
                 <a data-role="button" data-transition="slide" data-theme="b" href="#blood_pressure"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -714,15 +713,15 @@
                         <span class="helper_text"> If you don't know it at this time, KYH can help you find a clinic that
                             can assist you. </span>
                     </p>
-                <div data-role="fieldcontain">
-                    <fieldset data-role="controlgroup" data-type="horizontal">
-                        <legend></legend>
-                        <input id="knows_chol_radio_t" name="knows_chol" value="true" type="radio">
-                        <label for="knows_chol_radio_t"> Yes </label>
-                        <input id="knows_chol_radio_f" name="knows_chol" value="false" type="radio">
-                        <label for="knows_chol_radio_f"> No </label>
-                    </fieldset>
-                </div>
+                    <div data-role="fieldcontain">
+                        <fieldset data-role="controlgroup" data-type="horizontal">
+                            <legend></legend>
+                            <input id="knows_chol_radio_t" name="knows_chol" value="true" type="radio">
+                            <label for="knows_chol_radio_t"> Yes </label>
+                            <input id="knows_chol_radio_f" name="knows_chol" value="false" type="radio">
+                            <label for="knows_chol_radio_f"> No </label>
+                        </fieldset>
+                    </div>
                 </div>
 
                 <a data-role="button" data-transition="slide" data-theme="b" href="#cholesterol"
@@ -804,13 +803,30 @@
             <div data-role="content">
                 <div id="incompleteFlag">
                     <p>
-                        Your blood pressure and cholesterol values are needed to accurately calculate your risk
+                        Your blood pressure and cholesterol values are needed
+                        to accurately calculate your risk.
                     </p>
                 </div>
-                <div style="">
-                    <img src="images/heart_thermometer_moderate2.png">
+                <div>
+                    <img id="risk_img" src="images/heart_thermometer_moderate2.png">
+                    <div id="circularG">
+                        <div id="circularG_1" class="circularG"></div>
+                        <div id="circularG_2" class="circularG"></div>
+                        <div id="circularG_3" class="circularG"></div>
+                        <div id="circularG_4" class="circularG"></div>
+                        <div id="circularG_5" class="circularG"></div>
+                        <div id="circularG_6" class="circularG"></div>
+                        <div id="circularG_7" class="circularG"></div>
+                        <div id="circularG_8" class="circularG"></div>
+                    </div>
                     <br/>
-                    Your risk for heart disease could be as high as 45% over the next 5 years
+                    <p id="risk_error">
+                        An error occured during risk calculation.
+                    </p>
+                    <p>
+                        Your risk for heart disease could be as high as
+                        <span id="5_year_risk">45</span>% over the next 5 years.
+                    </p>
                 </div>
                 <div>
                     <p>
@@ -826,16 +842,9 @@
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page26"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Find Screening Clinics </a>
-            </div>
-        </div>
-        <!-- Results - Complete -->
-        <div data-role="page" data-theme="a" id="page30">
-            <div data-theme="a" data-role="header" data-position="fixed">
-                <h2> Your Heart </h2>
-                <a data-role="button" data-theme="c" href="#page34" data-icon="info" data-iconpos="right"
-                class="ui-btn-right"> Edit </a>
-            </div>
-            <div data-role="content">
+                <!-- END Incomplete Result -->
+                <hr>
+                <!-- START Complete Result -->
                 <div style="">
                     <img src="images/heart_thermometer_moderate2.png">
                 </div>

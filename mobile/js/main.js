@@ -22,8 +22,10 @@ if ( typeof console === "undefined" || !console.log) {
 console.debug("loading main.js")
 
 /*
-* Constants
-*/
+ * Constants
+ */
+
+ARCHIMEDES_URL = "https://demo-indigo4health.rchimedesmodel.com/IndiGO4Health/IndiGO4Health";
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
@@ -157,6 +159,7 @@ var USER_DEFAULTS = {
  * Globals
  */
 var gCurrentUser = null;
+var gIsFirstPageInit = true;
 
 /*
  * Functions
@@ -199,7 +202,23 @@ function createUser(user, callbacks) {
     return user;
 }
 
-function calculateRisk(user) {
+var RISK_IMAGES = {
+    1 : "images/heart_thermometer_low2.png",
+    2 : "images/heart_thermometer_moderate2.png",
+    3 : "images/heart_thermometer_high2.png",
+    4 : "images/heart_thermometer_urgent2.png",
+    5 : "images/heart_thermometer_critical2.png"
+}
+
+function calculateRisk(page, user) {
+    var $error = $("#risk_error", page);
+    var $loader = $("#circularG", page);
+    var $risk = $("#risk_img", page);
+
+    $error.hide();
+    $risk.hide();
+    $loader.show();
+
     var requestData = {};
     for (attr in ARCHIMEDES_ATTRS) {
         var val = user.attributes[ARCHIMEDES_ATTRS[attr]];
@@ -209,14 +228,57 @@ function calculateRisk(user) {
             requestData[attr] = ARCHIMEDES_DEFAULTS[attr];
         }
     }
-    $.post("https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health", requestData, function(data) {
+
+    $.post(ARCHIMEDES_URL, requestData, function(data) {
         console.dir(data);
+
+        // update risk content
+        $risk.prop("src", RISK_IMAGES[data.Risk[0].rating]);
+        $("#5_year_risk", page).html(data.Risk[0].risk);
+        $loader.fadeOut("slow", function() {
+            $risk.fadeIn("slow");
+        });
+    }, "json").fail(function(data) {
+        console.error("Error calling Archimedes API: " + data.statusText + " (code " + data.status + ")");
+        $loader.fadeOut("slow", function() {
+            $error.fadeIn("slow");
+        });
+    });
+}
+
+function doFirstPageInit() {
+    // create a view for each survey page to handle user input
+    for (var pageId in UI_MAP) {
+        var viewArgs = {
+            el : $("#" + pageId),
+            inputMap : UI_MAP[pageId],
+            model : gCurrentUser
+        };
+        if (pageId === "history") {
+            new SurveyHistoryView(viewArgs);
+        } else if (pageId === "knows_bp") {
+            new SurveyKnowsBpView(viewArgs);
+        } else if (pageId === "knows_chol") {
+            new SurveyKnowsCholView(viewArgs);
+        } else {
+            new SurveyView(viewArgs);
+        }
+    }
+
+    new ResultView({
+        el : $("#assessment"),
+        model : gCurrentUser
     });
 }
 
 function loadSurveyPage(page, user, uiMap) {
-    var missingInput = false;
+    var incompleteForm = false;
     var inputMap = uiMap[page.id];
+
+    if (!inputMap) {
+        return;
+    }
+
     for (var input in inputMap) {
         var userField = inputMap[input];
         var val = user.get(userField) || "";
@@ -227,7 +289,7 @@ function loadSurveyPage(page, user, uiMap) {
         $input.prop("loadedValue", val);
 
         if (val === "") {
-            missingInput = true;
+            incompleteForm = true;
             continue;
         }
 
@@ -246,7 +308,7 @@ function loadSurveyPage(page, user, uiMap) {
         }
     }
 
-    if (missingInput) {
+    if (incompleteForm) {
         $(page).find(".nextbtn").addClass("ui-disabled");
     }
 }
@@ -254,16 +316,29 @@ function loadSurveyPage(page, user, uiMap) {
 /*
  * Views
  */
+var ResultView = Backbone.View.extend({
+    initialize : function() {
+
+    },
+    events : {
+        "pagebeforeshow" : "updateView"
+    },
+    updateView : function(event, data) {
+        calculateRisk(this.el, this.model);
+    }
+});
+
 var SurveyView = Backbone.View.extend({
     initialize : function() {
-        // handle init outside because it's easier
-        // this.$("#textinput2").val(this.model.get("age"));
+        loadSurveyPage(this.el, this.model, UI_MAP);
     },
     events : {
         "change input[type=radio]" : "handleChange",
         "change input[type=number]" : "handleChange",
+        "change select" : "handleChange",
         "keyup input[type=text]" : "handleChange",
-        "change select" : "handleChange"
+        "pagebeforehide" : "handlePageBeforeHide",
+        "pageshow" : "handlePageShow"
     },
     handleChange : function(event, data) {
         var $input = $(event.currentTarget);
@@ -291,11 +366,41 @@ var SurveyView = Backbone.View.extend({
         } else if (!$nextBtn.hasClass("ui-disabled")) {
             $nextBtn.addClass("ui-disabled");
         }
+    },
+    handlePageBeforeHide : function(event, data) {
+        // save if input changed
+        var changed = false;
+        for (var input in this.options.inputMap) {
+            var $input = $("#" + input, this.el);
+            var inputVal = this.model.get(this.options.inputMap[input]);
+            if (inputVal !== $input.prop("loadedValue")) {
+                changed = true;
+                $input.prop("loadedValue", inputVal);
+            }
+        }
+        if (changed) {
+            console.info("saving user");
+            this.model.save({
+                last_survey_page : data.nextPage.attr("id")
+            });
+        }
+    },
+    handlePageShow : function(event, data) {
+        var $nextPage;
+        if (!event) {
+            $nextPage = $(this.el);
+        } else {
+            $nextPage = $(event.target);
+        }
+        $nextPage.find("input[type=radio]").checkboxradio("refresh");
+        $nextPage.find("input[type=number], select[data-role=slider]").slider("refresh");
+        $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
     }
 });
 
 var SurveyHistoryView = SurveyView.extend({
     initialize : function() {
+        SurveyView.prototype.initialize.call(this);
         this.events = _.extend({}, this.moreEvents, this.events);
         this.delegateEvents();
         this.updateDiabetesVis($("#diabetes_toggle", this.el));
@@ -317,6 +422,7 @@ var SurveyHistoryView = SurveyView.extend({
 
 var SurveyKnowsBpView = SurveyView.extend({
     initialize : function() {
+        SurveyView.prototype.initialize.call(this);
         this.events = _.extend({}, this.moreEvents, this.events);
         this.delegateEvents();
         this.updateNextTarget($("input[name='knows_bp']:checked", this.el));
@@ -340,6 +446,7 @@ var SurveyKnowsBpView = SurveyView.extend({
 
 var SurveyKnowsCholView = SurveyView.extend({
     initialize : function() {
+        SurveyView.prototype.initialize.call(this);
         this.events = _.extend({}, this.moreEvents, this.events);
         this.delegateEvents();
         this.updateNextTarget($("input[name='knows_chol']:checked", this.el));
@@ -408,24 +515,6 @@ if (localStorage["currentUsername"] == null) {
  */
 $(document).ready(function() {
     console.debug("ready");
-
-    // create a view for each survey page to handle user input
-    for (var pageId in UI_MAP) {
-        var viewArgs = {
-            el : $("#" + pageId),
-            inputMap : UI_MAP[pageId],
-            model : gCurrentUser
-        };
-        if (pageId === "history") {
-            new SurveyHistoryView(viewArgs);
-        } else if (pageId === "knows_bp") {
-            new SurveyKnowsBpView(viewArgs);
-        } else if (pageId === "knows_chol") {
-            new SurveyKnowsCholView(viewArgs);
-        } else {
-            new SurveyView(viewArgs);
-        }
-    }
 });
 
 $(document).on("pagebeforeload", function(event, data) {
@@ -440,7 +529,7 @@ $(document).on("pageloadfailed", function(event, data) {
 
 $(document).on("pagebeforechange", function(event, data) {
     var page = data.toPage;
-    console.debug("pagebeforechange - " + (_.isString(page) ? page : page.attr("id")));
+    console.debug("\n\npagebeforechange - " + (_.isString(page) ? page : page.attr("id")));
 });
 $(document).on("pagechange", function(event, data) {
     var page = data.toPage;
@@ -457,36 +546,10 @@ $(document).on("pagebeforeshow", function(event, data) {
 });
 $(document).on("pagebeforehide", function(event, data) {
     console.debug("pagebeforehide - " + event.target.id + " to " + data.nextPage.attr("id"));
-
-    var page = event.target;
-    var inputMap = UI_MAP[page.id];
-    // save if input changed
-    var changed = false;
-    for (var input in inputMap) {
-        var $input = $(page).find("#" + input);
-        var inputVal = gCurrentUser.get(inputMap[input]);
-        if (inputVal !== $input.prop("loadedValue")) {
-            changed = true;
-            $input.prop("loadedValue", inputVal);
-        }
-    }
-    if (changed) {
-        console.info("saving user");
-        gCurrentUser.save({
-            last_survey_page : data.nextPage.attr("id")
-        });
-    }
-
-    calculateRisk(gCurrentUser);
 });
 $(document).on("pageshow", function(event, data) {
     var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
     console.debug("pageshow - " + prevPage + " to " + event.target.id);
-
-    var $nextPage = $(event.target);
-    $nextPage.find("input[type=radio]").checkboxradio("refresh");
-    $nextPage.find("input[type=number], select[data-role=slider]").slider("refresh");
-    $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
 });
 $(document).on("pagehide", function(event, data) {
     console.debug("pagehide - " + event.target.id + " to " + data.nextPage.attr("id"));
@@ -501,7 +564,10 @@ $(document).on("pagecreate", function(event) {
 $(document).on("pageinit", function(event) {
     console.debug("pageinit - " + event.target.id);
 
-    loadSurveyPage(event.target, gCurrentUser, UI_MAP);
+    if (gIsFirstPageInit) {
+        gIsFirstPageInit = false;
+        doFirstPageInit();
+    }
 });
 $(document).on("pageremove", function(event) {
     console.debug("pageremove - " + event.target.id);
