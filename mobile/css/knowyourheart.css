@@ -65,6 +65,10 @@ h3 {
 	font-weight: normal;
 }
 
+.helper_text {
+	font-size: 0.8em;
+}
+
 .ui-br {
 	border-bottom-width: 0px; /* disable border under text boxes */
 }
@@ -84,11 +88,6 @@ h3 {
 }
 
 
-#history .ui-grid-a {
-	width: 80%;
-	margin: 0 auto;
-}
-
 /*Added nextbtn class to next buttons */
 .nextbtn {
 	width: 60%;
@@ -102,16 +101,17 @@ input[type="text"], select, textarea {
 
 /* Progress Bar */
 .footer {
-	background-color: rgba(135,137,141, 0.1);
+	background: rgba(143,143,143,0.05);
 	height: 60px;
 	color: #ffffff /*{a-bar-color}*/;
 	text-shadow: 0 /*{a-bar-shadow-x}*/ 0 /*{a-bar-shadow-y}*/ 0 /*{a-bar-shadow-radius}*/ #444444 /*{a-bar-shadow-color}*/;
 	background-image: -webkit-gradient(radial, from(rgba(143,143,143,0.05) /*{a-bar-background-start}*/), to(rgba(135,137,141, 0.25) /*{a-bar-background-end}*/)); /* Saf4+, Chrome */
 	background-image: -webkit-radial-gradient( rgba(143,143,143,0.05) /*{a-bar-background-start}*/, rgba(135,137,141, 0.15) /*{a-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
 	background-image:    -moz-linear-gradient( rgba(143,143,143,0.05) /*{a-bar-background-start}*/, rgba(135,137,141, 0.25) /*{a-bar-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #38c4FF /*{a-bar-background-start}*/, #258ecf /*{a-bar-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #38c4FF /*{a-bar-background-start}*/, #258ecf /*{a-bar-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #38c4FF /*{a-bar-background-start}*/, #258ecf /*{a-bar-background-end}*/);
+	background-image:     -ms-linear-gradient( #38c4FF/*{a-bar-background-start}*/, #258ecf/*{a-bar-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #38c4FF/*{a-bar-background-start}*/, #258ecf/*{a-bar-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #38c4FF/*{a-bar-background-start}*/, #258ecf/*{a-bar-background-end}*/);
+
 }
 
 .progressBar {
@@ -134,6 +134,16 @@ input[type="text"], select, textarea {
    -webkit-box-shadow: inset 0 2px 2px rgba(138,138,138,0.5);
    box-shadow:         inset 0 2px 2px rgba(138,138,138,0.5);
 
+}
+
+.activedot {
+/*	background-color:  rgba(138,138,138,1)
+	border: 1px solid rgba(100,100,100,0.8); */
+   -moz-box-shadow:     0 0 2px 2px rgba(100,100,100,0.7);
+   -webkit-box-shadow:  0 0 2px 2px rgba(100,100,100,0.7);
+   box-shadow:          0 0 2px 2px rgba(100,100,100,0.7);
+
+	
 }
 .completedot {
 background: rgb(133,199,99); /* Old browsers */
@@ -455,6 +465,24 @@ fieldset .ui-btn-inner {
 	font-weight: 500;
 }
 
+/* SMOKING SCREEN */
+#page13 .ui-content {
+	text-align: left;
+}
+
+#page13 .qanda {
+	padding: 0 20% 0 20%;	
+}
+
+.icon-help {
+	height: 30px;
+	width: 30px;
+	background-image: url('../images/icon-help2.png');
+	display: inline-block;
+	float: left;	
+}
+
+
 /*HEALTH HISTORY Screen */
 #history .ui-content,
 #page26 .ui-content,
@@ -462,6 +490,19 @@ fieldset .ui-btn-inner {
 #page35 .ui-content {
 	text-align: left;	
 	margin: 	auto;
+}
+
+#history .qanda {
+	padding: 0 20% 0 20%;	
+	margin: 0 auto;
+
+}
+
+/*BLOOD PRESSURE + SCREEN */
+#knows_bp .qanda, #knows_chol .qanda {
+	text-align: left;
+	padding: 0 20% 0 20%;	
+	
 }
 
 /*LOCATION Screen */
@@ -500,10 +541,24 @@ width: 62px;
 zoom: 1;
 }
 
+/* HELP ICON */
+
+.help-icon {
+	background: url('../images/icon-help2.png');
+	height: 20px;
+	width: 20px;
+	display: inline-block;
+	
+	
+}
+
 /* TOOLTIP */
 #tooltip
 {
-    text-align: center;
+	font-family: "MuseoSans500Regular",sans-serif;
+	font-weight: normal;    
+	font-size: 0.8em;
+	text-align: center;
     color: #fff;
     background: #111;
     position: absolute;

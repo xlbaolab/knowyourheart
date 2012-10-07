@@ -458,25 +458,22 @@
             </div>
             <div data-role="content">
                 <h3> Do you currently smoke? </h3>
-                <div class="ui-grid-a">
-                    <div class="ui-block-a">
-                        <div data-role="fieldcontain">
-                            <fieldset data-role="controlgroup">
+
+
+                <div class="qanda">
+                	<p>
+                    	<span style="font-size: small; " data-mce-style="font-size: small;"> Answer 'Yes' if you have smoked any cigarettes in the past month </span>
+                    </p>
+
+                <div data-role="fieldcontain">
+                             <fieldset data-role="controlgroup">
                                 <select name="smoker" id="smoker_toggle" data-theme="" data-role="slider">
                                     <option value="false"> No </option>
                                     <option value="true"> Yes </option>
                                 </select>
                             </fieldset>
-                        </div>
-                    </div>
-                    <div class="ui-block-b">
-                        <div>
-                            <p>
-                                <span style="font-size: small; " data-mce-style="font-size: small;"> Answer 'Yes' if you have smoked any cigarettes in the past month </span>
-                            </p>
-                        </div>
-                    </div>
                 </div>
+				</div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#history"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -507,11 +504,15 @@
             </div>
             <div data-role="content">
                 <h3> Has a doctor ever told you that you had any of the following? </h3>
+                
+                <div class="qanda">
+
+                
                 <div class="ui-grid-a">
                     <div class="ui-block-a">
                         <div>
                             <p>
-                                Heart attack
+                                Heart attack <span class="help-icon" rel="tooltip" title="Also called myocardial infarction (MI)"></span>
                             </p>
                         </div>
                     </div>
@@ -549,7 +550,7 @@
                     <div class="ui-block-a">
                         <div>
                             <p>
-                                Diabetes
+                                Diabetes <span class="help-icon" rel="tooltip" title="Includes Type I and Type II"></span>
                             </p>
                         </div>
                     </div>
@@ -581,6 +582,9 @@
                         </div>
                     </div>
                 </div>
+                
+               </div>
+                
                 <a data-role="button" data-transition="slide" data-theme="b" href="#knows_bp"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -611,16 +615,14 @@
             </div>
             <div data-role="content">
                 <h3> Do you know your blood pressure? </h3>
-                <div>
+                <div class="qanda">
                     <p>
-                        <span style="font-size: small; " data-mce-style="font-size: small;"> Knowing your blood pressure will improve the accuracy of your risk score.
-                            &nbsp; </span>
+                        <span class="helper_text"> Knowing your blood pressure will improve the accuracy of your heart risk score.</span>
                     </p>
                     <p>
-                        <span style="font-size: small; " data-mce-style="font-size: small;"> If you don't know it at this time, KYH can help you find a clinic or pharmacy
+                        <span class="helper_text"> If you don't know it at this time, KYH can help you find a clinic or pharmacy
                             that can assist you. </span>
                     </p>
-                </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend></legend>
@@ -630,6 +632,8 @@
                         <label for="knows_bp_radio_f"> No </label>
                     </fieldset>
                 </div>
+                </div>
+                
                 <a data-role="button" data-transition="slide" data-theme="b" href="#blood_pressure"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -662,13 +666,13 @@
                 <h3> What is your blood pressure? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="systolic_bp_slider"> Systolic Blood Pressure </label>
+                        <label for="systolic_bp_slider"> Systolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure when the heart beats, usually the top and higher number"></span></label>
                         <input id="systolic_bp_slider" type="range" name="systolic_bp" value="120" min="80" max="220" data-highlight="true">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="diastolic_bp_slider"> Diastolic Blood Pressure </label>
+                        <label for="diastolic_bp_slider"> Diastolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure between heart beats, usually the bottom and lower number"></span></label>
                         <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true">
                     </fieldset>
                 </div>
@@ -702,16 +706,14 @@
             </div>
             <div data-role="content">
                 <h3> Do you know your cholesterol level? </h3>
-                <div>
+                <div class="qanda">
                     <p>
-                        <span style="font-size: small; " data-mce-style="font-size: small;"> ﻿Knowing your cholesterol will improve the accuracy of your risk score.
-                            &nbsp; </span>
+                        <span class="helper_text"> ﻿Knowing your cholesterol will improve the accuracy of your heart risk score.</span>
                     </p>
                     <p>
-                        <span style="font-size: small; " data-mce-style="font-size: small;"> If you don't know it at this time, KYH can help you find a clinic that
+                        <span class="helper_text"> If you don't know it at this time, KYH can help you find a clinic that
                             can assist you. </span>
                     </p>
-                </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="horizontal">
                         <legend></legend>
@@ -721,6 +723,8 @@
                         <label for="knows_chol_radio_f"> No </label>
                     </fieldset>
                 </div>
+                </div>
+
                 <a data-role="button" data-transition="slide" data-theme="b" href="#cholesterol"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -753,19 +757,19 @@
                 <h3> What is your cholesterol level? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
-                        <label for="total_chol_slider"> Total Cholesterol </label>
+                        <label for="total_chol_slider"> Total Cholesterol <span class="help-icon" rel="tooltip" title="A total of LDL, HDL, and other lipids"></span></label>
                         <input id="total_chol_slider" type="range" name="cholesterol" value="200" min="70" max="500" data-highlight="true">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
-                        <label for="hdl_slider"> HDL Cholesterol </label>
+                        <label for="hdl_slider"> HDL Cholesterol <span class="help-icon" rel="tooltip" title="Good cholesterol that reduces LDL"></span></label>
                         <input id="hdl_slider" type="range" name="hdl" value="40" min="20" max="130" data-highlight="true">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
-                        <label for="ldl_slider"> LDL Cholesterol </label>
+                        <label for="ldl_slider"> LDL Cholesterol <span class="help-icon" rel="tooltip" title="Bad cholesterol that can clog arteries"></span></label>
                         <input id="ldl_slider" type="range" name="ldl" value="100" min="40" max="400" data-highlight="true"
                         data-track-theme="">
                     </fieldset>
