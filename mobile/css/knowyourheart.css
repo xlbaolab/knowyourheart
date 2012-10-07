@@ -429,8 +429,8 @@ right: 0px;
 /* Center Radio Buttons */ 
 #page9 fieldset, 
 #page10 fieldset, 
-#page28 fieldset,
-#page29 fieldset
+#knows_bp fieldset,
+#knows_chol fieldset
 {
 display: inline-block;
 float:none;
@@ -439,8 +439,8 @@ float:none;
 /* Make active selection yellow */
 #page9 fieldset .ui-btn-active,
 #page12 fieldset .ui-btn-active,
-#page28 fieldset .ui-btn-active,
-#page29 fieldset .ui-btn-active,
+#knows_bp fieldset .ui-btn-active,
+#knows_chol fieldset .ui-btn-active,
 .ui-slider .ui-btn-active {
 	background: #ffcb3d;
 }

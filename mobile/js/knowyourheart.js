@@ -42,8 +42,8 @@ $(function(){
     $('div.ui-header').addClass("header");
     
 
-	/* Show HbA1c entry if DIABETES is YES */ 
-	$('select#diabetes_toggle').change(function() {
+	/* Show HbA1c entry if DIABETES is YES */
+	/*$('select#diabetes_toggle').change(function() {
 	    if($(this).val() == "true"){
 	        $('.hba1c').show();
 	        val = $(this).val();
@@ -51,7 +51,7 @@ $(function(){
 	    else {
 	   	$('.hba1c').hide();
 		}
-	 });
+	 });*/
 	    
 	});
 

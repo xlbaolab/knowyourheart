@@ -50,19 +50,19 @@ var UI_MAP = {
         "diabetes_toggle" : "diabetes",
         "hba1c_field" : "hba1c"
     },
-    "page28" : {
+    "knows_bp" : {
         "knows_bp_radio_t" : "knows_bp",
         "knows_bp_radio_f" : "knows_bp"
     },
-    "page16" : {
+    "blood_pressure" : {
         "systolic_bp_slider" : "systolic",
         "diastolic_bp_slider" : "diastolic"
     },
-    "page29" : {
-        "knows_chol_t" : "knows_chol",
-        "knows_chol_f" : "knows_chol"
+    "knows_chol" : {
+        "knows_chol_radio_t" : "knows_chol",
+        "knows_chol_radio_f" : "knows_chol"
     },
-    "page17" : {
+    "cholesterol" : {
         "total_chol_slider" : "cholesterol",
         "hdl_slider" : "hdl",
         "ldl_slider" : "ldl"
@@ -298,12 +298,66 @@ var SurveyHistoryView = SurveyView.extend({
     initialize : function() {
         this.events = _.extend({}, this.moreEvents, this.events);
         this.delegateEvents();
+        this.updateDiabetesVis($("#diabetes_toggle", this.el));
     },
     moreEvents : {
         "change #diabetes_toggle" : "handleDiabetesToggle"
     },
     handleDiabetesToggle : function(event, data) {
-        console.log("toggle!");
+        this.updateDiabetesVis($(event.currentTarget));
+    },
+    updateDiabetesVis : function($toggle) {
+        if ($toggle.val() === "true") {
+            $(".hba1c", this.el).show();
+        } else {
+            $(".hba1c", this.el).hide();
+        }
+    }
+});
+
+var SurveyKnowsBpView = SurveyView.extend({
+    initialize : function() {
+        this.events = _.extend({}, this.moreEvents, this.events);
+        this.delegateEvents();
+        this.updateNextTarget($("input[name='knows_bp']:checked", this.el));
+    },
+    moreEvents : {
+        "change #knows_bp_radio_t" : "handleKnowsBpRadio",
+        "change #knows_bp_radio_f" : "handleKnowsBpRadio"
+    },
+    handleKnowsBpRadio : function(event, data) {
+        var $input = $(event.currentTarget);
+        if (!$input.prop("checked")) {
+            return;
+        }
+        this.updateNextTarget($input);
+    },
+    updateNextTarget : function($selectedRadio) {
+        var page = $selectedRadio.val() === "true" ? "#blood_pressure" : "#knows_chol";
+        $(".nextbtn", this.el).attr("href", page);
+    }
+});
+
+var SurveyKnowsCholView = SurveyView.extend({
+    initialize : function() {
+        this.events = _.extend({}, this.moreEvents, this.events);
+        this.delegateEvents();
+        this.updateNextTarget($("input[name='knows_chol']:checked", this.el));
+    },
+    moreEvents : {
+        "change #knows_chol_radio_t" : "handleKnowsCholRadio",
+        "change #knows_chol_radio_f" : "handleKnowsCholRadio"
+    },
+    handleKnowsCholRadio : function(event, data) {
+        var $input = $(event.currentTarget);
+        if (!$input.prop("checked")) {
+            return;
+        }
+        this.updateNextTarget($input);
+    },
+    updateNextTarget : function($selectedRadio) {
+        var page = $selectedRadio.val() === "true" ? "#cholesterol" : "#assessment";
+        $(".nextbtn", this.el).attr("href", page);
     }
 });
 
@@ -357,18 +411,19 @@ $(document).ready(function() {
 
     // create a view for each survey page to handle user input
     for (var pageId in UI_MAP) {
+        var viewArgs = {
+            el : $("#" + pageId),
+            inputMap : UI_MAP[pageId],
+            model : gCurrentUser
+        };
         if (pageId === "history") {
-            new SurveyHistoryView({
-                el : $("#" + pageId),
-                inputMap : UI_MAP[pageId],
-                model : gCurrentUser
-            });
+            new SurveyHistoryView(viewArgs);
+        } else if (pageId === "knows_bp") {
+            new SurveyKnowsBpView(viewArgs);
+        } else if (pageId === "knows_chol") {
+            new SurveyKnowsCholView(viewArgs);
         } else {
-            new SurveyView({
-                el : $("#" + pageId),
-                inputMap : UI_MAP[pageId],
-                model : gCurrentUser
-            });
+            new SurveyView(viewArgs);
         }
     }
 });
