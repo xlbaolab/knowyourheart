@@ -25,7 +25,7 @@ console.debug("loading main.js")
  * Constants
  */
 
-ARCHIMEDES_URL = "https://demo-indigo4health.rchimedesmodel.com/IndiGO4Health/IndiGO4Health";
+ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health";
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
