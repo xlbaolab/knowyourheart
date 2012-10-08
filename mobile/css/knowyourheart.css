@@ -462,6 +462,29 @@ fieldset .ui-btn-inner {
     padding: 0 20% 0 20%;
 }
 
+/*ASSESSMENT SCREEN */
+.risk_score {
+	text-align: center;	
+	padding-bottom: 20px;
+}
+
+#heart_meter {
+	text-align: center;
+}
+
+.nextsteps {
+    color: #32a7da;
+    font-size: 0.8em;
+    font-weight: normal;
+    font-family: "MuseoSans500Regular", sans-serif;
+   white-space: pre-wrap;      /* CSS3 */   
+   white-space: -moz-pre-wrap; /* Firefox */    
+   white-space: -pre-wrap;     /* Opera <7 */   
+   white-space: -o-pre-wrap;   /* Opera 7 */    
+   word-wrap: break-word;      /* IE */
+}
+ 
+
 /*LOCATION Screen */
 .locationData {
     position: relative;
