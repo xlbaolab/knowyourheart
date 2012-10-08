@@ -265,10 +265,19 @@ function doFirstPageInit() {
         }
     }
 
+    new ProfileView({
+        el : $("#basic_profile"),
+        model : gCurrentUser
+    });
+
     new ResultView({
         el : $("#assessment"),
         model : gCurrentUser
     });
+}
+
+function isNonEmptyString(s) {
+    return s && (s !== "");
 }
 
 function loadSurveyPage(page, user, uiMap) {
@@ -316,9 +325,72 @@ function loadSurveyPage(page, user, uiMap) {
 /*
  * Views
  */
+var ProfileView = Backbone.View.extend({
+    initialize : function() {
+    },
+    events : {
+        "pagebeforeshow" : "updateView"
+    },
+    updateView : function(event, data) {
+        var page = this.el;
+        var text;
+
+        var age = this.model.get("age");
+        $("#profile_age", page).text(isNonEmptyString(age) ? age : "");
+
+        var gender = this.model.get("gender");
+        text = isNonEmptyString(gender) ? (gender === "M" ? "Male" : "Female") : "";
+        $("#profile_gender", page).text(text);
+
+        var height_ft = this.model.get("height_ft");
+        var height_in = this.model.get("height_in");
+        text = (isNonEmptyString(height_ft) && isNonEmptyString(height_in)) ? height_ft + "' " + height_in + "\"" : "";
+        $("#profile_height", page).text(text);
+
+        var weight = this.model.get("weight");
+        $("#profile_weight", page).text(isNonEmptyString(weight) ? weight + " lbs" : "");
+
+        var smoker = this.model.get("smoker");
+        text = isNonEmptyString(smoker) ? (smoker === "true" ? "Yes" : "No") : "";
+        $("#profile_smoker", page).text(text);
+
+        text = "";
+        if (this.model.get("ami") === "true") {
+            text += "Heart Attack";
+        }
+        if (this.model.get("stroke") === "true") {
+            text += text.length === 0 ? "" : ", ";
+            text += "Stroke";
+        }
+        if (this.model.get("diabetes") === "true") {
+            text += text.length === 0 ? "" : ", ";
+            text += "Diabetes";
+        }
+        $("#profile_history", page).text(text);
+
+        var systolic = this.model.get("systolic");
+        var diastolic = this.model.get("diastolic");
+        if (isNonEmptyString(systolic) && isNonEmptyString(diastolic)) {
+            text = systolic + "/" + diastolic;
+        } else {
+            text = "";
+        }
+        $("#profile_bp", page).text(text);
+
+        var chol = this.model.get("cholesterol");
+        var hdl = this.model.get("hdl");
+        var ldl = this.model.get("ldl");
+        if (isNonEmptyString(chol) && isNonEmptyString(hdl) && isNonEmptyString(ldl)) {
+            text = chol + " | " + hdl + " | " + ldl;
+        } else {
+            text = "";
+        }
+        $("#profile_chol", page).text(text);
+    }
+});
+
 var ResultView = Backbone.View.extend({
     initialize : function() {
-
     },
     events : {
         "pagebeforeshow" : "updateView"
@@ -529,7 +601,7 @@ $(document).on("pageloadfailed", function(event, data) {
 
 $(document).on("pagebeforechange", function(event, data) {
     var page = data.toPage;
-    console.debug("\n\npagebeforechange - " + (_.isString(page) ? page : page.attr("id")));
+    console.debug((_.isString(page) ? "\n\n" : "") + "pagebeforechange - " + (_.isString(page) ? page : page.attr("id")));
 });
 $(document).on("pagechange", function(event, data) {
     var page = data.toPage;

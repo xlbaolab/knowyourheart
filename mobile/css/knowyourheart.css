@@ -389,7 +389,7 @@ a#dashboardShareBtn:active {
 }
 
 /*remove blue background of tab bar */
-#profile .ui-footer.ui-bar-a, #page37 .ui-footer.ui-bar-a {
+#basic_profile .ui-footer.ui-bar-a, #page37 .ui-footer.ui-bar-a {
     border: 0px;
 }
 
