@@ -68,6 +68,27 @@ var UI_MAP = {
         "total_chol_slider" : "cholesterol",
         "hdl_slider" : "hdl",
         "ldl_slider" : "ldl"
+    },
+    "page38" : {
+        "toggleswitch13" : "bloodpressuremeds"
+    },
+    "page36" : {
+        "bp_meds_slider" : "bloodpressuremedcount"
+    },
+    "page39" : {
+        "toggleswitch14" : "cholesterolmeds"
+    },
+    "page40" : {
+        "toggleswitch17" : "aspirin"
+    },
+    "page42" : {
+        "slider18" : "vigorousexercise"
+    },
+    "page41" : {
+        "slider17" : "moderateexercise"
+    },
+    "page43" : {
+        "toggleswitch19" : "familymihistory"
     }
 };
 
@@ -414,7 +435,7 @@ var SurveyView = Backbone.View.extend({
     },
     handleChange : function(event, data) {
         var $input = $(event.currentTarget);
-        // console.log($input.prop("nodeName"));
+        // console.log($input.prop("nodeName") + " " + event.currentTarget.id);
         if ($input.prop("type") === "radio" && !$input.prop("checked")) {
             return;
         }
