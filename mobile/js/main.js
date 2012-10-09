@@ -203,17 +203,20 @@ function createUser(user, callbacks) {
 }
 
 var RISK_IMAGES = {
-    1 : "images/heart_thermometer_low2.png",
-    2 : "images/heart_thermometer_moderate2.png",
-    3 : "images/heart_thermometer_high2.png",
-    4 : "images/heart_thermometer_urgent2.png",
-    5 : "images/heart_thermometer_critical2.png"
+
+    1 : {background: "url(images/heartmeter_sprite.png) no-repeat 0 0"},
+    2 : {background: "url(images/heartmeter_sprite.png) no-repeat -231px 0"},
+    3 : {background: "url(images/heartmeter_sprite.png) no-repeat -462px 0"},
+    4 : {background: "url(images/heartmeter_sprite.png) no-repeat -693px 0"},
+    5 : {background: "url(images/heartmeter_sprite.png) no-repeat -924px 0"}
+
 }
+
 
 function calculateRisk(page, user) {
     var $error = $("#risk_error", page);
     var $loader = $("#circularG", page);
-    var $risk = $("#risk_img", page);
+    var $risk = $("#heart_meter", page);
 
     $error.hide();
     $risk.hide();
@@ -233,7 +236,7 @@ function calculateRisk(page, user) {
         console.dir(data);
 
         // update risk content
-        $risk.prop("src", RISK_IMAGES[data.Risk[0].rating]);
+        $risk.css(RISK_IMAGES[data.Risk[0].rating]);
         $("#5_year_risk", page).html(data.Risk[0].risk);
         $loader.fadeOut("slow", function() {
             $risk.fadeIn("slow");

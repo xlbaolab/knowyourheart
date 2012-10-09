@@ -462,6 +462,32 @@ fieldset .ui-btn-inner {
     padding: 0 20% 0 20%;
 }
 
+/*EXTRA: BP SCREEN */
+#page38 .qanda, #page39 .qanda, #page40 .qanda {
+    text-align: left;
+	font-size: 0.8em;
+    padding: 0 20% 0 20%;
+	
+}
+
+
+/*EXTRA: ACTIVITY SCREEN */
+#page41 .qanda, #page42 .qanda  {
+    text-align: left;
+	font-size: 0.8em;
+    padding: 0 20% 0 20%;
+	
+}
+
+/*EXTRA: FAMILY SCREEN */
+#page43 .qanda  {
+	text-align: left;
+	font-size: 0.8em;
+    padding: 0 20% 0 20%;
+	
+}
+
+
 /*ASSESSMENT SCREEN */
 .risk_score {
 	text-align: center;	
@@ -470,10 +496,12 @@ fieldset .ui-btn-inner {
 
 #heart_meter {
 	text-align: center;
+	height: 94px;
+	width: 231px;
 }
 
 .nextsteps {
-    color: #32a7da;
+    color: #d00313;
     font-size: 0.8em;
     font-weight: normal;
     font-family: "MuseoSans500Regular", sans-serif;
@@ -519,6 +547,21 @@ fieldset .ui-btn-inner {
     top: 50%;
     width: 62px;
     zoom: 1;
+}
+
+/* ACTION SCREEN */
+#page27 .ui-content {
+padding: 0;
+}
+
+#page27 .ui-collapsible-set {
+text-align: left;
+
+}
+
+#page27 div.ui-collapsible.ui-collapsible-collapsed {
+/*padding: 0 20px 0 20px	;*/
+text-align: left;
 }
 
 /* HELP ICON */

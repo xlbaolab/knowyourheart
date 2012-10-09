@@ -21,7 +21,9 @@
         </style> -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>
+        <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>-->
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+        
         <script src="js/my.js"></script>
 
         <script type="text/javascript" src="http://static.stackmob.com/js/json2-min.js"></script>
@@ -107,7 +109,7 @@
                         Assessment
                     </div>
                     <div class="ui-block-c" style="text-align: center;">
-                        <a id="dashboardShareBtn" data-transition="fade" href="#page18"></a>
+                        <a id="dashboardShareBtn" data-transition="slideup" href="#share"></a>
                         Share
                     </div>
                 </div>
@@ -135,6 +137,22 @@
                 </ul>
             </div>
         </div>
+        <!-- share -->
+        <div data-role="page" data-theme="a" id="share">
+            <div data-theme="a" data-role="header">
+                <h2> Share </h2>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
+                href="#page32" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+            </div>
+            <div data-role="content">
+            	<p>
+            		Raise awareness about heart disease with your family and friends.
+            	</p>
+				<a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" href="mailto:?subject=Inviting you to learn about your risk for heart disease &body=KnowYourHeart provided me with my heart risk score.  http%3A%2F%2Fknowyourheart.info">Email</a>      
+				<a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" href="http://m.facebook.com/sharer.php?u=knowyourheart.info&i=m.knowyourheart.info/image/logo.png&d=I just learned about my risk for heart disease.  Do you know yours?">Share on Facebook</a>      
+				<a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" href="http://twitter.com/share?text=Just learned about my risk for heart disease. Do you know yours? http://knowyourheart.info">Share on Twitter</a>       
+            </div>
+        </div>        
         <!-- Profile BASIC STRIPED-->
         <div data-role="page" data-theme="a" id="page34">
             <div data-theme="a" data-role="header">
@@ -249,13 +267,13 @@
                         </div> </a>
                     </li>
                     <li data-theme="f">
-                        <a href="#page41" data-transition="slide"> Weekly Moderate Exercise
+                        <a href="#page41" data-transition="slide"> Weekly Moderate Activity
                         <div>
                             <span class="profileData"> 5 hours </span>
                         </div> </a>
                     </li>
                     <li data-theme="e">
-                        <a href="#page42" data-transition="slide"> Weekly Vigorous Exercise
+                        <a href="#page42" data-transition="slide"> Weekly Vigorous Activity
                         <div>
                             <span class="profileData"> 10 hours </span>
                         </div> </a>
@@ -294,7 +312,7 @@
                 <!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page34"
                 data-icon="profile" data-iconpos="notext" class="ui-btn-right"> Profile </a>
                 -->
-                <a data-role="button" data-direction="reverse" data-rel="back" data-transition="none"
+                <a data-role="button" data-direction="reverse" data-rel="back"
                 data-theme="c" href="#page2" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
@@ -810,7 +828,6 @@
             <div data-role="content">
                 <div class="risk_score">
 					<div id="heart_meter">
-                    <img id="risk_img" src="images/heart_thermometer_moderate2.png">
                     </div>
                     <div id="circularG">
                         <div id="circularG_1" class="circularG"></div>
@@ -863,10 +880,8 @@
                 <!-- END Incomplete Result -->
                 <!-- START Complete Result -->
                 <div class="risk_score">
-                
-                <div id="heart_meter">
-                    <img src="images/heart_thermometer_moderate2.png">
-                </div>
+					<div id="heart_meter">
+                    </div>
                    <p id="risk_error">
                         An error occured during risk calculation.
                     </p>
@@ -891,9 +906,14 @@
                     </li>
                     <li data-theme="f">
                         <a href="#" data-transition="slide">Get Rewards
-                        	<div class="nextsteps">Enter to win a free Apple iPad</div>
+                        	<div class="nextsteps">Enter to win an Apple iPad</div>
                         </a>
                     </li>              
+                    <li data-theme="e">
+                        <a href="#" data-transition="slide">Share
+                        	<div class="nextsteps">Get your friends and family to learn their risk</div>
+                        </a>
+                    </li>   
                 </ul>                	
                 </div>
 
@@ -1018,50 +1038,72 @@
         <div data-role="page" data-theme="a" id="page27">
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h2> Lower Your Risk </h2>
-                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext"
-                class="ui-btn-right"> Home </a>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
                 href="#assessment" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <h2> Your current risk is 45% </h2>
-                <h4> Lower your risk to </h4>
-                <div data-role="collapsible-set">
-                    <div data-role="collapsible" data-collapsed="true">
-                        <h3> 35% by exercising </h3>
+				<p>These interventions can modify your risk of developing heart disease</p>
+                <div data-role="collapsible-set" data-inset="false">
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> +10% if not taking medication </h3>
                         <div>
                             <p>
-                                Adding three hours of moderate exercise such as brisk walking to your
-                                weekly routine will reduce
-                                <br>
-                                your risk by __%.
+                                It is important to be consistent about the medications you are currently taking to reduce your blood pressure or cholesterol.  
+                                Based on the information you have entered, your risk could increase to 50%.
                             </p>
                         </div>
                     </div>
-                    <div data-role="collapsible" data-collapsed="true">
-                        <h3> 40% by dieting </h3>
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> -5% by using medication </h3>
+                        <div>
+                            <p>
+                                A doctor may be able to reduce your risk to 30% by managing your blood pressure and cholesterol
+                            </p>
+                        </div>
+                    </div>
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> -10% with additional 3 hours / week of moderate exercise </h3>
+                        <div>
+                            <p>
+								Adding three hours of moderate exercise such as brisk walking to your weekly routine will reduce your risk to 30%
+                            </p>
+                        </div>
+                    </div>
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> -15% with additional 3 hours / week of vigorous exercise </h3>
+                        <div>
+                            <p>
+								Adding six hours of moderate exercise or three hours of vigorous exercise such as running to your weekly routine 
+								will reduce your risk to 25%
+                            </p>
+                        </div>
+                    </div>
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> -5% by losing weight </h3>
                         <div>
                             <p>
                                 If you lose 11 (5%) pounds and do not regain it
                             </p>
                         </div>
                     </div>
-                    <div data-role="collapsible" data-collapsed="true">
-                        <h3> 30% by stopping smoking </h3>
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> -20% by quitting smoking </h3>
                         <div>
                             <p>
                                 If you quit smoking you will reduce your risk by __%
                             </p>
                         </div>
                     </div>
-                    <div data-role="collapsible" data-collapsed="true">
-                        <h3> 25% by doing everything </h3>
+                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+                        <h3> -35% by doing everything </h3>
                         <div>
                             <p>
                                 If you do all of the above you could reduce your risk by __%
                             </p>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -1110,6 +1152,7 @@
             </div>
             <div data-role="content">
                 <h3> Are you currently on any medication to treat high blood pressure? </h3>
+				<div class="qanda">
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <select name="toggleswitch13" id="toggleswitch13" data-theme="" data-role="slider">
@@ -1117,6 +1160,7 @@
                             <option value="true"> Yes </option>
                         </select>
                     </fieldset>
+                </div>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page36"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
@@ -1155,6 +1199,7 @@
             </div>
             <div data-role="content">
                 <h3> Are you currently on medication to lower your cholesterol? </h3>
+                <div class="qanda">
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <select name="toggleswitch14" id="toggleswitch14" data-theme="" data-role="slider">
@@ -1162,6 +1207,7 @@
                             <option value="true"> Yes </option>
                         </select>
                     </fieldset>
+                </div>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page40"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
@@ -1180,12 +1226,14 @@
             <div data-role="content">
                 <h3> Do you take aspirin daily for your heart? </h3>
                 <div data-role="fieldcontain">
+                	<div class="qanda">
                     <fieldset data-role="controlgroup">
                         <select name="toggleswitch17" id="toggleswitch17" data-theme="" data-role="slider">
                             <option value="false"> No </option>
                             <option value="true"> Yes </option>
                         </select>
                     </fieldset>
+                </div>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page41"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
@@ -1196,7 +1244,7 @@
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
                 href="#page41" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-                <h2> Vigorous Exercise </h2>
+                <h2> Vigorous Activity </h2>
                 <!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
                 -->
@@ -1204,13 +1252,21 @@
             <div data-role="content">
                 <h3> How many hours do you spend doing vigorous physical activities in a typical
                 week? </h3>
-                <div>
-                    <a href="" data-transition="fade"> <span rel="tooltip" title="Need to pause to breathe while speaking">What is vigorous exercise?</span> </a>
+
+                <div class="qanda">
+                    <p>
+                        <span>Vigorous activity means you are breathing hard and fast, your heart rate has gone up, and you will need to pause to breathe while speaking.
+                        </span>
+					</p>
+                    <p>
+                        <span>Examples include jogging, swimming laps, playing tennis</span>
+					</p>
                 </div>
+
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="slider18"> Hours </label>
-                        <input type="range" name="slider" value="0" min="0" max="20" data-highlight="false">
+                        <label for="slider18" class="ui-hidden-accessible"> Hours </label>
+                        <input type="range" name="slider18" value="0" min="0" max="20" data-highlight="false">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
@@ -1222,7 +1278,7 @@
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
                 href="#page41" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-                <h2> Moderate Exercise </h2>
+                <h2> Moderate Activity </h2>
                 <!--                <a data-role="button" data-transition="flip" data-theme="c" href="#page37"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Button </a>
                 -->
@@ -1230,13 +1286,20 @@
             <div data-role="content">
                 <h3> How many hours do you spend doing moderate physical activities in a typical
                 week? </h3>
-                <div>
-                    <a href="" data-transition="fade"> <span rel="tooltip" title="A light sweat without being out of breath after 10 minutes of activity">What is moderate exercise?</span> </a>
+
+                <div class="qanda">
+                    <p>
+                        <span>Moderate activity results in a light sweat without being out of breath after 10 minutes of activity  </span>
+					</p>
+                    <p>
+                        <span>Examples include brisk walking, bicycling, raking leaves, and gardening</span>
+					</p>
                 </div>
+
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <label for="slider17"> Hours </label>
-                        <input type="range" name="slider" value="0" min="0" max="20" data-highlight="false">
+                        <label for="slider17" class="ui-hidden-accessible"> Moderate Exercise </label>
+                        <input type="range" name="slider17" value="0" min="0" max="20" data-highlight="false">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page42"
@@ -1254,8 +1317,12 @@
                 -->
             </div>
             <div data-role="content">
-                <h3> Have any of your first-degree relatives (parent, full-blooded brother
-                or sister, or child) had a heart attack before the age of 55? </h3>
+                <h3> Have any of your first-degree relatives had a heart attack before the age of 55? </h3>
+
+                <div class="qanda">
+                    <p>
+                        <span>(i.e. parent, full-blooded brother or sister, or child)</span>
+					</p>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
 
@@ -1265,6 +1332,8 @@
                         </select>
                     </fieldset>
                 </div>
+                </div>
+
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page37"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
