@@ -175,6 +175,23 @@ var USER_DEFAULTS = {
     knows_chol : "false",
     last_survey_page : ""
 };
+var RISK_IMAGES = {
+    1 : {
+        background : "url(images/heartmeter_sprite.png) no-repeat 0 0"
+    },
+    2 : {
+        background : "url(images/heartmeter_sprite.png) no-repeat -231px 0"
+    },
+    3 : {
+        background : "url(images/heartmeter_sprite.png) no-repeat -462px 0"
+    },
+    4 : {
+        background : "url(images/heartmeter_sprite.png) no-repeat -693px 0"
+    },
+    5 : {
+        background : "url(images/heartmeter_sprite.png) no-repeat -924px 0"
+    }
+}
 
 /*
  * Globals
@@ -183,12 +200,19 @@ var gCurrentUser = null;
 var gIsFirstPageInit = true;
 
 /*
- * Functions
+ * Utility Functions
  */
 function generateRandomString() {
     return Math.random().toString(36).substring(2);
 }
 
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+
+/*
+ * Functions
+ */
 function createUser(user, callbacks) {
     if (_.isUndefined(callbacks)) {
         callbacks = {
@@ -222,17 +246,6 @@ function createUser(user, callbacks) {
     user.create(callbacks);
     return user;
 }
-
-var RISK_IMAGES = {
-
-    1 : {background: "url(images/heartmeter_sprite.png) no-repeat 0 0"},
-    2 : {background: "url(images/heartmeter_sprite.png) no-repeat -231px 0"},
-    3 : {background: "url(images/heartmeter_sprite.png) no-repeat -462px 0"},
-    4 : {background: "url(images/heartmeter_sprite.png) no-repeat -693px 0"},
-    5 : {background: "url(images/heartmeter_sprite.png) no-repeat -924px 0"}
-
-}
-
 
 function calculateRisk(page, user) {
     var $error = $("#risk_error", page);
@@ -300,52 +313,6 @@ function doFirstPageInit() {
     });
 }
 
-function isNonEmptyString(s) {
-    return s && (s !== "");
-}
-
-function loadSurveyPage(page, user, uiMap) {
-    var incompleteForm = false;
-    var inputMap = uiMap[page.id];
-
-    if (!inputMap) {
-        return;
-    }
-
-    for (var input in inputMap) {
-        var userField = inputMap[input];
-        var val = user.get(userField) || "";
-        var $input = $("#" + input);
-        console.debug("loaded " + userField + "=" + val);
-
-        // remember what we loaded so we know if it changes
-        $input.prop("loadedValue", val);
-
-        if (val === "") {
-            incompleteForm = true;
-            continue;
-        }
-
-        if ($input.prop("nodeName").toLowerCase() === "input") {
-            if ($input.prop("type") === "radio") {
-                if ($input.val() === val) {
-                    $input.prop("checked", true)
-                }
-            } else {
-                // type = text, number
-                $input.val(val);
-            }
-        } else {
-            // $input.prop("nodeName").toLowerCase() === "select"
-            $input.val(val);
-        }
-    }
-
-    if (incompleteForm) {
-        $(page).find(".nextbtn").addClass("ui-disabled");
-    }
-}
-
 /*
  * Views
  */
@@ -360,22 +327,22 @@ var ProfileView = Backbone.View.extend({
         var text;
 
         var age = this.model.get("age");
-        $("#profile_age", page).text(isNonEmptyString(age) ? age : "");
+        $("#profile_age", page).text(isBlank(age) ? "" : age);
 
         var gender = this.model.get("gender");
-        text = isNonEmptyString(gender) ? (gender === "M" ? "Male" : "Female") : "";
+        text = isBlank(gender) ? "" : (gender === "M" ? "Male" : "Female");
         $("#profile_gender", page).text(text);
 
         var height_ft = this.model.get("height_ft");
         var height_in = this.model.get("height_in");
-        text = (isNonEmptyString(height_ft) && isNonEmptyString(height_in)) ? height_ft + "' " + height_in + "\"" : "";
+        text = (isBlank(height_ft) || isBlank(height_in)) ? "" : height_ft + "' " + height_in + "\"";
         $("#profile_height", page).text(text);
 
         var weight = this.model.get("weight");
-        $("#profile_weight", page).text(isNonEmptyString(weight) ? weight + " lbs" : "");
+        $("#profile_weight", page).text(isBlank(weight) ? "" : weight + " lbs");
 
         var smoker = this.model.get("smoker");
-        text = isNonEmptyString(smoker) ? (smoker === "true" ? "Yes" : "No") : "";
+        text = isBlank(smoker) ? "" : (smoker === "true" ? "Yes" : "No");
         $("#profile_smoker", page).text(text);
 
         text = "";
@@ -394,21 +361,13 @@ var ProfileView = Backbone.View.extend({
 
         var systolic = this.model.get("systolic");
         var diastolic = this.model.get("diastolic");
-        if (isNonEmptyString(systolic) && isNonEmptyString(diastolic)) {
-            text = systolic + "/" + diastolic;
-        } else {
-            text = "";
-        }
+        text = (isBlank(systolic) || isBlank(diastolic)) ? "" : systolic + "/" + diastolic;
         $("#profile_bp", page).text(text);
 
         var chol = this.model.get("cholesterol");
         var hdl = this.model.get("hdl");
         var ldl = this.model.get("ldl");
-        if (isNonEmptyString(chol) && isNonEmptyString(hdl) && isNonEmptyString(ldl)) {
-            text = chol + " | " + hdl + " | " + ldl;
-        } else {
-            text = "";
-        }
+        text = (isBlank(chol) || isBlank(hdl) || isBlank(ldl)) ? "" : chol + " | " + hdl + " | " + ldl;
         $("#profile_chol", page).text(text);
     }
 });
@@ -426,7 +385,39 @@ var ResultView = Backbone.View.extend({
 
 var SurveyView = Backbone.View.extend({
     initialize : function() {
-        loadSurveyPage(this.el, this.model, UI_MAP);
+        var incompleteForm = false;
+
+        for (var input in this.options.inputMap) {
+            var userFieldName = this.options.inputMap[input];
+            var val = this.model.get(userFieldName) || "";
+            var $input = $("#" + input);
+
+            console.debug("loadeding " + userFieldName + "=" + val);
+
+            // remember what we loaded so we know if it changes
+            $input.prop("loadedValue", val);
+
+            if (val === "") {
+                incompleteForm = true;
+                continue;
+            }
+
+            if ($input.prop("nodeName").toLowerCase() === "input") {
+                if ($input.prop("type") === "radio") {
+                    if ($input.val() === val) {
+                        $input.prop("checked", true)
+                    }
+                } else {
+                    // type = text, number
+                    $input.val(val);
+                }
+            } else {
+                // $input.prop("nodeName").toLowerCase() === "select"
+                $input.val(val);
+            }
+        }
+
+        this.setNextButtonEnabled(!incompleteForm);
     },
     events : {
         "change input[type=radio]" : "handleChange",
@@ -447,21 +438,15 @@ var SurveyView = Backbone.View.extend({
         o[userField] = $input.val();
         this.model.set(o);
 
-        var missingInput = false;
+        var incompleteForm = false;
         for (var inputId in this.options.inputMap) {
-            var val = this.model.get(this.options.inputMap[inputId]);
-            if (_.isUndefined(val) || val === "") {
-                missingInput = true;
+            if (!this.validate(inputId)) {
+                incompleteForm = true;
                 break;
             }
         }
 
-        var $nextBtn = $.mobile.activePage.find(".nextbtn");
-        if (!missingInput) {
-            $nextBtn.removeClass("ui-disabled");
-        } else if (!$nextBtn.hasClass("ui-disabled")) {
-            $nextBtn.addClass("ui-disabled");
-        }
+        this.setNextButtonEnabled(!incompleteForm);
     },
     handlePageBeforeHide : function(event, data) {
         // save if input changed
@@ -491,6 +476,20 @@ var SurveyView = Backbone.View.extend({
         $nextPage.find("input[type=radio]").checkboxradio("refresh");
         $nextPage.find("input[type=number], select[data-role=slider]").slider("refresh");
         $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
+    },
+    setNextButtonEnabled : function(enabled) {
+        var $nextBtn = $(".nextbtn", this.el);
+
+        if (enabled) {
+            $nextBtn.removeClass("ui-disabled");
+        } else {
+            if (!$nextBtn.hasClass("ui-disabled")) {
+                $nextBtn.addClass("ui-disabled");
+            }
+        }
+    },
+    validate : function(inputId) {
+        return !isBlank(this.model.get(this.options.inputMap[inputId]));
     }
 });
 
@@ -499,20 +498,36 @@ var SurveyHistoryView = SurveyView.extend({
         SurveyView.prototype.initialize.call(this);
         this.events = _.extend({}, this.moreEvents, this.events);
         this.delegateEvents();
-        this.updateDiabetesVis($("#diabetes_toggle", this.el));
+        this.updateDiabetesVis(this.getToggleButton());
     },
     moreEvents : {
         "change #diabetes_toggle" : "handleDiabetesToggle"
+    },
+    getToggleButton : function() {
+        return $("#diabetes_toggle", this.el);
     },
     handleDiabetesToggle : function(event, data) {
         this.updateDiabetesVis($(event.currentTarget));
     },
     updateDiabetesVis : function($toggle) {
+        $nextBtn = $(this.el).find(".nextbtn");
+
         if ($toggle.val() === "true") {
             $(".hba1c", this.el).show();
         } else {
             $(".hba1c", this.el).hide();
         }
+    },
+    validate : function(inputId) {
+        if (inputId !== "hba1c_field") {
+            return SurveyView.prototype.validate.call(this, inputId);
+        }
+
+        var valid = true;
+        if (this.getToggleButton().val() === "true") {
+            valid = $.isNumeric($("#hba1c_field", this.el).val())
+        }
+        return valid;
     }
 });
 
@@ -582,7 +597,7 @@ StackMob.Model.prototype.sync = function(method, model, options) {
 };
 
 // init user
-if (localStorage["currentUsername"] == null) {
+if (localStorage["currentUsername"] === null) {
     console.info("user not found in localStorage - creating one");
 
     createUser();

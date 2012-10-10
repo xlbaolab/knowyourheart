@@ -10,7 +10,7 @@ $(function(){
 	var remotefont = "museo-slab";
 
 /*	
-	if (host == "local") {
+	if (host === "local") {
 		$('body').css("font-family", localslab);
 		$('h2, h3').css("font-family", localslab);
 		$('.header').css("font-family", localslab);
@@ -44,7 +44,7 @@ $(function(){
 
 	/* Show HbA1c entry if DIABETES is YES */
 	/*$('select#diabetes_toggle').change(function() {
-	    if($(this).val() == "true"){
+	    if($(this).val() === "true"){
 	        $('.hba1c').show();
 	        val = $(this).val();
 	    }
@@ -68,7 +68,7 @@ $( document ).ready( function()
         tip     = target.attr( 'title' );
         tooltip = $( '<div id="tooltip"></div>' );
  
-        if( !tip || tip == '' )
+        if( !tip || tip === '' )
             return false;
  
         target.removeAttr( 'title' );

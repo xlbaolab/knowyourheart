@@ -385,7 +385,6 @@ a#dashboardShareBtn:active {
 }
 
 .ui-li .ui-btn-inner a.ui-link-inherit, .ui-li-static.ui-li {
-    padding: 1em;
 }
 
 /*remove blue background of tab bar */
@@ -501,16 +500,16 @@ fieldset .ui-btn-inner {
 }
 
 .nextsteps {
+	position: auto;
+	width: 100%;
+	overflow: hidden;
     color: #d00313;
     font-size: 0.8em;
     font-weight: normal;
     font-family: "MuseoSans500Regular", sans-serif;
-   white-space: pre-wrap;      /* CSS3 */   
-   white-space: -moz-pre-wrap; /* Firefox */    
-   white-space: -pre-wrap;     /* Opera <7 */   
-   white-space: -o-pre-wrap;   /* Opera 7 */    
-   word-wrap: break-word;      /* IE */
-}
+    white-space: normal;
+
+ }
  
 
 /*LOCATION Screen */
