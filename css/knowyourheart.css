@@ -35,21 +35,21 @@ div {
 }
 
 .ui-header .ui-title {
-    font-size: 1em;
+    font-size: medium;
     font-weight: normal;
     /*	margin: 0.4em 30% 0.6em; */
     color: #ffffff;
 }
 
 h3 {
-    font-size: 1.7em;
+    font-size: x-large;
     color: #474849;
     text-align: center;
     font-weight: normal;
 }
 
 .helper_text {
-    font-size: 0.8em;
+    font-size: small;
 }
 
 .ui-br {
@@ -64,6 +64,8 @@ h3 {
 #page21 .ui-content {
     text-align: left;
 }
+
+
 
 .ui-field-contain .ui-controlgroup-controls {
     width: 100%;
@@ -243,6 +245,11 @@ a.nextbtn.ui-btn-corner-all {
     background-image: url('../images/icon-rarrow-18x18.png');
 }
 
+.ui-icon-assessment {
+    background-image: url('../images/icon-assessment-18x18.png');
+}
+
+
 /*START PAGE */
 .knh-logo {
     background-image: url('../images/knh-logo.png');
@@ -395,7 +402,7 @@ a#dashboardShareBtn:active {
 .profileData {
     position: relative;
     color: #32a7da;
-    font-size: 0.8em;
+    font-size: small;
     font-weight: normal;
     padding: .2em .5em;
     top: 50%;
@@ -423,7 +430,7 @@ a#dashboardShareBtn:active {
 }
 
 fieldset .ui-btn-inner {
-    font-size: 1em;
+    font-size: medium;
     font-weight: 500;
 }
 
@@ -464,7 +471,7 @@ fieldset .ui-btn-inner {
 /*EXTRA: BP SCREEN */
 #page38 .qanda, #page39 .qanda, #page40 .qanda {
     text-align: left;
-	font-size: 0.8em;
+	font-size: small;
     padding: 0 20% 0 20%;
 	
 }
@@ -473,7 +480,7 @@ fieldset .ui-btn-inner {
 /*EXTRA: ACTIVITY SCREEN */
 #page41 .qanda, #page42 .qanda  {
     text-align: left;
-	font-size: 0.8em;
+	font-size: small;
     padding: 0 20% 0 20%;
 	
 }
@@ -481,7 +488,7 @@ fieldset .ui-btn-inner {
 /*EXTRA: FAMILY SCREEN */
 #page43 .qanda  {
 	text-align: left;
-	font-size: 0.8em;
+	font-size: small;
     padding: 0 20% 0 20%;
 	
 }
@@ -503,12 +510,16 @@ fieldset .ui-btn-inner {
 	position: auto;
 	width: 100%;
 	overflow: hidden;
-    color: #d00313;
-    font-size: 0.8em;
+    color: #32a7da;
+    font-size: small;
     font-weight: normal;
     font-family: "MuseoSans500Regular", sans-serif;
     white-space: normal;
 
+ }
+ 
+ .red {
+ 	color: #d00313;
  }
  
 
@@ -516,7 +527,8 @@ fieldset .ui-btn-inner {
 .locationData {
     position: relative;
     color: #32a7da;
-    font-size: 0.8em;
+    font-family: "MuseoSans500Regular", sans-serif;
+    font-size: small;
     font-weight: normal;
     padding: .2em .5em;
     top: 50%;
@@ -533,7 +545,7 @@ fieldset .ui-btn-inner {
     border-top-left-radius: 14px;
     border-top-right-radius: 14px;
     color: rgb(255, 255, 255);
-    font-size: 11px;
+    font-size: x-small;
     height: 13px;
     margin-left: 10px;
     padding-bottom: 2px;
@@ -553,22 +565,32 @@ fieldset .ui-btn-inner {
 padding: 0;
 }
 
-#page27 .ui-collapsible-set {
-text-align: left;
+#page27 .ui-content > p {
+padding: 0 10px 0 10px;
+}
 
+#page27 .action_accordion {
+	text-align: left;
+	padding: 0 10px 0  10px;
+	font-size: small;
 }
 
 #page27 div.ui-collapsible.ui-collapsible-collapsed {
-/*padding: 0 20px 0 20px	;*/
-text-align: left;
+	/*padding: 0 20px 0 20px	;*/
+	text-align: left;
 }
 
+#page27 a.ui-collapsible-heading-toggle.ui-btn.ui-btn-icon-left.ui-btn-up-a,
+#page27 a.ui-collapsible-heading-toggle.ui-btn.ui-btn-icon-left.ui-btn-hover-a {
+	height: 40px;
+	padding: 10px;
+}
 /* HELP ICON */
 
 .help-icon {
     background: url('../images/icon-help2.png');
-    height: 20px;
-    width: 20px;
+    height: 21px;
+    width: 21px;
     display: inline-block;
 }
 
@@ -576,13 +598,13 @@ text-align: left;
 #tooltip {
     font-family: "MuseoSans500Regular", sans-serif;
     font-weight: normal;
-    font-size: 0.8em;
+    font-size: small;
     text-align: center;
     color: #fff;
-    background: #111;
+    background: rgba(17,17,17,0.8);
     position: absolute;
     z-index: 100;
-    padding: 15px;
+    padding: 10px;
 }
 
 #tooltip:after/* triangle decoration */ {
@@ -590,7 +612,7 @@ text-align: left;
     height: 0;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 10px solid #111;
+    border-top: 10px solid rgba(17,17,17,0.8);
     content: '';
     position: absolute;
     left: 50%;
@@ -600,7 +622,7 @@ text-align: left;
 
 #tooltip.top:after {
     border-top-color: transparent;
-    border-bottom: 10px solid #111;
+    border-bottom: 10px solid rgba(17,17,17,0.8);
     top: -20px;
     bottom: auto;
 }

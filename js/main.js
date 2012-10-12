@@ -414,7 +414,7 @@ var SurveyView = Backbone.View.extend({
             } else {
                 // $input.prop("nodeName").toLowerCase() === "select"
                 $input.val(val);
-            }
+            }            
         }
 
         this.setNextButtonEnabled(!incompleteForm);

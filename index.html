@@ -42,7 +42,15 @@
         <!-- Add KNH: TypeKit tags -->
         <!--        <script type="text/javascript" src="//use.typekit.net/asz8qly.js"></script>
         <script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
-
+        
+        <!-- Mobiscroll -->
+        
+        <!--<script src="mobiscroll/js/mobiscroll.core-2.0.3.js" type="text/javascript"></script>
+		<link href="mobiscroll/css/mobiscroll.core-2.0.3.css" rel="stylesheet" type="text/css" />
+		<script src="mobiscroll/js/mobiscroll.select-2.0.2.js" type="text/javascript"></script>
+		<script src="mobiscroll/js/mobiscroll.jqm-2.0.2.js" type="text/javascript"></script>
+		<link href="mobiscroll/css/mobiscroll.jqm-2.0.2.css" rel="stylesheet" type="text/css" />
+-->
     </head>
 
     <body>
@@ -118,7 +126,7 @@
                     </li>
                     <li data-theme="f">
                         <a href="#page26" data-transition="slide">Find a health screening clinic
-                        <div class="nextsteps">
+                        <div class="nextsteps red">
                             Your blood pressure and cholesterol values are needed to accurately calculate your risk
                         </div></a>
                     </li>
@@ -160,7 +168,7 @@
                 class="ui-btn-left"> </a>
                 <h2>About You</h2>
                 <a data-role="button" data-direction="reverse" data-transition="fade"
-                data-theme="c" href="#assessment" data-icon="refresh" data-iconpos="left" class="ui-btn-right">Your Heart</a>
+                data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="notext" class="ui-btn-right"></a>
             </div>
             <div data-role="content">
                 <ul data-role="listview" data-divider-theme="b" data-inset="false">
@@ -412,6 +420,7 @@
                         </select>
                     </fieldset>
                 </div>
+
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page12"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
             </div>
@@ -840,7 +849,7 @@
                         </li>
                         <li data-theme="f">
                             <a href="#page26" data-transition="slide">Find a health screening clinic
-                            <div class="nextsteps">
+                            <div class="nextsteps red">
                                 Your blood pressure and cholesterol values are needed to accurately calculate your risk
                             </div></a>
                         </li>
@@ -929,6 +938,9 @@
                     </fieldset>
                 </div>
                 <br>
+                
+
+                
                 <ul data-role="listview" data-divider-theme="b" data-inset="false">
                     <li data-theme="f">
                         <a href="#page33" data-transition="slide"> Screening Tips </a>
@@ -968,25 +980,62 @@
                 href="#page33" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
+
                 <div>
-                    <p class="p1">
-                        Many pharmacies and clinics offer in-store health tests that measure blood
-                        pressure and cholesterol values.
-                    </p>
-                    <p class="p1">
-                        - Blood Pressure tests are usually free
-                    </p>
-                    <p class="p1">
-                        - Request a Full Lipid Panel that includes: Total Cholesterol, HDL, and
-                        LDL
-                    </p>
-                    <p class="p1">
-                        - For best results, do not eat 9-12 hours before cholesterol testing
-                    </p>
-                    <p class="p1">
-                        - Cost: about $35 without a coupon
-                    </p>
-                </div>
+			        <ul data-role="listview" data-divider-theme="b" data-inset="false">
+			            <li data-theme="f">
+			                Many pharmacies and clinics offer in-store health tests that measure blood
+                        	pressure and cholesterol values.
+			            </li>
+
+			            <li data-role="list-divider" role="heading">
+                        BLOOD PRESSURE TEST: FREE
+                        </li>
+			            <li data-theme="f">
+                        <p>
+                        	<strong>Procedure:</strong><br/>
+                        	Blood pressure monitor is wrapped around your arm.<br/>
+                        	The wrap is tightened and your blood pressure is measured with a device or stephoscope
+                        </p>
+                        </li>
+			            <li data-theme="e">
+                        <p>
+                        	<strong>Result:</strong><br/>
+                        	Two numbers will be given: systolic and diastolic .<br/>
+							
+                        </p>
+                        </li>
+			            <li data-role="list-divider" role="heading">
+                        CHOLESTEROL TEST: about $35
+                        </li>
+
+			            <li data-theme="f">
+	                        <p>Request a Full Lipid Panel that includes: Total Cholesterol, HDL, and
+	                        LDL
+	                        </p>
+                        </li>
+			            <li data-theme="e">
+                        	<p>For best results, do not eat 9-12 hours before cholesterol testing
+                        	</p>
+                        </li>
+			            <li data-theme="f">
+                        <p>
+                        	<strong>Procedure:</strong><br/>
+                        	Finger is pricked and blood sample is taken<br/>
+							The blood is then analyzed by a lab machine
+                        </p>						
+                        </li>
+			            <li data-theme="e">
+                        <p>
+                        	<strong>Result:</strong><br/>
+                        	At least three numbers will be given: Total Cholesterol, HDL, and LDL<br/>
+                        </p>						
+                        </li>
+			            <li data-role="list-divider" role="heading">
+							TOTAL TIME: less than 30 minutes					
+                        </li>
+			        </ul>              
+			    </div>  
             </div>
         </div>
         <!-- A sample location -->
@@ -998,25 +1047,28 @@
             </div>
             <div data-role="content">
                 <div>
-                    <p class="p1">
-                        Name: [name]
-                        <br>
+			        <ul data-role="listview" data-divider-theme="b" data-inset="true">
+			            <li data-role="list-divider" role="heading">
+                        [name]
+			            </li>
+			            <li data-theme="f">
                         Description: [description]
-                        <br>
+			            </li>
+			            <li data-theme="e">
                         Website: [urlCaption][url]
-                    </p>
-
-                    <p class="p1">
+			            </li>
+			            <li data-theme="f">
                         Call [phone]
-                    </p>
-
-                    <p class="p1">
+			            </li>
+			            <li data-theme="e">
                         Directions [address1]
                         <br>
                         [address2]
                         <br>
-                        [city], [state] [zip]
-                    </p>
+                        [city], [state] [zip]                        
+			            </li>
+			        </ul>                	
+                	
 
                     <a data-role="button" data-transition="slide" data-theme="b" href="#page35"
                     data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Get Directions <!--Launch map app --> </a>
@@ -1034,67 +1086,51 @@
             <div data-role="content">
                 <h2> Your current risk is 45% </h2>
                 <p>
-                    These interventions can modify your risk of developing heart disease
+                    These interventions can lower your risk of developing heart disease by up to 35%
                 </p>
                 <div data-role="collapsible-set" data-inset="false">
                     <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> +10% if not taking medication </h3>
-                        <div>
+                        <h3> Take medication </h3>
+                        <div class="action_accordion">
                             <p>
                                 It is important to be consistent about the medications you are currently taking to reduce your blood pressure or cholesterol.
-                                Based on the information you have entered, your risk could increase to 50%.
+                                Based on the information you have entered, your risk could increase to 50%. (+10%)
                             </p>
-                        </div>
-                    </div>
-                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> -5% by using medication </h3>
-                        <div>
                             <p>
-                                A doctor may be able to reduce your risk to 30% by managing your blood pressure and cholesterol
+                                A doctor may be able to reduce your risk to 30% by using medication to manage your blood pressure and cholesterol (-5%)
                             </p>
                         </div>
                     </div>
+
                     <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> -10% with additional 3 hours / week of moderate exercise </h3>
-                        <div>
+                        <h3> Exercise more </h3>
+                        <div class="action_accordion">
                             <p>
-                                Adding three hours of moderate exercise such as brisk walking to your weekly routine will reduce your risk to 30%
+                                Adding three hours of moderate exercise such as brisk walking to your weekly routine will reduce your risk to 30% (-10%)
                             </p>
-                        </div>
-                    </div>
-                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> -15% with additional 3 hours / week of vigorous exercise </h3>
-                        <div>
                             <p>
                                 Adding six hours of moderate exercise or three hours of vigorous exercise such as running to your weekly routine
-                                will reduce your risk to 25%
+                                will reduce your risk to 25% (-15%)
                             </p>
                         </div>
                     </div>
                     <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> -5% by losing weight </h3>
-                        <div>
+                        <h3> Lose weight </h3>
+                        <div class="action_accordion">
                             <p>
-                                If you lose 11 (5%) pounds and do not regain it
+                                If you lose 11 pounds and do not regain it you will reduce your risk to 40% (-5%)
                             </p>
                         </div>
                     </div>
                     <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> -20% by quitting smoking </h3>
-                        <div>
+                        <h3> Quit smoking </h3>
+                        <div class="action_accordion">
                             <p>
-                                If you quit smoking you will reduce your risk by __%
+                                If you quit smoking, you will reduce your risk to 25% (-20%)
                             </p>
                         </div>
                     </div>
-                    <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-                        <h3> -35% by doing everything </h3>
-                        <div>
-                            <p>
-                                If you do all of the above you could reduce your risk by __%
-                            </p>
-                        </div>
-                    </div>
+
 
                 </div>
             </div>
