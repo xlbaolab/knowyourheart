@@ -63,10 +63,10 @@ h3 {
 .ui-content {
     text-align: center;
     max-width: 980px;
-    margin: 0 auto;
 }
 
 .surveypage {
+	margin-top: 10%;
 }
 
 #page21 .ui-content {
@@ -80,15 +80,7 @@ h3 {
     display: block;
 }
 
-/*Added nextbtn class to next buttons */
-.nextbtn {
-    width: 60%;
-    margin: 0 auto;
-}
 
-input[type="text"], select, textarea {
-    text-align: center;	/* center help text in text input and centers input 8? */
-}
 
 /* Progress Bar */
 .footer {
@@ -174,10 +166,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#12f2f2f2', e
 
 /* Button corner classes -----------------------------------------------------------------------------------------------------------*/
 
+/*Added nextbtn class to next buttons */
+
+input[type="text"], select, textarea {
+    text-align: center;	/* center help text in text input and centers input 8? */
+}
+
 a.nextbtn {
+    width: 75%;
+    margin: 20px auto;
+}
 
-margin-top: 20px;
-
+.nextbtn > span.ui-btn-inner {
+	margin-left: 15px;
 }
 
 a.nextbtn.ui-btn-corner-tl {
@@ -288,18 +289,19 @@ p.note {
 	font-size: small;
 }
 
-#page1  span.ui-btn-text{
+#welcome  span.ui-btn-text{
     font-family: "MuseoSans500Regular", sans-serif;
 }
 
-#page1 div#checkboxes2 {
-	width: 80%;
-	margin: 20px auto;
+#welcome div#checkboxes2 {
+	margin: 0px auto;
+	width: 280px;
 }
 
-a.startbtn.ui-btn-corner-all {
+a.startbtn.ui-btn-corner-all{
 	width: 80%;
-	margin: 0 auto;
+	min-width: 280px;
+	margin: 25px auto;
     -moz-border-radius: 0.4em/*{global-radii-buttons}*/;
     -webkit-border-radius: 0.4em/*{global-radii-buttons}*/;
     border-radius: 0.4em/*{global-radii-buttons}*/;
@@ -311,7 +313,7 @@ a.startbtn.ui-btn-corner-all {
     border-radius: 0.4em/*{global-radii-buttons}*/;
 }
 
-#page1 label {
+#welcome label {
 	text-align: center;
 	border: 0px;
 
@@ -466,7 +468,6 @@ a#dashboardShareBtn:active {
     position: relative;
     color: #32a7da;
     font-family: "MuseoSans500Regular", sans-serif;
-
     font-size: small;
     font-weight: normal;
     padding: 0.2em 0 0.2em 0;
@@ -482,7 +483,7 @@ a#dashboardShareBtn:active {
 	-moz-border-radius: 0.2em /*{global-radii-blocks}*/;
 	-webkit-border-radius: 0.2em /*{global-radii-blocks}*/;
 	border-radius: 0.2em /*{global-radii-blocks}*/;
-	width: 60%;
+	width: 75%;
 	margin: 0 auto;
 }
 
@@ -521,7 +522,7 @@ fieldset .ui-btn-inner {
 }
 
 #page13 .qanda {
-    padding: 0 20% 0 20%;
+    padding: 0 12.5% 0 12.5%;
 }
 
 
@@ -532,7 +533,7 @@ fieldset .ui-btn-inner {
 }
 
 #history .qanda {
-    padding: 0 20% 0 20%;
+    padding: 0 12.5% 0 12.5%;
     margin: 0 auto;
 }
 
@@ -541,12 +542,20 @@ fieldset .ui-btn-inner {
 	-webkit-border-radius: 0.2em /*{global-radii-blocks}*/;
 	border-radius: 0.2em /*{global-radii-blocks}*/;
 }
+#history .ui-block-a {
+	width: 60%;
+}
+
+#history .ui-block-b {
+	width: 40%;
+	text-align: right;
+}
 
 
 /*BLOOD PRESSURE + SCREEN */
 #knows_bp .qanda, #knows_chol .qanda {
     text-align: left;
-    padding: 0 20% 0 20%;
+    padding: 0 12.5% 0 12.5%;
 }
 
 #blood_pressure input#systolic_bp_slider.ui-input-text.ui-body-a.ui-corner-all,
@@ -561,9 +570,8 @@ fieldset .ui-btn-inner {
 /*EXTRA: BP SCREEN */
 #page38 .qanda, #page39 .qanda, #page40 .qanda {
     text-align: left;
-
 	font-size: small;
-    padding: 0 20% 0 20%;
+    padding: 0 12.5% 0 12.5%;
 }
 
 #page36 input#bp_meds_slider.ui-input-text.ui-body-a.ui-corner-all {
@@ -576,7 +584,7 @@ fieldset .ui-btn-inner {
 #page41 .qanda, #page42 .qanda {
     text-align: left;
 	font-size: small;
-    padding: 0 20% 0 20%;
+    padding: 0 12.5% 0 12.5%;
 }
 
 #page41 input#slider17.ui-input-text.ui-body-a.ui-corner-all, 
@@ -591,7 +599,7 @@ fieldset .ui-btn-inner {
 #page43 .qanda  {
 	text-align: left;
 	font-size: small;
-    padding: 0 20% 0 20%;
+    padding: 0 12.5% 0 12.5%;
 }
 
 /*ASSESSMENT SCREEN */
@@ -604,15 +612,20 @@ fieldset .ui-btn-inner {
     text-align: center;
     height: 94px;
     width: 231px;
+    margin: 0 auto;
 }
 
 .helper_text {
+	font-size: small;
+}
+
+#assessment_helper_text {
 	font-size: x-small;
 	text-align: center;
 	font-style: italic;
 }
 
-.helper_text a {
+#assessment_helper_text a {
 	text-decoration: none;
 }
 
@@ -687,9 +700,8 @@ fieldset .ui-btn-inner {
 }
 
 /* SCREENING TIPS SCREEN */
-#page33 p {
-	    white-space: normal;
-
+#screeningTips p {
+	white-space: normal;
 }
 
 /* ACTION SCREEN */
@@ -718,6 +730,20 @@ padding: 0 10px 0 10px;
 	height: 40px;
 	padding: 10px;
 }
+
+/* REWARD SCREEN */
+#rewards input#reward_textinput_name.ui-input-text.ui-body-a.ui-corner-all,
+#rewards input#reward_textinput_email.ui-input-text.ui-body-a.ui-corner-all {
+	-moz-border-radius: 0.2em /*{global-radii-blocks}*/;
+	-webkit-border-radius: 0.2em /*{global-radii-blocks}*/;
+	border-radius: 0.2em /*{global-radii-blocks}*/;
+	margin: 0 auto;
+}
+
+ #rewards fieldset {
+    display: inline-block;
+    float: none;
+ }
 
 /* SHARE SCREEN */
 a.sharebtn.ui-btn-corner-all {
@@ -923,7 +949,7 @@ a.sharebtn.ui-btn-corner-all {
 }
 
 /*
- * Locations view
+ * Locations pages
  */
 .loc-search-bar {
     padding: 0;
@@ -969,3 +995,11 @@ a.sharebtn.ui-btn-corner-all {
 #locationsList ul {
     margin: 0;
 }
+
+
+/*
+ * Load page
+ */
+/*#loading #circularG {
+    margin: 3em 0 1em 0;
+}*/
