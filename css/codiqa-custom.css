@@ -163,20 +163,20 @@
 -----------------------------------------------------------------------------------------------------------*/
 
 .ui-bar-b {
-	border: 1px solid #B3B3B3 /*{b-bar-border}*/;
-	background: #eeeeee /*{b-bar-background-color}*/;
-	color: #3E3E3E /*{b-bar-color}*/;
+	border: 1px solid #65b64b /*{b-bar-border}*/;
+	background: #65b64b /*{b-bar-background-color}*/;
+	color: #ffffff /*{b-bar-color}*/;
 	font-weight: bold;
-	text-shadow: 0 /*{b-bar-shadow-x}*/ 1px /*{b-bar-shadow-y}*/ 1px /*{b-bar-shadow-radius}*/ #ffffff /*{b-bar-shadow-color}*/;
-	background-image: -webkit-gradient(linear, left top, left bottom, from( #f0f0f0 /*{b-bar-background-start}*/), to( #dddddd /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
-	background-image: -webkit-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
-	background-image:    -moz-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/); /* FF3.6 */
-	background-image:     -ms-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/); /* IE10 */
-	background-image:      -o-linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/); /* Opera 11.10+ */
-	background-image:         linear-gradient( #f0f0f0 /*{b-bar-background-start}*/, #dddddd /*{b-bar-background-end}*/);
+	text-shadow: 0 /*{b-bar-shadow-x}*/ 0 /*{b-bar-shadow-y}*/ 0 /*{b-bar-shadow-radius}*/ #ffffff /*{b-bar-shadow-color}*/;
+	background-image: -webkit-gradient(linear, left top, left bottom, from( #77d658 /*{b-bar-background-start}*/), to( #52953d /*{b-bar-background-end}*/)); /* Saf4+, Chrome */
+	background-image: -webkit-linear-gradient( #77d658 /*{b-bar-background-start}*/, #52953d /*{b-bar-background-end}*/); /* Chrome 10+, Saf5.1+ */
+	background-image:    -moz-linear-gradient( #77d658 /*{b-bar-background-start}*/, #52953d /*{b-bar-background-end}*/); /* FF3.6 */
+	background-image:     -ms-linear-gradient( #77d658 /*{b-bar-background-start}*/, #52953d /*{b-bar-background-end}*/); /* IE10 */
+	background-image:      -o-linear-gradient( #77d658 /*{b-bar-background-start}*/, #52953d /*{b-bar-background-end}*/); /* Opera 11.10+ */
+	background-image:         linear-gradient( #77d658 /*{b-bar-background-start}*/, #52953d /*{b-bar-background-end}*/);
 }
 .ui-bar-b .ui-link-inherit {
-	color: #3E3E3E /*{b-bar-color}*/;
+	color: #ffffff /*{b-bar-color}*/;
 }
 
 .ui-bar-b a.ui-link {

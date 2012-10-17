@@ -25,7 +25,12 @@ console.debug("loading main.js")
  * Constants
  */
 
-ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health";
+var ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health";
+// callback indicates JSONP, which seems necessary
+var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find?callback=?";
+var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
+// vars: dataTheme, pageId, name, distance
+var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
@@ -269,9 +274,15 @@ function calculateRisk(page, user) {
     $.post(ARCHIMEDES_URL, requestData, function(data) {
         console.dir(data);
 
+        var risk = data.Risk[0];
+        if (!$.isNumeric(risk.rating)) {
+            // only risk range is available
+            risk = data.Risk[1];
+        }
+
         // update risk content
-        $risk.css(RISK_IMAGES[data.Risk[0].rating]);
-        $("#5_year_risk", page).html(data.Risk[0].risk);
+        $risk.css(RISK_IMAGES[risk.rating]);
+        $("#5_year_risk", page).html(risk.risk);
         $loader.fadeOut("slow", function() {
             $risk.fadeIn("slow");
         });
@@ -302,6 +313,18 @@ function doFirstPageInit() {
         }
     }
 
+    var locationsModel = new LocationsModel();
+
+    new LocListView({
+        el : $("#locationsList"),
+        model : locationsModel
+    });
+
+    new LocMapView({
+        el : $("#locationsMap"),
+        model : locationsModel
+    });
+
     new ProfileView({
         el : $("#basic_profile"),
         model : gCurrentUser
@@ -313,9 +336,188 @@ function doFirstPageInit() {
     });
 }
 
+var LocationsModel = Backbone.Model.extend({
+    initialize : function() {
+        this.geocoder = new google.maps.Geocoder();
+        this.providers = null;
+        this.location = null;
+
+        _.extend(this, Backbone.Events);
+    },
+    geocode : function(address) {
+        this.geocoder.geocode({
+            "address" : address
+        }, _.bind(this.handleGeocode, this));
+    },
+    geolocate : function() {
+        // Try HTML5 geolocation
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(_.bind(this.handleGeolocate, this), function(error) {
+                // interface PositionError {
+                // const unsigned short PERMISSION_DENIED = 1;
+                // const unsigned short POSITION_UNAVAILABLE = 2;
+                // const unsigned short TIMEOUT = 3;
+                // readonly attribute unsigned short code;
+                // readonly attribute DOMString message;
+                // };
+                console.dir(error);
+            });
+        } else {
+            // Browser doesn't support Geolocation
+        }
+    },
+    handleGeocode : function(result, status) {
+        console.debug("geocode returned with status " + status);
+        console.dir(result);
+
+        if (status != google.maps.GeocoderStatus.OK) {
+            // TODO
+            console.error("Geocoding failed: " + status);
+            return;
+        }
+
+        this.location = result[0].geometry.location;
+        this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
+
+        $.getJSON(SURESCRIPTS_URL, {
+            apikey : SURESCRIPTS_API_KEY,
+            lat : this.location.lat(),
+            lon : this.location.lng(),
+            radius : 50, // TODO - options
+            maxResults : 20
+        }, _.bind(this.handleSurescripts, this)).fail(function(data) {
+            console.error("Error calling Surescripts API: " + data.statusText + " (code " + data.status + ")");
+        });
+    },
+    handleGeolocate : function(position) {
+        this.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
+    },
+    handleSurescripts : function(result) {
+        console.dir(result);
+
+        this.providers = result.providers;
+        this.trigger(LocationsModel.PROVIDERS_CHANGE_EVENT, this.providers);
+    }
+}, {
+    LOCATION_CHANGE_EVENT : "location:change",
+    PROVIDERS_CHANGE_EVENT : "providers:change"
+});
+
 /*
  * Views
  */
+var LocListView = Backbone.View.extend({
+    initialize : function() {
+        this.$list = this.$("#locList");
+        this.options.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
+    },
+    events : {
+        "click .loc-search-btn" : "handleFind",
+        "pageshow" : "refreshView"
+    },
+    handleFind : function() {
+        this.options.model.geocode($(".loc-search-field", this.el).val());
+    },
+    handleProvidersChange : function(providers) {
+        // clear list
+        $("li.provider", this.$list).remove();
+
+        for (var i = 0; i < providers.length; i++) {
+            var provider = providers[i];
+
+            this.$list.append(LOC_LI_TEMPLATE({
+                dataTheme : i % 2 ? "e" : "f",
+                pageId : "page35",
+                name : provider.name,
+                distance : provider.distance.toPrecision(1)
+            }));
+        }
+
+        this.refreshView();
+    },
+    refreshView : function() {
+        if ($.mobile.activePage.attr("id") === this.el.id) {
+            this.$list.listview("refresh");
+        }
+
+        if (!this.model.location) {
+            this.model.geolocate();
+        }
+    }
+});
+
+var LocMapView = Backbone.View.extend({
+    initialize : function() {
+        var mapEl = document.getElementById("locMap");
+        var options = {
+            center : new google.maps.LatLng(37.7652065, -122.24163550000003),
+            mapTypeId : google.maps.MapTypeId.ROADMAP,
+            zoom : 13
+        };
+        this.map = new google.maps.Map(mapEl, options);
+        google.maps.event.addListener(this.map, "click", _.bind(this.handleMapClick, this));
+
+        this.options.model.on(LocationsModel.LOCATION_CHANGE_EVENT, this.handleLocationChange, this);
+        this.options.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
+    },
+    events : {
+        "click .loc-search-btn" : "handleFind",
+        "pageshow" : "refreshView"
+    },
+    handleFind : function() {
+        this.options.model.geocode($(".loc-search-field", this.el).val());
+    },
+    handleLocationChange : function(location) {
+        this.map.panTo(location);
+    },
+    handleMapClick : function() {
+        if (this.infoWindow) {
+            this.infoWindow.close();
+        }
+    },
+    handleMarkerClick : function(marker, provider) {
+        if (this.infoWindow) {
+            this.infoWindow.close();
+        }
+        this.infoWindow = new google.maps.InfoWindow({
+            map : this.map,
+            position : marker.position,
+            content : provider.description // TODO
+        });
+    },
+    handleProvidersChange : function(providers) {
+        for (var i = 0; i < providers.length; i++) {
+            var provider = providers[i];
+
+            var marker = new google.maps.Marker({
+                position : new google.maps.LatLng(provider.lat, provider.lon),
+                map : this.map,
+                title : provider.name
+            });
+            google.maps.event.addListener(marker, "click", _.bind(this.handleMarkerClick, this, marker, provider));
+        }
+    },
+    refreshView : function() {
+        var windowHeight = $(window).height();
+        var headerHeight = $(".ui-header", this.el).height();
+        var footerHeight = $(".ui-footer", this.el).height();
+        var contentHeight = windowHeight - headerHeight - footerHeight;
+        var searchHeight = $(".ui-bar", this.el).outerHeight();
+        $(".ui-content", this.el).height(contentHeight);
+        $(this.map.getDiv()).height(contentHeight - searchHeight);
+
+        // needed to make sure map renders correctly on page change
+        google.maps.event.trigger(this.map, "resize");
+
+        if (this.model.location) {
+            this.map.panTo(this.model.location);
+        } else {
+            this.model.geolocate();
+        }
+    }
+});
+
 var ProfileView = Backbone.View.extend({
     initialize : function() {
     },
@@ -385,22 +587,17 @@ var ResultView = Backbone.View.extend({
 
 var SurveyView = Backbone.View.extend({
     initialize : function() {
-        var incompleteForm = false;
+        var valid = true;
 
         for (var input in this.options.inputMap) {
             var userFieldName = this.options.inputMap[input];
             var val = this.model.get(userFieldName) || "";
-            var $input = $("#" + input);
+            var $input = $("#" + input, this.el);
 
             console.debug("loadeding " + userFieldName + "=" + val);
 
             // remember what we loaded so we know if it changes
             $input.prop("loadedValue", val);
-
-            if (val === "") {
-                incompleteForm = true;
-                continue;
-            }
 
             if ($input.prop("nodeName").toLowerCase() === "input") {
                 if ($input.prop("type") === "radio") {
@@ -412,12 +609,14 @@ var SurveyView = Backbone.View.extend({
                     $input.val(val);
                 }
             } else {
-                // $input.prop("nodeName").toLowerCase() === "select"
+                // if ($input.prop("nodeName").toLowerCase() === "select")
                 $input.val(val);
-            }            
+            }
+
+            valid &= this.validate(input);
         }
 
-        this.setNextButtonEnabled(!incompleteForm);
+        this.setNextButtonEnabled(valid);
     },
     events : {
         "change input[type=radio]" : "handleChange",
@@ -580,49 +779,7 @@ var SurveyKnowsCholView = SurveyView.extend({
 });
 
 /*
- * Initialization
- */
-StackMob.init({
-    appName : "knowyourheart",
-    clientSubdomain : "peterttsenggmailcom",
-    publicKey : "ad81cf6c-4523-411c-a326-f63717789c07",
-    apiVersion : 0
-});
-
-// add localStorage support to StackMob's user model
-StackMob.Model.prototype.localStorage = new Backbone.LocalStorage("user");
-StackMob.Model.prototype.sync = function(method, model, options) {
-    Backbone.localSync.apply(this, arguments);
-    StackMob.sync.call(this, method, this, options);
-};
-
-// init user
-if (localStorage["currentUsername"] === null) {
-    console.info("user not found in localStorage - creating one");
-
-    createUser();
-} else {
-    console.info("found user in localStorage: " + localStorage["currentUsername"]);
-
-    gCurrentUser = new StackMob.User({
-        username : localStorage["currentUsername"]
-    });
-    gCurrentUser.fetch({
-        success : function(model) {
-            console.info("fetched user " + model.get("username"));
-        },
-        error : function(model, response) {
-            console.error("failed to fetch user: " + response.error);
-
-            if (!response.error || response.error.indexOf("does not exist")) {
-                createUser(model);
-            }
-        }
-    });
-}
-
-/*
- * onload
+ * Events
  */
 $(document).ready(function() {
     console.debug("ready");
@@ -683,3 +840,45 @@ $(document).on("pageinit", function(event) {
 $(document).on("pageremove", function(event) {
     console.debug("pageremove - " + event.target.id);
 });
+
+/*
+ * Initialization
+ */
+StackMob.init({
+    appName : "knowyourheart",
+    clientSubdomain : "peterttsenggmailcom",
+    publicKey : "ad81cf6c-4523-411c-a326-f63717789c07",
+    apiVersion : 0
+});
+
+// add localStorage support to StackMob's user model
+StackMob.Model.prototype.localStorage = new Backbone.LocalStorage("user");
+StackMob.Model.prototype.sync = function(method, model, options) {
+    Backbone.localSync.apply(this, arguments);
+    StackMob.sync.call(this, method, this, options);
+};
+
+// init user
+if (!localStorage["currentUsername"]) {
+    console.info("user not found in localStorage - creating one");
+
+    createUser();
+} else {
+    console.info("found user in localStorage: " + localStorage["currentUsername"]);
+
+    gCurrentUser = new StackMob.User({
+        username : localStorage["currentUsername"]
+    });
+    gCurrentUser.fetch({
+        success : function(model) {
+            console.info("fetched user " + model.get("username"));
+        },
+        error : function(model, response) {
+            console.error("failed to fetch user: " + response.error);
+
+            if (!response.error || response.error.indexOf("does not exist")) {
+                createUser(model);
+            }
+        }
+    });
+}

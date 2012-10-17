@@ -8,8 +8,10 @@
         <meta http-equiv="Cache-control" content="no-cache">
 
         <title>Know Your Heart</title>
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
-        />
+        <!--<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.css"
+        />-->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+
         <link rel="stylesheet" href="css/my.css" />
 
         <!-- Add KNH CSS -->
@@ -20,19 +22,20 @@
         /* App custom styles */
         </style> -->
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js"></script>-->
-        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+        <!--<script src="https://ajax.aspnetcdn.com/ajax/jquery.mobile/1.1.1/jquery.mobile-1.1.1.min.js" type="text/javascript"></script>-->
+        <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
         <script src="js/my.js"></script>
 
-        <script type="text/javascript" src="http://static.stackmob.com/js/json2-min.js"></script>
-        <script type="text/javascript" src="http://static.stackmob.com/js/underscore-1.3.3-min.js"></script>
+        <script src="http://static.stackmob.com/js/json2-min.js" type="text/javascript"></script>
+        <script src="http://static.stackmob.com/js/underscore-1.3.3-min.js" type="text/javascript"></script>
         <!--<script type="text/javascript" src="http://static.stackmob.com/js/backbone-0.9.2-min.js"></script>-->
-        <script type="text/javascript" src="js/backbone.js"></script>
-        <script type="text/javascript" src="js/backbone.localStorage.js"></script>
-        <script type="text/javascript" src="http://static.stackmob.com/js/2.5.3-crypto-sha1-hmac.js"></script>
-        <script type="text/javascript" src="http://static.stackmob.com/js/stackmob-js-0.5.5-min.js"></script>
+        <script src="js/backbone.js" type="text/javascript"></script>
+        <script src="js/backbone.localStorage.js" type="text/javascript"></script>
+        <script src="http://static.stackmob.com/js/2.5.3-crypto-sha1-hmac.js" type="text/javascript"></script>
+        <script src="http://static.stackmob.com/js/stackmob-js-0.5.5-min.js" type="text/javascript"></script>
+
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBAh6svu8A0CurhoeIt0jcZ_zvuEWzYHXE&sensor=true" type="text/javascript"></script>
 
         <script type="text/javascript" src="js/main.js"></script>
 
@@ -57,26 +60,19 @@
         <!-- New User Start -->
         <div data-role="page" data-theme="a" id="page1">
             <div data-role="content">
-                <div class="knh-logo"></div>
-                <div>
-
-                    <p style="text-align: left; " data-mce-style="text-align: left;">
-                        Heart disease can affect anyone.
-                    </p>
-
-                    <p style="text-align: left; " data-mce-style="text-align: left;">
-                        Answer <strong>8 questions</strong> to calculate your risk for heart disease
-                    </p>
-                    <p style="text-align: left; " data-mce-style="text-align: left;">
-                        <br>
-                    </p>
+            	<div class="top-shadow">
+	                <div class="knh-logo"></div>
+	                <div id="start_text">
+	                    <p>
+	                        Heart disease can affect anyone.</br>
+	                        Answer 8 questions to calculate your risk for heart disease
+	                    </p>
+	                    <p class="note">
+	                        Powered by the Archimedes IndiGO decision support tool that is used by physicians,  
+	                        you will receive personalized guidelines to help you make the best decision about your health.
+	                    </p>
+	                </div>
                 </div>
-                <div>
-                    <p>
-                        <b> Let's see how your heart is doing </b>
-                    </p>
-                </div>
-                <a data-role="button" data-transition="slide" data-theme="b" href="#page2"> Get Started </a>
                 <div id="checkboxes2" data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
                         <legend></legend>
@@ -84,6 +80,11 @@
                         <label for="checkbox2"> Agree with <a href="#page32" data-transition="fade">Terms and Conditions</a> </label>
                     </fieldset>
                 </div>
+                <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#page2" class="startbtn"> Get Started </a>
+
+                <div id="archimedes_logo"></div>
+                <div id="millionhearts_logo"></div>
+                
             </div>
         </div>
         <!-- Terms and Conditions -->
@@ -104,7 +105,9 @@
         <!-- Dashboard -->
         <div data-role="page" data-theme="a" id="page18">
             <div data-role="content">
+            	<div class="top-shadow">
                 <div class="knh-logo"></div>
+                </div>
                 <div class="ui-grid-b">
                     <div class="ui-block-a" style="text-align: center;">
                         <a id="dashboardProfileBtn" data-transition="fade" href="#basic_profile">&nbsp;</a>
@@ -120,12 +123,12 @@
                     </div>
                 </div>
 
-                <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                <ul data-role="listview" data-divider-theme="d" data-inset="false">
                     <li data-role="list-divider" role="heading">
                         Next Steps
                     </li>
                     <li data-theme="f">
-                        <a href="#page26" data-transition="slide">Find a health screening clinic
+                        <a href="#locationsMap" data-transition="slide">Find a health screening clinic  <span class="warning-icon"></span>
                         <div class="nextsteps red">
                             Your blood pressure and cholesterol values are needed to accurately calculate your risk
                         </div></a>
@@ -156,19 +159,18 @@
                 <p>
                     Raise awareness about heart disease with your family and friends.
                 </p>
-                <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" href="mailto:?subject=Inviting you to learn about your risk for heart disease &body=KnowYourHeart provided me with my heart risk score.  http%3A%2F%2Fknowyourheart.info">Email</a>
-                <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" href="http://m.facebook.com/sharer.php?u=knowyourheart.info&i=m.knowyourheart.info/image/logo.png&d=I just learned about my risk for heart disease.  Do you know yours?">Share on Facebook</a>
-                <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" href="http://twitter.com/share?text=Just learned about my risk for heart disease. Do you know yours? http://knowyourheart.info">Share on Twitter</a>
+                <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="mailto:?subject=Inviting you to learn about your risk for heart disease &body=KnowYourHeart provided me with my heart risk score.  http%3A%2F%2Fknowyourheart.info">Email</a>
+                <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="http://m.facebook.com/sharer.php?u=knowyourheart.info&i=m.knowyourheart.info/image/logo.png&d=I just learned about my risk for heart disease.  Do you know yours?">Share on Facebook</a>
+                <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="http://twitter.com/share?text=Just learned about my risk for heart disease. Do you know yours? http://knowyourheart.info">Share on Twitter</a>
             </div>
         </div>
         <!-- Profile BASIC STRIPED-->
         <div data-role="page" data-theme="a" id="basic_profile">
             <div data-theme="a" data-role="header">
                 <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext"
-                class="ui-btn-left"> </a>
+                class="ui-btn-right"> </a>
                 <h2>About You</h2>
-                <a data-role="button" data-direction="reverse" data-transition="fade"
-                data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="notext" class="ui-btn-right"></a>
+                <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="left" class="ui-btn-left">Your Heart</a>
             </div>
             <div data-role="content">
                 <ul data-role="listview" data-divider-theme="b" data-inset="false">
@@ -230,7 +232,7 @@
             <div data-role="tabbar" data-iconpos="top" data-theme="a">
                 <ul>
                     <li>
-                        <a href="#basic_profile" data-theme="" data-icon="info" data-transition="flip">Essentials</a>
+                        <a href="#basic_profile" data-theme="" data-icon="info" data-transition="flip">Basic</a>
                     </li>
                     <li>
                         <a href="#page37" data-theme="" data-icon="gear" data-transition="flip" data-direction="reverse">More</a>
@@ -241,9 +243,9 @@
         <!-- Profile ADVANCED -->
         <div data-role="page" data-theme="a" id="page37">
             <div data-theme="a" data-role="header">
-                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext" class="ui-btn-left"></a>
-                <h2>More About You</h2>
-                <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="refresh" data-iconpos="left" class="ui-btn-right">Your Heart</a>
+                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext" class="ui-btn-right"></a>
+                <h2>More You</h2>
+                <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="left" class="ui-btn-left">Your Heart</a>
             </div>
             <div data-role="content">
                 <ul data-role="listview" data-divider-theme="b" data-inset="false">
@@ -301,7 +303,7 @@
             <div data-role="tabbar" data-iconpos="top" data-theme="a">
                 <ul>
                     <li>
-                        <a href="#basic_profile" data-theme="" data-icon="info" data-transition="flip">Essentials</a>
+                        <a href="#basic_profile" data-theme="" data-icon="info" data-transition="flip">Basic</a>
                     </li>
                     <li>
                         <a href="#page37" data-theme="" data-icon="gear" data-transition="flip" data-direction="reverse">More</a>
@@ -310,7 +312,7 @@
             </div>
         </div>
         <!-- Survey_Age -->
-        <div data-role="page" data-theme="a" id="page2">
+        <div data-role="page" data-theme="a" id="page2" class="surveypage">
 
             <div data-theme="a" data-role="header" data-position="fixed">
                 <h2> Age </h2>
@@ -324,7 +326,7 @@
                 <h3> How old are you? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <input name="age" id="textinput2" placeholder="Enter your age here" value="" type="text" pattern="\d*">
+                        <input name="age" id="textinput2" placeholder="Enter your age here" value="" type="text" pattern="[0-9]*	">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page9"
@@ -344,7 +346,7 @@
             </div>
         </div>
         <!-- Survey_Gender -->
-        <div data-role="page" data-theme="a" id="page9">
+        <div data-role="page" data-theme="a" id="page9" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Gender </h2>
                 <a data-role="button" data-rel="back" data-theme="c" href="#page9" data-icon="newarrow-l"
@@ -380,7 +382,7 @@
             </div>
         </div>
         <!-- Survey_Height -->
-        <div data-role="page" data-theme="a" id="page10">
+        <div data-role="page" data-theme="a" id="page10" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Height </h2>
                 <a data-role="button" data-rel="back" data-theme="c" href="#page10" data-icon="newarrow-l"
@@ -438,7 +440,7 @@
             </div>
         </div>
         <!-- Survey_Weight -->
-        <div data-role="page" data-theme="a" id="page12">
+        <div data-role="page" data-theme="a" id="page12" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-rel="back" data-theme="c" href="#page12" data-icon="newarrow-l"
                 data-iconpos="left" class="ui-btn-left"> Back </a>
@@ -473,7 +475,7 @@
             </div>
         </div>
         <!-- Survey_Smoke -->
-        <div data-role="page" data-theme="a" id="page13">
+        <div data-role="page" data-theme="a" id="page13" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
                 href="#page13" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
@@ -517,7 +519,7 @@
             </div>
         </div>
         <!-- Survey_History -->
-        <div data-role="page" data-theme="a" id="history">
+        <div data-role="page" data-theme="a" id="history" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <!--                <a data-role="button" data-transition="flip" data-theme="c" href="#basic_profile"
                 data-icon="grid" data-iconpos="notext" class="ui-btn-right"> Profile </a>
@@ -592,7 +594,7 @@
                         <div class="ui-block-a hba1c" style="display: none;">
                             <div>
                                 <p>
-                                    If yes, what is your HbA1c level?
+                                    If diabetic, what is your HbA1c level?
                                 </p>
                             </div>
                         </div>
@@ -600,7 +602,7 @@
                             <div data-role="fieldcontain">
                                 <fieldset data-role="controlgroup" data-mini="true">
                                     <label for="hba1c_field"> </label>
-                                    <input name="hba1c" id="hba1c_field" placeholder="Enter HbA1c %" value="" type="text">
+                                    <input name="hba1c" id="hba1c_field" placeholder="Enter %" value="" type="text" pattern="\d*">
                                 </fieldset>
                             </div>
                         </div>
@@ -626,7 +628,7 @@
             </div>
         </div>
         <!-- Survey_BP? -->
-        <div data-role="page" data-theme="a" id="knows_bp">
+        <div data-role="page" data-theme="a" id="knows_bp" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Blood Pressure </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
@@ -642,8 +644,7 @@
                         <span class="helper_text"> Knowing your blood pressure will improve the accuracy of your heart risk score.</span>
                     </p>
                     <p>
-                        <span class="helper_text"> If you don't know it at this time, KYH can help you find a clinic or pharmacy
-                            that can assist you. </span>
+                        <span class="helper_text"> If you don't know it at this time, we can help you find a clinic that can assist you. </span>
                     </p>
                     <div data-role="fieldcontain">
                         <fieldset data-role="controlgroup" data-type="horizontal">
@@ -674,7 +675,7 @@
             </div>
         </div>
         <!-- Survey_BP -->
-        <div data-role="page" data-theme="a" id="blood_pressure">
+        <div data-role="page" data-theme="a" id="blood_pressure" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Blood Pressure </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
@@ -688,13 +689,13 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="systolic_bp_slider"> Systolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure when the heart beats, usually the top and higher number"></span></label>
-                        <input id="systolic_bp_slider" type="range" name="systolic_bp" value="120" min="80" max="220" data-highlight="true">
+                        <input id="systolic_bp_slider" type="range" name="systolic_bp" value="120" min="80" max="220" data-highlight="true" pattern="\d*">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="diastolic_bp_slider"> Diastolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure between heart beats, usually the bottom and lower number"></span></label>
-                        <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true">
+                        <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true" pattern="\d*">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#knows_chol" data-icon="newarrow-r"
@@ -715,7 +716,7 @@
             </div>
         </div>
         <!-- Survey_Cholesterol? -->
-        <div data-role="page" data-theme="a" id="knows_chol">
+        <div data-role="page" data-theme="a" id="knows_chol" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Cholesterol </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
@@ -731,8 +732,7 @@
                         <span class="helper_text"> ﻿Knowing your cholesterol will improve the accuracy of your heart risk score.</span>
                     </p>
                     <p>
-                        <span class="helper_text"> If you don't know it at this time, KYH can help you find a clinic that
-                            can assist you. </span>
+                        <span class="helper_text"> If you don't know it at this time, we can help you find a clinic that can assist you. </span>
                     </p>
                     <div data-role="fieldcontain">
                         <fieldset data-role="controlgroup" data-type="horizontal">
@@ -763,7 +763,7 @@
             </div>
         </div>
         <!-- Survey_Cholesterol -->
-        <div data-role="page" data-theme="a" id="cholesterol">
+        <div data-role="page" data-theme="a" id="cholesterol" class="surveypage">
             <div data-theme="" data-role="header" data-position="fixed">
                 <h2> Cholesterol </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
@@ -777,20 +777,19 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
                         <label for="total_chol_slider"> Total Cholesterol <span class="help-icon" rel="tooltip" title="A total of LDL, HDL, and other lipids"></span></label>
-                        <input id="total_chol_slider" type="range" name="cholesterol" value="200" min="70" max="500" data-highlight="true">
+                        <input id="total_chol_slider" type="range" name="cholesterol" value="200" min="70" max="500" data-highlight="true" pattern="\d*">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
                         <label for="hdl_slider"> HDL Cholesterol <span class="help-icon" rel="tooltip" title="Good cholesterol that reduces LDL"></span></label>
-                        <input id="hdl_slider" type="range" name="hdl" value="40" min="20" max="130" data-highlight="true">
+                        <input id="hdl_slider" type="range" name="hdl" value="40" min="20" max="130" data-highlight="true" pattern="\d*">
                     </fieldset>
                 </div>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup" data-mini="true">
                         <label for="ldl_slider"> LDL Cholesterol <span class="help-icon" rel="tooltip" title="Bad cholesterol that can clog arteries"></span></label>
-                        <input id="ldl_slider" type="range" name="ldl" value="100" min="40" max="400" data-highlight="true"
-                        data-track-theme="">
+                        <input id="ldl_slider" type="range" name="ldl" value="100" min="40" max="400" data-highlight="true" pattern="\d*">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#assessment"
@@ -812,12 +811,12 @@
         </div>
         <!-- Results -->
         <div data-role="page" data-theme="a" id="assessment">
-            <div data-theme="a" data-role="header" data-position="fixed">
-                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext"
-                class="ui-btn-left"> </a>
+            <div data-theme="b" data-role="header" data-position="fixed">
+                <a data-role="button" data-theme="b" href="#page18" data-icon="home" data-iconpos="notext"
+                class="ui-btn-right"> </a>
                 <h2>Your Heart</h2>
-                <a data-role="button" data-theme="c" href="#basic_profile" data-icon="profile" data-iconpos="left"
-                class="ui-btn-right">About You</a>
+                <a data-role="button" data-theme="b" href="#basic_profile" data-icon="profile" data-iconpos="left"
+                class="ui-btn-left">You</a>
             </div>
             <div data-role="content">
                 <div class="risk_score">
@@ -840,30 +839,48 @@
                         Your risk for heart disease could be as high as
                         <span id="5_year_risk">45</span>% over the next 5 years
                     </p>
+					<a href="#popupMoreInfo" data-rel="popup" data-role="button">More Info</a>
+					
+					<div data-role="popup" id="popupMoreInfo" class="ui-content" style="text-align: left; font-size: small;">
+						<p>Recommendation: It is urgent that you get screened because your risk could be high</p>
+						<p>Risk: 12%-45%</p>
+						<p>For same age/gender: 57 to 65 percentile</p>
+						<p>For same age/gender: 1.3 to 3.5 times what is considered healthy</p>
+					</div>
+					<div class="helper_text">
+						Calculated by <a href="http://archimedesmodel.com/indigo">Archimedes IndiGO</a>
+					</div>
                 </div>
                 <div>
-                    <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                    <ul data-role="listview" data-divider-theme="d" data-inset="false">
                         <li data-role="list-divider" role="heading">
                             Next Steps
                         </li>
                         <li data-theme="f">
-                            <a href="#page26" data-transition="slide">Find a health screening clinic
-                            <div class="nextsteps">
-                                Your blood pressure and cholesterol values are needed to accurately calculate your risk
-                            </div></a>
+                            <a href="#locationsMap" data-transition="slide">Find a health screening clinic <span class="warning-icon"></span>
+
+                            <div class="nextsteps_assessment">
+                                Your blood pressure and cholesterol values are needed to calculate your true risk 
+                            </div></a> 
                         </li>
                         <li data-theme="e">
-                            <a href="#blood_pressure" data-transition="slide">Update your blood pressure <div class="nextsteps"></div></a>
+                            <a href="#blood_pressure" data-transition="slide">Update your blood pressure <div class="nextsteps_assessment">INCOMPLETE</div></a>
                         </li>
                         <li data-theme="f">
-                            <a href="#cholesterol" data-transition="slide">Update your cholesterol <div class="nextsteps"></div></a>
+                            <a href="#cholesterol" data-transition="slide">Update your cholesterol <div class="nextsteps_assessment">INCOMPLETE</div></a>
 
                         </li>
                         <li data-theme="e">
-                            <a href="#" data-transition="slide">Get Rewards
-                            <div class="nextsteps">
-                                Complete the assessment to win rewards
+                            <a href="#popupReward" data-rel="popup" data-position-to="window" data-inline="true" data-transition="fade" class="ui-content" style="text-align: left;">Get Rewards
+                            <div class="nextsteps_assessment">
+                                Complete your screening and enter to win an Apple iPod
                             </div></a>
+
+<div data-role="popup" id="popupReward" data-overlay-theme="a" data-theme="d" data-corners="true">
+			<a href="#" data-rel="back" data-role="button" data-theme="b" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+			<span>Come back and get your reward</span>
+		</div>                         
+                            
                         </li>
                     </ul>
 
@@ -880,7 +897,7 @@
                     </p>
                 </div>
                 <div>
-                    <ul data-role="listview" data-divider-theme="b" data-inset="false">
+                    <ul data-role="listview" data-divider-theme="d" data-inset="false">
                         <li data-role="list-divider" role="heading">
                             Next Steps
                         </li>
@@ -915,53 +932,70 @@
 
         </div>
         <!-- Location -->
-        <div data-role="page" data-theme="a" id="page26">
+        <div data-role="page" data-theme="a" id="locationsMap">
             <div data-theme="a" data-role="header">
-                <h2> Find a Clinic </h2>
-                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page26" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <h2>Find a Clinic</h2>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c" href="#locationsMap" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left">Back</a>
+                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext" class="ui-btn-right"></a>
             </div>
             <div data-role="content">
-                <img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false"
-                width="288" height="200">
-                <div>
-                    <p style="text-align: center; ">
-                        <span style="font-size: large; "> Find a Screening Clinic: </span>
-                    </p>
-                </div>
-                <div data-role="fieldcontain">
+                <!--<img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false" width="288" height="200">-->
+                <div class="ui-bar loc-search-bar">
                     <fieldset data-role="controlgroup">
-                        <label for="textinput4"> </label>
-                        <input name="" id="textinput4" placeholder="Enter your zipcode here" value=""
-                        type="text">
+                        <label for="loc-search-field" class="ui-hidden-accessible">Near</label>
+                        <input id="loc-search-field-1" class="loc-search-field" name="address" placeholder="Current Location" value="Minneapolis" type="search">
                     </fieldset>
+                    <a class="loc-search-btn" href="#" data-role="button" data-mini="false">Find</a>
                 </div>
-                <br>
-                
-
-                
-                <ul data-role="listview" data-divider-theme="b" data-inset="false">
-                    <li data-theme="f">
-                        <a href="#page33" data-transition="slide"> Screening Tips </a>
+                <div id="locMap"></div>
+            </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#locationsMap" data-theme="" data-icon="" data-transition="flip">Map</a>
                     </li>
+                    <li>
+                        <a href="#locationsList" data-theme="" data-icon="" data-transition="flip" data-direction="reverse">List</a>
+                    </li>
+                    <li>
+                        <a href="#screeningTips" data-theme="" data-icon="" >Screening Tips</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="page" data-theme="a" id="locationsList">
+            <div data-theme="a" data-role="header">
+                <h2>Find a Clinic</h2>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c" href="#locationsMap" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left">Back</a>
+                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext" class="ui-btn-right"></a>
+            </div>
+            <div data-role="content">
+                <div class="ui-bar loc-search-bar">
+                    <fieldset data-role="controlgroup">
+                        <label for="loc-search-field" class="ui-hidden-accessible">Near</label>
+                        <input id="loc-search-field-2" class="loc-search-field" name="address" placeholder="Current Location" value="Minneapolis" type="search">
+                    </fieldset>
+                    <a class="loc-search-btn" href="#" data-role="button" data-mini="false">Find</a>
+                </div>
+                <ul id="locList" data-role="listview" data-divider-theme="b" data-inset="false">
                     <li data-role="list-divider" data-theme="e" role="heading">
-                        Nearby locations
+                        Nearby Locations
                     </li>
-                    <li data-theme="e">
+                    <li class="provider" data-theme="e">
                         <a href="#page35" data-transition="slide"> Mt Auburn Hospital
                         <div class="locationData">
                             <span>1.2 miles</span>
                             <span class="coupon">$10 coupon</span>
                         </div></a>
                     </li>
-                    <li data-theme="f">
+                    <li class="provider" data-theme="f">
                         <a href="#page35" data-transition="slide"> Children's Hospital of Boston
                         <div class="locationData">
                             <span>2.0 miles</span>
                             <span class="coupon">$10 coupon</span>
                         </div></a>
                     </li>
-                    <li data-theme="e">
+                    <li class="provider" data-theme="e">
                         <a href="#page35" data-transition="slide"> Walgreens
                         <div class="locationData">
                             <span>2.5 miles</span>
@@ -970,13 +1004,26 @@
                     </li>
                 </ul>
             </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#locationsMap" data-theme="" data-icon="" data-transition="flip">Map</a>
+                    </li>
+                    <li>
+                        <a href="#locationsList" data-theme="" data-icon="" data-transition="flip" data-direction="reverse">List</a>
+                    </li>
+                    <li>
+                        <a href="#screeningTips" data-theme="" data-icon="" >Screening Tips</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- Screening Tests -->
-        <div data-role="page" id="page33">
+        <div data-role="page" id="screeningTips">
             <div data-theme="a" data-role="header">
                 <h2> Screening Tips </h2>
-                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page33" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c" href="#screeningTips" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                <a data-role="button" data-theme="c" href="#page18" data-icon="home" data-iconpos="notext" class="ui-btn-right"></a>
             </div>
             <div data-role="content">
 
@@ -1036,13 +1083,26 @@
 			        </ul>              
 			    </div>  
             </div>
+            <div data-role="tabbar" data-iconpos="top" data-theme="a">
+                <ul>
+                    <li>
+                        <a href="#locationsMap" data-theme="" data-icon="">Map</a>
+                    </li>
+                    <li>
+                        <a href="#locationsList" data-theme="" data-icon="">List</a>
+                    </li>
+                    <li>
+                        <a href="#screeningTips" data-theme="" data-icon="" >Screening Tips</a>
+                    </li>
+                </ul>
+            </div>
         </div>
         <!-- A sample location -->
         <div data-role="page" id="page35">
             <div data-theme="a" data-role="header">
                 <h2> Screening Location </h2>
                 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-                href="#page33" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+                href="#screeningTips" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
             </div>
             <div data-role="content">
                 <div>
@@ -1207,7 +1267,7 @@
                 <h3> How many different medications do you take for your blood pressure? </h3>
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
-                        <input id="bp_meds_slider" type="range" name="slider" value="0" min="0" max="10" data-highlight="false">
+                        <input id="bp_meds_slider" type="range" name="slider" value="0" min="0" max="10" data-highlight="false" pattern="\d*">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page39"
@@ -1292,7 +1352,7 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="slider18" class="ui-hidden-accessible"> Hours </label>
-                        <input id="slider18" type="range" name="slider18" value="0" min="0" max="20" data-highlight="false">
+                        <input id="slider18" type="range" name="slider18" value="0" min="0" max="20" data-highlight="false" pattern="\d*">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
@@ -1325,7 +1385,7 @@
                 <div data-role="fieldcontain">
                     <fieldset data-role="controlgroup">
                         <label for="slider17" class="ui-hidden-accessible"> Moderate Exercise </label>
-                        <input id="slider17" type="range" name="slider17" value="0" min="0" max="20" data-highlight="false">
+                        <input id="slider17" type="range" name="slider17" value="0" min="0" max="20" data-highlight="false" pattern="\d*">
                     </fieldset>
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page42"
@@ -1360,27 +1420,6 @@
                 </div>
                 <a data-role="button" data-transition="slide" data-theme="b" href="#page37"
                 data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
-            </div>
-        </div>
-        <!-- Resources -->
-        <div data-role="page" data-theme="a" id="page31">
-            <div data-theme="a" data-role="header" data-position="fixed">
-                <h2> Resources </h2>
-                <a data-role="button" data-rel="back" data-theme="c" href="#page31" data-icon="newarrow-l"
-                data-iconpos="left" class="ui-btn-left"> Back </a>
-            </div>
-            <div data-role="content">
-                <div>
-                    <p>
-                        <b> Learn more about heart disease, hypertension, and stroke </b>
-                    </p>
-                </div>
-                <div style=" text-align:center">
-                    <img style="width: 250px; height: 130px" src="http://millionhearts.hhs.gov/images/logo_MH.png">
-                </div>
-                <div style=" text-align:center">
-                    <img style="width: 250px; height: 100px" src="http://branding.heart.org/new_aha_logos/spot/ucm_317435.jpg">
-                </div>
             </div>
         </div>
 
