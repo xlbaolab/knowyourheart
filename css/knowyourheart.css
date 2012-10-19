@@ -336,7 +336,7 @@ a.startbtn.ui-btn-corner-all{
 
 /*DASHBOARD */
 
-#page18 .ui-grid-b {
+#home .ui-grid-b {
     margin: 20px -15px 15px -15px;
     padding: 5px 0 30px 0;
 }
@@ -397,6 +397,17 @@ a#dashboardShareBtn:hover {
 }
 a#dashboardShareBtn:active {
     background-position: right;
+}
+
+/* High Res images */
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+screen and (max-moz-device-pixel-ratio: 2) {
+	#dashboardAssessmentBtn {
+	    display: block;
+	    background: url('../images/assessmentbtn_sprite@2x.png');
+	    background-position: left;
+        background-size: 66px auto;
+	}
 }
 
 /*PROFILE Screen */

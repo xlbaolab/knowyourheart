@@ -31,6 +31,15 @@ var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find?
 var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 // vars: dataTheme, pageId, name, distance
 var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
+var NEXT_STEP_TEMPLATES = {
+  actions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page27" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <%= reduction %>%</div></a></li>'),
+  enterBp : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#blood_pressure" data-transition="slide">Enter your blood pressure<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
+  enterChol : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
+  findLocation : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
+  getRewards : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#rewards" data-transition="slide">Get Rewards<div class="nextsteps">Enter to win an Apple iPad</div></a></li>'),
+  moreQuestions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page37" data-transition="slide">Assess further<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
+  share : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#share" data-transition="slide">Share<div class="nextsteps">Your friends and family need to know their risk</div></a></li>')
+};
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
@@ -263,11 +272,8 @@ function calculateRisk(page, user) {
   $.post(ARCHIMEDES_URL, requestData, function(data) {
     console.dir(data);
 
-    var risk = data.Risk[0];
-    if (!$.isNumeric(risk.rating)) {
-      // only risk range is available
-      risk = data.Risk[1];
-    }
+    // risk range if no chol and bp
+    var risk = data.Risk[data.Recommendation ? 1 : 0];
 
     // update risk content
     $risk.css(RISK_IMAGES[risk.rating]);
@@ -301,6 +307,11 @@ function doFirstPageInit() {
       new SurveyView(viewArgs);
     }
   }
+
+  new HomeView({
+    el : $("#home"),
+    model : gCurrentUser
+  });
 
   var locationsModel = new LocationsModel();
 
@@ -365,6 +376,19 @@ var User = StackMob.User.extend({
     }
 
     StackMob.User.prototype.constructor.call(this, attrs);
+  },
+  hasCompletedBp : function() {
+    return this.get("systolic") && this.get("diastolic");
+  },
+  hasCompletedChol : function() {
+    return this.get("hdl") && this.get("ldl") && this.get("cholesterol");
+  },
+  hasCompletedExtra : function() {
+    // TODO
+    return false;
+  },
+  hasCompletedRequired : function() {
+    return this.get("progress") === "assessment";
   }
 });
 
@@ -553,6 +577,90 @@ var LocMapView = Backbone.View.extend({
   }
 });
 
+var HomeView = Backbone.View.extend({
+  initialize : function(attrs) {
+    this.listView = new NextStepListView({
+      el : this.$(".next-steps-list"),
+      model : this.model
+    });
+  },
+  events : {
+    "pagebeforeshow" : "updateView"
+  },
+  updateView : function(event, data) {
+    this.listView.updateList();
+  }
+});
+
+var NextStepListView = Backbone.View.extend({
+  initialize : function(attrs) {
+  },
+  events : {
+    // "pageshow" : "refreshView"
+  },
+  refreshView : function() {
+    //if ($.mobile.activePage.attr("id") === this.el.id) {
+    this.$el.listview("refresh");
+    //}
+  },
+  updateList : function() {
+    var i = 0;
+
+    var completedBp = this.model.hasCompletedBp();
+    var completedChol = this.model.hasCompletedChol();
+    var completedExtra = this.model.hasCompletedExtra();
+
+    if (completedBp === this.completedBp && completedChol === this.completedChol && completedExtra === this.completedExtr) {
+      // no change
+      return;
+    }
+
+    this.completedBp = completedBp;
+    this.completedChol = completedChol;
+    this.completedExtra = completedExtra;
+
+    // clear list
+    this.$("li.next-step").remove();
+
+    if (!completedBp || !completedChol) {
+      this.$el.append(NEXT_STEP_TEMPLATES.findLocation({
+        dataTheme : i++ % 2 ? "e" : "f"
+      }));
+    }
+    if (!completedBp) {
+      this.$el.append(NEXT_STEP_TEMPLATES.enterBp({
+        dataTheme : i++ % 2 ? "e" : "f"
+      }));
+    }
+    if (!completedChol) {
+      this.$el.append(NEXT_STEP_TEMPLATES.enterChol({
+        dataTheme : i++ % 2 ? "e" : "f"
+      }));
+    }
+    if (i < 3 && completedBp && completedChol) {
+      this.$el.append(NEXT_STEP_TEMPLATES.actions({
+        dataTheme : i++ % 2 ? "e" : "f",
+        reduction : 10 // TODO
+      }));
+    }
+    if (i < 3 && !completedExtra) {
+      this.$el.append(NEXT_STEP_TEMPLATES.moreQuestions({
+        dataTheme : i++ % 2 ? "e" : "f"
+      }));
+    }
+    this.$el.append(NEXT_STEP_TEMPLATES.getRewards({
+      dataTheme : i++ % 2 ? "e" : "f"
+    }));
+    if (i < 4) {
+      this.$el.append(NEXT_STEP_TEMPLATES.share({
+        dataTheme : i++ % 2 ? "e" : "f"
+      }));
+    }
+
+    this.refreshView();
+  }
+});
+
 var ProfileView = Backbone.View.extend({
   initialize : function(attrs) {
   },
@@ -611,12 +719,17 @@ var ProfileView = Backbone.View.extend({
 
 var ResultView = Backbone.View.extend({
   initialize : function(attrs) {
+    this.listView = new NextStepListView({
+      el : this.$(".next-steps-list"),
+      model : this.model
+    });
   },
   events : {
     "pagebeforeshow" : "updateView"
   },
   updateView : function(event, data) {
     calculateRisk(this.el, this.model);
+    this.listView.updateList();
   }
 });
 
@@ -694,7 +807,7 @@ var SurveyView = Backbone.View.extend({
       }
     }
 
-    if (this.model.get("progress") !== "assessment") {
+    if (!this.model.hasCompletedRequired()) {
       this.model.set("progress", data.nextPage.attr("id"));
       changed = true;
     }
@@ -887,8 +1000,8 @@ $(document).on("pageinit", function(event) {
   }
 
   if (event.target.id === "loading") {
-    if (gCurrentUser.get("progress") === "assessment") {
-      $.mobile.changePage("#page18", {
+    if (gCurrentUser.hasCompletedRequired()) {
+      $.mobile.changePage("#home", {
         transition : "none"
       });
     } else {
