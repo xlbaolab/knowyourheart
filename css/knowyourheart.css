@@ -277,7 +277,17 @@ a.nextbtn.ui-btn-corner-all {
     background: url('../images/knh-logo.png') no-repeat;
     height: 96px;
     width: 250px;
-    margin: 0px auto 0px auto;
+    margin: 0px auto;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+screen and (max-moz-device-pixel-ratio: 2) {
+	.knh-logo {
+	    background: url('../images/knh-logo@2x.png');
+        background-size: 250px auto;
+	    margin: 0px auto;
+
+	}
 }
 
 #start_text {
