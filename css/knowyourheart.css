@@ -406,7 +406,7 @@ screen and (max-moz-device-pixel-ratio: 2) {
 	    display: block;
 	    background: url('../images/assessmentbtn_sprite@2x.png');
 	    background-position: left;
-        background-size: 66px auto;
+        background-size: 198px auto;
 	}
 }
 
