@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-	<!--NO ZOOMING!!!-->
+  <!--NO ZOOMING!!!-->
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
   <!-- TODO: no caching for development, remove for production -->
   <meta http-equiv="Cache-control" content="no-cache">
@@ -105,11 +105,9 @@
         <label for="checkbox2"> Agree with <a href="#page32" data-transition="fade">Terms and Conditions</a> </label>
       </fieldset>
     </div>
-    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#page2" class="startbtn"> Get Started </a>
-
+    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#page2" class="startbtn">Get Started</a>
     <div id="archimedes_logo"></div>
     <div id="millionhearts_logo"></div>
-
   </div>
 </div>
 <!-- Terms and Conditions -->
@@ -798,7 +796,7 @@
   </div>
   <div data-role="content">
     <div class="risk_score">
-      <div id="heart_meter"></div>
+      <div class="heart_meter"></div>
       <div id="circularG">
         <div id="circularG_1" class="circularG"></div>
         <div id="circularG_2" class="circularG"></div>
@@ -810,16 +808,16 @@
         <div id="circularG_8" class="circularG"></div>
       </div>
       <br/>
-      <p id="risk_error">
+      <p class="risk_error">
         An error occured during risk calculation.
       </p>
       <p>
         Your risk for heart disease could be as high as
-        <span id="5_year_risk">45</span>% over the next 5 years
+        <span class="5_year_risk">45</span>% over the next 5 years
       </p>
       <a href="#popupMoreInfo" data-rel="popup" data-role="button">More Info</a>
       <div data-role="popup" id="popupMoreInfo" class="ui-content" style="text-align: left; font-size: small;">
-		<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
+        <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>
         <p>
           Recommendation: It is urgent that you get screened because your risk could be high
         </p>
@@ -1157,59 +1155,50 @@
     <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
     href="#page38" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
   </div>
-    <div data-role="content">
-        <div>
-            <p>
-                    Thank you for completing the KnowYourHeart assessment
-            </p>
-            <p>
-                    Please answer a few questions to be eligible for our giveaway
-            </p>
+  <div data-role="content">
+    <div>
+      <p>
+        Thank you for completing the KnowYourHeart assessment
+      </p>
+      <p>
+        Please answer a few questions to be eligible for our giveaway
+      </p>
+    </div>
+    <div data-role="fieldcontain">
+      <fieldset data-role="controlgroup" data-type="horizontal">
+        <div class="helper_text">
+          <p>
+            How would you rate the value of the knowledge you gained from this app?
+          </p>
+          <p>
+            (5="You saved my life!"; 1="I already knew that")
+          </p>
         </div>
-        <div data-role="fieldcontain">
-            <fieldset data-role="controlgroup" data-type="horizontal">
-                <div class="helper_text">
-                	<p>How would you rate the value of the knowledge you gained from this app?</p>
-                	<p>(5="You saved my life!"; 1="I already knew that")</p>
-                	</div>
-                <legend>
-                </legend>
-                <input id="rating1" name="" value="1" type="radio">
-                <label for="rating1">
-                    1
-                </label>
-                <input id="rating2" name="" value="2" type="radio">
-                <label for="rating2">
-                    2
-                </label>
-                <input id="rating3" name="" value="3" type="radio">
-                <label for="rating3">
-                    3
-                </label>
-                <input id="rating4" name="" value="4" type="radio">
-                <label for="rating4">
-                    4
-                </label>
-                <input id="rating5" name="" value="5" type="radio">
-                <label for="rating5">
-                    5
-                </label>
-            </fieldset>
-        </div>
-        <div data-role="fieldcontain">
-            <fieldset data-role="controlgroup">
-                <label for="reward_textinput_name">
-                </label>
-                <input name="" id="reward_textinput_name" placeholder="Full Name" value="" type="text">
-            </fieldset>
-        </div>
-        <div data-role="fieldcontain">
-            <fieldset data-role="controlgroup">
-                <label for="reward_textinput_email">
-                </label>
-                <input name="" id="reward_textinput_email" placeholder="Email address" value="" type="text">
-            </fieldset>
-    	</div>
+        <legend></legend>
+        <input id="rating1" name="" value="1" type="radio">
+        <label for="rating1"> 1 </label>
+        <input id="rating2" name="" value="2" type="radio">
+        <label for="rating2"> 2 </label>
+        <input id="rating3" name="" value="3" type="radio">
+        <label for="rating3"> 3 </label>
+        <input id="rating4" name="" value="4" type="radio">
+        <label for="rating4"> 4 </label>
+        <input id="rating5" name="" value="5" type="radio">
+        <label for="rating5"> 5 </label>
+      </fieldset>
+    </div>
+    <div data-role="fieldcontain">
+      <fieldset data-role="controlgroup">
+        <label for="reward_textinput_name"> </label>
+        <input name="" id="reward_textinput_name" placeholder="Full Name" value="" type="text">
+      </fieldset>
+    </div>
+    <div data-role="fieldcontain">
+      <fieldset data-role="controlgroup">
+        <label for="reward_textinput_email"> </label>
+        <input name="" id="reward_textinput_email" placeholder="Email address" value="" type="text">
+      </fieldset>
+    </div>
     <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#" class="startbtn"> Submit </a>
   </div>
 </div>

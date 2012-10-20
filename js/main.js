@@ -32,7 +32,7 @@ var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 // vars: dataTheme, pageId, name, distance
 var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
 var NEXT_STEP_TEMPLATES = {
-  actions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page27" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <%= reduction %>%</div></a></li>'),
+  actions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page27" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <span class="risk-reduction"><%= reduction %></span>%</div></a></li>'),
   enterBp : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#blood_pressure" data-transition="slide">Enter your blood pressure<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
   enterChol : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
   findLocation : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
@@ -130,6 +130,30 @@ var ARCHIMEDES_ATTRS = {
   "vigorousexercise" : "vigorousexercise",
   "familymihistory" : "familymihistory"
 };
+// user attrs mapped to archimedes attrs
+var USER_ATTRS = {
+  "age" : "age",
+  "gender" : "gender",
+  "height" : "height",
+  "weight" : "weight",
+  "smoker" : "smoker",
+  "ami" : "mi",
+  "stroke" : "stroke",
+  "diabetes" : "diabetes",
+  "systolic" : "systolic",
+  "diastolic" : "diastolic",
+  "cholesterol" : "cholesterol",
+  "hdl" : "hdl",
+  "ldl" : "ldl",
+  "hba1c" : "hba1c",
+  "cholesterolmeds" : "cholesterolmeds",
+  "bloodpressuremeds" : "bloodpressuremeds",
+  "bloodpressuremedcount" : "bloodpressuremedcount",
+  "aspirin" : "aspirin",
+  "moderateexercise" : "moderateexercise",
+  "vigorousexercise" : "vigorousexercise",
+  "familymihistory" : "familymihistory"
+};
 var ARCHIMEDES_DEFAULTS = {
   age : 18, // 18 to 130 years
   gender : "M", // M/F
@@ -185,8 +209,6 @@ var USER_DEFAULTS = {
   bloodpressuremeds : "false",
   aspirin : "false",
   familymihistory : "false",
-  knows_bp : "false",
-  knows_chol : "false",
   last_survey_page : ""
 };
 var RISK_IMAGES = {
@@ -248,45 +270,6 @@ function createUser(user, callbacks) {
 
   user.create(callbacks);
   return user;
-}
-
-function calculateRisk(page, user) {
-  var $error = $("#risk_error", page);
-  var $loader = $("#circularG", page);
-  var $risk = $("#heart_meter", page);
-
-  $error.hide();
-  $risk.hide();
-  $loader.show();
-
-  var requestData = {};
-  for (attr in ARCHIMEDES_ATTRS) {
-    var val = user.attributes[ARCHIMEDES_ATTRS[attr]];
-    if (val != "") {
-      requestData[attr] = val;
-    } else if (ARCHIMEDES_REQUIRED[attr]) {
-      requestData[attr] = ARCHIMEDES_DEFAULTS[attr];
-    }
-  }
-
-  $.post(ARCHIMEDES_URL, requestData, function(data) {
-    console.dir(data);
-
-    // risk range if no chol and bp
-    var risk = data.Risk[data.Recommendation ? 1 : 0];
-
-    // update risk content
-    $risk.css(RISK_IMAGES[risk.rating]);
-    $("#5_year_risk", page).html(risk.risk);
-    $loader.fadeOut("slow", function() {
-      $risk.fadeIn("slow");
-    });
-  }, "json").fail(function(data) {
-    console.error("Error calling Archimedes API: " + data.statusText + " (code " + data.status + ")");
-    $loader.fadeOut("slow", function() {
-      $error.fadeIn("slow");
-    });
-  });
 }
 
 function doFirstPageInit() {
@@ -359,7 +342,9 @@ StackMob.Model.prototype.sync = function(method, model, options) {
 };
 
 var User = StackMob.User.extend({
-  constructor : function(attrs) {
+  initialize : function(attrs) {
+    StackMob.User.prototype.initialize.apply(this, arguments);
+
     if (_.isUndefined(attrs)) {
       attrs = {
         username : generateRandomString(),
@@ -373,9 +358,56 @@ var User = StackMob.User.extend({
       for (attr in USER_DEFAULTS) {
         attrs[attr] = USER_DEFAULTS[attr];
       }
+
+      attrs.archimedes_result = "";
+      attrs.state = User.RISK_STATE.CHANGED;
+
+      this.set(attrs);
     }
 
-    StackMob.User.prototype.constructor.call(this, attrs);
+    _.extend(this, Backbone.Events);
+    this.on("change", this.handleChange, this);
+  },
+  calculateRisk : function() {
+    this.set("risk_state", User.RISK_STATE.CALCULATING);
+
+    // build request
+    var request = {};
+    for (attr in ARCHIMEDES_ATTRS) {
+      var val = this.get(ARCHIMEDES_ATTRS[attr]);
+      if (val !== undefined && val !== "") {
+        request[attr] = val;
+      } else if (ARCHIMEDES_REQUIRED[attr]) {
+        request[attr] = ARCHIMEDES_DEFAULTS[attr];
+      }
+    }
+
+    console.debug("Requesting risk calculations from Archimedes...");
+    $.post(ARCHIMEDES_URL, request, _.bind(this.calculateRiskSuccess, this), "text").fail(_.bind(this.calculateRiskError, this));
+  },
+  calculateRiskError : function(data) {
+    console.error("Error calling Archimedes API: " + data.statusText + " (code " + data.status + ")");
+    this.set("risk_state", User.RISK_STATE.ERROR);
+  },
+  calculateRiskSuccess : function(data) {
+    console.dir(data);
+    this.set("archimedes_result", data);
+    this.archimedes_result = $.parseJSON(data);
+    this.save();
+    this.set("risk_state", User.RISK_STATE.UP_TO_DATE);
+  },
+  handleChange : function(fn, data) {
+    for (var attr in data.changes) {
+      if (USER_ATTRS[attr]) {
+        console.debug("User's " + attr + " changed to " + this.get(attr));
+        this.set("risk_state", User.RISK_STATE.CHANGED);
+      } else if (attr === "risk_state") {
+        console.debug("User triggering " + User.RISK_STATE_CHANGE_EVENT + ": " + this.get("risk_state"));
+        this.trigger(User.RISK_STATE_CHANGE_EVENT, this.get("risk_state"), this);
+      } else if (attr === "archimedes_result") {
+        this.archimedes_result = $.parseJSON(this.get("archimedes_result"));
+      }
+    }
   },
   hasCompletedBp : function() {
     return this.get("systolic") && this.get("diastolic");
@@ -389,6 +421,14 @@ var User = StackMob.User.extend({
   },
   hasCompletedRequired : function() {
     return this.get("progress") === "assessment";
+  }
+}, {
+  RISK_STATE_CHANGE_EVENT : "risk-state:change",
+  RISK_STATE : {
+    CALCULATING : "calculating",
+    CHANGED : "changed", // needs to be updated
+    ERROR : "error",
+    UP_TO_DATE : "up-to-date"
   }
 });
 
@@ -469,14 +509,14 @@ var LocationsModel = Backbone.Model.extend({
 var LocListView = Backbone.View.extend({
   initialize : function(attrs) {
     this.$list = this.$("#locList");
-    this.options.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
+    this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
   events : {
     "click .loc-search-btn" : "handleFind",
     "pageshow" : "refreshView"
   },
   handleFind : function() {
-    this.options.model.geocode($(".loc-search-field", this.el).val());
+    this.model.geocode($(".loc-search-field", this.el).val());
   },
   handleProvidersChange : function(providers) {
     // clear list
@@ -517,15 +557,15 @@ var LocMapView = Backbone.View.extend({
     this.map = new google.maps.Map(mapEl, options);
     google.maps.event.addListener(this.map, "click", _.bind(this.handleMapClick, this));
 
-    this.options.model.on(LocationsModel.LOCATION_CHANGE_EVENT, this.handleLocationChange, this);
-    this.options.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
+    this.model.on(LocationsModel.LOCATION_CHANGE_EVENT, this.handleLocationChange, this);
+    this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
   events : {
     "click .loc-search-btn" : "handleFind",
     "pageshow" : "refreshView"
   },
   handleFind : function() {
-    this.options.model.geocode($(".loc-search-field", this.el).val());
+    this.model.geocode($(".loc-search-field", this.el).val());
   },
   handleLocationChange : function(location) {
     this.map.panTo(location);
@@ -594,14 +634,22 @@ var HomeView = Backbone.View.extend({
 
 var NextStepListView = Backbone.View.extend({
   initialize : function(attrs) {
+    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
-  events : {
-    // "pageshow" : "refreshView"
+  getRiskReduction : function() {
+    return this.model.archimedes_result ? this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions : "...";
+  },
+  handleRiskChange : function(state, user) {
+    var $risk = this.$("li .risk-reduction");
+
+    switch(state) {
+    case User.RISK_STATE.UP_TO_DATE:
+      $risk.html(this.getRiskReduction());
+      break;
+    }
   },
   refreshView : function() {
-    //if ($.mobile.activePage.attr("id") === this.el.id) {
     this.$el.listview("refresh");
-    //}
   },
   updateList : function() {
     var i = 0;
@@ -640,7 +688,7 @@ var NextStepListView = Backbone.View.extend({
     if (i < 3 && completedBp && completedChol) {
       this.$el.append(NEXT_STEP_TEMPLATES.actions({
         dataTheme : i++ % 2 ? "e" : "f",
-        reduction : 10 // TODO
+        reduction : this.getRiskReduction()
       }));
     }
     if (i < 3 && !completedExtra) {
@@ -723,12 +771,48 @@ var ResultView = Backbone.View.extend({
       el : this.$(".next-steps-list"),
       model : this.model
     });
+
+    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
   events : {
     "pagebeforeshow" : "updateView"
   },
+  handleRiskChange : function(state, user) {
+    var result = this.model.archimedes_result;
+    var $error = this.$(".risk_error");
+    var $loader = this.$("#circularG");
+    var $img = this.$(".heart_meter");
+
+    switch(state) {
+    case User.RISK_STATE.CALCULATING:
+      $error.hide();
+      $img.hide();
+      $loader.show();
+      break;
+    case User.RISK_STATE.ERROR:
+      // error
+      $loader.fadeOut("slow", function() {
+        $error.fadeIn("slow");
+      });
+      break;
+    case User.RISK_STATE.UP_TO_DATE:
+      // update risk content
+      var risk = result.Risk[result.Recommendation ? 1 : 0];
+      $img.css(RISK_IMAGES[risk.rating]);
+      this.$(".5_year_risk").html(risk.risk);
+      $loader.fadeOut("slow", function() {
+        $img.fadeIn("slow");
+      });
+      break;
+    }
+  },
   updateView : function(event, data) {
-    calculateRisk(this.el, this.model);
+    switch(this.model.get("risk_state")) {
+    case User.RISK_STATE.CHANGED:
+    case User.RISK_STATE.ERROR:
+      this.model.calculateRisk();
+      break;
+    }
     this.listView.updateList();
   }
 });
