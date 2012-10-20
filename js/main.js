@@ -37,7 +37,7 @@ var NEXT_STEP_TEMPLATES = {
   enterChol : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
   findLocation : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
   getRewards : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#rewards" data-transition="slide">Get Rewards<div class="nextsteps">Enter to win an Apple iPad</div></a></li>'),
-  moreQuestions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page37" data-transition="slide">Assess further<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
+  moreQuestions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page38" data-transition="slide">Assess further<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
   share : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#share" data-transition="slide">Share<div class="nextsteps">Your friends and family need to know their risk</div></a></li>')
 };
 
