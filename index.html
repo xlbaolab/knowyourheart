@@ -88,7 +88,7 @@
           Heart disease can affect anyone.
         </p>
         <p>
-          Answer 8 questions to calculate your risk for heart disease.
+          Answer 10 questions to calculate your risk for heart disease.
         </p>
         <p class="note">
           Powered by the Archimedes IndiGO decision support tool used by physicians.
@@ -105,7 +105,7 @@
         <label for="checkbox2"> Agree with <a href="#page32" data-transition="fade">Terms and Conditions</a> </label>
       </fieldset>
     </div>
-    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#page2" class="startbtn">Get Started</a>
+    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#quiz1" class="startbtn">Get Started</a>
     <div id="archimedes_logo"></div>
     <div id="millionhearts_logo"></div>
   </div>
@@ -133,12 +133,12 @@
     </div>
     <div class="ui-grid-b">
       <div class="ui-block-a" style="text-align: center;">
-        <a id="dashboardProfileBtn" data-transition="fade" href="#basic_profile">&nbsp;</a>
-        <span>About You</span>
-      </div>
-      <div class="ui-block-b">
         <a id="dashboardAssessmentBtn" data-transition="fade" href="#assessment"></a>
         Your Heart
+      </div>
+      <div class="ui-block-b">
+        <a id="dashboardProfileBtn" data-transition="fade" href="#basic_profile">&nbsp;</a>
+        <span>Find	 Clinic</span>
       </div>
       <div class="ui-block-c" style="text-align: center;">
         <a id="dashboardShareBtn" data-transition="slideup" href="#share"></a>
@@ -315,6 +315,126 @@
     </ul>
   </div>
 </div>
+
+<!-- Heart Quiz Question 1 -->
+<div data-role="page" data-theme="a" id="quiz1">
+  <div data-theme="a" data-role="header" data-position="fixed">
+    <h2> Facts </h2>
+    <a data-role="button" data-direction="reverse" data-rel="back"
+    data-theme="c" href="#quiz1" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+  </div>
+    <div data-role="content">
+        <h3>
+            Which statement is true?
+        </h3>
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <legend>
+                </legend>
+                <input id="fact1" name="" value="a" type="radio">
+                <label for="fact1">
+                    150,000 people younger than 65 die every year from heart disease and stroke
+                </label>
+                <input id="fact2" name="" value="b" type="radio">
+                <label for="fact2">
+                    African Americans have the highest rate of high blood pressure all population
+                    groups
+                </label>
+                <input id="fact3" name="" value="c" type="radio">
+                <label for="fact3">
+                    Heart disease is the leading cause of death for American women
+                </label>
+                <input id="fact4" name="" value="d" type="radio">
+                <label for="fact4">
+                    Individuals with low incomes are more likely to suffer from high blood
+                    pressure, high cholesterol, and heart attack
+                </label>
+                <input id="fact5" name="" value="e" type="radio">
+                <label for="fact5">
+                    All of the above
+                </label>
+            </fieldset>
+        </div>
+        <a data-role="button" data-transition="slide" data-theme="b" href="#quiz2"
+	    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+
+    </div>
+  <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
+    <div class="progressBar">
+      <span class="dot activedot"></span>
+      <span class="dot dot2"></span>
+      <span class="dot dot3"></span>
+      <span class="dot dot4"></span>
+      <span class="dot dot5"></span>
+      <span class="dot dot6"></span>
+      <span class="dot dot7"></span>
+      <span class="dot dot8"></span>
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
+
+    </div>
+  </div>    
+</div>
+<!-- Heart Quiz: Question 2 -->
+<div data-role="page" data-theme="a" id="quiz2">
+  <div data-theme="a" data-role="header" data-position="fixed">
+    <h2> Risk Factors </h2>
+    <a data-role="button" data-direction="reverse" data-rel="back"
+    data-theme="c" href="#quiz2" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+  </div>
+    <div data-role="content">
+        <h3>
+            What is the leading risk factor for heart disease?
+        </h3>
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup" data-type="vertical">
+                <legend>
+                </legend>
+                <input id="risk1" name="" value="a" type="radio">
+                <label for="risk1">
+                    High Blood Pressure
+                </label>
+                <input id="risk2" name="" value="b" type="radio">
+                <label for="risk2">
+                    High Cholesterol
+                </label>
+                <input id="risk3" name="" value="c" type="radio">
+                <label for="risk3">
+                    Inactivity
+                </label>
+                <input id="risk4" name="" value="d" type="radio">
+                <label for="risk4">
+                    Obesity
+                </label>
+                <input id="risk5" name="" value="e" type="radio">
+                <label for="risk5">
+                    Diabetes
+                </label>
+                <input id="risk6" name="" value="f" type="radio">
+                <label for="risk6">
+                    Cigarette Smoking
+                </label>
+            </fieldset>
+        </div>
+        <a data-role="button" data-transition="slide" data-theme="b" href="#page2"
+	    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+        
+    </div>
+  <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
+    <div class="progressBar">
+      <span class="dot completedot"></span>
+      <span class="dot activedot"></span>
+      <span class="dot dot3"></span>
+      <span class="dot dot4"></span>
+      <span class="dot dot5"></span>
+      <span class="dot dot6"></span>
+      <span class="dot dot7"></span>
+      <span class="dot dot8"></span>
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
+    </div>
+  </div>    
+</div>
 <!-- Survey_Age -->
 <div data-role="page" data-theme="a" id="page2">
 
@@ -335,14 +455,16 @@
   </div>
   <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
     <div class="progressBar">
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot2"></span>
-      <span class="dot dot3"></span>
       <span class="dot dot4"></span>
       <span class="dot dot5"></span>
       <span class="dot dot6"></span>
       <span class="dot dot7"></span>
       <span class="dot dot8"></span>
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -369,14 +491,15 @@
   <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
     <div class="progressBar">
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot3"></span>
-      <span class="dot dot4"></span>
       <span class="dot dot5"></span>
       <span class="dot dot6"></span>
       <span class="dot dot7"></span>
       <span class="dot dot8"></span>
-
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -426,13 +549,14 @@
     <div class="progressBar">
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot4"></span>
-      <span class="dot dot5"></span>
       <span class="dot dot6"></span>
       <span class="dot dot7"></span>
       <span class="dot dot8"></span>
-
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -447,8 +571,9 @@
     <h3> How much do you weigh? </h3>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <label for="weight_slider"> In pounds </label>
-        <input id="weight_slider" type="range" name="slider" value="150" min="50" max="400" data-highlight="true" pattern="\d*">
+<!--        <label for="weight_slider"> In pounds </label>-->
+        <input name="weight" id="weight_slider" placeholder="In pounds" value="" type="number">        
+<!--        <input id="weight_slider" type="range" name="slider" value="150" min="50" max="400" data-highlight="true" pattern="\d*">-->
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page13"
@@ -459,12 +584,13 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot5"></span>
-      <span class="dot dot6"></span>
       <span class="dot dot7"></span>
       <span class="dot dot8"></span>
-
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -501,11 +627,12 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot6"></span>
-      <span class="dot dot7"></span>
       <span class="dot dot8"></span>
-
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -608,10 +735,11 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-
+      <span class="dot dot9"></span>
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -653,9 +781,10 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot8"></span>
-
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -691,9 +820,10 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot"></span>
-
+      <span class="dot dot10"></span>
     </div>
   </div>
 </div>
@@ -736,8 +866,9 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-
     </div>
   </div>
 </div>
@@ -780,8 +911,9 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
+      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-
     </div>
   </div>
 </div>
@@ -1075,10 +1207,10 @@
         <div class="action_accordion">
           <p>
             It is important to be consistent about the medications you are currently taking to reduce your blood pressure or cholesterol.
-            Based on the information you have entered, your risk could increase to 50%. (+10%)
+            Based on the information you have entered, your current medications redue your risk by about 10%
           </p>
           <p>
-            A doctor may be able to reduce your risk to 30% by using medication to manage your blood pressure and cholesterol (-5%)
+            Medication may be able to manage your blood pressure and cholesterol to 30%.  Please see your doctor for a prescription. (-5%)
           </p>
         </div>
       </div>
@@ -1099,7 +1231,7 @@
         <h3> Lose weight </h3>
         <div class="action_accordion">
           <p>
-            If you lose 11 pounds and do not regain it you will reduce your risk to 40% (-5%)
+            If you lose 11 pounds and do not regain it you will reduce your risk to 40% (-5%).  Try a combination of a healthy diet and exercise.
           </p>
         </div>
       </div>
@@ -1221,24 +1353,15 @@
           </select>
         </fieldset>
       </div>
-    </div>
-    <a data-role="button" data-transition="slide" data-theme="b" href="#page36"
-    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
-  </div>
-</div>
-<!-- Advanced_BP Meds # -->
-<div data-role="page" data-theme="a" id="page36">
-  <div data-theme="" data-role="header" data-position="fixed">
-    <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-    href="#page36" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-    <h2> Medication </h2>
-  </div>
-  <div data-role="content"  class="surveypage">
-    <h3> How many different medications do you take for your blood pressure? </h3>
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <input id="bp_meds_slider" type="range" name="slider" value="0" min="0" max="10" data-highlight="false" pattern="\d*">
-      </fieldset>
+	<div id="bpmeds_yes">
+		<p> How many different medications do you take for your blood pressure?</p>
+	
+	    <div data-role="fieldcontain">
+	      <fieldset data-role="controlgroup">
+	        <input id="bp_meds_slider" type="range" name="slider" value="0" min="0" max="4" data-highlight="false" pattern="\d*">
+	      </fieldset>
+	    </div>
+	</div>      
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page39"
     data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
@@ -1313,7 +1436,7 @@
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
         <label for="slider18" class="ui-hidden-accessible"> Hours </label>
-        <input id="slider18" type="range" name="slider18" value="0" min="0" max="20" data-highlight="false" pattern="\d*">
+        <input id="slider18" type="range" name="slider18" value="0" min="0" max="30" data-highlight="false" pattern="\d*">
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
@@ -1343,7 +1466,7 @@
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
         <label for="slider17" class="ui-hidden-accessible"> Moderate Exercise </label>
-        <input id="slider17" type="range" name="slider17" value="0" min="0" max="20" data-highlight="false" pattern="\d*">
+        <input id="slider17" type="range" name="slider17" value="0" min="0" max="60" data-highlight="false" pattern="\d*">
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page42"

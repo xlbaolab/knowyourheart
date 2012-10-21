@@ -169,7 +169,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#12f2f2f2', e
 
 /*Added nextbtn class to next buttons */
 
-input[type="text"], select, textarea {
+input[type="text"], input[type="number"], select, textarea {
     text-align: center;	/* center help text in text input and centers input 8? */
 }
 
@@ -584,10 +584,13 @@ fieldset .ui-btn-inner {
 }
 
 /* WEIGHT SCREEN */
+
 #page12 input#weight_slider.ui-input-text.ui-body-a.ui-corner-all {
 	-moz-border-radius: 0.2em /*{global-radii-blocks}*/;
 	-webkit-border-radius: 0.2em /*{global-radii-blocks}*/;
 	border-radius: 0.2em /*{global-radii-blocks}*/;
+	width: 75%;
+	margin: 0 auto;
 }
 
 /* SMOKING SCREEN */
