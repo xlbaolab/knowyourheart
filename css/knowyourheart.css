@@ -304,11 +304,17 @@ a.nextbtn.ui-btn-corner-all {
 
 /*START PAGE */
 
+.navbar-stripe {
+	background: #32a7da;
+	height: 5px;
+	width: 100%;
+}
+
 .top-shadow {
   margin: -45px -15px 0 -15px;
   background: rgba(128,123,123,0.1);
   border-bottom: 1px solid rgba(128,123,123,0.15);
-  padding: 75px 0 30px 0;
+  padding: 60px 0 10px 0;
 }
 .knh-logo {
   background: url('../images/knh-logo.png') no-repeat;
@@ -327,8 +333,8 @@ screen and (max-moz-device-pixel-ratio: 2) {
 }
 
 #start_text {
-  margin-top: 30px;
-  padding: 15px 30px 0px 30px;
+  margin-top: 20px;
+  padding: 15px 25px 0px 25px;
   color: #807b7b;
 }
 
@@ -517,18 +523,17 @@ screen and (max-moz-device-pixel-ratio: 2) {
 }
 
 /*remove blue background of tab bar */
-#basic_profile .ui-footer.ui-bar-a, #page37 .ui-footer.ui-bar-a {
+#basic_profile .ui-footer.ui-bar-a, #extra_profile .ui-footer.ui-bar-a {
   border: 0px;
 }
 
 .profileData {
-  position: relative;
   color: #32a7da;
   font-family: "MuseoSans500Regular", sans-serif;
   font-size: small;
   font-weight: normal;
-  padding: 0.2em 0 0.2em 0;
-  top: 50%;
+  margin: 0.4em 0 0 0;
+  padding: 0;
 }
 
 .ui-li-has-arrow.ui-li-has-count .ui-li-count {

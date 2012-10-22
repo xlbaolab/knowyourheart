@@ -80,15 +80,13 @@
 </div>
 <!-- New User Start -->
 <div data-role="page" data-theme="a" id="welcome">
+    <div class="navbar-stripe"></div>
   <div data-role="content">
     <div class="top-shadow">
       <div class="knh-logo"></div>
       <div id="start_text">
         <p>
-          Heart disease can affect anyone.
-        </p>
-        <p>
-          Answer 10 questions to calculate your risk for heart disease.
+          Answer 10 questions to calculate your risk for cardiovascular disease.
         </p>
         <p class="note">
           Powered by the Archimedes IndiGO decision support tool used by physicians.
@@ -138,7 +136,7 @@
       </div>
       <div class="ui-block-b">
         <a id="dashboardProfileBtn" data-transition="fade" href="#basic_profile"> &nbsp; </a>
-        <span>Find	 Clinic</span>
+        <span>Find Clinic</span>
       </div>
       <div class="ui-block-c" style="text-align: center;">
         <a id="dashboardShareBtn" data-transition="slideup" href="#share"> </a>
@@ -179,59 +177,30 @@
   <div data-role="content">
     <ul data-role="listview" data-divider-theme="b" data-inset="false">
       <li data-theme="f">
-        <a href="#page2" data-transition="slide"> Age
-          <div id="profile_age" class="profileData">
-            28
-          </div> </a>
+        <a href="#page2" data-transition="slide"> Age <p class="age profileData"></p> </a>
       </li>
       <li data-theme="e">
-        <a href="#page9" data-transition="slide"> Gender
-          <div id="profile_gender" class="profileData">
-            Male
-          </div> </a>
+        <a href="#page9" data-transition="slide"> Gender <p class="gender profileData"></p> </a>
       </li>
       <li data-theme="f">
-        <a href="#page10" data-transition="slide"> Height
-          <div id="profile_height" class="profileData">
-            5 ft 10 in
-          </div> </a>
+        <a href="#page10" data-transition="slide"> Height <p class="height profileData"></p> </a>
       </li>
       <li data-theme="e">
-        <a href="#page12" data-transition="slide"> Weight
-          <div id="profile_weight" class="profileData">
-            150 lbs
-          </div> </a>
+        <a href="#page12" data-transition="slide"> Weight <p class="weight profileData"></p> </a>
       </li>
       <li data-theme="f">
-        <a href="#page13" data-transition="slide"> Smoker?
-          <div id="profile_smoker" class="profileData">
-            No
-          </div> </a>
+        <a href="#page13" data-transition="slide"> Smoker? <p class="smoker profileData"></p> </a>
       </li>
       <li data-theme="e">
-        <a href="#history" data-transition="slide"> Health History
-          <div id="profile_history" class="profileData">
-            Heart Attack, Stroke, Diabetes
-          </div> </a>
+        <a href="#history" data-transition="slide"> Health History <p class="history profileData"></p> </a>
       </li>
       <li data-theme="f">
-        <a href="#blood_pressure" data-transition="slide"> Blood Pressure
-          <div id="profile_bp" class="profileData">
-            120 / 80
-          </div> </a>
+        <a href="#blood_pressure" data-transition="slide"> Blood Pressure <p class="bp profileData"></p> </a>
       </li>
       <li data-theme="e">
-        <a href="#cholesterol" data-transition="slide"> Cholesterol
-          <div id="profile_chol" class="profileData">
-            100 | 40 | 80
-          </div> </a>
+        <a href="#cholesterol" data-transition="slide"> Cholesterol <p class="chol profileData"></p> </a>
       </li>
     </ul>
-    <div>
-      <p>
-        <br>
-      </p>
-    </div>
   </div>
   <div data-role="tabbar" data-iconpos="top" data-theme="a">
     <ul>
@@ -239,13 +208,13 @@
         <a href="#basic_profile" data-theme="" data-icon="info" data-transition="flip"> Basic </a>
       </li>
       <li>
-        <a href="#page37" data-theme="" data-icon="gear" data-transition="flip" data-direction="reverse"> More </a>
+        <a href="#extra_profile" data-theme="" data-icon="gear" data-transition="flip" data-direction="reverse"> More </a>
       </li>
     </ul>
   </div>
 </div>
 <!-- Profile ADVANCED -->
-<div data-role="page" data-theme="a" id="page37">
+<div data-role="page" data-theme="a" id="extra_profile">
   <div data-theme="a" data-role="header">
     <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext" class="ui-btn-right"> </a>
     <h2>More You</h2>
@@ -253,50 +222,25 @@
   </div>
   <div data-role="content">
     <ul data-role="listview" data-divider-theme="b" data-inset="false">
-      <li data-theme="f">
-        <a href="#page38" data-transition="slide"> Taking blood pressure medication?
-          <div>
-            <span class="profileData"> No </span>
-          </div> </a>
+      <li data-theme="e">
+        <a href="#page38" data-transition="slide"> Taking blood pressure medication? <p class="bloodpressuremeds profileData"></p> </a>
       </li>
       <li data-theme="f">
-        <a href="#page39" data-transition="slide"> Taking cholesterol medication?
-          <div>
-            <span class="profileData"> No </span>
-          </div> </a>
+        <a href="#page39" data-transition="slide"> Taking cholesterol medication? <p class="cholesterolmeds profileData"></p> </a>
       </li>
       <li data-theme="e">
-        <a href="#page40" data-transition="slide"> Daily Aspirin?
-          <div>
-            <span class="profileData"> No </span>
-          </div> </a>
+        <a href="#page40" data-transition="slide"> Daily Aspirin? <p class="aspirin profileData"></p> </a>
       </li>
       <li data-theme="f">
-        <a href="#page41" data-transition="slide"> Weekly Moderate Activity
-          <div>
-            <span class="profileData"> 5 hours </span>
-          </div> </a>
+        <a href="#page41" data-transition="slide"> Weekly Moderate Activity <p class="moderateexercise profileData"></p> </a>
       </li>
       <li data-theme="e">
-        <a href="#page42" data-transition="slide"> Weekly Vigorous Activity
-          <div>
-            <span class="profileData"> 10 hours </span>
-          </div> </a>
+        <a href="#page42" data-transition="slide"> Weekly Vigorous Activity <p class="vigorousexercise profileData"></p> </a>
       </li>
       <li data-theme="f">
-        <a href="#page43" data-transition="slide"> Relatives with heart disease?
-          <div>
-            <span class="profileData"> Yes </span>
-          </div> </a>
+        <a href="#page43" data-transition="slide"> Relatives with heart disease? <p class="familymihistory profileData"></p> </a>
       </li>
     </ul>
-    <div>
-      <p>
-        <b>
-        <br>
-        </b>
-      </p>
-    </div>
   </div>
   <div data-role="tabbar" data-iconpos="top" data-theme="a">
     <ul>
@@ -304,7 +248,7 @@
         <a href="#basic_profile" data-theme="" data-icon="info" data-transition="flip"> Basic </a>
       </li>
       <li>
-        <a href="#page37" data-theme="" data-icon="gear" data-transition="flip" data-direction="reverse"> More </a>
+        <a href="#extra_profile" data-theme="" data-icon="gear" data-transition="flip" data-direction="reverse"> More </a>
       </li>
     </ul>
   </div>
@@ -886,11 +830,11 @@
 </div>
 <!-- Results -->
 <div data-role="page" data-theme="a" id="assessment">
-  <div data-theme="b" data-role="header" data-position="fixed">
-    <a data-role="button" data-theme="b" href="#home" data-icon="home" data-iconpos="notext"
+  <div data-theme="" data-role="header" data-position="fixed">
+    <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext"
     class="ui-btn-right"> </a>
     <h2>Your Heart</h2>
-    <a data-role="button" data-theme="b" href="#basic_profile" data-icon="profile" data-iconpos="left"
+    <a data-role="button" data-theme="c" href="#basic_profile" data-icon="profile" data-iconpos="left"
     class="ui-btn-left"> You </a>
   </div>
   <div data-role="content">
@@ -1420,9 +1364,8 @@
     </div>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-
         <label for="slider17" class="ui-hidden-accessible"> Hours </label>
-        <input id="slider17" type="range" name="slider17" value="0" min="0" max="30" data-highlight="false" pattern="\d*">
+        <input id="slider17" type="range" name="slider17" value="0" min="0" max="60" data-highlight="false" pattern="\d*">
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page42"
@@ -1448,9 +1391,8 @@
     </div>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-
         <label for="slider18" class="ui-hidden-accessible"> Hours </label>
-        <input id="slider18" type="range" name="slider18" value="0" min="0" max="60" data-highlight="false" pattern="\d*">
+        <input id="slider18" type="range" name="slider18" value="0" min="0" max="30" data-highlight="false" pattern="\d*">
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
@@ -1480,7 +1422,7 @@
         </fieldset>
       </div>
     </div>
-    <a data-role="button" data-transition="slide" data-theme="b" href="#page37"
+    <a data-role="button" data-transition="slide" data-theme="b" href="#extra_profile"
     data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
   </div>
 </div>

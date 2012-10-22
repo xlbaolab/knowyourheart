@@ -273,6 +273,7 @@ function createUser(user, callbacks) {
   if (_.isUndefined(callbacks)) {
     callbacks = {
       success : function(model) {
+        // this gets called twice (once for local and once for StackMob)
         console.info("created user " + model.get("username"));
         gCurrentUser = model;
         localStorage["currentUsername"] = model.get("username");
@@ -338,6 +339,11 @@ function doFirstPageInit() {
     model : gCurrentUser
   });
 
+  new ExtraProfileView({
+    el : $("#extra_profile"),
+    model : gCurrentUser
+  });
+
   new ResultView({
     el : $("#assessment"),
     model : gCurrentUser
@@ -359,11 +365,58 @@ StackMob.init({
   apiVersion : 0
 });
 
-// add localStorage support to StackMob's user model
+// addArgs(fn, arg1, arg2, ...)
+// function addArgs(fn) {
+// var wrapperArgs = arguments;
+// return function() {
+// var args, i;
+// // can't use map function - no IE support
+// args = Array.prototype.slice.call(arguments);
+// for ( i = 1; i < wrapperArgs.length; i++) {
+// args.push(wrapperArgs[i]);
+// }
+// fn.apply(null, args);
+// };
+// }
+
+function wrapError(fn, storageLocation) {
+  return function(onError, originalModel, options) {
+    if (storageLocation === "local") {
+      originalModel.isFetchingLocal = false;
+    } else {
+      originalModel.isFetchingRemote = false;
+    }
+    fn.apply(null, arguments);
+  }
+}
+
+function wrapSuccess(fn, storageLocation) {
+  return function(resp, status, xhr) {
+    if (gCurrentUser) {
+      if (storageLocation === "local") {
+        gCurrentUser.isFetchingLocal = false;
+      } else {
+        gCurrentUser.isFetchingRemote = false;
+      }
+    }
+    fn.apply(null, arguments);
+  }
+}
+
+// hack - add localStorage support to StackMob's user model
+// note that a significant side effect is that callbacks get called twice
 StackMob.Model.prototype.localStorage = new Backbone.LocalStorage("user");
 StackMob.Model.prototype.sync = function(method, model, options) {
+  var successFn = options.success;
+  var errorFn = options.error;
+
+  arguments[2].success = wrapSuccess(successFn, "local");
+  arguments[2].error = wrapError(errorFn, "local");
   Backbone.localSync.apply(this, arguments);
-  StackMob.sync.call(this, method, this, options);
+
+  arguments[2].success = wrapSuccess(successFn, "remote");
+  arguments[2].error = wrapError(errorFn, "remote");
+  StackMob.sync.apply(this, arguments);
 };
 
 var User = StackMob.User.extend({
@@ -393,6 +446,23 @@ var User = StackMob.User.extend({
     this.on("change", this.handleChange, this);
   },
   calculateRisk : function() {
+    switch(this.get("risk_state")) {
+    case User.RISK_STATE.CALCULATING:
+      return;
+    case User.RISK_STATE.UP_TO_DATE:
+      if (this.archimedes_result) {
+        return;
+      }
+      break;
+    }
+
+    if (this.isFetching()) {
+      // TODO replace with better solution
+      this.calculateLater = true;
+      return;
+    }
+    this.calculateLater = false;
+
     this.set("risk_state", User.RISK_STATE.CALCULATING);
 
     // build request
@@ -415,16 +485,26 @@ var User = StackMob.User.extend({
   },
   calculateRiskSuccess : function(data) {
     console.dir(data);
-    this.set("archimedes_result", data);
     this.archimedes_result = $.parseJSON(data);
+    this.set("archimedes_result", data);
     this.set("risk_state", User.RISK_STATE.UP_TO_DATE);
     this.save();
   },
-  handleChange : function(fn, data) {
+  fetch : function() {
+    // TODO use events:
+    // http://tbranyen.com/post/how-to-indicate-backbone-fetch-progress
+    this.isFetchingLocal = true;
+    this.isFetchingRemote = true;
+    StackMob.User.prototype.fetch.apply(this, arguments);
+  },
+  handleChange : function(obj, data) {
     for (var attr in data.changes) {
+      // console.debug(attr);
       if (USER_ATTRS[attr]) {
-        console.debug("User's " + attr + " changed to " + this.get(attr));
-        this.set("risk_state", User.RISK_STATE.CHANGED);
+        if (!this.isFetching()) {
+          console.debug("User's " + attr + " changed to " + this.get(attr));
+          this.set("risk_state", User.RISK_STATE.CHANGED);
+        }
       } else if (attr === "risk_state") {
         console.debug("User triggering " + User.RISK_STATE_CHANGE_EVENT + ": " + this.get("risk_state"));
         this.trigger(User.RISK_STATE_CHANGE_EVENT, this.get("risk_state"), this);
@@ -445,6 +525,9 @@ var User = StackMob.User.extend({
   },
   hasCompletedRequired : function() {
     return this.get("progress") === "assessment";
+  },
+  isFetching : function() {
+    return this.isFetchingLocal || this.isFetchingRemote;
   }
 }, {
   RISK_STATE_CHANGE_EVENT : "risk-state:change",
@@ -653,12 +736,7 @@ var HomeView = Backbone.View.extend({
     "pagebeforeshow" : "updateView"
   },
   updateView : function(event, data) {
-    switch(this.model.get("risk_state")) {
-    case User.RISK_STATE.CHANGED:
-    case User.RISK_STATE.ERROR:
-      this.model.calculateRisk();
-      break;
-    }
+    this.model.calculateRisk();
     this.listView.updateList();
   }
 });
@@ -677,6 +755,10 @@ var InterventionsView = Backbone.View.extend({
   },
   updateView : function() {
     var result = this.model.archimedes_result;
+    if (!result) {
+      return;
+    }
+
     var interventions = result.Interventions;
     var risk = result.Risk[0];
 
@@ -809,24 +891,24 @@ var ProfileView = Backbone.View.extend({
   updateView : function(event, data) {
     var text;
 
-    var age = this.model.get("age");
-    this.$("#profile_age").text(isBlank(age) ? "" : age);
+    text = this.model.get("age");
+    this.$(".age").html(isBlank(text) ? "" : text);
 
-    var gender = this.model.get("gender");
-    text = isBlank(gender) ? "" : (gender === "M" ? "Male" : "Female");
-    this.$("#profile_gender").text(text);
+    text = this.model.get("gender");
+    text = !text ? "" : (text === "M" ? "Male" : "Female");
+    this.$(".gender").html(text);
 
     var height_ft = this.model.get("height_ft");
     var height_in = this.model.get("height_in");
-    text = (isBlank(height_ft) || isBlank(height_in)) ? "" : height_ft + "' " + height_in + "\"";
-    this.$("#profile_height").text(text);
+    text = (!height_ft || !height_in) ? "" : height_ft + "' " + height_in + "\"";
+    this.$(".height").html(text);
 
-    var weight = this.model.get("weight");
-    this.$("#profile_weight").text(isBlank(weight) ? "" : weight + " lbs");
+    text = this.model.get("weight");
+    this.$(".weight").html(isBlank(text) ? "" : text + " lbs");
 
-    var smoker = this.model.get("smoker");
-    text = isBlank(smoker) ? "" : (smoker === "true" ? "Yes" : "No");
-    this.$("#profile_smoker").text(text);
+    text = this.model.get("smoker");
+    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    this.$(".smoker").html(text);
 
     text = "";
     if (this.model.get("ami") === "true") {
@@ -840,18 +922,59 @@ var ProfileView = Backbone.View.extend({
       text += text.length === 0 ? "" : ", ";
       text += "Diabetes";
     }
-    this.$("#profile_history").text(text);
+    this.$(".history").html(text);
 
     var systolic = this.model.get("systolic");
     var diastolic = this.model.get("diastolic");
     text = (isBlank(systolic) || isBlank(diastolic)) ? "" : systolic + "/" + diastolic;
-    this.$("#profile_bp").text(text);
+    this.$(".bp").html(text);
 
     var chol = this.model.get("cholesterol");
     var hdl = this.model.get("hdl");
     var ldl = this.model.get("ldl");
     text = (isBlank(chol) || isBlank(hdl) || isBlank(ldl)) ? "" : chol + " | " + hdl + " | " + ldl;
-    this.$("#profile_chol").text(text);
+    this.$(".chol").html(text);
+  }
+});
+
+var ExtraProfileView = Backbone.View.extend({
+  initialize : function(attrs) {
+  },
+  events : {
+    "pagebeforeshow" : "updateView"
+  },
+  updateView : function(event, data) {
+    var text;
+
+    text = this.model.get("bloodpressuremeds");
+    if (!text) {
+      text = "";
+    } else {
+      if (text === "true") {
+        text = "Yes - " + this.model.get("bloodpressuremedcount") + " kinds";
+      } else {
+        text = "No";
+      }
+    }
+    this.$(".bloodpressuremeds").html(text);
+
+    text = this.model.get("cholesterolmeds");
+    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    this.$(".cholesterolmeds").html(text);
+
+    text = this.model.get("aspirin");
+    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    this.$(".aspirin").html(text);
+
+    text = this.model.get("moderateexercise");
+    this.$(".moderateexercise").html(isBlank(text) ? "" : text + " hours");
+
+    text = this.model.get("vigorousexercise");
+    this.$(".vigorousexercise").html(isBlank(text) ? "" : text + " hours");
+
+    text = this.model.get("familymihistory");
+    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    this.$(".familymihistory").html(text);
   }
 });
 
@@ -864,22 +987,20 @@ var ResultView = Backbone.View.extend({
     });
 
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.updateRiskView, this);
+
+    // do it at least once; pageinit doesn't work if this is the initial page
+    this.riskViewRendered = false;
   },
   events : {
-    "pageinit" : "handlePageInit",
     "pagebeforeshow" : "handlePageBeforeShow",
   },
   handlePageBeforeShow : function(event, data) {
-    switch(this.model.get("risk_state")) {
-    case User.RISK_STATE.CHANGED:
-    case User.RISK_STATE.ERROR:
-      this.model.calculateRisk();
-      break;
+    this.model.calculateRisk();
+    if (!this.riskViewRendered) {
+      this.riskViewRendered = true;
+      this.updateRiskView();
     }
     this.listView.updateList();
-  },
-  handlePageInit : function(event) {
-    this.updateRiskView();
   },
   updateRiskView : function() {
     var result = this.model.archimedes_result;
@@ -894,20 +1015,34 @@ var ResultView = Backbone.View.extend({
       $loader.show();
       break;
     case User.RISK_STATE.ERROR:
+      $img.hide();
       if (this.$el.is(":visible")) {
-        $img.hide();
         $loader.fadeOut("slow", function() {
           $error.fadeIn("slow");
         });
       } else {
-        $img.hide();
         $loader.hide();
         $error.show();
       }
       break;
     case User.RISK_STATE.CHANGED:
     case User.RISK_STATE.UP_TO_DATE:
-      // update risk content
+      $error.hide();
+      if (this.$el.is(":visible")) {
+        $error.hide();
+        $loader.fadeOut("slow", function() {
+          $img.fadeIn("slow");
+        });
+      } else {
+        $loader.hide();
+        $img.show();
+      }
+
+      if (!result) {
+        break;
+      }
+
+      // update risk image and message
       var range = result.Recommendation !== "";
       var risk = result.Risk[ range ? 1 : 0];
       var risk2 = result.Risk[ range ? 2 : 0];
@@ -940,17 +1075,6 @@ var ResultView = Backbone.View.extend({
         this.$(".accuracy").show();
       } else {
         this.$(".accuracy").hide();
-      }
-
-      if (this.$el.is(":visible")) {
-        $error.hide();
-        $loader.fadeOut("slow", function() {
-          $img.fadeIn("slow");
-        });
-      } else {
-        $error.hide();
-        $loader.hide();
-        $img.show();
       }
       break;
     }
@@ -1256,18 +1380,33 @@ if (!localStorage["currentUsername"]) {
     username : localStorage["currentUsername"]
   });
   gCurrentUser.fetch({
-    success : function(model) {
-      console.info("fetched user " + model.get("username"));
+    success : function(model, resp) {
+      // this gets called twice (once for local and once for StackMob)
+      console.info("fetched user " + model.get("username") + (model.isFetching() ? " (still fetching)" : " (done fetching)"));
 
-      if (model.get("risk_state") !== User.RISK_STATE.UP_TO_DATE) {
-        model.set("risk_state", User.RISK_STATE.CHANGED);
+      if (!model.isFetching()) {
+        if (model.get("risk_state") !== User.RISK_STATE.UP_TO_DATE) {
+          model.set("risk_state", User.RISK_STATE.CHANGED);
+        }
+        if (model.calculateLater) {
+          model.calculateRisk();
+        }
       }
     },
-    error : function(model, response) {
-      console.error("failed to fetch user: " + response.error);
+    error : function(model, resp, options) {
+      console.error("failed to fetch user: " + resp.error + (model.isFetching() ? " (still fetching)" : " (done fetching)"));
 
-      if (!response.error || response.error.indexOf("does not exist")) {
+      // TODO - this is a bit iffy, since it could be a local or remoteerror,
+      // and uncertain order (though likely local first); assume remote error for
+      // now
+      if (!resp.error || resp.error.indexOf("does not exist")) {
         createUser(model);
+      }
+
+      if (!model.isFetching()) {
+        if (model.calculateLater) {
+          model.calculateRisk();
+        }
       }
     }
   });
