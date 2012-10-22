@@ -29,17 +29,38 @@ var ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Heal
 // callback indicates JSONP, which seems necessary
 var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find?callback=?";
 var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
+
 // vars: dataTheme, pageId, name, distance
 var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
 var NEXT_STEP_TEMPLATES = {
-  actions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page27" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <span class="risk-reduction"><%= reduction %></span>%</div></a></li>'),
-  enterBp : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#blood_pressure" data-transition="slide">Enter your blood pressure<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
-  enterChol : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
-  findLocation : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
-  getRewards : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#rewards" data-transition="slide">Get Rewards<div class="nextsteps">Enter to win an Apple iPad</div></a></li>'),
-
-  moreQuestions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page38" data-transition="slide">Improve your risk estimate<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
-  share : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#share" data-transition="slide">Share<div class="nextsteps">Your friends and family need to know their risk</div></a></li>')
+  ACTIONS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page27" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <span class="risk-reduction"><%= reduction %></span>%</div></a></li>'),
+  ENTER_BP : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#blood_pressure" data-transition="slide">Enter your blood pressure<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
+  ENTER_CHOL : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
+  FIND_LOCATION : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
+  GET_REWARDS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#rewards" data-transition="slide">Get Rewards<div class="nextsteps">Enter to win an Apple iPad</div></a></li>'),
+  MORE_QUESTIONS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page38" data-transition="slide">Improve your risk estimate<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
+  SHARE : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#share" data-transition="slide">Share<div class="nextsteps">Your friends and family need to know their risk</div></a></li>')
+};
+var RISK_MESSAGE = _.template('Your risk is <%= risk %>%, <%= comparisonRisk %> times what is considered healthy for your age');
+var RISK_MESSAGE_RANGE = _.template('Your risk could be as high as <%= risk %>%, <%= comparisonRisk %> times what is considered healthy for your age');
+var RISK_REC = {
+  0 : "",
+  1 : "It is important for you to check your blood pressure and cholesterol to understand your risk better, and keep track of it over time.",
+  2 : "You may be at high risk for your age. It is important for you to check your blood pressure and cholesterol to determine your risk, and take action if it is high.",
+  3 : "You are likely at very high risk for your age. It is important for you to check your blood pressure and cholesterol to determine your risk, and get treatment if necessary."
+};
+var RISK_DOC_REC = {
+  0 : _.template('<%= risk =>'),
+  1 : _.template('Your heart risk is <%= risk %>. Discuss steps you can take to reduce it with a doctor.'),
+  2 : _.template('Your heart risk is <%= risk %>. It is important that you discuss it with a doctor.'),
+  3 : _.template('Your heart risk is <%= risk %>. It is very important that you see a doctor soon to discuss how you can reduce your risk.')
+};
+var RISK_RATING = {
+  1 : "low",
+  2 : "moderately high",
+  3 : "high",
+  4 : "very high",
+  5 : "extremely high"
 };
 
 // survey pages and their inputs, mapped to user attrs
@@ -469,7 +490,7 @@ var LocationsModel = Backbone.Model.extend({
     console.debug("geocode returned with status " + status);
     console.dir(result);
 
-    if (status != google.maps.GeocoderStatus.OK) {
+    if (status !== google.maps.GeocoderStatus.OK) {
       // TODO
       console.error("Geocoding failed: " + status);
       return;
@@ -621,7 +642,8 @@ var HomeView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
       el : this.$(".next-steps-list"),
-      model : this.model
+      model : this.model,
+      page : this
     });
   },
   events : {
@@ -643,7 +665,7 @@ var NextStepListView = Backbone.View.extend({
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
   getRiskReduction : function() {
-    return this.model.archimedes_result ? this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions : "...";
+    return this.model.archimedes_result ? this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions : "&hellip;";
   },
   handleRiskChange : function(state, user) {
     var $risk = this.$("li .risk-reduction");
@@ -655,7 +677,9 @@ var NextStepListView = Backbone.View.extend({
     }
   },
   refreshView : function() {
-    this.$el.listview("refresh");
+    if (this.options.page.el.id === $.mobile.activePage.attr("id")) {
+      this.$el.listview("refresh");
+    }
   },
   updateList : function() {
     var i = 0;
@@ -677,36 +701,36 @@ var NextStepListView = Backbone.View.extend({
     this.$("li.next-step").remove();
 
     if (!completedBp || !completedChol) {
-      this.$el.append(NEXT_STEP_TEMPLATES.findLocation({
+      this.$el.append(NEXT_STEP_TEMPLATES.FIND_LOCATION({
         dataTheme : i++ % 2 ? "e" : "f"
       }));
     }
     if (!completedBp) {
-      this.$el.append(NEXT_STEP_TEMPLATES.enterBp({
+      this.$el.append(NEXT_STEP_TEMPLATES.ENTER_BP({
         dataTheme : i++ % 2 ? "e" : "f"
       }));
     }
     if (!completedChol) {
-      this.$el.append(NEXT_STEP_TEMPLATES.enterChol({
+      this.$el.append(NEXT_STEP_TEMPLATES.ENTER_CHOL({
         dataTheme : i++ % 2 ? "e" : "f"
       }));
     }
     if (i < 3 && completedBp && completedChol) {
-      this.$el.append(NEXT_STEP_TEMPLATES.actions({
+      this.$el.append(NEXT_STEP_TEMPLATES.ACTIONS({
         dataTheme : i++ % 2 ? "e" : "f",
         reduction : this.getRiskReduction()
       }));
     }
     if (i < 3 && !completedExtra) {
-      this.$el.append(NEXT_STEP_TEMPLATES.moreQuestions({
+      this.$el.append(NEXT_STEP_TEMPLATES.MORE_QUESTIONS({
         dataTheme : i++ % 2 ? "e" : "f"
       }));
     }
-    this.$el.append(NEXT_STEP_TEMPLATES.getRewards({
+    this.$el.append(NEXT_STEP_TEMPLATES.GET_REWARDS({
       dataTheme : i++ % 2 ? "e" : "f"
     }));
     if (i < 4) {
-      this.$el.append(NEXT_STEP_TEMPLATES.share({
+      this.$el.append(NEXT_STEP_TEMPLATES.SHARE({
         dataTheme : i++ % 2 ? "e" : "f"
       }));
     }
@@ -775,51 +799,94 @@ var ResultView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
       el : this.$(".next-steps-list"),
-      model : this.model
+      model : this.model,
+      page : this
     });
 
-    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
+    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.updateRiskView, this);
   },
   events : {
-    "pagebeforeshow" : "updateView"
+    "pagebeforeshow" : "handlePageBeforeShow",
   },
-  handleRiskChange : function(state, user) {
-    var result = this.model.archimedes_result;
-    var $error = this.$(".risk_error");
-    var $loader = this.$("#circularG");
-    var $img = this.$(".heart_meter");
-
-    switch(state) {
-    case User.RISK_STATE.CALCULATING:
-      $error.hide();
-      $img.hide();
-      $loader.show();
-      break;
-    case User.RISK_STATE.ERROR:
-      // error
-      $loader.fadeOut("slow", function() {
-        $error.fadeIn("slow");
-      });
-      break;
-    case User.RISK_STATE.UP_TO_DATE:
-      // update risk content
-      var risk = result.Risk[result.Recommendation ? 1 : 0];
-      $img.css(RISK_IMAGES[risk.rating]);
-      this.$(".5_year_risk").html(risk.risk);
-      $loader.fadeOut("slow", function() {
-        $img.fadeIn("slow");
-      });
-      break;
-    }
-  },
-  updateView : function(event, data) {
+  handlePageBeforeShow : function(event, data) {
     switch(this.model.get("risk_state")) {
     case User.RISK_STATE.CHANGED:
     case User.RISK_STATE.ERROR:
       this.model.calculateRisk();
       break;
     }
+    this.updateRiskView();
     this.listView.updateList();
+  },
+  updateRiskView : function() {
+    var result = this.model.archimedes_result;
+    var $error = this.$(".risk_error");
+    var $loader = this.$("#circularG");
+    var $img = this.$(".heart_meter");
+
+    switch(this.model.get("risk_state")) {
+    case User.RISK_STATE.CALCULATING:
+      $error.hide();
+      $img.hide();
+      $loader.show();
+      break;
+    case User.RISK_STATE.ERROR:
+      if (this.$el.is(":visible")) {
+        $loader.fadeOut("slow", function() {
+          $error.fadeIn("slow");
+        });
+      } else {
+        $loader.hide();
+        $error.show();
+      }
+      break;
+    case User.RISK_STATE.CHANGED:
+    case User.RISK_STATE.UP_TO_DATE:
+      // update risk content
+      var range = result.Recommendation !== "";
+      var risk = result.Risk[ range ? 1 : 0];
+      var risk2 = result.Risk[ range ? 2 : 0];
+
+      var rating = parseInt(risk.rating);
+      var ratingForAge = parseInt(risk.ratingForAge);
+      var highestRating = rating > ratingForAge ? rating : ratingForAge;
+      $img.css(RISK_IMAGES[highestRating]);
+
+      var msgArgs = {
+        risk : risk.risk,
+        comparisonRisk : risk.comparisonRisk
+      };
+      this.$(".risk_message").html(range ? RISK_MESSAGE_RANGE(msgArgs) : RISK_MESSAGE(msgArgs));
+
+      // popup
+      var riskStr = range ? (risk2.risk + "% to " + risk.risk + "%") : (risk.risk + "%");
+      var ratioStr = range ? (risk2.comparisonRisk + " to " + risk.comparisonRisk) : risk.comparisonRisk;
+      var percentileStr = range ? (risk2.riskPercentile + " to " + risk.riskPercentile) : risk.riskPercentile;
+      this.$(".risk").html(riskStr);
+      this.$(".ratio").html(ratioStr);
+      this.$(".percentile").html(percentileStr);
+
+      var rec = range ? RISK_REC[result.Recommendation] : RISK_DOC_REC[result.DoctorRecommendation]({
+        risk : RISK_RATING[highestRating]
+      });
+      this.$(".recommendation").html(rec);
+
+      if (range) {
+        this.$(".accuracy").show();
+      } else {
+        this.$(".accuracy").hide();
+      }
+
+      if (this.$el.is(":visible")) {
+        $loader.fadeOut("slow", function() {
+          $img.fadeIn("slow");
+        });
+      } else {
+        $loader.hide();
+        $img.show();
+      }
+      break;
+    }
   }
 });
 
