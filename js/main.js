@@ -33,7 +33,7 @@ var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 // vars: dataTheme, pageId, name, distance
 var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
 var NEXT_STEP_TEMPLATES = {
-  ACTIONS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page27" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <span class="risk-reduction"><%= reduction %></span>%</div></a></li>'),
+  ACTIONS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#interventions" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <span class="risk-reduction"><%= reduction %></span>%</div></a></li>'),
   ENTER_BP : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#blood_pressure" data-transition="slide">Enter your blood pressure<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
   ENTER_CHOL : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
   FIND_LOCATION : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
@@ -106,9 +106,7 @@ var UI_MAP = {
     "ldl_slider" : "ldl"
   },
   "page38" : {
-    "toggleswitch13" : "bloodpressuremeds"
-  },
-  "page36" : {
+    "toggleswitch13" : "bloodpressuremeds",
     "bp_meds_slider" : "bloodpressuremedcount"
   },
   "page39" : {
@@ -185,18 +183,18 @@ var ARCHIMEDES_DEFAULTS = {
   mi : false,
   stroke : false,
   diabetes : false,
-  systolic : 120, // 80 to 200 mm/Hg
+  systolic : 120, // 80 to 220 mm/Hg
   diastolic : 80, // 40 to 130 mm/Hg
   cholesterol : 200, // 70 to 500 mg/dL
   hdl : 60, // 20 to 130 mg/dL
   ldl : 100, // 40 to 400 mg/dL
-  hba1c : 4.8, // % (typically 1 digit after decimal)
+  hba1c : 4.8, // 2 to 16 % (typically 1 digit after decimal)
   cholesterolmeds : false,
   bloodpressuremeds : false,
   bloodpressuremedcount : 0, // 1, 2, 3, 4+
   aspirin : false,
-  moderateexercise : 4, // 0 to 59 hours
-  vigorousexercise : 2, // 0 to 29 hours
+  moderateexercise : 4, // 0 to 60 hours
+  vigorousexercise : 2, // 0 to 30 hours
   familymihistory : false
 };
 var ARCHIMEDES_REQUIRED = {
@@ -315,6 +313,11 @@ function doFirstPageInit() {
 
   new HomeView({
     el : $("#home"),
+    model : gCurrentUser
+  });
+
+  new InterventionsView({
+    el : $("#interventions"),
     model : gCurrentUser
   });
 
@@ -537,7 +540,7 @@ var LocListView = Backbone.View.extend({
     "pageshow" : "refreshView"
   },
   handleFind : function() {
-    this.model.geocode($(".loc-search-field", this.el).val());
+    this.model.geocode(this.$(".loc-search-field").val());
   },
   handleProvidersChange : function(providers) {
     // clear list
@@ -586,7 +589,7 @@ var LocMapView = Backbone.View.extend({
     "pageshow" : "refreshView"
   },
   handleFind : function() {
-    this.model.geocode($(".loc-search-field", this.el).val());
+    this.model.geocode(this.$(".loc-search-field").val());
   },
   handleLocationChange : function(location) {
     this.map.panTo(location);
@@ -620,11 +623,11 @@ var LocMapView = Backbone.View.extend({
   },
   refreshView : function() {
     var windowHeight = $(window).height();
-    var headerHeight = $(".ui-header", this.el).height();
-    var footerHeight = $(".ui-footer", this.el).height();
+    var headerHeight = this.$(".ui-header").height();
+    var footerHeight = this.$(".ui-footer").height();
     var contentHeight = windowHeight - headerHeight - footerHeight;
-    var searchHeight = $(".ui-bar", this.el).outerHeight();
-    $(".ui-content", this.el).height(contentHeight);
+    var searchHeight = this.$(".ui-bar").outerHeight();
+    this.$(".ui-content").height(contentHeight);
     $(this.map.getDiv()).height(contentHeight - searchHeight);
 
     // needed to make sure map renders correctly on page change
@@ -657,6 +660,64 @@ var HomeView = Backbone.View.extend({
       break;
     }
     this.listView.updateList();
+  }
+});
+
+var InterventionsView = Backbone.View.extend({
+  initialize : function(attrs) {
+    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
+  },
+  events : {
+    "pagebeforeshow" : "updateView"
+  },
+  handleRiskChange : function(state, user) {
+    if (state === User.RISK_STATE.UP_TO_DATE) {
+      this.updateView();
+    }
+  },
+  updateView : function() {
+    var result = this.model.archimedes_result;
+    var interventions = result.Interventions;
+    var risk = result.Risk[0];
+
+    this.$(".risk").html(risk.risk);
+    this.$(".risk_reduction").html(interventions.PercentReductionWithAllInterventions);
+
+    if (interventions.IncreaseInRisk === "0" && interventions.PercentReductionInRiskWithMedication === "0") {
+      this.$(".meds").hide();
+    } else {
+      if (interventions.IncreaseInRisk === "0") {
+        this.$(".stop_meds").hide();
+      } else {
+        this.$(".stop_meds_increase").html(interventions.IncreaseInRisk);
+        this.$(".stop_meds").show();
+      }
+      if (interventions.PercentReductionInRiskWithMedication === "0") {
+        this.$(".take_meds").hide();
+      } else {
+        this.$(".take_meds_reduction").html(interventions.PercentReductionInRiskWithMedication);
+        this.$(".take_meds").show();
+      }
+      this.$(".meds").show();
+    }
+
+    this.$(".moderate_exercise_reduction").html(interventions.PercentReductionInRiskWithAdditionalModerateExercise);
+    this.$(".vigorous_exercise_reduction").html(interventions.PercentReductionInRiskWithAdditionalVigorousExercise);
+
+    if (interventions.PercentReductionInRiskWithWeightLoss === "") {
+      this.$(".weight").hide();
+    } else {
+      this.$(".lose_pounds").html(interventions.PoundsOfWeightLossRequired);
+      this.$(".lose_weight_reduction").html(interventions.PercentReductionInRiskWithWeightLoss);
+      this.$(".weight").show();
+    }
+
+    if (interventions.PercentReductionWithSmokingCessation === "0") {
+      this.$(".smoking").hide();
+    } else {
+      this.$(".quit_smoking_reduction").html(interventions.PercentReductionWithSmokingCessation);
+      this.$(".smoking").hide();
+    }
   }
 });
 
@@ -746,27 +807,26 @@ var ProfileView = Backbone.View.extend({
     "pagebeforeshow" : "updateView"
   },
   updateView : function(event, data) {
-    var page = this.el;
     var text;
 
     var age = this.model.get("age");
-    $("#profile_age", page).text(isBlank(age) ? "" : age);
+    this.$("#profile_age").text(isBlank(age) ? "" : age);
 
     var gender = this.model.get("gender");
     text = isBlank(gender) ? "" : (gender === "M" ? "Male" : "Female");
-    $("#profile_gender", page).text(text);
+    this.$("#profile_gender").text(text);
 
     var height_ft = this.model.get("height_ft");
     var height_in = this.model.get("height_in");
     text = (isBlank(height_ft) || isBlank(height_in)) ? "" : height_ft + "' " + height_in + "\"";
-    $("#profile_height", page).text(text);
+    this.$("#profile_height").text(text);
 
     var weight = this.model.get("weight");
-    $("#profile_weight", page).text(isBlank(weight) ? "" : weight + " lbs");
+    this.$("#profile_weight").text(isBlank(weight) ? "" : weight + " lbs");
 
     var smoker = this.model.get("smoker");
     text = isBlank(smoker) ? "" : (smoker === "true" ? "Yes" : "No");
-    $("#profile_smoker", page).text(text);
+    this.$("#profile_smoker").text(text);
 
     text = "";
     if (this.model.get("ami") === "true") {
@@ -780,18 +840,18 @@ var ProfileView = Backbone.View.extend({
       text += text.length === 0 ? "" : ", ";
       text += "Diabetes";
     }
-    $("#profile_history", page).text(text);
+    this.$("#profile_history").text(text);
 
     var systolic = this.model.get("systolic");
     var diastolic = this.model.get("diastolic");
     text = (isBlank(systolic) || isBlank(diastolic)) ? "" : systolic + "/" + diastolic;
-    $("#profile_bp", page).text(text);
+    this.$("#profile_bp").text(text);
 
     var chol = this.model.get("cholesterol");
     var hdl = this.model.get("hdl");
     var ldl = this.model.get("ldl");
     text = (isBlank(chol) || isBlank(hdl) || isBlank(ldl)) ? "" : chol + " | " + hdl + " | " + ldl;
-    $("#profile_chol", page).text(text);
+    this.$("#profile_chol").text(text);
   }
 });
 
@@ -806,6 +866,7 @@ var ResultView = Backbone.View.extend({
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.updateRiskView, this);
   },
   events : {
+    "pageinit" : "handlePageInit",
     "pagebeforeshow" : "handlePageBeforeShow",
   },
   handlePageBeforeShow : function(event, data) {
@@ -815,8 +876,10 @@ var ResultView = Backbone.View.extend({
       this.model.calculateRisk();
       break;
     }
-    this.updateRiskView();
     this.listView.updateList();
+  },
+  handlePageInit : function(event) {
+    this.updateRiskView();
   },
   updateRiskView : function() {
     var result = this.model.archimedes_result;
@@ -832,10 +895,12 @@ var ResultView = Backbone.View.extend({
       break;
     case User.RISK_STATE.ERROR:
       if (this.$el.is(":visible")) {
+        $img.hide();
         $loader.fadeOut("slow", function() {
           $error.fadeIn("slow");
         });
       } else {
+        $img.hide();
         $loader.hide();
         $error.show();
       }
@@ -856,7 +921,7 @@ var ResultView = Backbone.View.extend({
         risk : risk.risk,
         comparisonRisk : risk.comparisonRisk
       };
-      this.$(".risk_message").html(range ? RISK_MESSAGE_RANGE(msgArgs) : RISK_MESSAGE(msgArgs));
+      this.$(".risk_message").html( range ? RISK_MESSAGE_RANGE(msgArgs) : RISK_MESSAGE(msgArgs));
 
       // popup
       var riskStr = range ? (risk2.risk + "% to " + risk.risk + "%") : (risk.risk + "%");
@@ -878,10 +943,12 @@ var ResultView = Backbone.View.extend({
       }
 
       if (this.$el.is(":visible")) {
+        $error.hide();
         $loader.fadeOut("slow", function() {
           $img.fadeIn("slow");
         });
       } else {
+        $error.hide();
         $loader.hide();
         $img.show();
       }
@@ -897,7 +964,7 @@ var SurveyView = Backbone.View.extend({
     for (var input in this.options.inputMap) {
       var userFieldName = this.options.inputMap[input];
       var val = this.model.get(userFieldName) || "";
-      var $input = $("#" + input, this.el);
+      var $input = this.$("#" + input);
 
       console.debug("loading " + userFieldName + "=" + val);
 
@@ -956,7 +1023,7 @@ var SurveyView = Backbone.View.extend({
     // save if input changed
     var changed = false;
     for (var input in this.options.inputMap) {
-      var $input = $("#" + input, this.el);
+      var $input = this.$("#" + input);
       var inputVal = this.model.get(this.options.inputMap[input]);
       if (inputVal !== $input.prop("loadedValue")) {
         changed = true;
@@ -979,7 +1046,7 @@ var SurveyView = Backbone.View.extend({
   handlePageShow : function(event, data) {
     var $nextPage;
     if (!event) {
-      $nextPage = $(this.el);
+      $nextPage = this.$el;
     } else {
       $nextPage = $(event.target);
     }
@@ -988,7 +1055,7 @@ var SurveyView = Backbone.View.extend({
     $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
   },
   setNextButtonEnabled : function(enabled) {
-    var $nextBtn = $(".nextbtn", this.el);
+    var $nextBtn = this.$(".nextbtn");
 
     if (enabled) {
       $nextBtn.removeClass("ui-disabled");
@@ -1012,18 +1079,18 @@ var SurveyHistoryView = SurveyView.extend({
     "change #diabetes_toggle" : "handleDiabetesToggle"
   }, SurveyView.prototype.events),
   getToggleButton : function() {
-    return $("#diabetes_toggle", this.el);
+    return this.$("#diabetes_toggle");
   },
   handleDiabetesToggle : function(event, data) {
     this.updateDiabetesVis($(event.currentTarget));
   },
   updateDiabetesVis : function($toggle) {
-    $nextBtn = $(this.el).find(".nextbtn");
+    $nextBtn = this.$(".nextbtn");
 
     if ($toggle.val() === "true") {
-      $(".hba1c", this.el).show();
+      this.$(".hba1c").show();
     } else {
-      $(".hba1c", this.el).hide();
+      this.$(".hba1c").hide();
     }
   },
   validate : function(inputId) {
@@ -1043,7 +1110,7 @@ var SurveyHistoryView = SurveyView.extend({
 var SurveyKnowsBpView = SurveyView.extend({
   initialize : function(attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
-    this.updateNextTarget($("input[name='knows_bp']:checked", this.el));
+    this.updateNextTarget(this.$("input[name='knows_bp']:checked"));
   },
   events : _.extend({
     "change #knows_bp_radio_t" : "handleKnowsBpRadio",
@@ -1058,14 +1125,14 @@ var SurveyKnowsBpView = SurveyView.extend({
   },
   updateNextTarget : function($selectedRadio) {
     var page = $selectedRadio.val() === "true" ? "#blood_pressure" : "#knows_chol";
-    $(".nextbtn", this.el).attr("href", page);
+    this.$(".nextbtn").attr("href", page);
   }
 });
 
 var SurveyKnowsCholView = SurveyView.extend({
   initialize : function(attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
-    this.updateNextTarget($("input[name='knows_chol']:checked", this.el));
+    this.updateNextTarget(this.$("input[name='knows_chol']:checked"));
   },
   events : _.extend({
     "change #knows_chol_radio_t" : "handleKnowsCholRadio",
@@ -1080,7 +1147,7 @@ var SurveyKnowsCholView = SurveyView.extend({
   },
   updateNextTarget : function($selectedRadio) {
     var page = $selectedRadio.val() === "true" ? "#cholesterol" : "#assessment";
-    $(".nextbtn", this.el).attr("href", page);
+    this.$(".nextbtn").attr("href", page);
   }
 });
 

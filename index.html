@@ -259,12 +259,6 @@
             <span class="profileData"> No </span>
           </div> </a>
       </li>
-      <li data-theme="e">
-        <a href="#page36" data-transition="slide"> # of blood pressure medications
-          <div>
-            <span class="profileData"> 0 </span>
-          </div> </a>
-      </li>
       <li data-theme="f">
         <a href="#page39" data-transition="slide"> Taking cholesterol medication?
           <div>
@@ -1170,56 +1164,68 @@
   </div>
 </div>
 <!-- Action List -->
-<div data-role="page" data-theme="a" id="page27">
+<div data-role="page" data-theme="a" id="interventions">
   <div data-theme="a" data-role="header" data-position="fixed">
     <h2> Lower Your Risk </h2>
     <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
     href="#assessment" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
   </div>
   <div data-role="content">
-    <h2> Your current risk is 45% </h2>
+    <h2> Your current risk is <span class="risk">&hellip;</span>% </h2>
     <p>
-      These interventions can lower your risk of developing heart disease by up to 35%
+      These interventions can lower your risk of heart attack or stroke by up
+      to <span class="risk_reduction">&hellip;</span>%
     </p>
     <div data-role="collapsible-set" data-inset="false">
-      <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+      <div class="meds" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
         <h3> Take medication </h3>
         <div class="action_accordion">
-          <p>
-            It is important to be consistent about the medications you are currently taking to reduce your blood pressure or cholesterol.
-            Based on the information you have entered, your current medications redue your risk by about 10%
+          <p class="stop_meds">
+            It is important to be consistent about the medications you are
+            currently taking to reduce your blood pressure or cholesterol.
+            Based on the information you have entered, your current medications
+            (including aspirin if you take it) reduce your risk by about
+            <span class="stop_meds_increase">&hellip;</span>%.
           </p>
-          <p>
-            Medication may be able to manage your blood pressure and cholesterol to 30%.  Please see your doctor for a prescription. (-5%)
+          <p class="take_meds">
+            A doctor may be able to reduce your risk by
+            <span class="take_meds_reduction">&hellip;</span>% by managing
+            your blood pressure and cholesterol with medication.
           </p>
         </div>
       </div>
-
-      <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+      <div class="exercise" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
         <h3> Exercise more </h3>
         <div class="action_accordion">
-          <p>
-            Adding three hours of moderate exercise such as brisk walking to your weekly routine will reduce your risk to 30% (-10%)
+          <p class="moderate_exercise">
+            Adding three hours of moderate exercise such as brisk walking to
+            your weekly routine will reduce your risk by
+            <span class="moderate_exercise_reduction">&hellip;</span>%.
           </p>
-          <p>
-            Adding six hours of moderate exercise or three hours of vigorous exercise such as running to your weekly routine
-            will reduce your risk to 25% (-15%)
+          <p class="vigorous_exercise">
+            Adding six hours of moderate exercise or three hours of vigorous
+            exercise such as running to your weekly routine will reduce your
+            risk by <span class="vigorous_exercise_reduction">&hellip;</span>%.
           </p>
         </div>
       </div>
-      <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+      <div class="weight" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
         <h3> Lose weight </h3>
         <div class="action_accordion">
-          <p>
-            If you lose 11 pounds and do not regain it you will reduce your risk to 40% (-5%).  Try a combination of a healthy diet and exercise.
+          <p class="lose_weight">
+            If you lose <span class="lose_pounds">&hellip;</span> pounds and
+            do not regain it, you will reduce your risk by
+            <span class="lose_weight_reduction">&hellip;</span>%. Try a
+            combination of a healthy diet and exercise.
           </p>
         </div>
       </div>
-      <div data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+      <div class="smoking" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
         <h3> Quit smoking </h3>
         <div class="action_accordion">
-          <p>
-            If you quit smoking, you will reduce your risk to 25% (-20%)
+          <p class="quit_smoking">
+            If you quit smoking, you will reduce your risk by
+            <span class="quit_smoking_reduction">&hellip;</span>%.
           </p>
         </div>
       </div>
