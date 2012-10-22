@@ -447,7 +447,7 @@
     <h3> How old are you? </h3>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <input name="age" id="textinput2" placeholder="Enter your age here" value="" type="text" pattern="[0-9]*	">
+        <input name="age" id="textinput2" placeholder="Enter your age here" value="" type="text" pattern=pattern="\d*">
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page9"
@@ -603,12 +603,10 @@
   </div>
   <div data-role="content" class="surveypage">
     <h3> Do you currently smoke? </h3>
-
     <div class="qanda">
       <p>
-        <span style="font-size: small; " data-mce-style="font-size: small;"> Answer 'Yes' if you have smoked any cigarettes in the past month </span>
+        <span style="font-size: small; " data-mce-style="font-size: small;"> Answer "Yes" if you have smoked any cigarettes in the past month </span>
       </p>
-
       <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">
           <select name="smoker" id="smoker_toggle" data-theme="" data-role="slider">
@@ -652,7 +650,7 @@
         <div class="ui-block-a">
           <div>
             <p>
-              Heart Attack <span class="help-icon" rel="tooltip" title="also known as myocardial infarction (MI)"></span>
+              Heart Attack <span class="help-icon" rel="tooltip" title="also known as a myocardial infarction (MI)"></span>
             </p>
           </div>
         </div>
@@ -690,7 +688,7 @@
         <div class="ui-block-a">
           <div>
             <p>
-              Diabetes <span class="help-icon" rel="tooltip" title="includes Type I and Type II"></span>
+              Diabetes <span class="help-icon" rel="tooltip" title="diabetes mellitus type I or type II"></span>
             </p>
           </div>
         </div>
@@ -797,15 +795,18 @@
   </div>
   <div data-role="content">
     <h3> What is your blood pressure? </h3>
+    <p>
+      <span class="helper_text">If your blood pressure is 125/82 (for example), your systolic pressure is 125 and your diastolic pressure is 82.</span>
+    </p>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <label for="systolic_bp_slider"> Systolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure when the heart beats, usually the top and higher number"></span></label>
+        <label for="systolic_bp_slider"> Systolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure when the heart beats"></span></label>
         <input id="systolic_bp_slider" type="range" name="systolic_bp" value="120" min="80" max="220" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <label for="diastolic_bp_slider"> Diastolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure between heart beats, usually the bottom and lower number"></span></label>
+        <label for="diastolic_bp_slider"> Diastolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure between heart beats"></span></label>
         <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
@@ -1413,36 +1414,6 @@
     data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
   </div>
 </div>
-<!-- Advanced_Vigorous Ex -->
-<div data-role="page" data-theme="a" id="page42">
-  <div data-theme="" data-role="header" data-position="fixed">
-    <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-    href="#page41" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-    <h2> Vigorous Activity </h2>
-  </div>
-  <div data-role="content">
-    <h3> How many hours do you spend doing vigorous physical activities in a typical
-    week? </h3>
-
-    <div class="qanda">
-      <p>
-        <span>Vigorous activity means you are breathing hard and fast, your heart rate has gone up, and you will need to pause to breathe while speaking. </span>
-      </p>
-      <p>
-        <span>Examples include jogging, swimming laps, playing tennis</span>
-      </p>
-    </div>
-
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <label for="slider18" class="ui-hidden-accessible"> Hours </label>
-        <input id="slider18" type="range" name="slider18" value="0" min="0" max="30" data-highlight="false" pattern="\d*">
-      </fieldset>
-    </div>
-    <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
-    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
-  </div>
-</div>
 <!-- Advanced_Moderate Ex -->
 <div data-role="page" data-theme="a" id="page41">
   <div data-theme="" data-role="header" data-position="fixed">
@@ -1451,25 +1422,51 @@
     <h2> Moderate Activity </h2>
   </div>
   <div data-role="content">
-    <h3> How many hours do you spend doing moderate physical activities in a typical
-    week? </h3>
-
+    <h3> How many hours do you spend doing moderate physical activities in a typical week? </h3>
     <div class="qanda">
       <p>
-        <span>Moderate activity results in a light sweat without being out of breath after 10 minutes of activity </span>
+        <span>Moderate physical activities are ones that cause a slight elevation in heart rate or breathing.</span>
       </p>
       <p>
-        <span>Examples include brisk walking, bicycling, raking leaves, and gardening</span>
+        <span>For example: raking leaves, mowing the lawn, or heavy cleaning</span>
       </p>
     </div>
-
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <label for="slider17" class="ui-hidden-accessible"> Moderate Exercise </label>
-        <input id="slider17" type="range" name="slider17" value="0" min="0" max="60" data-highlight="false" pattern="\d*">
+
+        <label for="slider17" class="ui-hidden-accessible"> Hours </label>
+        <input id="slider17" type="range" name="slider17" value="0" min="0" max="30" data-highlight="false" pattern="\d*">
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page42"
+    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
+  </div>
+</div>
+<!-- Advanced_Vigorous Ex -->
+<div data-role="page" data-theme="a" id="page42">
+  <div data-theme="" data-role="header" data-position="fixed">
+    <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
+    href="#page41" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+    <h2> Vigorous Activity </h2>
+  </div>
+  <div data-role="content">
+    <h3> How many hours do you spend doing vigorous physical activities in a typical week? </h3>
+    <div class="qanda">
+      <p>
+        <span>Vigorous activities are ones that cause heavy sweating or large increases in breathing or heart rate for at least 10 minutes at a time.</span>
+      </p>
+      <p>
+        <span>For example: running, lap swimming, aerobics classes, or fast bicycling</span>
+      </p>
+    </div>
+    <div data-role="fieldcontain">
+      <fieldset data-role="controlgroup">
+
+        <label for="slider18" class="ui-hidden-accessible"> Hours </label>
+        <input id="slider18" type="range" name="slider18" value="0" min="0" max="60" data-highlight="false" pattern="\d*">
+      </fieldset>
+    </div>
+    <a data-role="button" data-transition="slide" data-theme="b" href="#page43"
     data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
   </div>
 </div>
@@ -1485,7 +1482,7 @@
 
     <div class="qanda">
       <p>
-        <span>(i.e. parent, full-blooded brother or sister, or child)</span>
+        <span>i.e. your parent, full-blooded brother or sister, or child</span>
       </p>
       <div data-role="fieldcontain">
         <fieldset data-role="controlgroup">

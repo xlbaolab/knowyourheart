@@ -37,7 +37,8 @@ var NEXT_STEP_TEMPLATES = {
   enterChol : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
   findLocation : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
   getRewards : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#rewards" data-transition="slide">Get Rewards<div class="nextsteps">Enter to win an Apple iPad</div></a></li>'),
-  moreQuestions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page38" data-transition="slide">Assess further<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
+
+  moreQuestions : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page38" data-transition="slide">Improve your risk estimate<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
   share : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#share" data-transition="slide">Share<div class="nextsteps">Your friends and family need to know their risk</div></a></li>')
 };
 
@@ -155,7 +156,7 @@ var USER_ATTRS = {
   "familymihistory" : "familymihistory"
 };
 var ARCHIMEDES_DEFAULTS = {
-  age : 18, // 18 to 130 years
+  age : 18, // 18 to 85 years
   gender : "M", // M/F
   height : 70, // 44 to 87 inches
   weight : 160, // 80 to 600 pounds
@@ -168,13 +169,13 @@ var ARCHIMEDES_DEFAULTS = {
   cholesterol : 200, // 70 to 500 mg/dL
   hdl : 60, // 20 to 130 mg/dL
   ldl : 100, // 40 to 400 mg/dL
-  hba1c : 4.8, // %
+  hba1c : 4.8, // % (typically 1 digit after decimal)
   cholesterolmeds : false,
   bloodpressuremeds : false,
-  bloodpressuremedcount : 0, // 0 to 4
+  bloodpressuremedcount : 0, // 1, 2, 3, 4+
   aspirin : false,
-  moderateexercise : 4, // 0 to 60 hours
-  vigorousexercise : 2, // 0 to 30 hours
+  moderateexercise : 4, // 0 to 59 hours
+  vigorousexercise : 2, // 0 to 29 hours
   familymihistory : false
 };
 var ARCHIMEDES_REQUIRED = {
@@ -365,7 +366,6 @@ var User = StackMob.User.extend({
       this.set(attrs);
     }
 
-    _.extend(this, Backbone.Events);
     this.on("change", this.handleChange, this);
   },
   calculateRisk : function() {
@@ -393,8 +393,8 @@ var User = StackMob.User.extend({
     console.dir(data);
     this.set("archimedes_result", data);
     this.archimedes_result = $.parseJSON(data);
-    this.save();
     this.set("risk_state", User.RISK_STATE.UP_TO_DATE);
+    this.save();
   },
   handleChange : function(fn, data) {
     for (var attr in data.changes) {
@@ -628,6 +628,12 @@ var HomeView = Backbone.View.extend({
     "pagebeforeshow" : "updateView"
   },
   updateView : function(event, data) {
+    switch(this.model.get("risk_state")) {
+    case User.RISK_STATE.CHANGED:
+    case User.RISK_STATE.ERROR:
+      this.model.calculateRisk();
+      break;
+    }
     this.listView.updateList();
   }
 });
@@ -960,7 +966,8 @@ var SurveyHistoryView = SurveyView.extend({
 
     var valid = true;
     if (this.getToggleButton().val() === "true") {
-      valid = $.isNumeric($("#hba1c_field", this.el).val())
+      var hba1c = this.$("#hba1c_field").val();
+      valid = hba1c === "" || $.isNumeric(hba1c);
     }
     return valid;
   }
@@ -1117,6 +1124,10 @@ if (!localStorage["currentUsername"]) {
   gCurrentUser.fetch({
     success : function(model) {
       console.info("fetched user " + model.get("username"));
+
+      if (model.get("risk_state") !== User.RISK_STATE.UP_TO_DATE) {
+        model.set("risk_state", User.RISK_STATE.CHANGED);
+      }
     },
     error : function(model, response) {
       console.error("failed to fetch user: " + response.error);
