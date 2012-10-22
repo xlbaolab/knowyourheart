@@ -28,9 +28,9 @@
 	<icon src="icons/aandroid/android-36.png" gap:platform="android" gap:density="ldpi" />
 	<icon src="icons/android/android-48.png" gap:platform="android" gap:density="mdpi" />
 	<icon src="icons/android/android-72.png" gap:platform="android" gap:density="hdpi" />
-<!--	<icon src="icons/android/xhdpi.png" gap:platform="android" gap:density="xhdpi" />
+	<icon src="icons/android/android-96.png" gap:platform="android" gap:density="xhdpi" />
 
-	<icon src="icons/bb/icon.png" gap:platform="blackberry" />
+<!--	<icon src="icons/bb/icon.png" gap:platform="blackberry" />
 	<icon src="icons/bb/icon_hover.png" gap:platform="blackberry" gap:state="hover"/>
 	<icon src="icons/winphone/icon.png" gap:platform="winphone" />-->
 	<!-- winphone requires a jpg for the tile icons
