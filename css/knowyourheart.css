@@ -333,8 +333,8 @@ screen and (max-moz-device-pixel-ratio: 2) {
 }
 
 #start_text {
-  margin-top: 20px;
-  padding: 15px 25px 0px 25px;
+  margin-top: 10px;
+  padding: 10px 25px 0px 25px;
   color: #807b7b;
 }
 
@@ -354,7 +354,7 @@ p.note {
 a.startbtn.ui-btn-corner-all {
   width: 80%;
   min-width: 280px;
-  margin: 25px auto;
+  margin: 10px auto;
   -moz-border-radius: 0.4em/*{global-radii-buttons}*/;
   -webkit-border-radius: 0.4em/*{global-radii-buttons}*/;
   border-radius: 0.4em/*{global-radii-buttons}*/;
