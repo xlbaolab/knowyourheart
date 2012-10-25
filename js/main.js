@@ -30,17 +30,107 @@ var ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Heal
 var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find?callback=?";
 var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 
+/*
+ * Text
+ */
+var TXT_INCOMPLETE = "<span class='important'>INCOMPLETE</span>"; 
+
+/*
+ * Templates
+ */
 // vars: dataTheme, pageId, name, distance
 var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
-var NEXT_STEP_TEMPLATES = {
-  ACTIONS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#interventions" data-transition="slide">Take action to lower your risk<div class="nextsteps">You could lower your risk by <span class="risk-reduction"><%= reduction %></span>%</div></a></li>'),
-  ENTER_BP : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#blood_pressure" data-transition="slide">Enter your blood pressure<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
-  ENTER_CHOL : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#cholesterol" data-transition="slide">Enter your cholesterol<div class="nextsteps_assessment">INCOMPLETE</div></a></li>'),
-  FIND_LOCATION : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#locationsMap" data-transition="slide">Find a health screening clinic<span class="warning-icon"></span><div class="nextsteps_assessment">Your blood pressure and cholesterol values are needed to calculate your true risk</div></a></li>'),
-  GET_REWARDS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#rewards" data-transition="slide">Get Rewards<div class="nextsteps">Enter to win an Apple iPad</div></a></li>'),
-  MORE_QUESTIONS : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#page38" data-transition="slide">Improve your risk estimate<div class="nextsteps">Answer a few more questions for a more accurate assessment</div></a></li>'),
-  SHARE : _.template('<li class="next-step" data-theme="<%= dataTheme %>"><a href="#share" data-transition="slide">Share<div class="nextsteps">Your friends and family need to know their risk</div></a></li>')
+
+var POPUP_LOCKED_HTML = '\
+  <div data-role="popup" id="popupLocked" class="ui-content">\
+    <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"> Close </a>\
+    <p>\
+      Enter your HbA1c (if applicable), blood pressure, and cholesterol levels\
+      to unlock this feature.\
+    </p>\
+    <p>\
+      A more accurate assessment is required to determine the best steps for you\
+      to take.\
+    </p>\
+  </div>\
+';
+
+// vars: items, limit
+var NEXT_STEPS_TEMPLATE = _.template('\
+  <% var added=0; %>\
+  <% for (var key in items) { %>\
+  <% var item = items[key]; %>\
+  <% if (item.hide) { continue; } %>\
+  <li class="<%= item.clazz %> next-step" data-theme="<%= added++ % 2 ? "e" : "f" %>">\
+    <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
+      <div class="nextsteps_primary">\
+        <%= item.primary %>\
+      </div>\
+      <div class="nextsteps_secondary">\
+        <%= item.secondary %>\
+      </div>\
+    </a>\
+  </li>\
+  <% if (added === limit) { break; } %>\
+  <% } %>\
+');
+var gNextStepsItems = {
+  locations : {
+    clazz : "locationsMap",
+    href : "#locationsMap",
+    primary : "Find a health screening clinic",
+    // Your [hba1c/bp/chol] levels are needed for a more accurate risk assessment
+    secondary : "",
+    hide : false
+  },
+  enterMissing : {
+    clazz : "missing",
+    href : "", // history, bp, or chol
+    primary : "", // Enter your [hba1c/bp/chol]
+    secondary : TXT_INCOMPLETE,
+    hide : false
+  },
+  interventions : {
+    clazz : "interventions",
+    href : "#interventions",
+    primary : "Take action to lower your risk",
+    secondary : "By up to <span class='reduction'>&hellip;</span>%",
+    popup : false
+  },
+  extra : {
+    clazz : "extra",
+    href : "#page38",
+    primary : "Improve your risk estimate",
+    secondary : "Answer a few more questions for a more accurate assessment",
+    hide : false
+  },
+  rewards : {
+    clazz : "rewards",
+    href : "#rewards",
+    primary : "Get Rewards",
+    secondary : "Enter to win an Apple iPad",
+  },
+  share : {
+    clazz : "share",
+    href : "#share",
+    primary : "Share",
+    secondary : "Your friends and family need to know their risk",
+  }
 };
+var gNextStepsItemsCompiled = null;
+var gNextStepsItemsState = null;
+
+function compileNextStepsItems(nextStepsItemsState) {
+  if (nextStepsItemsState !== gNextStepsItemsState) {
+    gNextStepsItemsState = nextStepsItemsState;
+    gNextStepsItemsCompiled = NEXT_STEPS_TEMPLATE({
+      items : gNextStepsItems,
+      limit : 4
+    });
+  }
+  return gNextStepsItemsCompiled;
+}
+
 var RISK_MESSAGE = _.template('Your risk is <%= risk %>%, <%= comparisonRisk %> times what is considered healthy for your age');
 var RISK_MESSAGE_RANGE = _.template('Your risk could be as high as <%= risk %>%, <%= comparisonRisk %> times what is considered healthy for your age');
 var RISK_REC = {
@@ -469,7 +559,7 @@ var User = StackMob.User.extend({
     var request = {};
     for (attr in ARCHIMEDES_ATTRS) {
       var val = this.get(ARCHIMEDES_ATTRS[attr]);
-      if (val !== undefined && val !== "") {
+      if (val) {
         request[attr] = val;
       } else if (ARCHIMEDES_REQUIRED[attr]) {
         request[attr] = ARCHIMEDES_DEFAULTS[attr];
@@ -513,11 +603,14 @@ var User = StackMob.User.extend({
       }
     }
   },
-  hasCompletedBp : function() {
-    return this.get("systolic") && this.get("diastolic");
+  needBp : function() {
+    return !$.isNumeric(this.get("systolic")) || !$.isNumeric(this.get("diastolic"));
   },
-  hasCompletedChol : function() {
-    return this.get("hdl") && this.get("ldl") && this.get("cholesterol");
+  needChol : function() {
+    return !$.isNumeric(this.get("hdl")) || !$.isNumeric(this.get("ldl")) || !$.isNumeric(this.get("cholesterol"));
+  },
+  needHba1c : function() {
+    return this.get("diabetes") === "true" && !$.isNumeric(this.get("hba1c"));
   },
   hasCompletedExtra : function() {
     // TODO
@@ -727,10 +820,11 @@ var LocMapView = Backbone.View.extend({
 var HomeView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
-      el : this.$(".next-steps-list"),
+      el : this.$(".nextStepsList"),
       model : this.model,
       page : this
     });
+    this.$el.append(POPUP_LOCKED_HTML);
   },
   events : {
     "pagebeforeshow" : "updateView"
@@ -738,6 +832,10 @@ var HomeView = Backbone.View.extend({
   updateView : function(event, data) {
     this.model.calculateRisk();
     this.listView.updateList();
+    // might need to init popup since we inserted it (jqm generates the id)
+    if (this.$("#popupLocked-popup").length === 0) {
+      this.$el.trigger("create");
+    }
   }
 });
 
@@ -808,10 +906,14 @@ var NextStepListView = Backbone.View.extend({
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
   getRiskReduction : function() {
-    return this.model.archimedes_result ? this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions : "&hellip;";
+    if (!this.model.archimedes_result || !this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions) {
+      return "&hellip;";
+    } else {
+      return this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions; 
+    }
   },
   handleRiskChange : function(state, user) {
-    var $risk = this.$("li .risk-reduction");
+    var $risk = this.$("li .reduction");
 
     switch(state) {
     case User.RISK_STATE.UP_TO_DATE:
@@ -827,58 +929,65 @@ var NextStepListView = Backbone.View.extend({
   updateList : function() {
     var i = 0;
 
-    var completedBp = this.model.hasCompletedBp();
-    var completedChol = this.model.hasCompletedChol();
+    var needBp = this.model.needBp();
+    var needChol = this.model.needChol();
+    var needHba1c = this.model.needHba1c();
     var completedExtra = this.model.hasCompletedExtra();
+    var state = "" + needBp + needChol + needHba1c + completedExtra;
 
-    if (completedBp === this.completedBp && completedChol === this.completedChol && completedExtra === this.completedExtr) {
+    if (state === this.nextStepsState) {
       // no change
       return;
     }
+    this.nextStepsState = state;
 
-    this.completedBp = completedBp;
-    this.completedChol = completedChol;
-    this.completedExtra = completedExtra;
+    if (needBp || needChol || needHba1c) {
+      var missingText;
+      if (needHba1c) {
+        gNextStepsItems.enterMissing.href = "#history";
+        if (needBp && needChol) {
+          missingText = "HbA1c, blood pressure, and cholesterol";
+        } else if (needBp) {
+          missingText = "HbA1c and blood pressure";
+        } else if (needChol) {
+          missingText = "HbA1c and cholesterol";
+        } else {
+          missingText = "HbA1c";
+        }
+      } else if (needBp) {
+        gNextStepsItems.enterMissing.href = "#blood_pressure";
+        if (needChol) {
+          missingText = "blood pressure and cholesterol";
+        } else {
+          missingText = "blood pressure";
+        }
+      } else if (needChol) {
+        gNextStepsItems.enterMissing.href = "#cholesterol";
+        missingText = "cholesterol";
+      }
+      gNextStepsItems.locations.secondary = "<span class='important'>Your " + missingText + " levels are needed for a more accurate risk assessment</span>";
+      gNextStepsItems.locations.hide = false;
+      gNextStepsItems.enterMissing.primary = "Enter your " + missingText;
+      gNextStepsItems.enterMissing.hide = false;
+      gNextStepsItems.extra.hide = true;
+      gNextStepsItems.interventions.href = "#popupLocked";
+      gNextStepsItems.interventions.popup = true;
+    } else {
+      gNextStepsItems.locations.hide = true;
+      gNextStepsItems.enterMissing.hide = true;
+      gNextStepsItems.extra.hide = completedExtra;
+      gNextStepsItems.interventions.href = "#interventions";
+      gNextStepsItems.interventions.popup = false;
+    }
 
-    // clear list
     this.$("li.next-step").remove();
-
-    if (!completedBp || !completedChol) {
-      this.$el.append(NEXT_STEP_TEMPLATES.FIND_LOCATION({
-        dataTheme : i++ % 2 ? "e" : "f"
-      }));
-    }
-    if (!completedBp) {
-      this.$el.append(NEXT_STEP_TEMPLATES.ENTER_BP({
-        dataTheme : i++ % 2 ? "e" : "f"
-      }));
-    }
-    if (!completedChol) {
-      this.$el.append(NEXT_STEP_TEMPLATES.ENTER_CHOL({
-        dataTheme : i++ % 2 ? "e" : "f"
-      }));
-    }
-    if (i < 3 && completedBp && completedChol) {
-      this.$el.append(NEXT_STEP_TEMPLATES.ACTIONS({
-        dataTheme : i++ % 2 ? "e" : "f",
-        reduction : this.getRiskReduction()
-      }));
-    }
-    if (i < 3 && !completedExtra) {
-      this.$el.append(NEXT_STEP_TEMPLATES.MORE_QUESTIONS({
-        dataTheme : i++ % 2 ? "e" : "f"
-      }));
-    }
-    this.$el.append(NEXT_STEP_TEMPLATES.GET_REWARDS({
-      dataTheme : i++ % 2 ? "e" : "f"
-    }));
-    if (i < 4) {
-      this.$el.append(NEXT_STEP_TEMPLATES.SHARE({
-        dataTheme : i++ % 2 ? "e" : "f"
-      }));
-    }
-
+    this.$el.append(compileNextStepsItems(state));
+    this.$("li .reduction").html(this.getRiskReduction());
     this.refreshView();
+  },
+  updateListContent : function() {
+    // TODO: when we need to update the list item contents, e.g. risk
+    // value, but not add/remove list items  
   }
 });
 
@@ -921,18 +1030,21 @@ var ProfileView = Backbone.View.extend({
     if (this.model.get("diabetes") === "true") {
       text += text.length === 0 ? "" : ", ";
       text += "Diabetes";
+      if (isBlank(this.model.get("hba1c"))) {
+        text = TXT_INCOMPLETE + " " + text; 
+      }
     }
     this.$(".history").html(text);
 
     var systolic = this.model.get("systolic");
     var diastolic = this.model.get("diastolic");
-    text = (isBlank(systolic) || isBlank(diastolic)) ? "" : systolic + "/" + diastolic;
+    text = (isBlank(systolic) || isBlank(diastolic)) ? TXT_INCOMPLETE : systolic + "/" + diastolic;
     this.$(".bp").html(text);
 
     var chol = this.model.get("cholesterol");
     var hdl = this.model.get("hdl");
     var ldl = this.model.get("ldl");
-    text = (isBlank(chol) || isBlank(hdl) || isBlank(ldl)) ? "" : chol + " | " + hdl + " | " + ldl;
+    text = (isBlank(chol) || isBlank(hdl) || isBlank(ldl)) ? TXT_INCOMPLETE : chol + " | " + hdl + " | " + ldl;
     this.$(".chol").html(text);
   }
 });
@@ -981,10 +1093,11 @@ var ExtraProfileView = Backbone.View.extend({
 var ResultView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
-      el : this.$(".next-steps-list"),
+      el : this.$(".nextStepsList"),
       model : this.model,
       page : this
     });
+    this.$el.append(POPUP_LOCKED_HTML);
 
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.updateRiskView, this);
 
@@ -1001,6 +1114,10 @@ var ResultView = Backbone.View.extend({
       this.updateRiskView();
     }
     this.listView.updateList();
+    // might need to init popup since we inserted it (jqm generates the id)
+    if (this.$("#popupLocked-popup").length === 0) {
+      this.$el.trigger("create");
+    }
   },
   updateRiskView : function() {
     var result = this.model.archimedes_result;
@@ -1282,9 +1399,9 @@ var WelcomeView = Backbone.View.extend({
     "pagebeforeshow" : "updateView"
   },
   updateView : function(event, data) {
-    var progress = this.model.get("progress");
-    if (progress) {
-      this.$(".startbtn").attr("href", "#" + progress);
+    var progressPage = this.model.get("progress");
+    if (progressPage && !this.model.hasCompletedRequired()) {
+      this.$(".startbtn").attr("href", "#" + progressPage);
     }
   }
 });

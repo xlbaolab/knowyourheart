@@ -591,7 +591,8 @@ fieldset .ui-btn-inner {
 }
 
 /*HEALTH HISTORY Screen */
-#history .ui-content, #locationsMap .ui-content, #screeningTips .ui-content, #page35 .ui-content {
+#history .ui-content, #locationsMap .ui-content, #locationsList .ui-content,
+#screeningTips .ui-content, #page35 .ui-content {
   text-align: left;
   margin: auto;
 }
@@ -710,7 +711,7 @@ fieldset .ui-btn-inner {
 }
 
 #popupMoreInfo td.value {
-  color: black;
+  color: #2F3E46;
   font-size: larger;
   padding-right: 0.5em;
   text-align: right;
@@ -718,7 +719,12 @@ fieldset .ui-btn-inner {
   white-space: nowrap;
 }
 
-.nextsteps {
+.nextsteps_primary {
+  color: #2F3E46;
+  font-family: "MuseoSlab500Regular", serif;
+}
+
+.nextsteps_secondary {
   width: 100%;
   overflow: hidden;
   color: #32a7da;
@@ -728,15 +734,8 @@ fieldset .ui-btn-inner {
   white-space: normal;
 }
 
-.nextsteps_assessment {
-  width: 100%;
-  overflow: hidden;
-  /* color: #71bd54; */
+.important {
   color: #cf0313;
-  font-size: small;
-  font-weight: normal;
-  font-family: "MuseoSans500Regular", sans-serif;
-  white-space: normal;
 }
 
 .icon-help {
@@ -1034,6 +1033,37 @@ a.sharebtn.ui-btn-corner-all {
 /*
  * Locations pages
  */
+
+
+#locationsMap .ui-body-a input, 
+#locationsMap .ui-btn-inner, 
+#locationsList .ui-body-a input, 
+#locationsList .ui-btn-inner {
+	font-family: "MuseoSans500Regular", sans-serif;
+  font-weight: normal;
+}
+
+#locationsMap .ui-fullsize .ui-btn-inner,
+#locationsList .ui-fullsize .ui-btn-inner {
+font-size: 16px;
+padding: .5em 20px;
+}
+
+#locationsMap .ui-input-search .ui-input-clear,
+#locationsList .ui-input-search .ui-input-clear {
+position: absolute;
+right: 5px;
+top: 50%;
+margin-top: -12px;
+
+}
+
+#locationsMap .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner,
+#locationsList .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner {
+height: 100%;
+padding: .6em 5px .6em 5px;
+}
+
 .loc-search-bar {
   padding: 0;
 }
@@ -1078,3 +1108,4 @@ a.sharebtn.ui-btn-corner-all {
 #locationsList ul {
   margin: 0;
 }
+
