@@ -322,7 +322,7 @@ a.nextbtn.ui-btn-corner-all {
   background: url('../images/knh-logo.png') no-repeat;
   height: 96px;
   width: 250px;
-  margin: 30px auto;
+  margin: 35px auto;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), 
@@ -335,7 +335,7 @@ screen and (max-moz-device-pixel-ratio: 2) {
 }
 
 #start_text {
-  margin: 25px 0px 50px 0px;
+  margin: 25px 0px 40px 0px;
   padding: 5px 25px 0px 25px;
   color: #807b7b;
 }
@@ -380,7 +380,7 @@ a.startbtn.ui-btn-corner-all {
   padding: 5px 0 30px 0;
 }
 
-a#dashboardProfileBtn.ui-link, a#dashboardAssessmentBtn.ui-link, a#dashboardShareBtn.ui-link {
+a#dashboardLocationBtn.ui-link, a#dashboardAssessmentBtn.ui-link, a#dashboardShareBtn.ui-link {
   margin: 10px auto;
 }
 
@@ -390,19 +390,19 @@ a#dashboardProfileBtn.ui-link, a#dashboardAssessmentBtn.ui-link, a#dashboardShar
   padding-bottom: 10%;
 }
 
-#dashboardProfileBtn {
+#dashboardLocationBtn {
   display: block;
   width: 66px;
   height: 66px;
-  background-image: url('../images/profilebtn_sprite.png');
+  background-image: url('../images/locationbtn_sprite.png');
   background-position: left;
   text-indent: -9999px;
 }
 
-a#dashboardProfileBtn:hover {
+a#dashboardLocationBtn:hover {
   background-position: center;
 }
-a#dashboardProfileBtn:active {
+a#dashboardLocationBtn:active {
   background-position: right;
 }
 
