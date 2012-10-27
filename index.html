@@ -88,10 +88,6 @@
         <p>
           Answer 10 questions to calculate your risk for cardiovascular disease.
         </p>
-        <p class="note">
-          Powered by the Archimedes IndiGO decision support tool used by physicians.
-          Receive personalized guidelines to help you make the best decision about your health.
-        </p>
       </div>
     </div>
     <div id="checkboxes2" data-role="fieldcontain">
@@ -103,8 +99,6 @@
       </fieldset>
     </div>
     <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#quiz1" class="startbtn"> Get Started </a>
-    <div id="archimedes_logo"></div>
-    <div id="millionhearts_logo"></div>
   </div>
 </div>
 <!-- Terms and Conditions -->
@@ -558,7 +552,12 @@
         <div class="ui-block-a">
           <div>
             <p>
-              Heart Attack <span class="help-icon" rel="tooltip" title="also known as a myocardial infarction (MI)"></span>
+              Heart Attack <a href="#popupInfo" data-rel="popup" data-role="button" data-inline="true" class="help-icon"></a>
+		<div data-role="popup" id="popupInfo" data-overlay-theme="b">
+				<div class="ui-corner-all ui-body-e" style="padding:5px 15px;">
+		          <p>also known as a myocardial infarction (MI)</p>
+				</div>
+		</div>
             </p>
           </div>
         </div>
@@ -907,15 +906,31 @@
         <input id="loc-search-field-1" class="loc-search-field" name="address" placeholder="Current Location" value="Minneapolis" type="search">
       </fieldset>
       <a class="loc-search-btn" href="#" data-role="button" data-mini="false"> Find </a>
-		<a href="#locationsList" data-role="button" data-inline="true" data-theme="" data-icon="" data-transition="flip" data-direction="reverse">List</a>
     </div>
     <div id="locMap"></div>
+    <div class="listToMap" style="height: 20px;">
+    			<a href="#locationsList" data-role="button" data-inline="true" data-theme="" data-icon="" data-transition="flip" data-direction="reverse">List</a>
+
+    </div>
   </div>
+
+  <div data-role="tabbar" data-iconpos="left" data-theme="a">
+    <ul>
+      <li>
+        <a href="#locationsMap" data-theme="" data-icon="search"> Map </a>
+      </li>
+      <li>
+        <a href="#locationsList" data-theme="" data-icon="grid"> List </a>
+      </li>
+    </ul>
+  </div>
+  
+  
 </div>
 <div data-role="page" data-theme="a" id="locationsList">
   <div data-theme="a" data-role="header">
     <h2>Find a Clinic</h2>
-    <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" class="ui-btn-left" data-iconpos="notext"> Your Heart </a>
+    <a da ta-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" class="ui-btn-left" data-iconpos="notext"> Your Heart </a>
     <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext" class="ui-btn-right"> </a>
   </div>
   <div data-role="content">
@@ -924,9 +939,7 @@
         <label for="loc-search-field" class="ui-hidden-accessible">Near</label>
         <input id="loc-search-field-2" class="loc-search-field" name="address" placeholder="Current Location" value="Minneapolis" type="search">
       </fieldset>
-      <a class="loc-search-btn" href="#" data-role="button" data-mini="false"> Find </a>
-      <a href="#locationsMap" data-role="button" data-inline="true" data-theme="" data-icon="" data-transition="flip" data-direction="reverse">Map</a>
-
+      <a class="loc-search-btn" href="#" data-role="button" data-mini="false"> Find </a>	
     </div>
     <ul id="locList" data-role="listview" data-divider-theme="c" data-inset="false">
       <li data-role="list-divider" data-theme="e" role="heading">
@@ -952,6 +965,17 @@
             <span>2.5 miles</span>
             <span class="coupon">$10 coupon</span>
           </div> </a>
+      </li>
+    </ul>
+  </div>
+  
+    <div data-role="tabbar" data-iconpos="left" data-theme="a">
+    <ul>
+      <li>
+        <a href="#locationsMap" data-theme="" data-icon="search"> Map </a>
+      </li>
+      <li>
+        <a href="#locationsList" data-theme="" data-icon="grid"> List </a>
       </li>
     </ul>
   </div>

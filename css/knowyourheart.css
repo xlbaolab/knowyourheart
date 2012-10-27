@@ -79,20 +79,22 @@ h3 {
 
 /* Progress Bar */
 .footer {
-  background: rgba(143,143,143,0.05);
   height: 60px;
   color: #ffffff/*{a-bar-color}*/;
   text-shadow: 0/*{a-bar-shadow-x}*/0/*{a-bar-shadow-y}*/0/*{a-bar-shadow-radius}*/#444444/*{a-bar-shadow-color}*/;
   /* IE9 SVG, needs conditional override of 'filter' to 'none' */
-  background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmMmYyZjIiIHN0b3Atb3BhY2l0eT0iMC4wNyIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjMDAwMDAwIiBzdG9wLW9wYWNpdHk9IjAuMTkiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
-  background: -moz-radial-gradient(center, ellipse cover,  rgba(242,242,242,0.07) 0%, rgba(0,0,0,0.19) 100%); /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(242,242,242,0.07)), color-stop(100%,rgba(0,0,0,0.19))); /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover,  rgba(242,242,242,0.07) 0%,rgba(0,0,0,0.19) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover,  rgba(242,242,242,0.07) 0%,rgba(0,0,0,0.19) 100%); /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover,  rgba(242,242,242,0.07) 0%,rgba(0,0,0,0.19) 100%); /* IE10+ */
-  background: radial-gradient(ellipse at center,  rgba(242,242,242,0.07) 0%,rgba(0,0,0,0.19) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#12f2f2f2', endColorstr='#30000000',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
-  border: 0px;
+	background: rgb(247,247,247); /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPHJhZGlhbEdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgY3g9IjUwJSIgY3k9IjUwJSIgcj0iNzUlIj4KICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9IiNmN2Y3ZjciIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZGJkYmRiIiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L3JhZGlhbEdyYWRpZW50PgogIDxyZWN0IHg9Ii01MCIgeT0iLTUwIiB3aWR0aD0iMTAxIiBoZWlnaHQ9IjEwMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-radial-gradient(center, ellipse cover,  rgba(247,247,247,1) 0%, rgba(219,219,219,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(247,247,247,1)), color-stop(100%,rgba(219,219,219,1))); /* Chrome,Safari4+ */
+	background: -webkit-radial-gradient(center, ellipse cover,  rgba(247,247,247,1) 0%,rgba(219,219,219,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-radial-gradient(center, ellipse cover,  rgba(247,247,247,1) 0%,rgba(219,219,219,1) 100%); /* Opera 12+ */
+	background: -ms-radial-gradient(center, ellipse cover,  rgba(247,247,247,1) 0%,rgba(219,219,219,1) 100%); /* IE10+ */
+	background: radial-gradient(ellipse at center,  rgba(247,247,247,1) 0%,rgba(219,219,219,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7f7f7', endColorstr='#dbdbdb',GradientType=1 ); /* IE6-8 fallback on horizontal gradient */
+
+  border-top: 2px solid rgba(200,200,200,0.5);
 }
 
 .progressBar {
@@ -727,15 +729,18 @@ fieldset .ui-btn-inner {
 .nextsteps_secondary {
   width: 100%;
   overflow: hidden;
-  color: #32a7da;
+  color: #959595;
   font-size: small;
   font-weight: normal;
   font-family: "MuseoSans500Regular", sans-serif;
   white-space: normal;
+  text-shadow: white 0px 0px 0px;
+
 }
 
 .important {
-  color: #cf0313;
+  color: #f69d00;
+  text-shadow: white 0px 0px 0px;
 }
 
 .icon-help {
@@ -1071,6 +1076,7 @@ padding: .6em 5px .6em 5px;
 .loc-search-bar fieldset {
   display: inline-block;
   margin: 0;
+  width: 70%;
 }
 
 .loc-search-bar label[for="locationField"] {
@@ -1109,3 +1115,7 @@ padding: .6em 5px .6em 5px;
   margin: 0;
 }
 
+#locationsMap .ui-footer.ui-footer-fixed.ui-bar-a.ui-navbar.ui-mini,
+#locationsList .ui-footer.ui-footer-fixed.ui-bar-a.ui-navbar.ui-mini {
+	border: 0px;
+}
