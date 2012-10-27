@@ -335,7 +335,7 @@ screen and (max-moz-device-pixel-ratio: 2) {
 }
 
 #start_text {
-  margin: 50px 0px 50px 0px;
+  margin: 25px 0px 50px 0px;
   padding: 5px 25px 0px 25px;
   color: #807b7b;
 }
@@ -349,7 +349,7 @@ p.note {
 }
 
 #welcome div#checkboxes2 {
-  margin: 20px auto;
+  margin: 10px auto;
   width: 280px;
 }
 
