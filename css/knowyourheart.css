@@ -757,6 +757,7 @@ fieldset .ui-btn-inner {
   white-space: nowrap;
 }
 
+
 .nextsteps_primary {
   color: #2F3E46;
   font-family: "MuseoSlab500Regular", serif;
@@ -775,7 +776,7 @@ fieldset .ui-btn-inner {
 }
 
 .important {
-  color: #fda300;
+  color: #32a7da;
   text-shadow: white 0px 0px 0px;
 }
 
@@ -885,6 +886,8 @@ a.sharebtn.ui-btn-corner-all {
   height: 21px;
   width: 21px;
   display: inline-block;
+  position: relative;
+  top: 3px;
 }
 
 .icon-warning {
@@ -892,7 +895,9 @@ a.sharebtn.ui-btn-corner-all {
   width: 21px;
   background-image: url('../images/icon-warning.png');
   display: inline-block;
-  float: left;
+  position: absolute;
+  margin: -2px 0px 0px 5px;
+
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), 

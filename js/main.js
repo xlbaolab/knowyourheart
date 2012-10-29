@@ -64,7 +64,7 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <li class="<%= item.clazz %> next-step" data-theme="<%= added++ % 2 ? "e" : "f" %>">\
     <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
       <div class="nextsteps_primary">\
-        <%= item.primary %>\
+        <%= item.primary %><span class="icon-warning"></span>\
       </div>\
       <div class="nextsteps_secondary">\
         <%= item.secondary %>\
