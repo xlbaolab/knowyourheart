@@ -28,7 +28,7 @@ p, td {
 
 .ui-page {
   background: rgb(255,255,255); /* Old browsers */
-  background: url('../images/bg_texture.png') 0 0 repeat;
+  background: url('../images/bg-texture.png') 0 0 repeat;
 }
 
 /* div {
@@ -890,7 +890,7 @@ a.sharebtn.ui-btn-corner-all {
   top: 3px;
 }
 
-.icon-warning {
+/*.icon-warning {
   height: 21px;
   width: 21px;
   background-image: url('../images/icon-warning.png');
@@ -899,7 +899,7 @@ a.sharebtn.ui-btn-corner-all {
   margin: -2px 0px 0px 5px;
 
 }
-
+*/
 @media screen and (-webkit-min-device-pixel-ratio: 2), 
 screen and (max-moz-device-pixel-ratio: 2) {
 	.icon-warning {

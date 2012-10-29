@@ -337,7 +337,24 @@ var RISK_IMAGES = {
   5 : {
     background : "url(images/heartmeter_sprite1.png) no-repeat -924px 0"
   }
-}
+};
+var RISK_IMAGES_COMPLETE = {
+  1 : {
+    background : "url(images/heartmeter_sprite2.png) no-repeat 0 0"
+  },
+  2 : {
+    background : "url(images/heartmeter_sprite2.png) no-repeat -231px 0"
+  },
+  3 : {
+    background : "url(images/heartmeter_sprite2.png) no-repeat -462px 0"
+  },
+  4 : {
+    background : "url(images/heartmeter_sprite2.png) no-repeat -693px 0"
+  },
+  5 : {
+    background : "url(images/heartmeter_sprite2.png) no-repeat -924px 0"
+  }
+};
 
 /*
  * Globals
@@ -1167,7 +1184,12 @@ var ResultView = Backbone.View.extend({
       var rating = parseInt(risk.rating);
       var ratingForAge = parseInt(risk.ratingForAge);
       var highestRating = rating > ratingForAge ? rating : ratingForAge;
-      $img.css(RISK_IMAGES[highestRating]);
+      
+      if (range) {
+      	$img.css(RISK_IMAGES[highestRating]);
+      } else {
+      	$img.css(RISK_IMAGES_COMPLETE[highestRating]);
+      }
 
       var msgArgs = {
         risk : risk.risk,
