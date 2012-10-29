@@ -43,6 +43,16 @@
   <!-- Add KNH JS -->
   <script src="js/knowyourheart.js"></script>
 
+  <!-- Tooltip CSS/JS -->
+	<link rel="stylesheet" href="tooltip/css/jqmTooltip.css" />
+	<script type="text/javascript" src="tooltip/js/jqmTooltip.min.js"></script>
+
+<script>
+    $('div:jqmData(role="page")').live('pagecreate', function(e){		
+        $(e.target).find('.tooltip').jqmTooltip();
+    });
+</script>
+
   <!-- Add KNH: TypeKit tags -->
   <!--        <script type="text/javascript" src="//use.typekit.net/asz8qly.js"></script>
   <script type="text/javascript">try{Typekit.load();}catch(e){}</script>-->
@@ -86,7 +96,7 @@
       <div class="knh-logo"></div>
       <div id="start_text">
         <p>
-          Answer 10 questions to calculate your risk for cardiovascular disease.
+          Answer 8 questions to calculate your risk for cardiovascular disease.
         </p>
       </div>
     </div>
@@ -98,7 +108,7 @@
         <label for="checkbox2"> Agree with <a href="#page32" data-transition="fade"> Terms and Conditions </a> </label>
       </fieldset>
     </div>
-    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#quiz1" class="startbtn"> Get Started </a>
+    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#heartfacts" class="startbtn"> Get Started </a>
     
   </div>
 </div>
@@ -120,8 +130,8 @@
 <!-- Dashboard -->
 <div data-role="page" data-theme="a" id="home">
   <div data-role="content">
-    <div class="top-shadow">
-      <div class="knh-logo"></div>
+    <div id="top-shadow-dash">
+      <div id="knh-logo-dash"></div>
     </div>
     <div class="ui-grid-b">
       <div class="ui-block-a" style="text-align: center;">
@@ -155,8 +165,8 @@
     <p>
       Raise awareness about heart disease with your family and friends.
     </p>
-    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="mailto:?subject=Inviting you to learn about your risk for heart disease &body=KnowYourHeart provided me with my heart risk score.  http%3A%2F%2Fknowyourheart.info"> Email </a>
-    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="http://m.facebook.com/sharer.php?u=knowyourheart.info&i=m.knowyourheart.info/image/logo.png&d=I just learned about my risk for heart disease.  Do you know yours?"> Share on Facebook </a>
+    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="b" target="_blank" class="sharebtn" href="mailto:?subject=Inviting you to learn about your risk for heart disease &body=KnowYourHeart provided me with my heart risk score.  http%3A%2F%2Fknowyourheart.info"> Email </a>
+    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="d" target="_blank" class="sharebtn" href="http://m.facebook.com/sharer.php?u=knowyourheart.info&i=m.knowyourheart.info/image/logo.png&d=I just learned about my risk for heart disease.  Do you know yours?"> Share on Facebook </a>
     <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="http://twitter.com/share?text=Just learned about my risk for heart disease. Do you know yours? http://knowyourheart.info"> Share on Twitter </a>
   </div>
 </div>
@@ -247,97 +257,29 @@
     </ul>
   </div>
 </div>
-
-<!-- Heart Quiz Question 1 -->
-<div data-role="page" data-theme="a" id="quiz1">
+<!-- Heart Facts -->
+<div data-role="page" data-theme="a" id="heartfacts">
   <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Facts </h2>
-    <a data-role="button" data-direction="reverse" data-rel="back"
-    data-theme="c" href="#quiz1" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-  </div>
-  <div data-role="content">
-    <h3> Which statement is true? </h3>
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup" data-type="vertical">
-        <legend></legend>
-        <input id="fact1" name="" value="a" type="radio">
-        <label for="fact1"> 150,000 people younger than 65 die every year from heart disease and stroke </label>
-        <input id="fact2" name="" value="b" type="radio">
-        <label for="fact2"> African Americans have the highest rate of high blood pressure all population
-          groups </label>
-        <input id="fact3" name="" value="c" type="radio">
-        <label for="fact3"> Heart disease is the leading cause of death for American women </label>
-        <input id="fact4" name="" value="d" type="radio">
-        <label for="fact4"> Individuals with low incomes are more likely to suffer from high blood
-          pressure, high cholesterol, and heart attack </label>
-        <input id="fact5" name="" value="e" type="radio">
-        <label for="fact5"> All of the above </label>
-      </fieldset>
-    </div>
-    <a data-role="button" data-transition="slide" data-theme="b" href="#quiz2"
-    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
-
-  </div>
-  <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
-    <div class="progressBar">
-      <span class="dot activedot"></span>
-      <span class="dot dot2"></span>
-      <span class="dot dot3"></span>
-      <span class="dot dot4"></span>
-      <span class="dot dot5"></span>
-      <span class="dot dot6"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
-
-    </div>
-  </div>
-</div>
-<!-- Heart Quiz: Question 2 -->
-<div data-role="page" data-theme="a" id="quiz2">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Risk Factors </h2>
+    <h2>  </h2>
     <a data-role="button" data-direction="reverse" data-rel="back"
     data-theme="c" href="#quiz2" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
   </div>
   <div data-role="content">
-    <h3> What is the leading risk factor for heart disease? </h3>
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup" data-type="vertical">
-        <legend></legend>
-        <input id="risk1" name="" value="a" type="radio">
-        <label for="risk1"> High Blood Pressure </label>
-        <input id="risk2" name="" value="b" type="radio">
-        <label for="risk2"> High Cholesterol </label>
-        <input id="risk3" name="" value="c" type="radio">
-        <label for="risk3"> Inactivity </label>
-        <input id="risk4" name="" value="d" type="radio">
-        <label for="risk4"> Obesity </label>
-        <input id="risk5" name="" value="e" type="radio">
-        <label for="risk5"> Diabetes </label>
-        <input id="risk6" name="" value="f" type="radio">
-        <label for="risk6"> Cigarette Smoking </label>
-      </fieldset>
-    </div>
+    <div id="facts">
+	<p>Before we begin, did you know that the top risk factors for heart disease and stroke are:</p>
+		<ol id="riskfactors">
+			<li>Inactivity</li>
+			<li>Obesity</li>
+			<li>High Blood Pressure</li>
+			<li>Cigarette Smoking</li>
+			<li>High Cholesterol</li>
+			<li>Diabetes</li>
+		</ol>
+	<p>And that you can take steps today to lower that risk?</p>
+  	</div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#page2"
-    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Next </a>
-
-  </div>
-  <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
-    <div class="progressBar">
-      <span class="dot completedot"></span>
-      <span class="dot activedot"></span>
-      <span class="dot dot3"></span>
-      <span class="dot dot4"></span>
-      <span class="dot dot5"></span>
-      <span class="dot dot6"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
-    </div>
-  </div>
+    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Continue </a>
+	</div>
 </div>
 <!-- Survey_Age -->
 <div data-role="page" data-theme="a" id="page2">
@@ -359,16 +301,14 @@
   </div>
   <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
     <div class="progressBar">
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot4"></span>
-      <span class="dot dot5"></span>
-      <span class="dot dot6"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -395,15 +335,13 @@
   <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
     <div class="progressBar">
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot5"></span>
-      <span class="dot dot6"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -450,16 +388,15 @@
   </div>
   <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
     <div class="progressBar">
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
+
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot6"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -487,13 +424,11 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot7"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -528,12 +463,10 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot8"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -553,12 +486,7 @@
         <div class="ui-block-a">
           <div>
             <p>
-              Heart Attack <a href="#popupInfo" data-rel="popup" data-role="button" data-inline="true" class="help-icon"></a>
-		<div data-role="popup" id="popupInfo" data-overlay-theme="b">
-				<div class="ui-corner-all ui-body-e" style="padding:5px 15px;">
-		          <p>also known as a myocardial infarction (MI)</p>
-				</div>
-		</div>
+              Heart Attack <a class="help-icon tooltip" href="#" title="also known as a myocardial infarction (MI)"></a>
             </p>
           </div>
         </div>
@@ -596,7 +524,9 @@
         <div class="ui-block-a">
           <div>
             <p>
-              Diabetes <span class="help-icon" rel="tooltip" title="diabetes mellitus type I or type II"></span>
+              Diabetes <a class="help-icon tooltip" href="#" title="diabetes mellitus type I or type II"></a>
+
+
             </p>
           </div>
         </div>
@@ -641,11 +571,9 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
-      <span class="dot dot9"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -687,10 +615,8 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot activedot"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -708,13 +634,13 @@
     </p>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <label for="systolic_bp_slider"> Systolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure when the heart beats"></span></label>
+        <label for="systolic_bp_slider"> Systolic Blood Pressure <a class="help-icon tooltip" href="#" title="Measures pressure when the heart beats"></a></label>
         <input id="systolic_bp_slider" type="range" name="systolic_bp" value="120" min="80" max="220" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup">
-        <label for="diastolic_bp_slider"> Diastolic Blood Pressure <span class="help-icon" rel="tooltip" title="Measures pressure between heart beats"></span></label>
+        <label for="diastolic_bp_slider"> Diastolic Blood Pressure <a class="help-icon tooltip" href="#" title="Measures pressure between heartbeats"></a></label>
         <input id="diastolic_bp_slider" type="range" name="diastolic_bp" value="80" min="40" max="130" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
@@ -729,10 +655,8 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot activedot"></span>
-      <span class="dot dot10"></span>
+      <span class="dot"></span>
+      <span class="dot"></span>
     </div>
   </div>
 </div>
@@ -775,8 +699,6 @@
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot activedot"></span>
     </div>
   </div>
@@ -792,19 +714,19 @@
     <h3> What is your cholesterol level? </h3>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup" data-mini="true">
-        <label for="total_chol_slider"> Total Cholesterol <span class="help-icon" rel="tooltip" title="A total of LDL, HDL, and other lipids"></span></label>
+        <label for="total_chol_slider"> Total Cholesterol <a class="help-icon tooltip" href="#" title="A total of LDL, HDL, and other lipids"></a></label>
         <input id="total_chol_slider" type="range" name="cholesterol" value="200" min="70" max="500" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup" data-mini="true">
-        <label for="hdl_slider"> HDL Cholesterol <span class="help-icon" rel="tooltip" title="Good cholesterol that reduces LDL"></span></label>
+        <label for="hdl_slider"> HDL Cholesterol <a class="help-icon tooltip" href="#" title="Good cholesterol that reduces LDL"></a></label>
         <input id="hdl_slider" type="range" name="hdl" value="40" min="20" max="130" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
     <div data-role="fieldcontain">
       <fieldset data-role="controlgroup" data-mini="true">
-        <label for="ldl_slider"> LDL Cholesterol <span class="help-icon" rel="tooltip" title="Bad cholesterol that can clog arteries"></span></label>
+        <label for="ldl_slider"> LDL Cholesterol <a class="help-icon tooltip" href="#" title="Bad cholesterol that can clog arteries"></a></label>
         <input id="ldl_slider" type="range" name="ldl" value="100" min="40" max="400" data-highlight="true" pattern="\d*">
       </fieldset>
     </div>
@@ -813,8 +735,6 @@
   </div>
   <div data-role="footer" data-position="fixed" data-theme="f" class="footer">
     <div class="progressBar">
-      <span class="dot completedot"></span>
-      <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
       <span class="dot completedot"></span>
@@ -861,7 +781,7 @@
       </li>
       <li data-theme="f">
         <p class="assessment_helper_text">
-          Calculated by <a href="http://archimedesmodel.com/indigo"> Archimedes IndiGO </a>
+          Calculated by <a target="_blank" href="http://archimedesmodel.com/indigo"> Archimedes IndiGO </a>
         </p>
       </li>
       <li data-role="list-divider" role="heading">
@@ -909,13 +829,9 @@
       <a class="loc-search-btn" href="#" data-role="button" data-mini="false"> Find </a>
     </div>
     <div id="locMap"></div>
-    <div class="listToMap" style="height: 20px;">
-    			<a href="#locationsList" data-role="button" data-inline="true" data-theme="" data-icon="" data-transition="flip" data-direction="reverse">List</a>
-
-    </div>
   </div>
 
-  <div data-role="tabbar" data-iconpos="left" data-theme="a">
+  <div data-role="tabbar" data-iconpos="left" data-theme="">
     <ul>
       <li>
         <a href="#locationsMap" data-theme="" data-icon="search"> Map </a>
@@ -1242,7 +1158,7 @@
             How would you rate the value of the knowledge you gained from this app?
           </p>
           <p>
-            (5="You saved my life!"; 1="I already knew that")
+            (1="I already knew that"; 5="You saved my life!")
           </p>
         </div>
         <legend></legend>

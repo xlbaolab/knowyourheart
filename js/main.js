@@ -323,19 +323,19 @@ var USER_DEFAULTS = {
 };
 var RISK_IMAGES = {
   1 : {
-    background : "url(images/heartmeter_sprite.png) no-repeat 0 0"
+    background : "url(images/heartmeter_sprite1.png) no-repeat 0 0"
   },
   2 : {
-    background : "url(images/heartmeter_sprite.png) no-repeat -231px 0"
+    background : "url(images/heartmeter_sprite1.png) no-repeat -231px 0"
   },
   3 : {
-    background : "url(images/heartmeter_sprite.png) no-repeat -462px 0"
+    background : "url(images/heartmeter_sprite1.png) no-repeat -462px 0"
   },
   4 : {
-    background : "url(images/heartmeter_sprite.png) no-repeat -693px 0"
+    background : "url(images/heartmeter_sprite1.png) no-repeat -693px 0"
   },
   5 : {
-    background : "url(images/heartmeter_sprite.png) no-repeat -924px 0"
+    background : "url(images/heartmeter_sprite1.png) no-repeat -924px 0"
   }
 }
 

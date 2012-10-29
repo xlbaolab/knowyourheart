@@ -328,9 +328,9 @@ a.nextbtn.ui-btn-corner-all {
 @media screen and (-webkit-min-device-pixel-ratio: 2), 
 screen and (max-moz-device-pixel-ratio: 2) {
   .knh-logo {
-    background: url('../images/knh-logo@2x.png');
+    background: url('../images/hires/knh-logo@2x.png');
     background-size: 250px auto;
-    margin: 0px auto;
+    margin: 35px auto;
   }
 }
 
@@ -375,9 +375,32 @@ a.startbtn.ui-btn-corner-all {
 
 /*DASHBOARD */
 
+#knh-logo-dash {
+  background: url('../images/knh-logo.png') no-repeat;
+  height: 96px;
+  width: 250px;
+  margin: 10px auto;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+screen and (max-moz-device-pixel-ratio: 2) {
+	#knh-logo-dash {
+    background: url('../images/hires/knh-logo@2x.png');
+    background-size: 250px auto;
+    margin: 10px auto;
+  }
+}
+
+#top-shadow-dash {
+  margin: -25px -15px 0 -15px;
+  background: rgba(128,123,123,0.1);
+  border-bottom: 1px solid rgba(128,123,123,0.15);
+  padding: 20px 0 20px 0;
+}
+
 #home .ui-grid-b {
-  margin: 20px -15px 15px -15px;
-  padding: 5px 0 30px 0;
+  margin: 10px -15px 10px -15px;
+  padding: 0px 0 25px 0;
 }
 
 a#dashboardLocationBtn.ui-link, a#dashboardAssessmentBtn.ui-link, a#dashboardShareBtn.ui-link {
@@ -443,10 +466,24 @@ a#dashboardShareBtn:active {
 screen and (max-moz-device-pixel-ratio: 2) {
   #dashboardAssessmentBtn {
     display: block;
-    background: url('../images/assessmentbtn_sprite@2x.png');
+    background: url('../images/hires/assessmentbtn_sprite@2x.png');
     background-position: left;
     background-size: 198px auto;
   }
+  
+  #dashboardLocationBtn {
+  display: block;
+  background-image: url('../images/hires/locationbtn_sprite@2x.png');
+  background-position: left;
+  background-size: 198px auto;
+
+}
+  #dashboardShareBtn {
+  display: block;
+  background-image: url('../images/hires/sharebtn_sprite@2x.png');
+  background-position: left;
+  background-size: 198px auto;
+}
 }
 
 /*PROFILE Screen */
@@ -526,6 +563,19 @@ screen and (max-moz-device-pixel-ratio: 2) {
 
 .ui-li-has-arrow.ui-li-has-count .ui-li-count {
   right: 0px;
+}
+
+/*FACTS Screen */
+ol#riskfactors {
+	font-size: small;
+	text-align: left;
+    font-family: "MuseoSans500Regular", sans-serif;
+
+}
+
+div#facts {
+	width: 85%;
+	margin: 0 auto;
 }
 
 /*AGE Screen */
@@ -715,7 +765,7 @@ fieldset .ui-btn-inner {
 .nextsteps_secondary {
   width: 100%;
   overflow: hidden;
-  color: #959595;
+  color: #32a7da;
   font-size: small;
   font-weight: normal;
   font-family: "MuseoSans500Regular", sans-serif;
@@ -725,17 +775,12 @@ fieldset .ui-btn-inner {
 }
 
 .important {
-  color: #f69d00;
+  color: #fda300;
   text-shadow: white 0px 0px 0px;
 }
 
-.icon-help {
-  height: 21px;
-  width: 21px;
-  background-image: url('../images/icon-warning.png');
-  display: inline-block;
-  float: left;
-}
+
+
 
 /*LOCATION Screen */
 .locationData {
@@ -810,6 +855,7 @@ fieldset .ui-btn-inner {
   -webkit-border-radius: 0.2em/*{global-radii-blocks}*/;
   border-radius: 0.2em/*{global-radii-blocks}*/;
   margin: 0 auto;
+  width: 300px;
 }
 
 #rewards fieldset {
@@ -835,61 +881,34 @@ a.sharebtn.ui-btn-corner-all {
 /* HELP ICON */
 
 .help-icon {
-  background: url('../images/icon-help2.png');
+  background: url('../images/icon-help.png');
   height: 21px;
   width: 21px;
   display: inline-block;
 }
 
-.warning-icon {
-  background: url('../images/icon-warning.png');
+.icon-warning {
   height: 21px;
   width: 21px;
+  background-image: url('../images/icon-warning.png');
   display: inline-block;
+  float: left;
 }
 
-/* TOOLTIP */
-#tooltip {
-  font-family: "MuseoSans500Regular", sans-serif;
-  font-weight: normal;
-  font-size: small;
-  text-align: center;
-  color: #fff;
-  background: rgba(17,17,17,0.8);
-  position: absolute;
-  z-index: 100;
-  padding: 10px;
-}
-
-#tooltip:after/* triangle decoration */ {
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-top: 10px solid rgba(17,17,17,0.8);
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -10px;
-  margin-left: -10px;
-}
-
-#tooltip.top:after {
-  border-top-color: transparent;
-  border-bottom: 10px solid rgba(17,17,17,0.8);
-  top: -20px;
-  bottom: auto;
-}
-
-#tooltip.left:after {
-  left: 10px;
-  margin: 0;
-}
-
-#tooltip.right:after {
-  right: 10px;
-  left: auto;
-  margin: 0;
+@media screen and (-webkit-min-device-pixel-ratio: 2), 
+screen and (max-moz-device-pixel-ratio: 2) {
+	.icon-warning {
+	    background: url('../images/hires/icon-warning@2x.png');
+		background-size: 21px auto;
+  		display: inline-block;
+  		float: left;
+  	}
+  	.help-icon {
+	  	background: url('../images/hires/icon-help@2x.png');
+		background-size: 21px auto;
+	  	display: inline-block;
+	}
+  	
 }
 
 /*
@@ -1062,7 +1081,7 @@ padding: .6em 5px .6em 5px;
 .loc-search-bar fieldset {
   display: inline-block;
   margin: 0;
-  width: 70%;
+  width: 65%;
 }
 
 .loc-search-bar label[for="locationField"] {
