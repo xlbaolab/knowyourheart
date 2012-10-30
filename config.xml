@@ -27,7 +27,7 @@
 	<icon src="icons/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
 	<icon src="icons/ios/icon_at_2x.png" width="114" height="114" />
 
-	<icon src="icons/aandroid/android-36.png" gap:platform="android" gap:density="ldpi" />
+	<icon src="icons/android/android-36.png" gap:platform="android" gap:density="ldpi" />
 	<icon src="icons/android/android-48.png" gap:platform="android" gap:density="mdpi" />
 	<icon src="icons/android/android-72.png" gap:platform="android" gap:density="hdpi" />
 	<icon src="icons/android/android-96.png" gap:platform="android" gap:density="xhdpi" />
@@ -41,16 +41,15 @@
 	<icon src="icons/webos/miniicon.png" gap:platform="webos" gap:role="mini" /> -->
 	
 	<!-- Splash Screens -->
-	<!--
 	<gap:splash src="splash.png" />
-	<gap:splash src="splash/ios/Default-Landscape.png" width="1024" height="768" />
-	<gap:splash src="splash/ios/Default-Portrait.png" width="768" height="1024" />
-	<gap:splash src="splash/ios/Default.png" width="320" height="480" />
-	<gap:splash src="splash/ios/Default_at_2x.png" width="640" height="960" />
-	<gap:splash src="splash/android/ldpi.png" gap:platform="android" gap:density="ldpi" />
-	<gap:splash src="splash/android/mdpi.png" gap:platform="android" gap:density="mdpi" />
-	<gap:splash src="splash/android/hdpi.png" gap:platform="android" gap:density="hdpi" />
-	<gap:splash src="splash/bb/splash.png" gap:platform="blackberry" />
-	-->
+	<gap:splash src="splash/kyh_splash_768x1004.png" width="768" height="1004" />
+	<gap:splash src="splash/kyh_splash_1536x2008.png" width="1536" height="2008" />
+	<gap:splash src="splash/kyh_splash_320x480.png" width="320" height="480" />
+	<gap:splash src="splash/kyh_splash_640x960.png" width="640" height="960" />
+	<gap:splash src="splash/kyh_splash_200x320.png" gap:platform="android" gap:density="ldpi" />
+	<gap:splash src="splash/kyh_splash_320x480.png" gap:platform="android" gap:density="mdpi" />
+	<gap:splash src="splash/kyh_splash_480x800.png" gap:platform="android" gap:density="hdpi" />
+	<gap:splash src="splash/kyh_splash_720x1280.png" gap:platform="android" gap:density="xhdpi" />
+<!-- 	<gap:splash src="splash/bb/splash.png" gap:platform="blackberry" /> -->
 	<!--<gap:splash src="splash/winphone/splash.jpg" gap:platform="winphone" />-->
 </widget>
