@@ -39,7 +39,29 @@ var TXT_INCOMPLETE = "<span class='important'>INCOMPLETE</span>";
  * Templates
  */
 // vars: dataTheme, pageId, name, distance
-var LOC_LI_TEMPLATE = _.template('<li class="provider" data-theme="<%= dataTheme %>"><a href="#<%= pageId %>" data-transition="slide"><%= name %><div class="locationData"><span><%= distance %> miles</span><span class="coupon">$10 coupon</span></div></a></li>');
+var LOC_LI_TEMPLATE = _.template('\
+  <li class="provider" data-theme="<%= dataTheme %>">\
+    <a href="#screening-location?index=<%= index %>" data-transition="slide">\
+      <div class="li-primary">\
+        <%= name %>\
+      </div>\
+      <div class="li-secondary">\
+        <%= address %> (<%= distance %> miles)\
+      </div>\
+    </a>\
+  </li>\
+');
+
+var LOC_MARKER_TEMPLATE = _.template('\
+  <div class="info-window">\
+    <a href="#screening-location?index=<%= index %>" data-transition="pop">\
+      <p>\
+        <%= content %>\
+        <span class="icon-right ui-icon-shadow ui-icon ui-icon-arrow-r"></span>\
+      </p>\
+    </a>\
+  </div>\
+');
 
 var POPUP_LOCKED_HTML = '\
   <div data-role="popup" id="popupLocked" class="ui-content">\
@@ -63,11 +85,11 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <% if (item.hide) { continue; } %>\
   <li class="<%= item.clazz %> next-step" data-theme="<%= added++ % 2 ? "e" : "f" %>">\
     <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
-      <div class="nextsteps_primary">\
+      <div class="li-primary">\
         <%= item.primary %>\
         <% if (item.warning) { print("<span class=\'icon-warning\'></span>"); } %>\
       </div>\
-      <div class="nextsteps_secondary">\
+      <div class="li-secondary">\
         <%= item.secondary %>\
       </div>\
     </a>\
@@ -77,8 +99,8 @@ var NEXT_STEPS_TEMPLATE = _.template('\
 ');
 var gNextStepsItems = {
   locations : {
-    clazz : "locationsMap",
-    href : "#locationsMap",
+    clazz : "screening-locations-map",
+    href : "#screening-locations-map",
     primary : "Find a health screening clinic",
     // Your [hba1c/bp/chol] levels are needed for a more accurate risk assessment
     secondary : "",
@@ -134,8 +156,8 @@ function compileNextStepsItems(nextStepsItemsState) {
   return gNextStepsItemsCompiled;
 }
 
-var RISK_MESSAGE = _.template('Your risk is <%= risk %>%, <%= comparisonRisk %> times what is considered healthy for your age');
-var RISK_MESSAGE_RANGE = _.template('Your risk could be as high as <%= risk %>%, <%= comparisonRisk %> times what is considered healthy for your age');
+var RISK_MESSAGE = _.template('Your risk is <%= comparisonRisk %> times what is considered healthy for your age');
+var RISK_MESSAGE_RANGE = _.template('Your risk could be up to <%= comparisonRisk %> times what is considered healthy for your age');
 var RISK_REC = {
   0 : "",
   1 : "It is important for you to check your blood pressure and cholesterol to understand your risk better, and keep track of it over time.",
@@ -436,13 +458,18 @@ function doFirstPageInit() {
 
   var locationsModel = new LocationsModel();
 
+  new LocDetailsView({
+    el : $("#screening-location"),
+    model : locationsModel
+  });
+
   new LocListView({
-    el : $("#locationsList"),
+    el : $("#screening-locations-list"),
     model : locationsModel
   });
 
   new LocMapView({
-    el : $("#locationsMap"),
+    el : $("#screening-locations-map"),
     model : locationsModel
   });
 
@@ -728,6 +755,31 @@ var LocationsModel = Backbone.Model.extend({
 /*
  * Views
  */
+var LocDetailsView = Backbone.View.extend({
+  initialize : function(attrs) {
+    this.$el.append(POPUP_LOCKED_HTML);
+  },
+  events : {
+    "pagebeforeshow" : "updateView"
+  },
+  updateView : function(event, data) {
+    if (this.model.providers === null) {
+      return;
+    }
+    var index = this.$el.data("url").split("=")[1];
+    var provider = this.model.providers[index];
+    var phone = provider.phone.slice(0, 3) + "-" + provider.phone.slice(3, 6) + "-" + provider.phone.slice(6);
+
+    this.$(".name").html(provider.name);
+    this.$(".address a").html(provider.address1 + "<br>" + provider.city + ", " + provider.state + " " + provider.zip.substring(0, 5));
+    this.$(".phone a").html(phone);
+    this.$(".phone a").attr("href", "tel:" + provider.phone);
+    this.$(".url a").html(provider.urlCaption);
+    this.$(".url a").attr("href", provider.url);
+    this.$(".description").html(provider.description);
+  }
+});
+
 var LocListView = Backbone.View.extend({
   initialize : function(attrs) {
     this.$list = this.$("#locList");
@@ -749,8 +801,9 @@ var LocListView = Backbone.View.extend({
 
       this.$list.append(LOC_LI_TEMPLATE({
         dataTheme : i % 2 ? "e" : "f",
-        pageId : "page35",
+        index : i,
         name : provider.name,
+        address : provider.address1,
         distance : provider.distance.toPrecision(1)
       }));
     }
@@ -797,14 +850,18 @@ var LocMapView = Backbone.View.extend({
       this.infoWindow.close();
     }
   },
-  handleMarkerClick : function(marker, provider) {
+  handleMarkerClick : function(marker, provider, index) {
     if (this.infoWindow) {
       this.infoWindow.close();
     }
+    var content = LOC_MARKER_TEMPLATE({
+      index : index,
+      content : provider.name
+    });
     this.infoWindow = new google.maps.InfoWindow({
       map : this.map,
       position : marker.position,
-      content : provider.description // TODO
+      content : content
     });
   },
   handleProvidersChange : function(providers) {
@@ -816,7 +873,7 @@ var LocMapView = Backbone.View.extend({
         map : this.map,
         title : provider.name
       });
-      google.maps.event.addListener(marker, "click", _.bind(this.handleMarkerClick, this, marker, provider));
+      google.maps.event.addListener(marker, "click", _.bind(this.handleMarkerClick, this, marker, provider, i));
     }
   },
   refreshView : function() {
@@ -1198,7 +1255,6 @@ var ResultView = Backbone.View.extend({
       }
 
       var msgArgs = {
-        risk : risk.risk,
         comparisonRisk : risk.comparisonRisk
       };
       this.$(".risk_message").html( range ? RISK_MESSAGE_RANGE(msgArgs) : RISK_MESSAGE(msgArgs));
@@ -1238,7 +1294,7 @@ var SurveyView = Backbone.View.extend({
       console.debug("loading " + userFieldName + "=" + val);
 
       // remember what we loaded so we know if it changes
-      $input.prop("loadedValue", val);
+      $input.data("loadedValue", val);
 
       if ($input.prop("nodeName").toLowerCase() === "input") {
         if ($input.prop("type") === "radio") {
@@ -1294,9 +1350,9 @@ var SurveyView = Backbone.View.extend({
     for (var input in this.options.inputMap) {
       var $input = this.$("#" + input);
       var inputVal = this.model.get(this.options.inputMap[input]);
-      if (inputVal !== $input.prop("loadedValue")) {
+      if (inputVal !== $input.data("loadedValue")) {
         changed = true;
-        $input.prop("loadedValue", inputVal);
+        $input.data("loadedValue", inputVal);
       }
     }
 

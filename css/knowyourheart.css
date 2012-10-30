@@ -30,13 +30,14 @@ p, td {
 .ui-page {
   background: rgb(255,255,255); /* Old browsers */
   background: url('../images/bg-texture.png') 0 0 repeat;
+ max-width: 980 px;
 
 }
 
- div {
+/* div {
  max-width: 980 px;
 }
-/*
+
 .ui-header .ui-title {
   font-size: medium;
   font-weight: normal;
@@ -155,7 +156,21 @@ p, td {
   background: #ffcb3d;
 }
 
-/* Button corner classes -----------------------------------------------------------------------------------------------------------*/
+/*
+ * button corner classes
+ */
+
+.rect-btn {
+  -moz-border-radius: 0.4em/*{global-radii-buttons}*/;
+  -webkit-border-radius: 0.4em/*{global-radii-buttons}*/;
+  border-radius: 0.4em/*{global-radii-buttons}*/;
+}
+
+.rect-btn > span.ui-btn-inner.ui-btn-corner-all {
+  -moz-border-radius: 0.4em/*{global-radii-buttons}*/;
+  -webkit-border-radius: 0.4em/*{global-radii-buttons}*/;
+  border-radius: 0.4em/*{global-radii-buttons}*/;
+}
 
 /*Added nextbtn class to next buttons */
 
@@ -296,6 +311,70 @@ a.nextbtn.ui-btn-corner-all {
     background-image: url(../images/icons-36-black.png);
   }
 }
+
+
+.li-primary {
+  color: #2F3E46;
+  font-family: "MuseoSlab500Regular", serif;
+}
+
+.li-secondary {
+  width: 100%;
+  overflow: hidden;
+  color: #32a7da;
+  font-size: small;
+  font-weight: normal;
+  font-family: "MuseoSans500Regular", sans-serif;
+  white-space: normal;
+  text-shadow: white 0px 0px 0px;
+}
+
+.important {
+  color: #32a7da;
+  text-shadow: white 0px 0px 0px;
+}
+
+li .more-info {
+  color: #807B7B;
+  font-family: "MuseoSans500Regular", sans-serif;
+  font-size: medium;
+  margin: -8px 0 0 0;
+  position: absolute;
+  right: 35px;
+  top: 50%;
+}
+
+.helper_text {
+  font-size: small;
+}
+
+.coupon {
+  -webkit-background-clip: padding-box;
+  background-color: rgb(255, 203, 61);
+  background-image: -webkit-linear-gradient(top, rgb(248, 185, 0), rgb(255, 140, 0));
+  background-origin: padding-box;
+  border: 1px solid rgb(255, 203, 61);
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+  color: rgb(255, 255, 255);
+  font-size: x-small;
+  height: 13px;
+  margin-left: 10px;
+  padding-bottom: 2px;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 2px;
+  text-align: left;
+  text-decoration: none;
+  text-overflow: clip;
+  top: 50%;
+  width: 62px;
+  zoom: 1;
+}
+
+
 
 /*START PAGE */
 
@@ -549,6 +628,12 @@ screen and (max-moz-device-pixel-ratio: 2) {
   border: 0px;
 }
 
+/*create space between cholesterol and tab bar*/
+.spacer {
+	width: auto;
+	height: 1em;
+}
+
 .profileData {
   color: #32a7da;
   font-family: "MuseoSans500Regular", sans-serif;
@@ -562,7 +647,8 @@ screen and (max-moz-device-pixel-ratio: 2) {
   right: 0px;
 }
 
-.ui-input-text {
+.ui-input-text,
+.ui-input-search {
   -moz-border-radius: 0.2em;
   -webkit-border-radius: 0.2em;
   border-radius: 0.2em;
@@ -579,11 +665,6 @@ div#facts {
 	width: 85%;
 	margin: 0 auto;
 }
-
-/*#locationsMap .ui-content, #locationsList .ui-content, #screeningTips .ui-content {
-  text-align: left;
-  margin: auto;
-}*/
 
 /*
  * Survey Pages
@@ -693,7 +774,7 @@ div#facts {
 #history input[type="number"] {
   display: inline-block;
   margin-top: 0.5em;
-  width: 5em; /* 0.4em padding */
+  width: 5.8em; /* 0.4em padding */
    font-family: "MuseoSans500Regular", sans-serif;  
 }
 
@@ -735,22 +816,12 @@ div#facts {
   margin: 1em 0 0.5em 0;
 }
 
-.risk_score p.more_info {
-  position: absolute;
-  top: 50%;
-  right: 35px;
-}
-
 .heart_meter {
   text-align: center;
   height: 94px;
   width: 231px;
   margin: 0 auto;
   display: none;
-}
-
-.helper_text {
-  font-size: small;
 }
 
 .assessment_helper_text {
@@ -781,69 +852,6 @@ div#facts {
   white-space: nowrap;
 }
 
-
-.nextsteps_primary {
-  color: #2F3E46;
-  font-family: "MuseoSlab500Regular", serif;
-}
-
-.nextsteps_secondary {
-  width: 100%;
-  overflow: hidden;
-  color: #32a7da;
-  font-size: small;
-  font-weight: normal;
-  font-family: "MuseoSans500Regular", sans-serif;
-  white-space: normal;
-  text-shadow: white 0px 0px 0px;
-
-}
-
-.important {
-  color: #32a7da;
-  text-shadow: white 0px 0px 0px;
-}
-
-
-
-
-/*LOCATION Screen */
-.locationData {
-  position: relative;
-  color: #32a7da;
-  font-family: "MuseoSans500Regular", sans-serif;
-  font-size: small;
-  font-weight: normal;
-  padding: .2em .5em;
-  top: 50%;
-}
-
-.coupon {
-  -webkit-background-clip: padding-box;
-  background-color: rgb(255, 203, 61);
-  background-image: -webkit-linear-gradient(top, rgb(248, 185, 0), rgb(255, 140, 0));
-  background-origin: padding-box;
-  border: 1px solid rgb(255, 203, 61);
-  border-bottom-left-radius: 14px;
-  border-bottom-right-radius: 14px;
-  border-top-left-radius: 14px;
-  border-top-right-radius: 14px;
-  color: rgb(255, 255, 255);
-  font-size: x-small;
-  height: 13px;
-  margin-left: 10px;
-  padding-bottom: 2px;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 2px;
-  text-align: left;
-  text-decoration: none;
-  text-overflow: clip;
-  top: 50%;
-  width: 62px;
-  zoom: 1;
-}
-
 /* SCREENING TIPS SCREEN */
 #screeningTips p {
   white-space: normal;
@@ -872,7 +880,7 @@ div#facts {
   -webkit-border-radius: 0.2em/*{global-radii-blocks}*/;
   border-radius: 0.2em/*{global-radii-blocks}*/;
 	margin: 0.5em auto;
-	width: 18em;;
+	width: 18em;
 }
 
 
@@ -915,7 +923,6 @@ a.sharebtn.ui-btn-corner-all {
   display: inline-block;
   position: absolute;
   margin: -2px 0px 0px 5px;
-
 }
 
 @media screen and (-webkit-min-device-pixel-ratio: 2), 
@@ -1068,22 +1075,22 @@ screen and (max-moz-device-pixel-ratio: 2) {
  */
 
 
-#locationsMap .ui-body-a input, 
-#locationsMap .ui-btn-inner, 
-#locationsList .ui-body-a input, 
-#locationsList .ui-btn-inner {
+#screening-locations-map .ui-body-a input, 
+#screening-locations-map .ui-btn-inner, 
+#screening-locations-list .ui-body-a input, 
+#screening-locations-list .ui-btn-inner {
 	font-family: "MuseoSans500Regular", sans-serif;
   font-weight: normal;
 }
 
-#locationsMap .ui-fullsize .ui-btn-inner,
-#locationsList .ui-fullsize .ui-btn-inner {
+#screening-locations-map .ui-fullsize .ui-btn-inner,
+#screening-locations-list .ui-fullsize .ui-btn-inner {
 font-size: 16px;
 padding: .5em 20px;
 }
 
-#locationsMap .ui-input-search .ui-input-clear,
-#locationsList .ui-input-search .ui-input-clear {
+#screening-locations-map .ui-input-search .ui-input-clear,
+#screening-locations-list .ui-input-search .ui-input-clear {
 position: absolute;
 right: 5px;
 top: 50%;
@@ -1091,8 +1098,8 @@ margin-top: -12px;
 
 }
 
-#locationsMap .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner,
-#locationsList .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner {
+#screening-locations-map .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner,
+#screening-locations-list .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner {
 height: 100%;
 padding: .6em 5px .6em 5px;
 }
@@ -1126,8 +1133,22 @@ padding: .6em 5px .6em 5px;
   margin: 0.3em 0.3em 0.4em 0.3em;
 }
 
-#locationsMap [data-role="content"] {
+#screening-locations-map [data-role="content"] {
   padding: 0;
+}
+
+#screening-locations-map .info-window a {
+  text-decoration: none;  
+}
+
+#screening-locations-map .info-window p {
+  margin: 0;
+  padding: 1em 0;
+  width: 100%;
+}
+
+.icon-right {
+  display: inline-block;
 }
 
 #locMap {
@@ -1135,15 +1156,29 @@ padding: .6em 5px .6em 5px;
   width: 100%;
 }
 
-#locationsList [data-role="content"] {
+#screening-locations-list [data-role="content"] {
   padding: 0;
 }
 
-#locationsList ul {
+#screening-locations-list ul {
   margin: 0;
 }
 
-#locationsMap .ui-footer.ui-footer-fixed.ui-bar-a.ui-navbar.ui-mini,
-#locationsList .ui-footer.ui-footer-fixed.ui-bar-a.ui-navbar.ui-mini {
+#screening-locations-map .ui-footer.ui-footer-fixed.ui-bar-a.ui-navbar.ui-mini,
+#screening-locations-list .ui-footer.ui-footer-fixed.ui-bar-a.ui-navbar.ui-mini {
 	border: 0px;
 }
+
+#screening-location .name {
+  font-size: larger;
+  text-align: center;  
+}
+
+#screening-location a, #screening-location li {
+  font-family: "MuseoSans500Regular", sans-serif;
+}
+
+#screening-location div.tips {
+  margin: 2em 1em 0 1em;
+}
+
