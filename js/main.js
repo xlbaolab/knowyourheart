@@ -64,7 +64,8 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <li class="<%= item.clazz %> next-step" data-theme="<%= added++ % 2 ? "e" : "f" %>">\
     <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
       <div class="nextsteps_primary">\
-        <%= item.primary %><span class="icon-warning"></span>\
+        <%= item.primary %>\
+        <% if (item.warning) { print("<span class=\'icon-warning\'></span>"); } %>\
       </div>\
       <div class="nextsteps_secondary">\
         <%= item.secondary %>\
@@ -81,14 +82,16 @@ var gNextStepsItems = {
     primary : "Find a health screening clinic",
     // Your [hba1c/bp/chol] levels are needed for a more accurate risk assessment
     secondary : "",
-    hide : false
+    hide : false,
+    warning: true
   },
   enterMissing : {
     clazz : "missing",
     href : "", // history, bp, or chol
     primary : "", // Enter your [hba1c/bp/chol]
     secondary : TXT_INCOMPLETE,
-    hide : false
+    hide : false,
+    warning: true
   },
   interventions : {
     clazz : "interventions",
@@ -99,7 +102,7 @@ var gNextStepsItems = {
   },
   extra : {
     clazz : "extra",
-    href : "#page38",
+    href : "#bp-meds",
     primary : "Improve your risk estimate",
     secondary : "Answer a few more questions for a more accurate assessment",
     hide : false
@@ -108,7 +111,7 @@ var gNextStepsItems = {
     clazz : "rewards",
     href : "#rewards",
     primary : "Get Rewards",
-    secondary : "Enter to win an Apple iPad",
+    secondary : "Enter to win a $20 Target gift card",
   },
   share : {
     clazz : "share",
@@ -140,7 +143,7 @@ var RISK_REC = {
   3 : "You are likely at very high risk for your age. It is important for you to check your blood pressure and cholesterol to determine your risk, and get treatment if necessary."
 };
 var RISK_DOC_REC = {
-  0 : _.template('<%= risk =>'),
+  0 : _.template('Your heart risk is <%= risk %>. Good job!'),
   1 : _.template('Your heart risk is <%= risk %>. Discuss steps you can take to reduce it with a doctor.'),
   2 : _.template('Your heart risk is <%= risk %>. It is important that you discuss it with a doctor.'),
   3 : _.template('Your heart risk is <%= risk %>. It is very important that you see a doctor soon to discuss how you can reduce your risk.')
@@ -155,64 +158,64 @@ var RISK_RATING = {
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
-  "page2" : {
-    "textinput2" : "age"
+  "age" : {
+    "age-field" : "age"
   },
-  "page9" : {
-    "radio3" : "gender",
-    "radio4" : "gender"
+  "gender" : {
+    "gender-male-radio" : "gender",
+    "gender-female-radio" : "gender"
   },
-  "page10" : {
-    "select_height_feet" : "height_ft",
-    "select_height_inches" : "height_in"
+  "height" : {
+    "height-ft-select" : "height_ft",
+    "height-in-select" : "height_in"
   },
-  "page12" : {
-    "weight_slider" : "weight"
+  "weight" : {
+    "weight-field" : "weight"
   },
-  "page13" : {
-    "smoker_toggle" : "smoker"
+  "smoker" : {
+    "smoker-toggle" : "smoker"
   },
   "history" : {
-    "mi_toggle" : "ami",
-    "stroke_toggle" : "stroke",
-    "diabetes_toggle" : "diabetes",
-    "hba1c_field" : "hba1c"
+    "mi-toggle" : "ami",
+    "stroke-toggle" : "stroke",
+    "diabetes-toggle" : "diabetes",
+    "hba1c-field" : "hba1c"
   },
-  "knows_bp" : {
-    "knows_bp_radio_t" : "knows_bp",
-    "knows_bp_radio_f" : "knows_bp"
+  "knows-bp" : {
+    "knows-bp-radio-t" : "knows_bp",
+    "knows-bp-radio-f" : "knows_bp"
   },
-  "blood_pressure" : {
-    "systolic_bp_slider" : "systolic",
-    "diastolic_bp_slider" : "diastolic"
+  "blood-pressure" : {
+    "systolic-bp-slider" : "systolic",
+    "diastolic-bp-slider" : "diastolic"
   },
-  "knows_chol" : {
-    "knows_chol_radio_t" : "knows_chol",
-    "knows_chol_radio_f" : "knows_chol"
+  "knows-chol" : {
+    "knows-chol-radio-t" : "knows_chol",
+    "knows-chol-radio-f" : "knows_chol"
   },
   "cholesterol" : {
-    "total_chol_slider" : "cholesterol",
-    "hdl_slider" : "hdl",
-    "ldl_slider" : "ldl"
+    "total-chol-slider" : "cholesterol",
+    "hdl-slider" : "hdl",
+    "ldl-slider" : "ldl"
   },
-  "page38" : {
-    "toggleswitch13" : "bloodpressuremeds",
-    "bp_meds_slider" : "bloodpressuremedcount"
+  "bp-meds" : {
+    "bp-meds-toggle" : "bloodpressuremeds",
+    "bp-meds-slider" : "bloodpressuremedcount"
   },
-  "page39" : {
-    "toggleswitch14" : "cholesterolmeds"
+  "chol-meds" : {
+    "chol-meds-toggle" : "cholesterolmeds"
   },
-  "page40" : {
-    "toggleswitch17" : "aspirin"
+  "aspirin" : {
+    "aspirin-toggle" : "aspirin"
   },
-  "page42" : {
-    "slider18" : "vigorousexercise"
+  "moderate-exercise" : {
+    "mod-ex-slider" : "moderateexercise"
   },
-  "page41" : {
-    "slider17" : "moderateexercise"
+  "vigorous-exercise" : {
+    "vig-ex-slider" : "vigorousexercise"
   },
-  "page43" : {
-    "toggleswitch19" : "familymihistory"
+  "family-history" : {
+    "family-toggle" : "familymihistory"
   }
 };
 
@@ -408,11 +411,13 @@ function doFirstPageInit() {
       inputMap : UI_MAP[pageId],
       model : gCurrentUser
     };
-    if (pageId === "history") {
+    if (pageId === "bp-meds") {
+      new SurveyBpMedsView(viewArgs);
+    } else if (pageId === "history") {
       new SurveyHistoryView(viewArgs);
-    } else if (pageId === "knows_bp") {
+    } else if (pageId === "knows-bp") {
       new SurveyKnowsBpView(viewArgs);
-    } else if (pageId === "knows_chol") {
+    } else if (pageId === "knows-chol") {
       new SurveyKnowsCholView(viewArgs);
     } else {
       new SurveyView(viewArgs);
@@ -621,13 +626,13 @@ var User = StackMob.User.extend({
     }
   },
   needBp : function() {
-    return !$.isNumeric(this.get("systolic")) || !$.isNumeric(this.get("diastolic"));
+    return (this.get("knows_bp") === "false") || !$.isNumeric(this.get("systolic")) || !$.isNumeric(this.get("diastolic"));
   },
   needChol : function() {
-    return !$.isNumeric(this.get("hdl")) || !$.isNumeric(this.get("ldl")) || !$.isNumeric(this.get("cholesterol"));
+    return (this.get("knows_chol") === "false") || !$.isNumeric(this.get("hdl")) || !$.isNumeric(this.get("ldl")) || !$.isNumeric(this.get("cholesterol"));
   },
   needHba1c : function() {
-    return this.get("diabetes") === "true" && !$.isNumeric(this.get("hba1c"));
+    return (this.get("diabetes") === "true") && !$.isNumeric(this.get("hba1c"));
   },
   hasCompletedExtra : function() {
     // TODO
@@ -972,19 +977,20 @@ var NextStepListView = Backbone.View.extend({
           missingText = "HbA1c";
         }
       } else if (needBp) {
-        gNextStepsItems.enterMissing.href = "#blood_pressure";
+        gNextStepsItems.enterMissing.href = "#knows-bp";
         if (needChol) {
           missingText = "blood pressure and cholesterol";
         } else {
           missingText = "blood pressure";
         }
       } else if (needChol) {
-        gNextStepsItems.enterMissing.href = "#cholesterol";
+        gNextStepsItems.enterMissing.href = "#knows-chol";
         missingText = "cholesterol";
       }
       gNextStepsItems.locations.secondary = "<span class='important'>Your " + missingText + " levels are needed for a more accurate risk assessment</span>";
       gNextStepsItems.locations.hide = false;
-      gNextStepsItems.enterMissing.primary = "Enter your " + missingText;
+      gNextStepsItems.enterMissing.primary = "Enter your missing values";
+      gNextStepsItems.enterMissing.secondary = "INCOMPLETE - " + missingText;
       gNextStepsItems.enterMissing.hide = false;
       gNextStepsItems.extra.hide = true;
       gNextStepsItems.interventions.href = "#popupLocked";
@@ -1241,7 +1247,7 @@ var SurveyView = Backbone.View.extend({
           }
         } else {
           // type = text, number
-          $input.val(val);
+          $input.attr("value", val);
         }
       } else {
         // if ($input.prop("nodeName").toLowerCase() === "select")
@@ -1314,7 +1320,8 @@ var SurveyView = Backbone.View.extend({
       $nextPage = $(event.target);
     }
     $nextPage.find("input[type=radio]").checkboxradio("refresh");
-    $nextPage.find("input[type=number], select[data-role=slider]").slider("refresh");
+    $nextPage.find("input.ui-slider-input").slider("refresh");
+    $nextPage.find("select[data-role=slider]").slider("refresh");
     $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
   },
   setNextButtonEnabled : function(enabled) {
@@ -1333,37 +1340,75 @@ var SurveyView = Backbone.View.extend({
   }
 });
 
+var SurveyBpMedsView = SurveyView.extend({
+  initialize : function(attrs) {
+    SurveyView.prototype.initialize.apply(this, arguments);
+    this.updateMedCountVis(this.getToggleButton());
+  },
+  events : _.extend({
+    "change #bp-meds-toggle" : "handleMedCountToggle"
+  }, SurveyView.prototype.events),
+  getToggleButton : function() {
+    return this.$("#bp-meds-toggle");
+  },
+  handleMedCountToggle : function(event, data) {
+    this.updateMedCountVis($(event.currentTarget));
+  },
+  updateMedCountVis : function($toggle) {
+    var $div = this.$("#bp-med-count");
+    if ($toggle.val() === "true") {
+      if (this.$el.is(":visible")) {
+        $div.slideDown();
+      } else {
+        $div.show();
+      }
+    } else {
+      if (this.$el.is(":visible")) {
+        $div.slideUp();
+      } else {
+        $div.hide();
+      }
+    }
+  }
+});
+
 var SurveyHistoryView = SurveyView.extend({
   initialize : function(attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
     this.updateDiabetesVis(this.getToggleButton());
   },
   events : _.extend({
-    "change #diabetes_toggle" : "handleDiabetesToggle"
+    "change #diabetes-toggle" : "handleDiabetesToggle"
   }, SurveyView.prototype.events),
   getToggleButton : function() {
-    return this.$("#diabetes_toggle");
+    return this.$("#diabetes-toggle");
   },
   handleDiabetesToggle : function(event, data) {
     this.updateDiabetesVis($(event.currentTarget));
   },
   updateDiabetesVis : function($toggle) {
-    $nextBtn = this.$(".nextbtn");
-
     if ($toggle.val() === "true") {
-      this.$(".hba1c").show();
+      if (this.$el.is(":visible")) {
+        this.$(".hba1c").slideDown();
+      } else {
+        this.$(".hba1c").show();
+      }
     } else {
-      this.$(".hba1c").hide();
+      if (this.$el.is(":visible")) {
+        this.$(".hba1c").slideUp();
+      } else {
+        this.$(".hba1c").hide();
+      }
     }
   },
   validate : function(inputId) {
-    if (inputId !== "hba1c_field") {
+    if (inputId !== "hba1c-field") {
       return SurveyView.prototype.validate.call(this, inputId);
     }
 
     var valid = true;
     if (this.getToggleButton().val() === "true") {
-      var hba1c = this.$("#hba1c_field").val();
+      var hba1c = this.$("#hba1c-field").val();
       valid = hba1c === "" || $.isNumeric(hba1c);
     }
     return valid;
@@ -1373,11 +1418,13 @@ var SurveyHistoryView = SurveyView.extend({
 var SurveyKnowsBpView = SurveyView.extend({
   initialize : function(attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
-    this.updateNextTarget(this.$("input[name='knows_bp']:checked"));
+    var $checked = this.$("input[name='knows-bp']:checked");
+    this.updateNextTarget($checked);
+    this.updateLocationsVis($checked);
   },
   events : _.extend({
-    "change #knows_bp_radio_t" : "handleKnowsBpRadio",
-    "change #knows_bp_radio_f" : "handleKnowsBpRadio"
+    "change #knows-bp-radio-t" : "handleKnowsBpRadio",
+    "change #knows-bp-radio-f" : "handleKnowsBpRadio"
   }, SurveyView.prototype.events),
   handleKnowsBpRadio : function(event, data) {
     var $input = $(event.currentTarget);
@@ -1385,21 +1432,39 @@ var SurveyKnowsBpView = SurveyView.extend({
       return;
     }
     this.updateNextTarget($input);
+    this.updateLocationsVis($input);
+  },
+  updateLocationsVis : function($selectedRadio) {
+    if ($selectedRadio.val() === "false") {
+      if (this.$el.is(":visible")) {
+        this.$(".locations-pointer").slideDown();
+      } else {
+        this.$(".locations-pointer").show();
+      }
+    } else {
+      if (!this.$el.is(":visible")) {
+        this.$(".locations-pointer").slideUp();
+      } else {
+        this.$(".locations-pointer").hide();
+      }
+    }
   },
   updateNextTarget : function($selectedRadio) {
-    var page = $selectedRadio.val() === "true" ? "#blood_pressure" : "#knows_chol";
-    this.$(".nextbtn").attr("href", page);
+    var page = $selectedRadio.val() === "true" ? "#blood-pressure" : "#knows-chol";
+    this.$(".dynamic-next").attr("href", page);
   }
 });
 
 var SurveyKnowsCholView = SurveyView.extend({
   initialize : function(attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
-    this.updateNextTarget(this.$("input[name='knows_chol']:checked"));
+    var $checked = this.$("input[name='knows-chol']:checked");
+    this.updateNextTarget($checked);
+    this.updateLocationsVis($checked);
   },
   events : _.extend({
-    "change #knows_chol_radio_t" : "handleKnowsCholRadio",
-    "change #knows_chol_radio_f" : "handleKnowsCholRadio"
+    "change #knows-chol-radio-t" : "handleKnowsCholRadio",
+    "change #knows-chol-radio-f" : "handleKnowsCholRadio"
   }, SurveyView.prototype.events),
   handleKnowsCholRadio : function(event, data) {
     var $input = $(event.currentTarget);
@@ -1407,10 +1472,26 @@ var SurveyKnowsCholView = SurveyView.extend({
       return;
     }
     this.updateNextTarget($input);
+    this.updateLocationsVis($input);
+  },
+  updateLocationsVis : function($selectedRadio) {
+    if ($selectedRadio.val() === "false") {
+      if (this.$el.is(":visible")) {
+        this.$(".locations-pointer").slideDown();
+      } else {
+        this.$(".locations-pointer").show();
+      }
+    } else {
+      if (!this.$el.is(":visible")) {
+        this.$(".locations-pointer").hide();
+      } else {
+      	this.$(".locations-pointer").slideUp();
+      }
+    }
   },
   updateNextTarget : function($selectedRadio) {
     var page = $selectedRadio.val() === "true" ? "#cholesterol" : "#assessment";
-    this.$(".nextbtn").attr("href", page);
+    this.$(".dynamic-next").attr("href", page);
   }
 });
 
