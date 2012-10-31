@@ -66,13 +66,13 @@ var LOC_MARKER_TEMPLATE = _.template('\
 var POPUP_LOCKED_HTML = '\
   <div data-role="popup" id="popupLocked" class="ui-content">\
     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"> Close </a>\
+    <strong>THIS FEATURE IS LOCKED</strong>\
     <p>\
       Enter your HbA1c (if applicable), blood pressure, and cholesterol levels\
-      to unlock this feature.\
+      to unlock.\
     </p>\
     <p>\
-      A more accurate assessment is required to determine the best steps for you\
-      to take.\
+      More information is required to calculate which actions will be best for you.\
     </p>\
   </div>\
 ';
