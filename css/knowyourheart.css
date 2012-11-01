@@ -334,16 +334,6 @@ a.nextbtn.ui-btn-corner-all {
   text-shadow: white 0px 0px 0px;
 }
 
-li .more-info {
-  color: #807B7B;
-  font-family: "MuseoSans500Regular", sans-serif;
-  font-size: medium;
-  margin: -8px 0 0 0;
-  position: absolute;
-  right: 35px;
-  top: 50%;
-}
-
 .helper_text {
   font-size: small;
 }
@@ -821,11 +811,15 @@ div#facts {
 
 /* assessment */
 
-.risk_score p.risk_message {
-  font-size: 100%;
-  text-align: center;
+#assessment .risk_score p.risk_message {
+  font-size: 95%;
+  text-align: left;
   white-space: normal;
-  margin: 1em 0 0.5em 0;
+  margin: 1em 0 1.5em 0;
+}
+
+#assessment .risk_score a {
+  padding: 15px;
 }
 
 .heart_meter {
@@ -836,13 +830,30 @@ div#facts {
   display: none;
 }
 
-.assessment_helper_text {
-  font-size: x-small;
-  text-align: right;
-  font-style: italic;
+#assessment .risk_score .more-info {
+  color: #807B7B;
+  font-family: "MuseoSans500Regular", sans-serif;
+  font-size: medium;
+  margin: 0 0 0 0;
+  position: absolute;
+  right: 35px;
+  bottom: 0%;
 }
 
-.assessment_helper_text a {
+#assessment .risk_score .ui-icon-arrow-r {
+  bottom: 0%;
+  margin: 0 0 2px 0;
+  top: auto;
+}
+
+p.archimedes-link {
+  font-size: x-small;
+  font-style: italic;
+  margin: 0;
+  text-align: right;
+}
+
+p.archimedes-link a {
   text-decoration: none;
 }
 
@@ -928,7 +939,7 @@ a.sharebtn.ui-btn-corner-all {
   margin-left: 0.2em;
 }
 
-.tooltip a.close.ui-link {
+.jqmTooltip a.close.ui-link {
 	color: #ffffff;
 }
 
@@ -936,18 +947,19 @@ a.sharebtn.ui-btn-corner-all {
   height: 19px;
   width: 22px;
   background-image: url('../images/icon-warning.png');
+  background-repeat: no-repeat;
   display: inline-block;
   position: absolute;
-  margin: -2px 0px 0px 5px;
+  margin: -5px 0px 0px 0.5em;
 }
 
 .icon-lock {
-  height: 21px;
-  width: 21px;
-  background-image: url('../images/icon-warning.png');
+  height: 19px;
+  width: 19px;
+  background-image: url('../images/icon-lock.png');
   display: inline-block;
   position: absolute;
-  margin: -2px 0px 0px 5px;
+  margin: -5px 0px 0px 0.5em;
 }
 
 
@@ -1124,7 +1136,7 @@ screen and (max-moz-device-pixel-ratio: 2) {
 #screening-locations-map .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner,
 #screening-locations-list .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner {
   height: 100%;
-  padding: .6em 5px .6em 5px;
+  padding: .5em 5px .7em 5px;
 }
 
 .loc-search-bar {

@@ -86,8 +86,9 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <li class="<%= item.clazz %> next-step" data-theme="<%= added++ % 2 ? "e" : "f" %>">\
     <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
       <div class="li-primary">\
-        <%= item.primary %>\
+        <%= added + ". " + item.primary %>\
         <% if (item.warning) { print("<span class=\'icon-warning\'></span>"); } %>\
+        <% if (item.lock) { print("<span class=\'icon-lock\'></span>"); } %>\
       </div>\
       <div class="li-secondary">\
         <%= item.secondary %>\
@@ -97,6 +98,7 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <% if (added === limit) { break; } %>\
   <% } %>\
 ');
+
 var gNextStepsItems = {
   locations : {
     clazz : "screening-locations-map",
@@ -105,7 +107,7 @@ var gNextStepsItems = {
     // Your [hba1c/bp/chol] levels are needed for a more accurate risk assessment
     secondary : "",
     hide : false,
-    warning: true
+    warning : true
   },
   enterMissing : {
     clazz : "missing",
@@ -113,14 +115,15 @@ var gNextStepsItems = {
     primary : "", // Enter your [hba1c/bp/chol]
     secondary : TXT_INCOMPLETE,
     hide : false,
-    warning: true
+    warning : true
   },
   interventions : {
     clazz : "interventions",
     href : "#interventions",
     primary : "Take action to lower your risk",
     secondary : "By up to <span class='reduction'>&hellip;</span>%",
-    popup : false
+    popup : false,
+    lock : false
   },
   extra : {
     clazz : "extra",
@@ -142,6 +145,7 @@ var gNextStepsItems = {
     secondary : "Your friends and family need to know their risk",
   }
 };
+
 var gNextStepsItemsCompiled = null;
 var gNextStepsItemsState = null;
 
@@ -156,19 +160,44 @@ function compileNextStepsItems(nextStepsItemsState) {
   return gNextStepsItemsCompiled;
 }
 
-var RISK_MESSAGE = _.template('Your risk is <%= comparisonRisk %> times what is considered healthy for your age');
-var RISK_MESSAGE_RANGE = _.template('Your risk could be up to <%= comparisonRisk %> times what is considered healthy for your age');
+var RISK_MESSAGE = _.template("Your risk is <%= comparisonRisk %> times what \
+is healthy for your age.");
+var RISK_MESSAGE_RANGE = _.template("Your risk could be up to <%= \
+comparisonRisk %> times what is healthy for your age.");
 var RISK_REC = {
-  0 : "",
-  1 : "It is important for you to check your blood pressure and cholesterol to understand your risk better, and keep track of it over time.",
-  2 : "You may be at high risk for your age. It is important for you to check your blood pressure and cholesterol to determine your risk, and take action if it is high.",
-  3 : "You are likely at very high risk for your age. It is important for you to check your blood pressure and cholesterol to determine your risk, and get treatment if necessary."
+  0 : _.template(""),
+  1 : _.template("It is important for you to check your <%= missing %> \
+  to understand your risk better, and keep track of it over time."),
+  2 : _.template("You may be at high risk for your age. It is important for\
+  you to check your <%= missing %> to determine your risk, and take action \
+  if it is high."),
+  3 : _.template("You are likely at very high risk for your age. It is urgent \
+  for you to check your <%= missing %> to determine your risk, because \
+  treatment could be critical.")
+};
+var RISK_REC_SHORT = {
+  0 : _.template(""),
+  1 : _.template("Getting your <%= missing %> checked will help you understand \
+  your risk better."),
+  2 : _.template("It is important to check your <%= missing %> \
+  to understand your risk better."),
+  3 : _.template("It is urgent to check your <%= missing %> because \
+  treatment could be critical.")
 };
 var RISK_DOC_REC = {
   0 : _.template('Your heart risk is <%= risk %>. Good job!'),
-  1 : _.template('Your heart risk is <%= risk %>. Discuss steps you can take to reduce it with a doctor.'),
-  2 : _.template('Your heart risk is <%= risk %>. It is important that you discuss it with a doctor.'),
-  3 : _.template('Your heart risk is <%= risk %>. It is very important that you see a doctor soon to discuss how you can reduce your risk.')
+  1 : _.template('Your heart risk is <%= risk %>. Discuss steps you can take \
+  to reduce it with a doctor.'),
+  2 : _.template('Your heart risk is <%= risk %>. It is important that you \
+  see a doctor to discuss it.'),
+  3 : _.template('Your heart risk is <%= risk %>. It is urgent that you see \
+  a doctor soon to determine how you can reduce your risk.')
+};
+var RISK_DOC_REC_SHORT = {
+  0 : "Good job! Keep doing what you are doing.",
+  1 : "Discuss your heart risk and how to reduce it with a doctor.",
+  2 : "It is important to see a doctor to discuss your heart risk.",
+  3 : "It is urgent to see a doctor soon to determine how to reduce your risk."
 };
 var RISK_RATING = {
   1 : "low",
@@ -1061,17 +1090,19 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.extra.hide = true;
       gNextStepsItems.interventions.href = "#popupLocked";
       gNextStepsItems.interventions.popup = true;
+      gNextStepsItems.interventions.lock = true;
     } else {
       gNextStepsItems.locations.hide = true;
       gNextStepsItems.enterMissing.hide = true;
       gNextStepsItems.extra.hide = completedExtra;
       gNextStepsItems.interventions.href = "#interventions";
       gNextStepsItems.interventions.popup = false;
+      gNextStepsItems.interventions.lock = false;
     }
 
     this.$("li.next-step").remove();
     this.$el.append(compileNextStepsItems(state));
-    this.$("li .reduction").html(this.getRiskReduction());
+    this.$("li .reduction").html(this.getRiskReduction());  
     this.refreshView();
   },
   updateListContent : function() {
@@ -1226,12 +1257,13 @@ var ResultView = Backbone.View.extend({
     }
   },
   updateRiskView : function() {
-    var result = this.model.archimedes_result;
+    var user = this.model;
+    var result = user.archimedes_result;
     var $error = this.$(".risk_error");
     var $loader = this.$("#circularG");
     var $img = this.$(".heart_meter");
 
-    switch(this.model.get("risk_state")) {
+    switch(user.get("risk_state")) {
     case User.RISK_STATE.CALCULATING:
       $error.hide();
       $img.hide();
@@ -1280,10 +1312,29 @@ var ResultView = Backbone.View.extend({
       	$img.css(RISK_IMAGES_COMPLETE[highestRating]);
       }
 
+      var missingStr = "";
+      if (user.needBp()) {
+        missingStr = "blood pressure";
+      }
+      if (user.needChol()) {
+        if (missingStr) {
+          missingStr += " and ";  
+        }
+        missingStr += "cholesterol";
+      }
       var msgArgs = {
-        comparisonRisk : risk.comparisonRisk
+        comparisonRisk : risk.comparisonRisk,
+        missing : missingStr
       };
-      this.$(".risk_message").html( range ? RISK_MESSAGE_RANGE(msgArgs) : RISK_MESSAGE(msgArgs));
+      var riskMsg;
+      if (range) {
+        riskMsg = RISK_MESSAGE_RANGE(msgArgs) + "<br><br>Recommendation: " + 
+          RISK_REC_SHORT[result.Recommendation](msgArgs);
+      } else {
+        riskMsg = RISK_MESSAGE(msgArgs) + "<br><br>Recommendation: " +
+          RISK_DOC_REC_SHORT[result.DoctorRecommendation];
+      }
+      this.$(".risk_message").html(riskMsg);
 
       // popup
       var riskStr = range ? (risk2.risk + "% to " + risk.risk + "%") : (risk.risk + "%");
@@ -1293,7 +1344,7 @@ var ResultView = Backbone.View.extend({
       this.$(".ratio").html(ratioStr);
       this.$(".percentile").html(percentileStr);
 
-      var rec = range ? RISK_REC[result.Recommendation] : RISK_DOC_REC[result.DoctorRecommendation]({
+      var rec = range ? RISK_REC[result.Recommendation](msgArgs) : RISK_DOC_REC[result.DoctorRecommendation]({
         risk : RISK_RATING[highestRating]
       });
       this.$(".recommendation").html(rec);
