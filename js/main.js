@@ -33,7 +33,7 @@ var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 /*
  * Text
  */
-var TXT_INCOMPLETE = "<span class='important'>INCOMPLETE</span>"; 
+var TXT_INCOMPLETE = "<span class='important'>INCOMPLETE</span>";
 
 /*
  * Templates
@@ -609,6 +609,15 @@ var User = StackMob.User.extend({
     for (attr in ARCHIMEDES_ATTRS) {
       var val = this.get(ARCHIMEDES_ATTRS[attr]);
       if (val) {
+        if ((attr === "systolic" || attr === "diastolic") && this.needBp()) {
+          continue;
+        }
+        if ((attr === "cholesterol" || attr === "hdl" || attr === "ldl") && this.needChol()) {
+          continue;   
+        }
+        if ((attr === "hba1c") && (this.get("diabetes") === "false")) {
+          continue;
+        }
         request[attr] = val;
       } else if (ARCHIMEDES_REQUIRED[attr]) {
         request[attr] = ARCHIMEDES_DEFAULTS[attr];
@@ -1079,53 +1088,69 @@ var ProfileView = Backbone.View.extend({
   },
   updateView : function(event, data) {
     var text;
+    var user = this.model;
 
-    text = this.model.get("age");
-    this.$(".age").html(isBlank(text) ? "" : text);
+    text = user.get("age");
+    this.$(".age").html(isBlank(text) ? "&nbsp;" : text);
 
-    text = this.model.get("gender");
-    text = !text ? "" : (text === "M" ? "Male" : "Female");
+    text = user.get("gender");
+    text = !text ? "&nbsp;" : (text === "M" ? "Male" : "Female");
     this.$(".gender").html(text);
 
-    var height_ft = this.model.get("height_ft");
-    var height_in = this.model.get("height_in");
-    text = (!height_ft || !height_in) ? "" : height_ft + "' " + height_in + "\"";
+    var height_ft = user.get("height_ft");
+    var height_in = user.get("height_in");
+    text = (!height_ft || !height_in) ? "&nbsp;" : height_ft + "' " + height_in + "\"";
     this.$(".height").html(text);
 
-    text = this.model.get("weight");
-    this.$(".weight").html(isBlank(text) ? "" : text + " lbs");
+    text = user.get("weight");
+    this.$(".weight").html(isBlank(text) ? "&nbsp;" : text + " lbs");
 
-    text = this.model.get("smoker");
-    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    text = user.get("smoker");
+    text = !text ? "&nbsp;" : (text === "true" ? "Yes" : "No");
     this.$(".smoker").html(text);
 
+    this.$(".history .icon-warning").hide();
     text = "";
-    if (this.model.get("ami") === "true") {
+    if (user.get("ami") === "true") {
       text += "Heart Attack";
     }
-    if (this.model.get("stroke") === "true") {
+    if (user.get("stroke") === "true") {
       text += text.length === 0 ? "" : ", ";
       text += "Stroke";
     }
-    if (this.model.get("diabetes") === "true") {
+    if (user.get("diabetes") === "true") {
       text += text.length === 0 ? "" : ", ";
       text += "Diabetes";
-      if (isBlank(this.model.get("hba1c"))) {
-        text = TXT_INCOMPLETE + " " + text; 
+      if (isBlank(user.get("hba1c"))) {
+        text += "<br>" + TXT_INCOMPLETE + " - HbA1c";
+        // show() uses display : block
+        this.$(".history .icon-warning").css("display", "inline-block");
       }
     }
-    this.$(".history").html(text);
+    this.$(".history .profileData").html(!text ? "&nbsp;" : text);
 
-    var systolic = this.model.get("systolic");
-    var diastolic = this.model.get("diastolic");
-    text = (isBlank(systolic) || isBlank(diastolic)) ? TXT_INCOMPLETE : systolic + "/" + diastolic;
-    this.$(".bp").html(text);
+    var systolic = user.get("systolic");
+    var diastolic = user.get("diastolic");
+    if (user.needBp()) {
+      text = TXT_INCOMPLETE;
+      this.$(".bp .icon-warning").css("display", "inline-block");
+    } else {
+      text = systolic + "/" + diastolic;
+      this.$(".bp .icon-warning").hide();  
+    }
+    this.$(".bp .profileData").html(text);
 
-    var chol = this.model.get("cholesterol");
-    var hdl = this.model.get("hdl");
-    var ldl = this.model.get("ldl");
-    text = (isBlank(chol) || isBlank(hdl) || isBlank(ldl)) ? TXT_INCOMPLETE : chol + " | " + hdl + " | " + ldl;
-    this.$(".chol").html(text);
+    var chol = user.get("cholesterol");
+    var hdl = user.get("hdl");
+    var ldl = user.get("ldl");
+    if (user.needChol()) {
+      text = TXT_INCOMPLETE;
+      this.$(".chol .icon-warning").css("display", "inline-block");
+    } else {
+      text = chol + " | " + hdl + " | " + ldl;
+      this.$(".chol .icon-warning").hide();  
+    }
+    this.$(".chol .profileData").html(text);
   }
 });
 
@@ -1137,35 +1162,36 @@ var ExtraProfileView = Backbone.View.extend({
   },
   updateView : function(event, data) {
     var text;
-
-    text = this.model.get("bloodpressuremeds");
+    var user = this.model;
+    
+    text = user.get("bloodpressuremeds");
     if (!text) {
-      text = "";
+      text = "&nbsp;";
     } else {
       if (text === "true") {
-        text = "Yes - " + this.model.get("bloodpressuremedcount") + " kinds";
+        text = "Yes - " + user.get("bloodpressuremedcount") + " kinds";
       } else {
         text = "No";
       }
     }
     this.$(".bloodpressuremeds").html(text);
 
-    text = this.model.get("cholesterolmeds");
-    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    text = user.get("cholesterolmeds");
+    text = !text ? "&nbsp;" : (text === "true" ? "Yes" : "No");
     this.$(".cholesterolmeds").html(text);
 
-    text = this.model.get("aspirin");
-    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    text = user.get("aspirin");
+    text = !text ? "&nbsp;" : (text === "true" ? "Yes" : "No");
     this.$(".aspirin").html(text);
 
-    text = this.model.get("moderateexercise");
-    this.$(".moderateexercise").html(isBlank(text) ? "" : text + " hours");
+    text = user.get("moderateexercise");
+    this.$(".moderateexercise").html(isBlank(text) ? "&nbsp;" : text + " hours");
 
-    text = this.model.get("vigorousexercise");
-    this.$(".vigorousexercise").html(isBlank(text) ? "" : text + " hours");
+    text = user.get("vigorousexercise");
+    this.$(".vigorousexercise").html(isBlank(text) ? "&nbsp;" : text + " hours");
 
-    text = this.model.get("familymihistory");
-    text = !text ? "" : (text === "true" ? "Yes" : "No");
+    text = user.get("familymihistory");
+    text = !text ? "&nbsp;" : (text === "true" ? "Yes" : "No");
     this.$(".familymihistory").html(text);
   }
 });
@@ -1356,15 +1382,16 @@ var SurveyView = Backbone.View.extend({
       }
     }
 
-    if (!this.model.hasCompletedRequired()) {
-      this.model.set("progress", data.nextPage.attr("id"));
+    var nextPageId = data.nextPage.attr("id");
+    if (!this.model.hasCompletedRequired() && nextPageId !== "welcome") {
+      this.model.set("progress", nextPageId);
       changed = true;
     }
 
     if (changed) {
       console.info("saving user");
       this.model.save({
-        last_survey_page : data.nextPage.attr("id")
+        last_survey_page : nextPageId
       });
     }
   },

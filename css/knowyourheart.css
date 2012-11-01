@@ -407,7 +407,7 @@ screen and (max-moz-device-pixel-ratio: 2) {
 }
 
 #start_text {
-  margin: 25px 0px 40px 0px;
+  margin: 25px 0px 20px 0px;
   padding: 5px 25px 0px 25px;
   color: #807b7b;
   text-align: center;
@@ -933,6 +933,15 @@ a.sharebtn.ui-btn-corner-all {
 }
 
 .icon-warning {
+  height: 19px;
+  width: 22px;
+  background-image: url('../images/icon-warning.png');
+  display: inline-block;
+  position: absolute;
+  margin: -2px 0px 0px 5px;
+}
+
+.icon-lock {
   height: 21px;
   width: 21px;
   background-image: url('../images/icon-warning.png');
@@ -941,11 +950,12 @@ a.sharebtn.ui-btn-corner-all {
   margin: -2px 0px 0px 5px;
 }
 
+
 @media screen and (-webkit-min-device-pixel-ratio: 2), 
 screen and (max-moz-device-pixel-ratio: 2) {
 	.icon-warning {
 	    background: url('../images/hires/icon-warning@2x.png');
-		background-size: 21px auto;
+		background-size: 22px auto;
   		display: inline-block;
   		float: left;
   	}
@@ -1089,8 +1099,6 @@ screen and (max-moz-device-pixel-ratio: 2) {
 /*
  * Locations pages
  */
-
-
 #screening-locations-map .ui-body-a input, 
 #screening-locations-map .ui-btn-inner, 
 #screening-locations-list .ui-body-a input, 
@@ -1101,23 +1109,22 @@ screen and (max-moz-device-pixel-ratio: 2) {
 
 #screening-locations-map .ui-fullsize .ui-btn-inner,
 #screening-locations-list .ui-fullsize .ui-btn-inner {
-font-size: 16px;
-padding: .5em 20px;
+  font-size: 16px;
+  padding: .5em 20px;
 }
 
 #screening-locations-map .ui-input-search .ui-input-clear,
 #screening-locations-list .ui-input-search .ui-input-clear {
-position: absolute;
-right: 5px;
-top: 50%;
-margin-top: -12px;
-
+  position: absolute;
+  right: 5px;
+  top: 50%;
+  margin-top: -12px;
 }
 
 #screening-locations-map .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner,
 #screening-locations-list .ui-controlgroup .ui-btn-icon-notext .ui-btn-inner {
-height: 100%;
-padding: .6em 5px .6em 5px;
+  height: 100%;
+  padding: .6em 5px .6em 5px;
 }
 
 .loc-search-bar {
