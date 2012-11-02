@@ -33,7 +33,13 @@ var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 /*
  * Text
  */
-var TXT_INCOMPLETE = "<span class='important'>INCOMPLETE</span>";
+var TXT_INCOMPLETE = "<span>INCOMPLETE</span>";
+var TXT_HIGH_BP = "You may have elevated blood pressure. You should consult \
+with your doctor or primary care provider about things you can do to control \
+it.";
+var TXT_HIGH_CHOL = "Your cholesterol levels exceed national standards and \
+are contributing to your risk. You should consult with your physician about \
+things you can do to improve your cholesterol levels.";
 
 /*
  * Templates
@@ -68,7 +74,7 @@ var POPUP_LOCKED_HTML = '\
     <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"> Close </a>\
     <strong>THIS FEATURE IS LOCKED</strong>\
     <p>\
-      Enter your HbA1c (if applicable), blood pressure, and cholesterol levels\
+      Enter your blood pressure, cholesterol, and HbA1c (if applicable)\
       to unlock.\
     </p>\
     <p>\
@@ -137,6 +143,7 @@ var gNextStepsItems = {
     href : "#rewards",
     primary : "Get Rewards",
     secondary : "Enter to win a $20 Target gift card",
+    lock : false
   },
   share : {
     clazz : "share",
@@ -424,7 +431,7 @@ function generateRandomString() {
 }
 
 function isBlank(str) {
-  return (!str || /^\s*$/.test(str));
+  return (!str || /^\s*$/.test(str)) && str !== false;
 }
 
 /*
@@ -664,7 +671,11 @@ var User = StackMob.User.extend({
     console.dir(data);
     this.archimedes_result = $.parseJSON(data);
     this.set("archimedes_result", data);
-    this.set("risk_state", User.RISK_STATE.UP_TO_DATE);
+    if (!this.archimedes_result.Risk) {
+      this.set("risk_state", User.RISK_STATE.ERROR);
+    } else {
+      this.set("risk_state", User.RISK_STATE.UP_TO_DATE);  
+    }
     this.save();
   },
   fetch : function() {
@@ -677,7 +688,7 @@ var User = StackMob.User.extend({
   handleChange : function(obj, data) {
     for (var attr in data.changes) {
       // console.debug(attr);
-      if (USER_ATTRS[attr]) {
+      if (USER_ATTRS[attr] || attr === "knows_bp" || attr === "knows_chol") {
         if (!this.isFetching()) {
           console.debug("User's " + attr + " changed to " + this.get(attr));
           this.set("risk_state", User.RISK_STATE.CHANGED);
@@ -970,7 +981,7 @@ var InterventionsView = Backbone.View.extend({
   },
   updateView : function() {
     var result = this.model.archimedes_result;
-    if (!result) {
+    if (!result || !result.Risk) {
       return;
     }
 
@@ -978,7 +989,7 @@ var InterventionsView = Backbone.View.extend({
     var risk = result.Risk[0];
 
     this.$(".risk").html(risk.risk);
-    this.$(".risk_reduction").html(interventions.PercentReductionWithAllInterventions);
+    this.$(".risk_reduction").html(Math.round(interventions.PercentReductionWithAllInterventions));
 
     if (interventions.IncreaseInRisk === "0" && interventions.PercentReductionInRiskWithMedication === "0") {
       this.$(".meds").hide();
@@ -986,33 +997,33 @@ var InterventionsView = Backbone.View.extend({
       if (interventions.IncreaseInRisk === "0") {
         this.$(".stop_meds").hide();
       } else {
-        this.$(".stop_meds_increase").html(interventions.IncreaseInRisk);
+        this.$(".stop_meds_increase").html(Math.round(interventions.IncreaseInRisk));
         this.$(".stop_meds").show();
       }
       if (interventions.PercentReductionInRiskWithMedication === "0") {
         this.$(".take_meds").hide();
       } else {
-        this.$(".take_meds_reduction").html(interventions.PercentReductionInRiskWithMedication);
+        this.$(".take_meds_reduction").html(Math.round(interventions.PercentReductionInRiskWithMedication));
         this.$(".take_meds").show();
       }
       this.$(".meds").show();
     }
 
-    this.$(".moderate_exercise_reduction").html(interventions.PercentReductionInRiskWithAdditionalModerateExercise);
-    this.$(".vigorous_exercise_reduction").html(interventions.PercentReductionInRiskWithAdditionalVigorousExercise);
+    this.$(".moderate_exercise_reduction").html(Math.round(interventions.PercentReductionInRiskWithAdditionalModerateExercise));
+    this.$(".vigorous_exercise_reduction").html(Math.round(interventions.PercentReductionInRiskWithAdditionalVigorousExercise));
 
     if (interventions.PercentReductionInRiskWithWeightLoss === "") {
       this.$(".weight").hide();
     } else {
       this.$(".lose_pounds").html(interventions.PoundsOfWeightLossRequired);
-      this.$(".lose_weight_reduction").html(interventions.PercentReductionInRiskWithWeightLoss);
+      this.$(".lose_weight_reduction").html(Math.round(interventions.PercentReductionInRiskWithWeightLoss));
       this.$(".weight").show();
     }
 
     if (interventions.PercentReductionWithSmokingCessation === "0") {
       this.$(".smoking").hide();
     } else {
-      this.$(".quit_smoking_reduction").html(interventions.PercentReductionWithSmokingCessation);
+      this.$(".quit_smoking_reduction").html(Math.round(interventions.PercentReductionWithSmokingCessation));
       this.$(".smoking").hide();
     }
   }
@@ -1023,10 +1034,11 @@ var NextStepListView = Backbone.View.extend({
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
   getRiskReduction : function() {
-    if (!this.model.archimedes_result || !this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions) {
+    var result = this.model.archimedes_result;
+    if (!result || !result.Risk || !result.Interventions.PercentReductionWithAllInterventions) {
       return "&hellip;";
     } else {
-      return this.model.archimedes_result.Interventions.PercentReductionWithAllInterventions; 
+      return Math.round(result.Interventions.PercentReductionWithAllInterventions); 
     }
   },
   handleRiskChange : function(state, user) {
@@ -1082,7 +1094,9 @@ var NextStepListView = Backbone.View.extend({
         gNextStepsItems.enterMissing.href = "#knows-chol";
         missingText = "cholesterol";
       }
-      gNextStepsItems.locations.secondary = "<span class='important'>Your " + missingText + " levels are needed for a more accurate risk assessment</span>";
+
+      gNextStepsItems.locations.secondary = "<span>Your " + missingText +
+      " levels are needed for a more accurate risk assessment</span>";
       gNextStepsItems.locations.hide = false;
       gNextStepsItems.enterMissing.primary = "Enter your missing values";
       gNextStepsItems.enterMissing.secondary = "INCOMPLETE - " + missingText;
@@ -1091,6 +1105,7 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#popupLocked";
       gNextStepsItems.interventions.popup = true;
       gNextStepsItems.interventions.lock = true;
+      gNextStepsItems.rewards.lock = true;
     } else {
       gNextStepsItems.locations.hide = true;
       gNextStepsItems.enterMissing.hide = true;
@@ -1098,6 +1113,7 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#interventions";
       gNextStepsItems.interventions.popup = false;
       gNextStepsItems.interventions.lock = false;
+      gNextStepsItems.rewards.lock = false;
     }
 
     this.$("li.next-step").remove();
@@ -1113,11 +1129,21 @@ var NextStepListView = Backbone.View.extend({
 
 var ProfileView = Backbone.View.extend({
   initialize : function(attrs) {
+    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
   events : {
     "pagebeforeshow" : "updateView"
   },
+  handleRiskChange : function(state, user) {
+    switch(state) {
+    case User.RISK_STATE.UP_TO_DATE:
+      this.updateView();
+      break;
+    }
+  },
   updateView : function(event, data) {
+    this.model.calculateRisk();
+    
     var text;
     var user = this.model;
 
@@ -1160,6 +1186,7 @@ var ProfileView = Backbone.View.extend({
     }
     this.$(".history .profileData").html(!text ? "&nbsp;" : text);
 
+    var result = user.archimedes_result;
     var systolic = user.get("systolic");
     var diastolic = user.get("diastolic");
     if (user.needBp()) {
@@ -1167,7 +1194,12 @@ var ProfileView = Backbone.View.extend({
       this.$(".bp .icon-warning").css("display", "inline-block");
     } else {
       text = systolic + "/" + diastolic;
-      this.$(".bp .icon-warning").hide();  
+      if (result && result.Risk && result.ElevatedBloodPressure) {
+        text += "<br><br><span class='important'>Warning: " + TXT_HIGH_BP + "</span>";
+        this.$(".bp .icon-warning").css("display", "inline-block");
+      } else {
+        this.$(".bp .icon-warning").hide();
+      }
     }
     this.$(".bp .profileData").html(text);
 
@@ -1179,7 +1211,12 @@ var ProfileView = Backbone.View.extend({
       this.$(".chol .icon-warning").css("display", "inline-block");
     } else {
       text = chol + " | " + hdl + " | " + ldl;
-      this.$(".chol .icon-warning").hide();  
+      if (result && result.Risk && result.ElevatedCholesterol) {
+        text += "<br><br><span class='important'>Warning: " + TXT_HIGH_CHOL + "</span>";
+        this.$(".chol .icon-warning").css("display", "inline-block");
+      } else {
+        this.$(".chol .icon-warning").hide();
+      }
     }
     this.$(".chol .profileData").html(text);
   }
@@ -1293,7 +1330,7 @@ var ResultView = Backbone.View.extend({
         $img.show();
       }
 
-      if (!result) {
+      if (!result || !result.Risk) {
         break;
       }
 
@@ -1365,7 +1402,10 @@ var SurveyView = Backbone.View.extend({
 
     for (var input in this.options.inputMap) {
       var userFieldName = this.options.inputMap[input];
-      var val = this.model.get(userFieldName) || "";
+      var val = this.model.get(userFieldName);
+      if (isBlank(val)) {
+        val = "";
+      }  
       var $input = this.$("#" + input);
 
       console.debug("loading " + userFieldName + "=" + val);
@@ -1380,7 +1420,14 @@ var SurveyView = Backbone.View.extend({
           }
         } else {
           // type = text, number
-          $input.attr("value", val);
+          if (val == "") {
+            // set the user with the value from the field
+            if ($input.attr("value")) {
+              this.model.set(userFieldName, $input.attr("value"));
+            }
+          } else {
+            $input.attr("value", val); 
+          }
         }
       } else {
         // if ($input.prop("nodeName").toLowerCase() === "select")
@@ -1397,6 +1444,7 @@ var SurveyView = Backbone.View.extend({
     "change input[type=number]" : "handleChange",
     "change select" : "handleChange",
     "keyup input[type=text]" : "handleChange",
+    "keyup input[type=number]" : "handleChange",
     "pagebeforehide" : "handlePageBeforeHide",
     "pageshow" : "handlePageShow"
   },
@@ -1577,9 +1625,9 @@ var SurveyKnowsBpView = SurveyView.extend({
       }
     } else {
       if (!this.$el.is(":visible")) {
-        this.$(".locations-pointer").slideUp();
-      } else {
         this.$(".locations-pointer").hide();
+      } else {
+        this.$(".locations-pointer").slideUp();
       }
     }
   },

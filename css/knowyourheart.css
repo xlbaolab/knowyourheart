@@ -329,8 +329,18 @@ a.nextbtn.ui-btn-corner-all {
   text-shadow: white 0px 0px 0px;
 }
 
+.more-info {
+  color: #807B7B;
+  font-family: "MuseoSans500Regular", sans-serif;
+  font-size: medium;
+  margin: 0 0 -0.6em 0;
+  position: absolute;
+  right: 35px;
+  bottom: 50%;
+}
+
 .important {
-  color: #32a7da;
+  color: #ffad00;
   text-shadow: white 0px 0px 0px;
 }
 
@@ -643,6 +653,7 @@ screen and (max-moz-device-pixel-ratio: 2) {
   font-weight: normal;
   margin: 0.4em 0 0 0;
   padding: 0;
+  white-space: normal;
 }
 
 .ui-li-has-arrow.ui-li-has-count .ui-li-count {
@@ -783,12 +794,11 @@ div#facts {
 .locations-pointer {
   margin: 1em auto 0 auto;
   max-width: 26em;
-  padding: 1em;
 }
 .locations-pointer p {
   margin: 0 auto;
   max-width: none;
-  width: 82%;
+  width: 75%;
   text-align: left;
 }
 
@@ -830,13 +840,12 @@ div#facts {
   display: none;
 }
 
+#assessment .risk_error {
+  white-space: normal; 
+}
+
 #assessment .risk_score .more-info {
-  color: #807B7B;
-  font-family: "MuseoSans500Regular", sans-serif;
-  font-size: medium;
   margin: 0 0 0 0;
-  position: absolute;
-  right: 35px;
   bottom: 0%;
 }
 
@@ -846,14 +855,17 @@ div#facts {
   top: auto;
 }
 
-p.archimedes-link {
+.archimedes-link.ui-li-static.ui-li {
+  padding-top: 0;
+}
+
+.archimedes-link p {
   font-size: x-small;
   font-style: italic;
   margin: 0;
-  text-align: right;
 }
 
-p.archimedes-link a {
+.archimedes-link p a {
   text-decoration: none;
 }
 

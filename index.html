@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-
 <head>
   <meta charset="utf-8">
   <!--NO ZOOMING!!!-->
@@ -27,8 +26,8 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
   <script src="http://static.stackmob.com/js/stackmob-js-0.6.0-bundled-min.js" type="text/javascript"></script>
   <script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
-  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBAh6svu8A0CurhoeIt0jcZ_zvuEWzYHXE&sensor=true" type="text/javascript"></script>
   -->
+  <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBAh6svu8A0CurhoeIt0jcZ_zvuEWzYHXE&sensor=true" type="text/javascript"></script>
 
   <!-- dev
   <script src="js/backbone.js" type="text/javascript"></script>
@@ -37,7 +36,7 @@
   <script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
   <script src="js/stackmob-js-0.6.0-bundled-min.js" type="text/javascript"></script>
   <script src="js/jquery.mobile-1.2.0.min.js" type="text/javascript"></script>
-  <script src="js/googlemaps.js" type="text/javascript"></script>
+  <!--   <script src="js/googlemaps.js" type="text/javascript"></script> -->
 
   <script src="js/backbone.localStorage.js" type="text/javascript"></script>
   <script src="tooltip/js/jqmTooltip.min.js" type="text/javascript"></script>
@@ -90,10 +89,10 @@
         <p>
           Answer 8 questions to calculate your risk for cardiovascular disease.
         </p>
-		<p id="archimedes">
-			Powered by the Archimedes IndiGO decision support tool used by physicians. 
-			Receive personalized guidelines to help you make the best decision about your health.
-		</p>        
+        <p id="archimedes">
+          Powered by the Archimedes IndiGO decision support tool used by physicians.
+          Receive personalized guidelines to help you make the best decision about your health.
+        </p>
       </div>
     </div>
     <div id="checkboxes2" data-role="fieldcontain">
@@ -169,7 +168,7 @@
 
 <!-- profile -->
 <div data-role="page" data-theme="a" id="basic_profile">
-  <div data-theme="a" data-role="header">
+  <div data-theme="a" data-role="header" data-position="fixed">
     <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext"
     class="ui-btn-right"> </a>
     <h2>About You</h2>
@@ -202,7 +201,7 @@
         <a href="#knows-chol" data-transition="slide"> Cholesterol <span class="icon-warning"></span><p class="profileData"></p> </a>
       </li>
     </ul>
-  <div class="spacer"></div>
+    <div class="spacer"></div>
   </div>
   <div data-role="tabbar" data-iconpos="top" data-theme="a">
     <ul>
@@ -217,7 +216,7 @@
 </div>
 <!-- Profile ADVANCED -->
 <div data-role="page" data-theme="a" id="extra_profile">
-  <div data-theme="a" data-role="header">
+  <div data-theme="a" data-role="header" data-position="fixed">
     <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext" class="ui-btn-right"> </a>
     <h2>More You</h2>
     <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="left" class="ui-btn-left"> Your Heart </a>
@@ -266,18 +265,36 @@
   </div>
   <div data-role="content">
     <div id="facts">
-	<p>1 in 3 adults in the U.S. have some form of heart disease, stroke, or other blood vessel diseases</p>
-	<p>And that the top risk factors for heart disease and stroke are:</p>
-		<ol id="riskfactors">
-			<li>Inactivity</li>
-			<li>Obesity</li>
-			<li>High Blood Pressure</li>
-			<li>Cigarette Smoking</li>
-			<li>High Cholesterol</li>
-			<li>Diabetes</li>
-		</ol>
-	<p>Know Your Heart can help you take steps to lower that risk today!</p>
-  	</div>
+      <p>
+        1 in 3 adults in the U.S. have some form of heart disease, stroke, or other blood vessel diseases
+      </p>
+      <p>
+        And that the top risk factors for heart disease and stroke are:
+      </p>
+      <ol id="riskfactors">
+        <li>
+          Inactivity
+        </li>
+        <li>
+          Obesity
+        </li>
+        <li>
+          High Blood Pressure
+        </li>
+        <li>
+          Cigarette Smoking
+        </li>
+        <li>
+          High Cholesterol
+        </li>
+        <li>
+          Diabetes
+        </li>
+      </ol>
+      <p>
+        Know Your Heart can help you take steps to lower that risk today!
+      </p>
+    </div>
     <a data-role="button" data-transition="slide" data-theme="b" href="#age"
     data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Continue </a>
   </div>
@@ -573,10 +590,10 @@
     </div>
     <div class="locations-pointer">
       <p>
-        Your blood pressure is required for an accurate risk assessment. 
+        Your blood pressure is required for an accurate risk assessment.
         Visit a screening location or your doctor to get a measurement.
       </p>
-	</div>
+    </div>
     <a href="#blood-pressure" class="dynamic-next nextbtn" data-role="button"
     data-transition="slide" data-theme="b" data-icon="newarrow-r"
     data-iconpos="right"> Next </a>
@@ -664,7 +681,7 @@
     <div class="locations-pointer">
       <p>
         Your cholesterol is required for an accurate risk assessment. Visit
-         a screening location or your doctor to get a measurement.
+        a screening location or your doctor to get a measurement.
       </p>
     </div>
     <a href="#cholesterol" class="dynamic-next nextbtn" data-role="button"
@@ -761,14 +778,14 @@
             An error occured during risk calculation, please check your values or refresh the page.
           </p>
           <p class="risk_message">
-            Your risk could be as high as &hellip; %, &hellip; times what is considered healthy for your age.
+            <!-- Your risk could be as high as &hellip; %, &hellip; times what is considered healthy for your age. -->
           </p>
           <p class="more-info">
             More Info
           </p></a>
       </li>
-      <li data-theme="f">
-        <p class="archimedes-link">
+      <li class="archimedes-link" data-theme="f">
+        <p>
           Calculated by <a target="_blank" href="http://archimedesmodel.com/indigo"> Archimedes IndiGO </a>
         </p>
       </li>
@@ -914,7 +931,7 @@
 <!-- Action List -->
 <div data-role="page" data-theme="a" id="interventions">
   <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Lower Your Risk </h2>
+    <h2> Interventions </h2>
     <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
     href="#assessment" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
   </div>
