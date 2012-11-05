@@ -8,13 +8,15 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>XLBao Lab</title>
+    <title>Know Your Heart</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
 
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/main.css">
 
     <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+
   </head>
   <body>
     <!--[if lt IE 7]>
@@ -22,126 +24,235 @@
     <![endif]-->
 
     <div class="navbar navbar-fixed-top">
+    	<div class="navbar-stripe"></div>
       <div class="navbar-inner">
         <div class="container">
           <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
-          <a class="brand" href="#">Million Heart Challenge</a>
+          <a class="brand" href="index.html"></a>
           <div class="nav-collapse">
             <ul class="nav">
-              <li class="active">
-                <a href="#">Home</a>
+              <li>
+                <a id="menuicon_about" href="about.html"></a><div class="menuicon_text">About</div>
               </li>
               <li>
-                <a href="#about">About</a>
+                <a id="menuicon_assess" href="http://dev.knowyourheart.info/mobile/app.html"></a><div class="menuicon_text">Assess Your Heart</div>
               </li>
               <li>
-                <a href="#contact">Contact</a>
+                <a id="menuicon_gettheapp" href="#gettheapp" data-toggle="modal"></a><div class="menuicon_text">Get The App</div>
               </li>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
       </div>
     </div>
+    <div class="container content">
+    
+    <div class="screen" id="home" style="display: show;">
+		<div class="container">
+		  <div class="row toppanel_home">
+		    <div class="span5">
+		    	<div id="iphone_screenshot"></div>
+		      <!--Sidebar content-->
+		    </div>
+		    <div class="span7 rightpanel_home">
+		      <!--Body content-->
+		      	<div class="row" id="home_text">
+			      	<div class="span6"><span  id="home_green_small">CALCULATE</span></div>
+			      	<div class="span6 offset1"><span id="home_green_big">YOUR RISK</span></div>
+					<div class="span6"><span id="home_gray">FOR</span><span id="home_blue_top">HEART</span></div>
+					<div class="span6 offset1" id="home_blue_bottom">DISEASE</div>
+				</div>	
+				<div class="row" id="home_buttons">
+					<div class="span7">
+						<a id="getappBtn" href="#gettheapp" data-toggle="modal">Get App</a>
+						<a id="assessyourheartBtn" href="http://dev.knowyourheart.info/mobile/app.html">Assess Your Heart</a>
+					</div>
+				</div>
+		    </div>
+		  </div>
+		  <div class="row-fluid bottompanel_home">
+			<div class="row span12"><span id="howitworks">HOW IT WORKS</span></div>
+			<div class="row" id="stepbystep">
+				<ul>
+					<li>
+						<div class="step span4" >
+							<div id="step1"></div>
+							<div class="steptext"><span class="boldNum">1. </span><span>Survey</span></div>
+							<p class="steptext_sub">Answer 8 questions</p>
+						</div>
+					</li>
+					<li>
+						<div class="step span4">
+							<div id="step2"></div>
+							<div class="steptext"><span class="boldNum">2. </span><span class="steptext">Assess</span></div>
+							<p class="steptext_sub">We assess your risk for </br>heart disease</p>
+						</div>
+					</li>
+					<li>
+						<div class="step span4">
+							<div id="step3"></div>
+							<div class="steptext"><span class="boldNum">3. </span><span class="steptext">Get Screened</span></div>
+							<p class="steptext_sub">Follow our suggestions and </br>find a place to get screened</p>
+						</div>
+					</li>
 
-    <div class="container">
-      <div class="row">
-        <div class="span10">
+				</ul>
+			</div>
+			<div class="filler"></div>
+		  </div>					  
+		</div>   	
+    </div>
+    
+    <!-- ASSESSMENT PAGE -->
+    <div class="screen" id="assessment" style="display: none;">
+    	<div class="row">
+    		<div class="span11" style="text-align: center;">
+    			<h3>Answer 8 questions to calculate your risk for cardiovascular disease</h3>
+    		</div>
+    	</div>
+      <div class="row survey">
+      	        <div class="span3">
+          <ul id="carouselNav" class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a href="javascript:void(0)">Age</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Gender</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Height</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Weight</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Smoking Status</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Health History</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Blood Pressure</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Cholesterol</a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Your Heart</a>
+            </li>
+
+          </ul>
+        </div>
+      	
+      	
+        <div class="span8">
           <form action="#" id="survey_form">
             <div id="survey_carousel" class="carousel slide">
               <div class="carousel-inner">
 
                 <div class="active item">
-                  <label for="input_age">How old are you?</label>
-                  <input type="text" id="input_age" name="age" placeholder="your age in years" />
+                  <label for="input_age">1. How old are you?</label>
+                  <input type="text" id="input_age" name="age" placeholder="Enter your age here" />
                 </div>
 
                 <div class="item">
-                  <label>Are you male or female?</label>
+                  <label>2. Are you male or female?</label>
                   <input type="radio" id="input_genderm" name="gender" value="M" />
-                  <label class="check_or_radio_label" for="input_genderm">male</label>
+                  <label class="check_or_radio_label" for="input_genderm">Male</label>
                   <input type="radio" id="input_genderf" name="gender" value="F" />
-                  <label class="check_or_radio_label" for="input_genderf">female</label>
+                  <label class="check_or_radio_label" for="input_genderf">Female</label>
                 </div>
 
                 <div class="item">
-                  <label for="input_height_feet">How tall are you?</label>
+                  <label for="input_height_feet">3. How tall are you?</label>
                   <select id="input_height_feet" name="height_feet">
-                    <option>Feet</option>
-                    <option>3'</option>
-                    <option>4'</option>
-                    <option>5'</option>
-                    <option>6'</option>
-                    <option>7'</option>
+                            <option value="">Feet</option>
+                            <option value="2"> 2 ft </option>
+                            <option value="3"> 3 ft </option>
+                            <option value="4"> 4 ft </option>
+                            <option value="5"> 5 ft </option>
+                            <option value="6"> 6 ft </option>
+                            <option value="7"> 7 ft </option>
                   </select>
                   <select id="input_height_inches" name="height_inches">
-                    <option>Inches</option>
-                    <option>0"</option>
-                    <option>1"</option>
-                    <option>2"</option>
-                    <option>3"</option>
-                    <option>4"</option>
-                    <option>5"</option>
-                    <option>6"</option>
-                    <option>7"</option>
-                    <option>8"</option>
-                    <option>9"</option>
-                    <option>10"</option>
-                    <option>11"</option>
+                            <option>Inches</option>
+                            <option value="0"> 0 in </option>
+                            <option value="1"> 1 in </option>
+                            <option value="2"> 2 in </option>
+                            <option value="3"> 3 in </option>
+                            <option value="4"> 4 in </option>
+                            <option value="5"> 5 in </option>
+                            <option value="6"> 6 in </option>
+                            <option value="7"> 7 in </option>
+                            <option value="8"> 8 in </option>
+                            <option value="9"> 9 in </option>
+                            <option value="10"> 10 in </option>
+                            <option value="11"> 11 in </option>
                   </select>
                 </div>
 
                 <div class="item">
-                  <label for="input_weight">How much do you weigh?</label>
-                  <input type="text" id="input_weight" name="weight" placeholder="your weight in lbs" />
+                  <label for="input_weight">4. How much do you weigh?</label>
+                  <input type="text" id="input_weight" name="weight" placeholder="In pounds" />
                 </div>
 
                 <div class="item">
-                  <label>Do you currently smoke?</label>
-                  <span class="help-block">In the past month?</span>
+                  <label>5. Do you currently smoke?</label>
+                  <span class="help-block">Answer 'Yes' if you have smoked any cigarettes in the past month</span>
 
                   <input type="radio" id="input_smoker" name="smoker" value="T" />
-                  <label class="check_or_radio_label" for="input_smoker">yes</label>
+                  <label class="check_or_radio_label" for="input_smoker">Yes</label>
                   <input type="radio" id="input_non_smoker" name="smoker" value="F" />
-                  <label class="check_or_radio_label" for="input_non_smoker">no</label>
+                  <label class="check_or_radio_label" for="input_non_smoker">No</label>
                 </div>
 
                 <div class="item">
-                  <label>Have you ever had &#8230</label>
+                  <label>6. Has a doctor ever told you that you had any of the following?</label>
                   <ul class="unstyled">
                     <li>
                       <input type="checkbox" id="input_mi" name="mi" value="T" />
-                      <label class="check_or_radio_label">a heart attack?</label>
+                      <label class="check_or_radio_label">Heart attack</label>
                     </li>
                     <li>
                       <input type="checkbox" id="input_stroke" name="stroke" value="T" />
-                      <label class="check_or_radio_label">a stroke?</label>
+                      <label class="check_or_radio_label">Stroke?</label>
                     </li>
                     <li>
                       <input type="checkbox" id="input_diabetes" name="diabetes" value="T" />
-                      <label class="check_or_radio_label">diabetes?</label>
+                      <label class="check_or_radio_label">Diabetes</label>
                     </li>
                   </ul>
+                        <div class="hba1c" style="display:show;">
+                            <div data-role="fieldcontain">
+                                <fieldset data-role="controlgroup" data-mini="true">
+                                    <label for="hba1c_field"> </label>
+                                    <input name="hba1c" id="hba1c_field" placeholder="Enter %" value="" type="text" pattern="\d*">
+                                </fieldset>
+                            </div>
+                        </div>
+                  
                 </div>
 
                 <div class="item">
-                  <label for="input_systolic">What is your blood pressure?</label>
-                  <input type="text" id="input_systolic" name="systolic" placeholder="systolic" />
-                  <input type="text" id="input_diastolic" name="diastolic" placeholder="diastolic" />
+                  <label for="input_systolic">7. What is your blood pressure?</label>
+                	<p>Knowing your blood pressure will improve the accuracy of your heart risk score.</br>
+					If you don't know it at this time, we can help you find a clinic that can assist you.
+					</p>
+                  <input type="text" id="input_systolic" name="systolic" placeholder="Systolic" />
+                  <input type="text" id="input_diastolic" name="diastolic" placeholder="Diastolic" />
                 </div>
 
-                <div class="item">
-                  <label for="input_cholesterol">What is your blood cholesterol?</label>
-                  <input type="text" id="input_cholesterol" name="cholesterol" placeholder="cholesterol" />
-                  <input type="text" id="input_hdl" name="hdl" placeholder="HDL" />
-                  <input type="text" id="input_ldl" name="ldl" placeholder="LDL" />
+                <div class="item">               	
+                  <label for="input_cholesterol">8. What is your cholesterol level?</label>
+                	<p>Knowing your cholesterol will improve the accuracy of your heart risk score.</br>
+					If you don't know it at this time, we can help you find a clinic that can assist you.
+					</p> 
+                  <input type="text" id="input_total" name="total" placeholder="Total Cholesterol" />
+                  <input type="text" id="input_hdl" name="hdl" placeholder="HDL Cholesterol" />
+                  <input type="text" id="input_ldl" name="ldl" placeholder="LDL Cholesterol" />
                 </div>
 
                 <!-- TODO combine with diabetes question -->
-                <div class="item">
-                  <label for="input_hba1c">What is your HbA1c?</label>
-                  <input type="text" id="input_hba1c" name="hba1c" placeholder="HbA1c" />
-                </div>
-
                 <div class="item">
                 	The following are additional inputs that can refine your risk estimate.
 
@@ -200,9 +311,7 @@
               <a class="carousel-control right" href="#survey_carousel" data-slide="next">&rsaquo;</a>
             </div>
           </form>
-          <p>
-            <a id="archimedesTest" class="btn btn-primary btn-large">Send Form</a>
-          </p>
+
           <p id="result"></p>
           <!-- <div class="hero-unit">
           <h1>Output!</h1>
@@ -214,52 +323,35 @@
           </p>
           </div> -->
         </div>
-        <div class="span2">
-          <ul id="carouselNav" class="nav nav-pills nav-stacked">
-            <li class="active">
-              <a href="javascript:void(0)">Age</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Gender</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Height</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Weight</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Smoke</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Health History</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Blood Pressure</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Cholesterol</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">HbA1c</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Optional</a>
-            </li>
-            <li>
-              <a href="javascript:void(0)">Recommendation</a>
-            </li>
 
-          </ul>
-        </div>
       </div>
-
+	</div> <!--close assessment div-->
+	
       <hr>
 
       <footer>
-        <p>
-          &copy; <a href="http://xlbaolab.com">XLBao Lab</a>
-        </p>
+      	<div class="navbar-fixed-bottom">
+      		<div class="container">
+				<div id="footer_left">
+						        <p>
+						          <a href="about.html">About</a> // <a href="http://dev.knowyourheart.info/mobile/app.html">Assess Your Heart</a>  // <a href="#gettheapp" data-toggle="modal">Get the app</a> 
+						        </p>
+						        <div class="apple_appstore"></div><div class="android_googleplay"></div>					
+				</div>
+				        <div id="footer_right"><span id="facebook"></span><span id="twitter"></span><span id="email"></span>
+						</div>
+			</div>
+		</div>
+					<div class="modal fade" id="gettheapp">
+					  <div class="modal-header">
+					    <a class="close" data-dismiss="modal">&times;</a>
+					    <h3>Download Know Your Heart for free</br>on iPad, iPhone, and Android</h3>
+					    <p><em>Currently undergoing app store submission</em></p>
+					  </div>
+					  <div class="modal-body">
+						<div class="apple_appstore"></div><div class="android_googleplay"></div>
+					  </div>
+					</div>
       </footer>
 
     </div>

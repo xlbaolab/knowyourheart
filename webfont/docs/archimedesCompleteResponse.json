@@ -1,0 +1,42 @@
+{
+    "ErrorMessageHashMap": {},
+    "Risk": [
+        {
+            "risk": "0.41",
+            "riskType": "CVD",
+            "riskPercentile": "16",
+            "comparisonRisk": "1.13",
+            "ratingForAge": "2",
+            "rating": "1"
+        }, {
+            "risk": "",
+            "riskType": "UpperBoundCVD",
+            "riskPercentile": "",
+            "comparisonRisk": "",
+            "ratingForAge": "",
+            "rating": ""
+        }, {
+            "risk": "",
+            "riskType": "LowerBoundCVD",
+            "riskPercentile": "",
+            "comparisonRisk": "",
+            "ratingForAge": "",
+            "rating": ""
+        }
+    ],
+    "Recommendation": "",
+    "Interventions": {
+        "IncreaseInRisk": "0",
+        "PercentReductionInRiskWithMedication": "0",
+        "PercentReductionInRiskWithAdditionalModerateExercise": "22.59",
+        "PercentReductionInRiskWithAdditionalVigorousExercise": "36.17",
+        "PercentReductionInRiskWithWeightLoss": "8.55",
+        "PoundsOfWeightLossRequired": "9.25",
+        "PercentReductionWithSmokingCessation": "0",
+        "PercentReductionWithAllInterventions": "54.72"
+    },
+    "ElevatedBloodPressure": false,
+    "ElevatedCholesterol": false,
+    "WarningCode": "0",
+    "DoctorRecommendation": "1"
+}
