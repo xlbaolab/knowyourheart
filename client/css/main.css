@@ -25,6 +25,12 @@ body {
     font-weight: normal;
 }
 
+h3 {
+	font-size: 2.5em;
+	color: #656668;
+	line-height: 1em;
+}
+
 p {
 	font-family: "MuseoSans500Regular", sans-serif;
     font-weight: normal;
@@ -403,7 +409,7 @@ ul {
 	color: #656668;
 }
 
-#assessment div.span8 {
+#assessment div.span9 {
 	background: #ffffff;
 	border: 1px solid #e1e1e1;
 	border-radius: 5px;
@@ -417,19 +423,71 @@ div.carousel-inner {
 
 #assessment #survey_carousel .item label {
 	color: #656668;
-font-size: 300%;
 }
 
-#assessment .carousel .active, .carousel .next, .carousel .prev {
-margin-top: 2em;
-text-align: center;
+#assessment div.active.item.survey-page {
+
 }
 
-#assessment #survey_carousel .item input {
-height: 200%;
-font-size: 200%;
-line-height: 200%;
-width: 370px;
+#assessment #survey_carousel .item input["text"] {
+height: 2em;
+font-size: 1.5em;
+line-height: 2em;
+width: 10em;
+}
+
+.question-box {
+	padding: 2em;
+	text-align: center;
+}
+
+.question-check-box {
+	padding: 2em 0 0 5em;
+	text-align: left;
 }
 
 
+/*Survey - Gender */
+.custom-btn-large {
+padding: 0.5em 1.2em;
+font-size: 1.5em;
+line-height: normal;
+-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;
+}
+
+
+
+/* Overrides */
+#assessment .btn-group {
+	width: 16em;
+	margin: 0 auto;
+}
+
+#assessment .btn.active {
+	background-color: #FFCB3D;
+	text-shadow: rgba(255, 255, 255, 0.74902) 0px 0px 0px;
+	color: white;
+}
+
+#assessment select {
+	width: 6em;
+	height: 2.5em;
+	line-height: 2.5em;
+	font-size: 1.5em;
+
+}
+
+#assessment .checkbox input[type="checkbox"] {
+	float:none;
+}
+
+#assessment .survey-page {
+	padding: 5em 2em;
+	text-align: center;
+}
+
+#assessment #tab4 label {
+	font-size: 1em;
+}

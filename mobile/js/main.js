@@ -24,7 +24,8 @@ console.debug("loading main.js")
 /*
  * Constants
  */
-
+var IS_IOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false;
+var MAPS_URL = IS_IOS ? "http://maps.apple.com/maps?q=" : "http://maps.google.com/maps?q=";
 var ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health";
 // callback indicates JSONP, which seems necessary
 var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find?callback=?";
@@ -33,6 +34,13 @@ var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
 /*
  * Text
  */
+var TXT = {};
+TXT.ADDRESS_NOT_FOUND = "Address not found";
+TXT.CLINICS_NOT_FOUND = "No clinics were found nearby";
+TXT.INTERVENTIONS_LOCKED_EXPLANATION = "More information is required to \
+calculate which actions will be best for you.";
+TXT.REWARDS_LOCKED_EXPLANATION = "Know your heart and get rewarded!";
+
 var TXT_INCOMPLETE = "<span>INCOMPLETE</span>";
 var TXT_HIGH_BP = "You may have elevated blood pressure. You should consult \
 with your doctor or primary care provider about things you can do to control \
@@ -61,10 +69,15 @@ var LOC_LI_TEMPLATE = _.template('\
 var LOC_MARKER_TEMPLATE = _.template('\
   <div class="info-window">\
     <a href="#screening-location?index=<%= index %>" data-transition="pop">\
-      <p>\
-        <%= content %>\
-        <span class="icon-right ui-icon-shadow ui-icon ui-icon-arrow-r"></span>\
-      </p>\
+      <div>\
+        <p class="name">\
+          <%= name %>\
+        </p>\
+        <p class="address">\
+          <%= address %>\
+          <span class="icon-right ui-icon-shadow ui-icon ui-icon-arrow-r"></span>\
+        </p>\
+      </div>\
     </a>\
   </div>\
 ');
@@ -77,9 +90,7 @@ var POPUP_LOCKED_HTML = '\
       Enter your blood pressure, cholesterol, and HbA1c (if applicable)\
       to unlock.\
     </p>\
-    <p>\
-      More information is required to calculate which actions will be best for you.\
-    </p>\
+    <p class="explanation"></p>\
   </div>\
 ';
 
@@ -89,12 +100,12 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <% for (var key in items) { %>\
   <% var item = items[key]; %>\
   <% if (item.hide) { continue; } %>\
-  <li class="<%= item.clazz %> next-step" data-theme="<%= added++ % 2 ? "e" : "f" %>">\
+  <li class="<%= item.clazz %> <% if (item.lock) { print(\'locked\'); } %> next-step"\
+    data-theme="<%= added++ % 2 ? "e" : "f" %>">\
     <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
       <div class="li-primary">\
         <%= added + ". " + item.primary %>\
         <% if (item.warning) { print("<span class=\'icon-warning\'></span>"); } %>\
-        <% if (item.lock) { print("<span class=\'icon-lock\'></span>"); } %>\
       </div>\
       <div class="li-secondary">\
         <%= item.secondary %>\
@@ -127,7 +138,7 @@ var gNextStepsItems = {
     clazz : "interventions",
     href : "#interventions",
     primary : "Take action to lower your risk",
-    secondary : "By up to <span class='reduction'>&hellip;</span>%",
+    secondary : "By up to <span class='reduction'>?</span>%",
     popup : false,
     lock : false
   },
@@ -143,6 +154,7 @@ var gNextStepsItems = {
     href : "#rewards",
     primary : "Get Rewards",
     secondary : "Enter to win a $20 Target gift card",
+    popup : false,
     lock : false
   },
   share : {
@@ -281,7 +293,7 @@ var UI_MAP = {
 var ARCHIMEDES_ATTRS = {
   "age" : "age",
   "gender" : "gender",
-  "height" : "height",
+  "height" : null,
   "weight" : "weight",
   "smoker" : "smoker",
   "mi" : "ami",
@@ -305,14 +317,17 @@ var ARCHIMEDES_ATTRS = {
 var USER_ATTRS = {
   "age" : "age",
   "gender" : "gender",
-  "height" : "height",
+  "height_ft" : null,
+  "height_in" : null,
   "weight" : "weight",
   "smoker" : "smoker",
   "ami" : "mi",
   "stroke" : "stroke",
   "diabetes" : "diabetes",
+  "knows_bp" : null,
   "systolic" : "systolic",
   "diastolic" : "diastolic",
+  "knows_chol" : null,
   "cholesterol" : "cholesterol",
   "hdl" : "hdl",
   "ldl" : "ldl",
@@ -379,8 +394,19 @@ var USER_DEFAULTS = {
   cholesterolmeds : "false",
   bloodpressuremeds : "false",
   aspirin : "false",
-  familymihistory : "false",
-  last_survey_page : ""
+  familymihistory : "false"
+};
+var REQUIRED_PAGES = {
+  "age" : true,
+  "gender" : true,
+  "height" : true,
+  "weight" : true,
+  "smoker" : true,
+  "history" : true,
+  "knows-bp" : true,
+  "blood-pressure" : true,
+  "knows-chol" : true,
+  "cholesterol" : true
 };
 var RISK_IMAGES = {
   1 : {
@@ -422,6 +448,50 @@ var RISK_IMAGES_COMPLETE = {
  */
 var gCurrentUser = null;
 var gIsFirstPageInit = true;
+
+/*
+* Custom Validators
+*/
+$.tools.validator.fn(
+  "#height-ft-select, #height-in-select",
+  "Height must be between 3'8\" and 7'3\"",
+  function(el, v) {
+    var feet = parseInt($("#height-ft-select").val());
+    var inches = parseInt($("#height-in-select").val());
+    if (isNaN(feet) || isNaN(inches)) {
+      return true; // required is validated elsewhere
+    }
+    var height = feet * 12 + inches;
+    return height >= 44 && height <= 87;
+  }
+);
+
+$.tools.validator.fn(
+  "#systolic-bp-slider, #diastolic-bp-slider",
+  "Systolic must be greater than diastolic blood pressure",
+  function(el, v) {
+    var systolic = parseInt($("#systolic-bp-slider").val());
+    var diastolic = parseInt($("#diastolic-bp-slider").val());
+    if (isNaN(systolic) || isNaN(diastolic)) {
+      return true; // required is validated elsewhere
+    }
+    return systolic > diastolic;
+  }
+);
+
+$.tools.validator.fn(
+  "#hdl-slider, #ldl-slider, #total-chol-slider",
+  "Total cholesterol must be greater than HDL + LDL",
+  function(el, v) {
+    var hdl = parseInt($("#hdl-slider").val());
+    var ldl = parseInt($("#ldl-slider").val());
+    var total = parseInt($("#total-chol-slider").val());
+    if (isNaN(hdl) || isNaN(ldl) || isNaN(total)) {
+      return true; // required is validated elsewhere
+    }
+    return total > hdl + ldl;
+  }
+);
 
 /*
  * Utility Functions
@@ -487,6 +557,11 @@ function doFirstPageInit() {
     model : gCurrentUser
   });
 
+  new OptionsView({
+    el : $("#options"),
+    model : gCurrentUser
+  });
+
   new InterventionsView({
     el : $("#interventions"),
     model : gCurrentUser
@@ -526,6 +601,7 @@ function doFirstPageInit() {
 
   new WelcomeView({
     el : $("#welcome"),
+    inputMap : {},
     model : gCurrentUser
   });
 }
@@ -603,19 +679,9 @@ var User = StackMob.User.extend({
         username : generateRandomString(),
         password : generateRandomString(),
       };
-
-      var attr;
-      for (attr in ARCHIMEDES_ATTRS) {
-        attrs[ARCHIMEDES_ATTRS[attr]] = "";
-      }
-      for (attr in USER_DEFAULTS) {
-        attrs[attr] = USER_DEFAULTS[attr];
-      }
-
-      attrs.archimedes_result = "";
-      attrs.state = User.RISK_STATE.CHANGED;
-
       this.set(attrs);
+      
+      this.reset();
     }
 
     this.on("change", this.handleChange, this);
@@ -643,20 +709,26 @@ var User = StackMob.User.extend({
     // build request
     var request = {};
     for (attr in ARCHIMEDES_ATTRS) {
-      var val = this.get(ARCHIMEDES_ATTRS[attr]);
+      var userAttr = ARCHIMEDES_ATTRS[attr];
+      var val = userAttr === null ? null : this.get(userAttr);
       if (val) {
-        if ((attr === "systolic" || attr === "diastolic") && this.needBp()) {
-          continue;
-        }
-        if ((attr === "cholesterol" || attr === "hdl" || attr === "ldl") && this.needChol()) {
-          continue;   
-        }
-        if ((attr === "hba1c") && (this.get("diabetes") === "false")) {
+        if (((attr === "systolic" || attr === "diastolic") && this.needBp()) || 
+          ((attr === "cholesterol" || attr === "hdl" || attr === "ldl") && this.needChol()) ||
+          ((attr === "hba1c") && (this.get("diabetes") === "false")) ||
+          (attr === "bloodpressuremedcount" && this.get("bloodpressuremeds") === "false"))
+        {
           continue;
         }
         request[attr] = val;
       } else if (ARCHIMEDES_REQUIRED[attr]) {
         request[attr] = ARCHIMEDES_DEFAULTS[attr];
+        if (attr === "height") {
+          var feet = parseInt(this.get("height_ft"));
+          var inches = parseInt(this.get("height_in"));
+          if (!isNaN(feet) && !isNaN(inches)) {
+            request[attr] = feet * 12 + inches;
+          };
+        }
       }
     }
 
@@ -688,7 +760,7 @@ var User = StackMob.User.extend({
   handleChange : function(obj, data) {
     for (var attr in data.changes) {
       // console.debug(attr);
-      if (USER_ATTRS[attr] || attr === "knows_bp" || attr === "knows_chol") {
+      if (_.has(USER_ATTRS, attr)) {
         if (!this.isFetching()) {
           console.debug("User's " + attr + " changed to " + this.get(attr));
           this.set("risk_state", User.RISK_STATE.CHANGED);
@@ -701,6 +773,16 @@ var User = StackMob.User.extend({
       }
     }
   },
+  hasCompletedExtra : function() {
+    // TODO
+    return false;
+  },
+  hasCompletedRequired : function() {
+    return this.get("progress") === "confirmation";
+  },
+  isFetching : function() {
+    return this.isFetchingLocal || this.isFetchingRemote;
+  },
   needBp : function() {
     return (this.get("knows_bp") === "false") || !$.isNumeric(this.get("systolic")) || !$.isNumeric(this.get("diastolic"));
   },
@@ -710,15 +792,20 @@ var User = StackMob.User.extend({
   needHba1c : function() {
     return (this.get("diabetes") === "true") && !$.isNumeric(this.get("hba1c"));
   },
-  hasCompletedExtra : function() {
-    // TODO
-    return false;
-  },
-  hasCompletedRequired : function() {
-    return this.get("progress") === "assessment";
-  },
-  isFetching : function() {
-    return this.isFetchingLocal || this.isFetchingRemote;
+  reset : function() {
+    var attrs = {};
+    var attr;
+    for (attr in USER_ATTRS) {
+      attrs[attr] = "";
+    }
+    for (attr in USER_DEFAULTS) {
+      attrs[attr] = USER_DEFAULTS[attr];
+    }
+    attrs.archimedes_result = "";
+    attrs.progress = "";
+    attrs.state = User.RISK_STATE.CHANGED;
+    
+    this.set(attrs);
   }
 }, {
   RISK_STATE_CHANGE_EVENT : "risk-state:change",
@@ -742,6 +829,11 @@ var LocationsModel = Backbone.Model.extend({
     _.extend(this, Backbone.Events);
   },
   geocode : function(address) {
+    if (address.length === 0 || $.trim(address.toLowerCase()) === "current location") {
+      this.geolocate();
+      return;
+    }
+    
     this.geocoder.geocode({
       "address" : address
     }, _.bind(this.handleGeocode, this));
@@ -757,6 +849,7 @@ var LocationsModel = Backbone.Model.extend({
         // readonly attribute unsigned short code;
         // readonly attribute DOMString message;
         // };
+        console.log("Failed to get geolocation");
         console.dir(error);
       });
     } else {
@@ -768,14 +861,25 @@ var LocationsModel = Backbone.Model.extend({
     console.dir(result);
 
     if (status !== google.maps.GeocoderStatus.OK) {
-      // TODO
-      console.error("Geocoding failed: " + status);
+      console.log("Geocoding failed: " + status);
+      this.trigger(LocationsModel.ERROR_EVENT, TXT.ADDRESS_NOT_FOUND);
       return;
     }
 
     this.location = result[0].geometry.location;
     this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
-
+    this.querySurescripts();
+  },
+  handleGeolocate : function(position) {
+    this.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+    this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
+    this.querySurescripts();
+  },
+  handleSurescripts : function(result) {
+    this.providers = result.providers;
+    this.trigger(LocationsModel.PROVIDERS_CHANGE_EVENT, this.providers);
+  },
+  querySurescripts : function() {
     $.getJSON(SURESCRIPTS_URL, {
       apikey : SURESCRIPTS_API_KEY,
       lat : this.location.lat(),
@@ -785,18 +889,9 @@ var LocationsModel = Backbone.Model.extend({
     }, _.bind(this.handleSurescripts, this)).fail(function(data) {
       console.error("Error calling Surescripts API: " + data.statusText + " (code " + data.status + ")");
     });
-  },
-  handleGeolocate : function(position) {
-    this.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
-  },
-  handleSurescripts : function(result) {
-    console.dir(result);
-
-    this.providers = result.providers;
-    this.trigger(LocationsModel.PROVIDERS_CHANGE_EVENT, this.providers);
   }
 }, {
+  ERROR_EVENT : "error",
   LOCATION_CHANGE_EVENT : "location:change",
   PROVIDERS_CHANGE_EVENT : "providers:change"
 });
@@ -806,12 +901,11 @@ var LocationsModel = Backbone.Model.extend({
  */
 var LocDetailsView = Backbone.View.extend({
   initialize : function(attrs) {
-    this.$el.append(POPUP_LOCKED_HTML);
   },
   events : {
     "pagebeforeshow" : "updateView"
   },
-  updateView : function(event, data) {
+  updateView : function(e, data) {
     if (this.model.providers === null) {
       return;
     }
@@ -821,6 +915,7 @@ var LocDetailsView = Backbone.View.extend({
 
     this.$(".name").html(provider.name);
     this.$(".address a").html(provider.address1 + "<br>" + provider.city + ", " + provider.state + " " + provider.zip.substring(0, 5));
+    this.$(".address a").attr("href", MAPS_URL + encodeURIComponent(provider.address1 + ", " + provider.city + ", " + provider.state + ", " + provider.zip.substring(0, 5)));
     this.$(".phone a").html(phone);
     this.$(".phone a").attr("href", "tel:" + provider.phone);
     this.$(".url a").html(provider.urlCaption);
@@ -832,18 +927,44 @@ var LocDetailsView = Backbone.View.extend({
 var LocListView = Backbone.View.extend({
   initialize : function(attrs) {
     this.$list = this.$("#locList");
+    this.model.on(LocationsModel.ERROR_EVENT, this.handleError, this);
     this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
   events : {
+    "click" : "handleClick",
     "click .loc-search-btn" : "handleFind",
+    "click .nav-map" : "handleNavMapClicked",
     "pageshow" : "refreshView"
   },
+  handleClick : function(e) {
+    this.$(".message").fadeOut();
+  },
+  handleError : function(e) {
+    this.$(".message p").html(e);
+    this.$(".message").fadeIn();
+  },
   handleFind : function() {
+    this.$(".message").fadeOut();
     this.model.geocode(this.$(".loc-search-field").val());
+  },
+  handleNavMapClicked : function(e) {
+    e.preventDefault();
+    $.mobile.changePage(e.currentTarget.hash, {
+      changeHash : false,
+      reverse : true,
+      transition : "flip"
+    });
   },
   handleProvidersChange : function(providers) {
     // clear list
     $("li.provider", this.$list).remove();
+
+    if (providers.length === 0) {
+      if ($.mobile.activePage.attr("id") === this.el.id) {
+        this.handleError(TXT.CLINICS_NOT_FOUND);
+      }
+      return;
+    }
 
     for (var i = 0; i < providers.length; i++) {
       var provider = providers[i];
@@ -860,6 +981,8 @@ var LocListView = Backbone.View.extend({
     this.refreshView();
   },
   refreshView : function() {
+    this.$(".message").hide();
+    
     if ($.mobile.activePage.attr("id") === this.el.id) {
       this.$list.listview("refresh");
     }
@@ -872,23 +995,40 @@ var LocListView = Backbone.View.extend({
 
 var LocMapView = Backbone.View.extend({
   initialize : function(attrs) {
-    var mapEl = document.getElementById("locMap");
     var options = {
       center : new google.maps.LatLng(37.7652065, -122.24163550000003),
       mapTypeId : google.maps.MapTypeId.ROADMAP,
       zoom : 13
     };
-    this.map = new google.maps.Map(mapEl, options);
+    this.map = new google.maps.Map(this.$(".map")[0], options);
+    this.markers = [];
     google.maps.event.addListener(this.map, "click", _.bind(this.handleMapClick, this));
-
+  
+    this.model.on(LocationsModel.ERROR_EVENT, this.handleError, this);
     this.model.on(LocationsModel.LOCATION_CHANGE_EVENT, this.handleLocationChange, this);
     this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
   events : {
+    "click" : "handleClick",
     "click .loc-search-btn" : "handleFind",
+    "click .nav-list" : "handleNavListClicked",
     "pageshow" : "refreshView"
   },
+  clearMarkers : function() {
+    for (var i = 0; i < this.markers.length; i++) {
+      this.markers[i].setMap(null);
+    }
+    this.markers = [];
+  },
+  handleClick : function(e) {
+    this.$(".message").fadeOut();
+  },
+  handleError : function(e) {
+    this.$(".message p").html(e);
+    this.$(".message").fadeIn();
+  },
   handleFind : function() {
+    this.$(".message").fadeOut();
     this.model.geocode(this.$(".loc-search-field").val());
   },
   handleLocationChange : function(location) {
@@ -904,8 +1044,10 @@ var LocMapView = Backbone.View.extend({
       this.infoWindow.close();
     }
     var content = LOC_MARKER_TEMPLATE({
+      address : provider.address1 + "<br>" + provider.city + ", " + provider.state + " " + provider.zip.substring(0, 5),
+      // address : provider.crossStreet
       index : index,
-      content : provider.name
+      name : provider.name 
     });
     this.infoWindow = new google.maps.InfoWindow({
       map : this.map,
@@ -913,23 +1055,42 @@ var LocMapView = Backbone.View.extend({
       content : content
     });
   },
+  handleNavListClicked : function(e) {
+    e.preventDefault();
+    $.mobile.changePage(e.currentTarget.hash, {
+      changeHash : false,
+      transition : "flip"
+    });
+  },
   handleProvidersChange : function(providers) {
+    this.clearMarkers();
+    
+    if (providers.length === 0) {
+      if ($.mobile.activePage.attr("id") === this.el.id) {
+        this.handleError(TXT.CLINICS_NOT_FOUND);
+      }
+      return;  
+    }
+    
     for (var i = 0; i < providers.length; i++) {
       var provider = providers[i];
-
       var marker = new google.maps.Marker({
+        animation: google.maps.Animation.DROP,
         position : new google.maps.LatLng(provider.lat, provider.lon),
         map : this.map,
         title : provider.name
       });
       google.maps.event.addListener(marker, "click", _.bind(this.handleMarkerClick, this, marker, provider, i));
+      this.markers.push(marker);
     }
   },
-  refreshView : function() {
+  refreshView : function() {    
+    this.$(".message").hide();
+    
     var windowHeight = $(window).height();
     var headerHeight = this.$(".ui-header").height();
-    var footerHeight = this.$(".ui-footer").height();
-    var contentHeight = windowHeight - headerHeight - footerHeight;
+    var footerHeight = this.$(".ui-navbar").height();
+    var contentHeight = windowHeight - headerHeight - footerHeight - 3;
     var searchHeight = this.$(".ui-bar").outerHeight();
     this.$(".ui-content").height(contentHeight);
     $(this.map.getDiv()).height(contentHeight - searchHeight);
@@ -948,16 +1109,15 @@ var LocMapView = Backbone.View.extend({
 var HomeView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
-      el : this.$(".nextStepsList"),
+      el : this.$(".next-steps-list"),
       model : this.model,
       page : this
     });
-    this.$el.append(POPUP_LOCKED_HTML);
   },
   events : {
     "pagebeforeshow" : "updateView"
   },
-  updateView : function(event, data) {
+  updateView : function(e, data) {
     this.model.calculateRisk();
     this.listView.updateList();
     // might need to init popup since we inserted it (jqm generates the id)
@@ -1032,14 +1192,25 @@ var InterventionsView = Backbone.View.extend({
 var NextStepListView = Backbone.View.extend({
   initialize : function(attrs) {
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
+    this.options.page.$el.append(POPUP_LOCKED_HTML);
+  },
+  events : {
+    "click li.interventions" : "handleInterventionsClicked",
+    "click li.rewards" : "handleRewardsClicked"
   },
   getRiskReduction : function() {
     var result = this.model.archimedes_result;
     if (!result || !result.Risk || !result.Interventions.PercentReductionWithAllInterventions) {
-      return "&hellip;";
+      return "?";
     } else {
       return Math.round(result.Interventions.PercentReductionWithAllInterventions); 
     }
+  },
+  handleInterventionsClicked : function(e) {
+    this.options.page.$(".explanation").html(TXT.INTERVENTIONS_LOCKED_EXPLANATION);
+  },
+  handleRewardsClicked : function(e) {
+    this.options.page.$(".explanation").html(TXT.REWARDS_LOCKED_EXPLANATION);
   },
   handleRiskChange : function(state, user) {
     var $risk = this.$("li .reduction");
@@ -1105,6 +1276,8 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#popupLocked";
       gNextStepsItems.interventions.popup = true;
       gNextStepsItems.interventions.lock = true;
+      gNextStepsItems.rewards.href = "#popupLocked";
+      gNextStepsItems.rewards.popup = true;
       gNextStepsItems.rewards.lock = true;
     } else {
       gNextStepsItems.locations.hide = true;
@@ -1113,17 +1286,40 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#interventions";
       gNextStepsItems.interventions.popup = false;
       gNextStepsItems.interventions.lock = false;
+      gNextStepsItems.interventions.href = "#rewards";
+      gNextStepsItems.rewards.popup = false;
       gNextStepsItems.rewards.lock = false;
     }
 
     this.$("li.next-step").remove();
-    this.$el.append(compileNextStepsItems(state));
+    this.$("li.next-steps-header").after(compileNextStepsItems(state));
     this.$("li .reduction").html(this.getRiskReduction());  
     this.refreshView();
+    this.$("li.locked .ui-icon-arrow-r").removeClass("ui-icon-arrow-r").addClass("icon-lock");
   },
   updateListContent : function() {
     // TODO: when we need to update the list item contents, e.g. risk
     // value, but not add/remove list items  
+  }
+});
+
+var OptionsView = Backbone.View.extend({
+  initialize : function(attrs) {
+  },
+  events : {
+    "click #reset-btn" : "handleReset",
+    "click #cancel-reset-btn" : "handleCancel"
+  },
+  handleCancel : function(evt) {
+    this.$("#popup-confirm-reset").popup("close");
+  },
+  handleReset : function(evt) {
+    this.model.reset();
+    this.model.save();
+    $.mobile.changePage("app.html", {
+      transition : "fade"
+    });
+    window.location.reload();
   }
 });
 
@@ -1141,7 +1337,7 @@ var ProfileView = Backbone.View.extend({
       break;
     }
   },
-  updateView : function(event, data) {
+  updateView : function(e, data) {
     this.model.calculateRisk();
     
     var text;
@@ -1228,7 +1424,7 @@ var ExtraProfileView = Backbone.View.extend({
   events : {
     "pagebeforeshow" : "updateView"
   },
-  updateView : function(event, data) {
+  updateView : function(e, data) {
     var text;
     var user = this.model;
     
@@ -1267,11 +1463,10 @@ var ExtraProfileView = Backbone.View.extend({
 var ResultView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
-      el : this.$(".nextStepsList"),
+      el : this.$(".next-steps-list"),
       model : this.model,
       page : this
     });
-    this.$el.append(POPUP_LOCKED_HTML);
 
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.updateRiskView, this);
 
@@ -1281,7 +1476,7 @@ var ResultView = Backbone.View.extend({
   events : {
     "pagebeforeshow" : "handlePageBeforeShow",
   },
-  handlePageBeforeShow : function(event, data) {
+  handlePageBeforeShow : function(e, data) {
     this.model.calculateRisk();
     if (!this.riskViewRendered) {
       this.riskViewRendered = true;
@@ -1291,6 +1486,13 @@ var ResultView = Backbone.View.extend({
     // might need to init popup since we inserted it (jqm generates the id)
     if (this.$("#popupLocked-popup").length === 0) {
       this.$el.trigger("create");
+    }
+  },
+  updateImage : function(range, rating, $img) {
+    if (range) {
+      $img.css(RISK_IMAGES[rating]);
+    } else {
+      $img.css(RISK_IMAGES_COMPLETE[rating]);
     }
   },
   updateRiskView : function() {
@@ -1319,21 +1521,12 @@ var ResultView = Backbone.View.extend({
       break;
     case User.RISK_STATE.CHANGED:
     case User.RISK_STATE.UP_TO_DATE:
-      $error.hide();
-      if (this.$el.is(":visible")) {
-        $error.hide();
-        $loader.fadeOut("slow", function() {
-          $img.fadeIn("slow");
-        });
-      } else {
-        $loader.hide();
-        $img.show();
-      }
-
       if (!result || !result.Risk) {
+        user.set("risk_state", User.RISK_STATE.ERROR);
+        user.save();
         break;
       }
-
+      
       // update risk image and message
       var range = result.Recommendation !== "";
       var risk = result.Risk[ range ? 1 : 0];
@@ -1343,10 +1536,23 @@ var ResultView = Backbone.View.extend({
       var ratingForAge = parseInt(risk.ratingForAge);
       var highestRating = rating > ratingForAge ? rating : ratingForAge;
       
-      if (range) {
-      	$img.css(RISK_IMAGES[highestRating]);
+      if (isNaN(rating)) {
+        user.set("risk_state", User.RISK_STATE.ERROR);
+        user.save();
+        break; 
+      }
+      
+      $error.hide();
+      if (this.$el.is(":visible")) {
+        $error.hide();
+        $loader.fadeOut("slow", _.bind(function() {
+          $img.fadeIn("slow");
+          this.updateImage(range, highestRating, $img);
+        }, this));
       } else {
-      	$img.css(RISK_IMAGES_COMPLETE[highestRating]);
+        $loader.hide();
+        $img.show();
+        this.updateImage(range, highestRating, $img);
       }
 
       var missingStr = "";
@@ -1398,8 +1604,6 @@ var ResultView = Backbone.View.extend({
 
 var SurveyView = Backbone.View.extend({
   initialize : function(attrs) {
-    var valid = true;
-
     for (var input in this.options.inputMap) {
       var userFieldName = this.options.inputMap[input];
       var val = this.model.get(userFieldName);
@@ -1433,11 +1637,16 @@ var SurveyView = Backbone.View.extend({
         // if ($input.prop("nodeName").toLowerCase() === "select")
         $input.val(val);
       }
-
-      valid &= this.validate(input);
     }
 
-    this.setNextButtonEnabled(valid);
+    this.$("form").validator({
+      message: "<div><em/></div>", // em element is the arrow
+      offset: [-16, 0],
+      position: "top left",
+      singleError: true
+    });
+    
+    this.nextPageHref = this.$("button[type=submit]").attr("href");
   },
   events : {
     "change input[type=radio]" : "handleChange",
@@ -1445,12 +1654,13 @@ var SurveyView = Backbone.View.extend({
     "change select" : "handleChange",
     "keyup input[type=text]" : "handleChange",
     "keyup input[type=number]" : "handleChange",
-    "pagebeforehide" : "handlePageBeforeHide",
-    "pageshow" : "handlePageShow"
+    "pagebeforehide" : "handlePagebeforehide",
+    "pageshow" : "handlePageshow",
+    "submit form" : "handleSubmit"    
   },
-  handleChange : function(event, data) {
-    var $input = $(event.currentTarget);
-    // console.log($input.prop("nodeName") + " " + event.currentTarget.id);
+  handleChange : function(e, data) {
+    var $input = $(e.currentTarget);
+    // console.log($input.prop("nodeName") + " " + e.currentTarget.id);
     if ($input.prop("type") === "radio" && !$input.prop("checked")) {
       return;
     }
@@ -1458,67 +1668,96 @@ var SurveyView = Backbone.View.extend({
     var o = {};
     o[userField] = $input.val();
     this.model.set(o);
-
-    var incompleteForm = false;
-    for (var inputId in this.options.inputMap) {
-      if (!this.validate(inputId)) {
-        incompleteForm = true;
-        break;
-      }
-    }
-
-    this.setNextButtonEnabled(!incompleteForm);
   },
-  handlePageBeforeHide : function(event, data) {
+  handlePagebeforehide : function(e, data) {
+    var validator = this.$("form").data("validator");
+    // check when user clicks our/browser's back button (unnecessarily called
+    // twice for submit but seems harmless)
+    validator.checkValidity();
+    
     // save if input changed
     var changed = false;
     for (var input in this.options.inputMap) {
       var $input = this.$("#" + input);
-      var inputVal = this.model.get(this.options.inputMap[input]);
-      if (inputVal !== $input.data("loadedValue")) {
-        changed = true;
-        $input.data("loadedValue", inputVal);
+      var attr = this.options.inputMap[input];
+      var inputVal = this.model.get(attr);
+      var lastVal = $input.data("loadedValue");
+      if (inputVal !== lastVal) {
+        if ($input.hasClass("invalid")) {
+          $input.val(lastVal);
+          var o = {};
+          o[attr] = lastVal;
+          this.model.set(o);
+        } else {
+          changed = true;
+          $input.data("loadedValue", inputVal);
+        }
       }
     }
+    
+    // clear error tooltips
+    validator.reset();
 
-    var nextPageId = data.nextPage.attr("id");
-    if (!this.model.hasCompletedRequired() && nextPageId !== "welcome") {
-      this.model.set("progress", nextPageId);
+    var nextPageHref = this.$("button[type=submit]").attr("href");
+    if (!this.model.hasCompletedRequired() && nextPageHref !== "#welcome") {
+      this.model.set("progress", nextPageHref.slice(1));
       changed = true;
     }
 
     if (changed) {
       console.info("saving user");
-      this.model.save({
-        last_survey_page : nextPageId
-      });
+      this.model.save();
     }
   },
-  handlePageShow : function(event, data) {
-    var $nextPage;
-    if (!event) {
-      $nextPage = this.$el;
+  handlePageshow : function(e, data) {
+    var $submit = this.$("button[type=submit]");
+    if ((this.model.hasCompletedRequired() && REQUIRED_PAGES[this.$el.attr("id")]) ||
+      (this.model.hasCompletedExtra() && !REQUIRED_PAGES[this.$el.attr("id")]))
+    {
+      $submit.attr("href", data.prevPage.length === 0 ? "#basic_profile" : "#" + data.prevPage.attr("id"));
+      $submit.attr("data-icon", "check");
+      this.$(".ui-submit .ui-icon").addClass("ui-icon-check").removeClass("ui-icon-newarrow-r");
+      $submit.html("Save");
     } else {
-      $nextPage = $(event.target);
+      $submit.attr("href", this.nextPageHref);
+      $submit.attr("data-icon", "newarrow-r");
+      this.$(".ui-submit .ui-icon").addClass("ui-icon-newarrow-r").removeClass("ui-icon-check");
+      $submit.html("Next");
     }
-    $nextPage.find("input[type=radio]").checkboxradio("refresh");
-    $nextPage.find("input.ui-slider-input").slider("refresh");
-    $nextPage.find("select[data-role=slider]").slider("refresh");
-    $nextPage.find("select[data-role!=slider]").selectmenu("refresh");
+    $submit.button("refresh");
+    
+    this.$("input[type=radio]").checkboxradio("refresh");
+    this.$("input.ui-slider-input").slider("refresh");
+    this.$("select[data-role=slider]").slider("refresh");
+    this.$("select[data-role!=slider]").selectmenu("refresh");
   },
-  setNextButtonEnabled : function(enabled) {
-    var $nextBtn = this.$(".nextbtn");
+  handleSubmit : function(e) {
+    e.preventDefault();
 
-    if (enabled) {
-      $nextBtn.removeClass("ui-disabled");
-    } else {
-      if (!$nextBtn.hasClass("ui-disabled")) {
-        $nextBtn.addClass("ui-disabled");
+    // don't continue if validation failed
+    // note: need to check the node name because the "invalid" class sometimes
+    // gets misapplied for selects (validation fails, change selection, span
+    // receives "invalid" class)
+    var $invalids = this.$(".invalid");
+    if ($invalids.length > 0) {
+      for (var i=0; i<$invalids.length; i++) {
+        var $node = $($invalids[0]);
+        var name = $node.prop("nodeName").toLowerCase();
+        if (name === "input" || name === "select") {
+          if ($node.is(":visible")) {
+            return;
+          } else {
+            $node.val("");
+          }
+        }
       }
     }
-  },
-  validate : function(inputId) {
-    return !isBlank(this.model.get(this.options.inputMap[inputId]));
+
+    var $submit = this.$("button[type=submit]");
+    $.mobile.changePage($submit.attr("href"), {
+      reverse : $submit.attr("data-icon") !== "newarrow-r",
+      transition : "slide"
+    });
   }
 });
 
@@ -1533,11 +1772,11 @@ var SurveyBpMedsView = SurveyView.extend({
   getToggleButton : function() {
     return this.$("#bp-meds-toggle");
   },
-  handleMedCountToggle : function(event, data) {
-    this.updateMedCountVis($(event.currentTarget));
+  handleMedCountToggle : function(e, data) {
+    this.updateMedCountVis($(e.currentTarget));
   },
   updateMedCountVis : function($toggle) {
-    var $div = this.$("#bp-med-count");
+    var $div = this.$("#bp-meds-count");
     if ($toggle.val() === "true") {
       if (this.$el.is(":visible")) {
         $div.slideDown();
@@ -1565,8 +1804,8 @@ var SurveyHistoryView = SurveyView.extend({
   getToggleButton : function() {
     return this.$("#diabetes-toggle");
   },
-  handleDiabetesToggle : function(event, data) {
-    this.updateDiabetesVis($(event.currentTarget));
+  handleDiabetesToggle : function(e, data) {
+    this.updateDiabetesVis($(e.currentTarget));
   },
   updateDiabetesVis : function($toggle) {
     if ($toggle.val() === "true") {
@@ -1582,18 +1821,6 @@ var SurveyHistoryView = SurveyView.extend({
         this.$(".hba1c").hide();
       }
     }
-  },
-  validate : function(inputId) {
-    if (inputId !== "hba1c-field") {
-      return SurveyView.prototype.validate.call(this, inputId);
-    }
-
-    var valid = true;
-    if (this.getToggleButton().val() === "true") {
-      var hba1c = this.$("#hba1c-field").val();
-      valid = hba1c === "" || $.isNumeric(hba1c);
-    }
-    return valid;
   }
 });
 
@@ -1608,8 +1835,8 @@ var SurveyKnowsBpView = SurveyView.extend({
     "change #knows-bp-radio-t" : "handleKnowsBpRadio",
     "change #knows-bp-radio-f" : "handleKnowsBpRadio"
   }, SurveyView.prototype.events),
-  handleKnowsBpRadio : function(event, data) {
-    var $input = $(event.currentTarget);
+  handleKnowsBpRadio : function(e, data) {
+    var $input = $(e.currentTarget);
     if (!$input.prop("checked")) {
       return;
     }
@@ -1648,8 +1875,8 @@ var SurveyKnowsCholView = SurveyView.extend({
     "change #knows-chol-radio-t" : "handleKnowsCholRadio",
     "change #knows-chol-radio-f" : "handleKnowsCholRadio"
   }, SurveyView.prototype.events),
-  handleKnowsCholRadio : function(event, data) {
-    var $input = $(event.currentTarget);
+  handleKnowsCholRadio : function(e, data) {
+    var $input = $(e.currentTarget);
     if (!$input.prop("checked")) {
       return;
     }
@@ -1672,85 +1899,86 @@ var SurveyKnowsCholView = SurveyView.extend({
     }
   },
   updateNextTarget : function($selectedRadio) {
-    var page = $selectedRadio.val() === "true" ? "#cholesterol" : "#assessment";
+    var page = $selectedRadio.val() === "true" ? "#cholesterol" : "#confirmation";
     this.$(".dynamic-next").attr("href", page);
   }
 });
 
-var WelcomeView = Backbone.View.extend({
+var WelcomeView = SurveyView.extend({
   initialize : function(attrs) {
+    SurveyView.prototype.initialize.apply(this, arguments);
   },
-  events : {
+  events : _.extend({
     "pagebeforeshow" : "updateView"
-  },
-  updateView : function(event, data) {
+  }, SurveyView.prototype.events),
+  updateView : function(e, data) {
     var progressPage = this.model.get("progress");
     if (progressPage && !this.model.hasCompletedRequired()) {
       this.$(".startbtn").attr("href", "#" + progressPage);
+      this.$("#terms-check").prop("checked", true).checkboxradio("refresh");
     }
   }
 });
 
 /*
  * Events
- */
+*/
 $(document).ready(function() {
   console.debug("ready");
 });
-
-$(document).on("pagebeforeload", function(event, data) {
+$(document).on("pagebeforeload", function(e, data) {
   console.debug("pagebeforeload");
 });
-$(document).on("pageload", function(event, data) {
+$(document).on("pageload", function(e, data) {
   console.debug("pageload");
 });
-$(document).on("pageloadfailed", function(event, data) {
+$(document).on("pageloadfailed", function(e, data) {
   console.debug("pageloadfailed");
 });
 
-$(document).on("pagebeforechange", function(event, data) {
+$(document).on("pagebeforechange", function(e, data) {
   var page = data.toPage;
   console.debug((_.isString(page) ? "\n\n" : "") + "pagebeforechange - " + (_.isString(page) ? page : page.attr("id")));
 });
-$(document).on("pagechange", function(event, data) {
+$(document).on("pagechange", function(e, data) {
   var page = data.toPage;
   console.debug("pagechange - " + (_.isString(page) ? page : page.attr("id")));
 });
-$(document).on("pagechangefailed", function(event, data) {
+$(document).on("pagechangefailed", function(e, data) {
   var page = data.toPage;
   console.debug("pagechangefailed - " + (_.isString(page) ? page : page.attr("id")));
 });
 
-$(document).on("pagebeforeshow", function(event, data) {
+$(document).on("pagebeforeshow", function(e, data) {
   var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
-  console.debug("pagebeforeshow - " + prevPage + " to " + event.target.id);
+  console.debug("pagebeforeshow - " + prevPage + " to " + e.target.id);
 });
-$(document).on("pagebeforehide", function(event, data) {
-  console.debug("pagebeforehide - " + event.target.id + " to " + data.nextPage.attr("id"));
+$(document).on("pagebeforehide", function(e, data) {
+  console.debug("pagebeforehide - " + e.target.id + " to " + data.nextPage.attr("id"));
 });
-$(document).on("pageshow", function(event, data) {
+$(document).on("pageshow", function(e, data) {
   var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
-  console.debug("pageshow - " + prevPage + " to " + event.target.id);
+  console.debug("pageshow - " + prevPage + " to " + e.target.id);
 });
-$(document).on("pagehide", function(event, data) {
-  console.debug("pagehide - " + event.target.id + " to " + data.nextPage.attr("id"));
+$(document).on("pagehide", function(e, data) {
+  console.debug("pagehide - " + e.target.id + " to " + data.nextPage.attr("id"));
 });
 
-$(document).on("pagebeforecreate", function(event) {
-  console.debug("pagebeforecreate - " + event.target.id);
+$(document).on("pagebeforecreate", function(e) {
+  console.debug("pagebeforecreate - " + e.target.id);
 });
-$(document).on("pagecreate", function(event) {
-  console.debug("pagecreate - " + event.target.id);
+$(document).on("pagecreate", function(e) {
+  console.debug("pagecreate - " + e.target.id);
 });
-$(document).on("pageinit", function(event) {
-  console.debug("pageinit - " + event.target.id);
+$(document).on("pageinit", function(e) {
+  console.debug("pageinit - " + e.target.id);
 
   if (gIsFirstPageInit) {
     gIsFirstPageInit = false;
     doFirstPageInit();
   }
 
-  if (event.target.id === "loading") {
+  if (e.target.id === "loading") {
     if (gCurrentUser.hasCompletedRequired()) {
       $.mobile.changePage("#home", {
         transition : "none"
@@ -1762,8 +1990,8 @@ $(document).on("pageinit", function(event) {
     }
   }
 });
-$(document).on("pageremove", function(event) {
-  console.debug("pageremove - " + event.target.id);
+$(document).on("pageremove", function(e) {
+  console.debug("pageremove - " + e.target.id);
 });
 
 /*

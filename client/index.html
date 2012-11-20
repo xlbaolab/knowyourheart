@@ -47,7 +47,7 @@
     </div>
     <div class="container content">
     
-    <div class="screen" id="home" style="display: show;">
+    <div class="screen" id="home" style="display: none;">
 		<div class="container">
 		  <div class="row toppanel_home">
 		    <div class="span5">
@@ -104,7 +104,7 @@
     </div>
     
     <!-- ASSESSMENT PAGE -->
-    <div class="screen" id="assessment" style="display: none;">
+    <div class="screen" id="assessment" style="display: show;">
     	<div class="row">
     		<div class="span11" style="text-align: center;">
     			<h3>Answer 8 questions to calculate your risk for cardiovascular disease</h3>
@@ -114,28 +114,28 @@
       	        <div class="span3">
           <ul id="carouselNav" class="nav nav-pills nav-stacked">
             <li class="active">
-              <a href="javascript:void(0)">Age</a>
+              <a href="javascript:void(0)">Age  <p class="age profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Gender</a>
+              <a href="javascript:void(0)">Gender <p class="gender profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Height</a>
+              <a href="javascript:void(0)">Height <p class="height profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Weight</a>
+              <a href="javascript:void(0)">Weight <p class="weight profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Smoking Status</a>
+              <a href="javascript:void(0)">Smoker? <p class="smoker profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Health History</a>
+              <a href="javascript:void(0)">Health History <span class="icon-warning"></span><p class="profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Blood Pressure</a>
+              <a href="javascript:void(0)">Blood Pressure <span class="icon-warning"></span><p class="profileData"></p></a>
             </li>
             <li>
-              <a href="javascript:void(0)">Cholesterol</a>
+              <a href="javascript:void(0)">Cholesterol <span class="icon-warning"></span><p class="profileData"></a>
             </li>
             <li>
               <a href="javascript:void(0)">Your Heart</a>
@@ -145,36 +145,49 @@
         </div>
       	
       	
-        <div class="span8">
+        <div class="span9">
           <form action="#" id="survey_form">
             <div id="survey_carousel" class="carousel slide">
               <div class="carousel-inner">
 
-                <div class="active item">
-                  <label for="input_age">1. How old are you?</label>
-                  <input type="text" id="input_age" name="age" placeholder="Enter your age here" />
+                <div class="active item survey-page" id="age">
+                  <h3>1. How old are you?</h3>
+                  <div class="question-box">
+	                  <label for="age-field"></label>
+	                  <input name="age" id="age-field" placeholder="Enter your age here" value="" type="number" />
+                  </div>
                 </div>
 
-                <div class="item">
-                  <label>2. Are you male or female?</label>
-                  <input type="radio" id="input_genderm" name="gender" value="M" />
-                  <label class="check_or_radio_label" for="input_genderm">Male</label>
-                  <input type="radio" id="input_genderf" name="gender" value="F" />
-                  <label class="check_or_radio_label" for="input_genderf">Female</label>
+                <div class="item survey-page" id="gender">
+                  <h3>2. Are you male or female?</h3>
+<!--
+                  <input type="radio" id="gender-male-radio" name="" value="M" />
+                  <label for="gender-male-radio">Male</label>
+                  <input type="radio" id="gender-female-radio" name="gender" value="F" />
+                  <label for="gender-female-radio">Female</label>
+-->					
+					<div class="question-box">
+						<div class="btn-group" data-toggle="buttons-radio">
+						  <button type="button" class="btn custom-btn-large" value="M">Male</button>
+						  <button type="button" class="btn custom-btn-large" value="F">Female</button>
+						</div>
+					</div>
                 </div>
 
-                <div class="item">
-                  <label for="input_height_feet">3. How tall are you?</label>
-                  <select id="input_height_feet" name="height_feet">
+                <div class="item survey-page" id="height">
+                  <h3>3. How tall are you?</h3>
+			      <div class="question-box">
+			      <!--<label for="height-ft-select"></label>-->
+			      <select name="height-feet" id="height-ft-select">
                             <option value="">Feet</option>
-                            <option value="2"> 2 ft </option>
                             <option value="3"> 3 ft </option>
                             <option value="4"> 4 ft </option>
                             <option value="5"> 5 ft </option>
                             <option value="6"> 6 ft </option>
                             <option value="7"> 7 ft </option>
                   </select>
-                  <select id="input_height_inches" name="height_inches">
+			      <!--<label for="height-in-select"></label>-->
+		 	      <select name="height-inches" id="height-in-select">
                             <option>Inches</option>
                             <option value="0"> 0 in </option>
                             <option value="1"> 1 in </option>
@@ -190,38 +203,54 @@
                             <option value="11"> 11 in </option>
                   </select>
                 </div>
-
-                <div class="item">
-                  <label for="input_weight">4. How much do you weigh?</label>
-                  <input type="text" id="input_weight" name="weight" placeholder="In pounds" />
+				</div>
+                <div class="item survey-page" id="weight">
+				  <h3>4. How much do you weigh?</h3>
+                  <!--<label for="weight-field">Weight</label>-->
+                  <div class="question-box">
+        		  	<input name="weight" id="weight-field" placeholder="In pounds" value="" type="number">
+        		  </div>	
                 </div>
 
-                <div class="item">
-                  <label>5. Do you currently smoke?</label>
-                  <span class="help-block">Answer 'Yes' if you have smoked any cigarettes in the past month</span>
+                <div class="item survey-page" id="smoker">
+                  <h3>5. Do you currently smoke?</h3>
+                  <!--<label>Smoker</label>-->
 
-                  <input type="radio" id="input_smoker" name="smoker" value="T" />
-                  <label class="check_or_radio_label" for="input_smoker">Yes</label>
-                  <input type="radio" id="input_non_smoker" name="smoker" value="F" />
-                  <label class="check_or_radio_label" for="input_non_smoker">No</label>
+<!--                  <input type="radio" id="smoker-yes-radio" name="" value="true" />
+                  <label for="smoker-yes-radio">Yes</label>
+                  <input type="radio" id="smoker-no-radio" name="" value="false" />
+                  <label for="smoker-no-radio">No</label>
+-->                  
+					<div class="question-box">
+	                  <span class="help-block">Answer 'Yes' if you have smoked any cigarettes in the past month</span>
+<br>
+						<div class="btn-group" data-toggle="buttons-radio">
+						  <button type="button" class="btn custom-btn-large" value="true">Yes</button>
+						  <button type="button" class="btn custom-btn-large" value="false">No</button>
+						</div>
+					</div>
+                  
                 </div>
 
-                <div class="item">
-                  <label>6. Has a doctor ever told you that you had any of the following?</label>
-                  <ul class="unstyled">
-                    <li>
-                      <input type="checkbox" id="input_mi" name="mi" value="T" />
-                      <label class="check_or_radio_label">Heart attack</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="input_stroke" name="stroke" value="T" />
-                      <label class="check_or_radio_label">Stroke?</label>
-                    </li>
-                    <li>
-                      <input type="checkbox" id="input_diabetes" name="diabetes" value="T" />
-                      <label class="check_or_radio_label">Diabetes</label>
-                    </li>
-                  </ul>
+                <div class="item survey-page" id="history">
+                  <h3>6. Has a doctor ever told you that you had any of the following?</h3>
+
+					<div class="question-check-box">
+
+
+
+					    <label class="checkbox">
+					      <input type="checkbox" id="mi-toggle" name="mi" value="T"> Heart Attack
+						</label>
+
+					    <label class="checkbox">
+					      <input type="checkbox" id="stroke-toggle" name="stroke" value="T"> Stroke
+						</label>
+						
+					    <label class="checkbox">
+					      <input type="checkbox" id="diabetes-toggle" name="diabetes" value="T"> Diabetes
+						</label>
+												
                         <div class="hba1c" style="display:show;">
                             <div data-role="fieldcontain">
                                 <fieldset data-role="controlgroup" data-mini="true">
@@ -230,77 +259,245 @@
                                 </fieldset>
                             </div>
                         </div>
-                  
+                  </div>
                 </div>
 
-                <div class="item">
-                  <label for="input_systolic">7. What is your blood pressure?</label>
+                <div class="item survey-page" id="blood-pressure">
+                  <h3>7. What is your blood pressure?</h3>
+                  <label for="input_systolic"></label>
+                  <div class="question-box">
                 	<p>Knowing your blood pressure will improve the accuracy of your heart risk score.</br>
 					If you don't know it at this time, we can help you find a clinic that can assist you.
 					</p>
-                  <input type="text" id="input_systolic" name="systolic" placeholder="Systolic" />
-                  <input type="text" id="input_diastolic" name="diastolic" placeholder="Diastolic" />
+					<br>
+					<div>
+						Systolic Blood Pressure
+                  		<input type="text" id="systolic-bp-slider" name="systolic" placeholder="Enter value here" />
+                  	</div>
+                  	<div>
+						Diastolic Blood Pressure
+                  		<input type="text" id="diastolic-bp-slider" name="diastolic" placeholder="Enter value here" />
+                  	</div>
+                </div>
                 </div>
 
-                <div class="item">               	
-                  <label for="input_cholesterol">8. What is your cholesterol level?</label>
+                <div class="item survey-page" id="cholesterol">
+                	<h3>8. What is your cholesterol level?</h3>
+                	<div class="question-box">               	
+                  <label for="input_cholesterol"></label>
                 	<p>Knowing your cholesterol will improve the accuracy of your heart risk score.</br>
 					If you don't know it at this time, we can help you find a clinic that can assist you.
 					</p> 
-                  <input type="text" id="input_total" name="total" placeholder="Total Cholesterol" />
-                  <input type="text" id="input_hdl" name="hdl" placeholder="HDL Cholesterol" />
-                  <input type="text" id="input_ldl" name="ldl" placeholder="LDL Cholesterol" />
+					<br>
+					<div>
+						Total Cholesterol
+                  		<input type="text" id="total-chol-slider" name="total" placeholder="Enter value here" />
+                  	</div>
+                  	<div>
+						HDL Cholesterol
+                  		<input type="text" id="hdl-slider" name="hdl" placeholder="Enter HDL value here" />
+                  	</div>
+                  	<div>
+						LDL Cholesterol
+                  		<input type="text" id="ldl-slider" name="ldl" placeholder="Enter LDL value here" />
+                  	</div>
+				</div>
                 </div>
+
+				<div class="item" id="assessment">
+					<div class="tabbable"> <!-- Only required for left/right tabs -->
+					  <ul class="nav nav-tabs">
+					    <li class="active"><a href="#tab1" data-toggle="tab">Result</a></li>
+					    <li><a href="#tab2" data-toggle="tab">Find Screening Locations</a></li>
+					    <li><a href="#tab3" data-toggle="tab">Lower your risk</a></li>
+					    <li><a href="#tab4" data-toggle="tab">Improve your assessment</a></li>
+					    <li><a href="#tab5" data-toggle="tab">Get Rewards</a></li>
+
+					  </ul>
+					  <div class="tab-content">
+					    <div class="tab-pane active" id="tab1">
+					      <p>
+					      	<h3>Potentially Moderate Risk</h3>
+					      	<p>Your risk for a heart attack or stroke in the next 5 years is <span>5.5% - 7.6%</span></p>
+					      	<p>*Depending on your blood pressure and cholesterol</p>
+					      	<p>Your risk is 2.2 to 3.6 times what is healthy for your age</p>
+					      </p>
+					    </div>
+					    <div class="tab-pane" id="tab2">
+							<div class="ui-bar loc-search-bar">
+								<fieldset data-role="controlgroup">
+									<label for="loc-search-field" class="ui-hidden-accessible">Near</label>
+									<input id="loc-search-field-1" class="loc-search-field" name="address" placeholder="Current Location" value="Minneapolis" type="search">
+								</fieldset>
+								<a class="loc-search-btn rect-btn" href="#" data-role="button" data-mini="false"> Find </a>
+							</div>
+							<div id="locMap"></div>
+					    </div>
+					    <div class="tab-pane" id="tab3">
+							<button class="btn btn-info">Improve your risk estimate</button>
+
+							<h2> Your current risk is <span class="risk">&hellip;</span>% </h2>
+							<p>
+								These interventions can lower your risk of heart attack or stroke by up
+								to <span class="risk_reduction">&hellip;</span>%
+							</p>
+							<div data-role="collapsible-set" data-inset="false">
+								<div class="meds" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Take medication </h3>
+									<div class="action_accordion">
+										<p class="stop_meds">
+											It is important to be consistent about the medications you are
+											currently taking to reduce your blood pressure or cholesterol.
+											Based on the information you have entered, your current medications
+											(including aspirin if you take it) reduce your risk by about
+											<span class="stop_meds_increase">&hellip;</span>%.
+										</p>
+										<p class="take_meds">
+											A doctor may be able to reduce your risk by
+											<span class="take_meds_reduction">&hellip;</span>% by managing
+											your blood pressure and cholesterol with medication.
+										</p>
+									</div>
+								</div>
+								<div class="exercise" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Exercise more </h3>
+									<div class="action_accordion">
+										<p class="moderate_exercise">
+											Adding three hours of moderate exercise such as brisk walking to
+											your weekly routine will reduce your risk by
+											<span class="moderate_exercise_reduction">&hellip;</span>%.
+										</p>
+										<p class="vigorous_exercise">
+											Adding six hours of moderate exercise or three hours of vigorous
+											exercise such as running to your weekly routine will reduce your
+											risk by <span class="vigorous_exercise_reduction">&hellip;</span>%.
+										</p>
+									</div>
+								</div>
+								<div class="weight" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Lose weight </h3>
+									<div class="action_accordion">
+										<p class="lose_weight">
+											If you lose <span class="lose_pounds">&hellip;</span> pounds and
+											do not regain it, you will reduce your risk by
+											<span class="lose_weight_reduction">&hellip;</span>%. Try a
+											combination of a healthy diet and exercise.
+										</p>
+									</div>
+								</div>
+								<div class="smoking" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Quit smoking </h3>
+									<div class="action_accordion">
+										<p class="quit_smoking">
+											If you quit smoking, you will reduce your risk by
+											<span class="quit_smoking_reduction">&hellip;</span>%.
+										</p>
+									</div>
+								</div>
+			
+							</div>
+					    	
+						</div>
+					    <div class="tab-pane" id="tab4">
+		                	The following are additional inputs that can refine your risk estimate.
+
+<table class="table">
+	<tr>
+		<td>
+			<label>Are you currently on any medication to treat high blood pressure?</label>
+		</td>
+		<td>
+		                  <span class="help-block">If you are unsure, then answer no.</span>
+		                  <input type="radio" id="input_bpmeds" name="bpmeds" value="T" />
+		                  <label class="check_or_radio_label" for="input_bpmeds">yes</label>
+		                  <input type="radio" id="input_non_bpmeds" name="bpmeds" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_bpmeds">no</label>                	
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label for="input_height_feet">How many different medications do you take for your blood pressure?</label>
+		</td>
+		<td>
+		                <!-- TODO if answer to meds is TRUE -->
+		                  <select id="input_height_feet" name="height_feet">
+		                    <option>1</option>
+		                    <option>2</option>
+		                    <option>3</option>
+		                    <option>4+</option>
+		                  </select>			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label>Are you currently on medication to lower your cholesterol?</label>
+			
+		</td>
+		<td>
+		                  <span class="help-block">If you are unsure, then answer no.</span>
+		                  <input type="radio" id="input_cholmeds" name="cholmeds" value="T" />
+		                  <label class="check_or_radio_label" for="input_cholmeds">Yes</label>
+		                  <input type="radio" id="input_non_cholmeds" name="cholmeds" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_cholmeds">No</label>  
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label>Do you take aspirin daily for your heart?</label>
+			
+		</td>
+		<td>
+		                  <span class="help-block">Answer YES if you take either full strength or junior aspirin.</span>
+		                  <input type="radio" id="input_aspirin" name="aspirin" value="T" />
+		                  <label class="check_or_radio_label" for="input_aspirin">Yes</label>
+		                  <input type="radio" id="input_non_aspirin" name="aspirin" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_aspirin">No</label>  			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label for="input_moderate">How many hours do you spend doing moderate physical activities in a typical week?</label>
+		</td>
+		<td>
+                  			<span class="help-block">Moderate physical exercises are ones that cause a slight elevation in heart rate or breathing such as raking leaves, mowing the lawn, or heavy cleaning</span>
+		                  <input type="text" id="input_moderate" name="moderate" placeholder="moderate" />
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label for="input_vigorous">How many hours do you spend doing vigorous physical activities in a typical week?</label>			
+		</td>
+		<td>
+		                  <span class="help-block">Vigoruos physical exercises are ones that cause heavy sweating or large increaeses in breathing or heart rate for at least 10 minutes at a time.  Some examples are running, lap swimming, aerobics classes or fast bicycling</span>
+		                  <input type="text" id="input_vigorous" name="vigorous" placeholder="vigorous" />			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label>Have any of your first-degree relatives (parent, full-blooded brother or sister, or child) had a heart attack before the age of 55??</label>	
+		</td>
+		<td>
+		                  <span class="help-block">A heart attack is also called a myocardial infarction.</span>
+		                  <input type="radio" id="input_heartattack" name="heartattack" value="T" />
+		                  <label class="check_or_radio_label" for="input_heartattack">Yes</label>
+		                  <input type="radio" id="input_non_heartattack" name="heartattack" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_heartattack">No</label>  
+			
+		</td>
+	</tr>
+</table>
+							
+						</div>											    
+					  </div>
+					</div>
+
+				</div>
 
                 <!-- TODO combine with diabetes question -->
                 <div class="item">
-                	The following are additional inputs that can refine your risk estimate.
-
-                  <label>Are you currently on any medication to treat high blood pressure?</label>
-                  <span class="help-block">If you are unsure, then answer no.</span>
-                  <input type="radio" id="input_bpmeds" name="bpmeds" value="T" />
-                  <label class="check_or_radio_label" for="input_bpmeds">yes</label>
-                  <input type="radio" id="input_non_bpmeds" name="bpmeds" value="F" />
-                  <label class="check_or_radio_label" for="input_non_bpmeds">no</label>                	
-
-                <!-- TODO if answer to meds is TRUE -->
-                  <label for="input_height_feet">How many different medications do you take for your blood pressure?</label>
-                  <select id="input_height_feet" name="height_feet">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4+</option>
-                  </select>
-
-                  <label>Are you currently on medication to lower your cholesterol?</label>
-                  <span class="help-block">If you are unsure, then answer no.</span>
-                  <input type="radio" id="input_cholmeds" name="cholmeds" value="T" />
-                  <label class="check_or_radio_label" for="input_cholmeds">yes</label>
-                  <input type="radio" id="input_non_cholmeds" name="cholmeds" value="F" />
-                  <label class="check_or_radio_label" for="input_non_cholmeds">no</label>  
-
-                  <label>Do you take aspirin daily for your heart?</label>
-                  <span class="help-block">Answer YES if you take either full strength or junior aspirin.</span>
-                  <input type="radio" id="input_aspirin" name="aspirin" value="T" />
-                  <label class="check_or_radio_label" for="input_aspirin">yes</label>
-                  <input type="radio" id="input_non_aspirin" name="aspirin" value="F" />
-                  <label class="check_or_radio_label" for="input_non_aspirin">no</label>  
-
-
-                  <label for="input_moderate">How many hours do you spend doing moderate physical activities in a typical week?</label>
-                  <span class="help-block">Moderate physical exercises are ones that cause a slight elevation in heart rate or breathing such as raking leaves, mowing the lawn, or heavy cleaning</span>
-                  <input type="text" id="input_moderate" name="moderate" placeholder="moderate" />
-
-                  <label for="input_vigorous">How many hours do you spend doing vigorous physical activities in a typical week?</label>
-                  <span class="help-block">Vigoruos physical exercises are ones that cause heavy sweating or large increaeses in breathing or heart rate for at least 10 minutes at a time.  Some examples are running, lap swimming, aerobics classes or fast bicycling</span>
-                  <input type="text" id="input_vigorous" name="vigorous" placeholder="vigorous" />
-
-                  <label>Have any of your first-degree relatives (parent, full-blooded brother or sister, or child) had a heart attack before the age of 55??</label>
-                  <span class="help-block">A heart attack is also called a myocardial infarction.</span>
-                  <input type="radio" id="input_heartattack" name="heartattack" value="T" />
-                  <label class="check_or_radio_label" for="input_heartattack">yes</label>
-                  <input type="radio" id="input_non_heartattack" name="heartattack" value="F" />
-                  <label class="check_or_radio_label" for="input_non_heartattack">no</label>  
 
 
                 </div>
@@ -330,7 +527,7 @@
       <hr>
 
       <footer>
-      	<div class="navbar-fixed-bottom">
+      	<div class="">
       		<div class="container">
 				<div id="footer_left">
 						        <p>
