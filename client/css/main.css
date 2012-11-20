@@ -250,6 +250,20 @@ ul {
     background: #ffffff;
 }
 
+@media screen and (max-width:1024px) {
+#howitworks {
+    display: block;
+	text-align: center;
+	font-family: "MuseoSlab500Regular", serif;
+    font-weight: normal;
+    font-size: 2em;
+    margin-top: 1.5em;
+    color: gray;	
+}
+}
+
+
+@media screen and (min-width:1024px) {
 #howitworks {
     display: block;
     width: 961px;
@@ -258,7 +272,7 @@ ul {
     background-position: left;
     text-indent: -9999px;	
     margin: 30px auto;	
-
+}
 }
 
 #stepbystep {
