@@ -199,13 +199,23 @@ a.brand {
 	line-height: 70px;
 	margin-left: 30px;
 }
-
 #home_blue_top {
 	height: 70px;
 	font-size: 70px;
 	color: #2fa1d8;
 	line-height: 70px;
 }
+
+@media screen and (max-width:400px) {
+	#home_blue_top {
+		height: 70px;
+		font-size: 3.5em;
+		color: #2fa1d8;
+		line-height: 1em;
+	}
+}
+
+
 
 #home_blue_bottom {
 
@@ -363,6 +373,12 @@ a.brand {
   	width: 100px;
   	height: 33px;
 	display: inline-block;
+}
+
+@media screen and (min-width:480px) {
+footer {
+	display: none;
+}
 }
 
 #footer_right {
