@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+  <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Know Your Heart</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+
+  </head>
+  <body>
+    <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
+    <![endif]-->
+
+    <div class="navbar navbar-fixed-top">
+    	<div class="navbar-stripe"></div>
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
+          <a class="brand" href="index.html"></a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li>
+                <a id="menuicon_about" href="about.html"></a><div class="menuicon_text">About</div>
+              </li>
+              <li>
+                <a id="menuicon_assess" href="http://dev.knowyourheart.info/mobile/app.html"></a><div class="menuicon_text">Assess Your Heart</div>
+              </li>
+              <li>
+                <a id="menuicon_gettheapp" href="#gettheapp" data-toggle="modal"></a><div class="menuicon_text">Get The App</div>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container content">
+    
+    <div class="screen" id="home" style="display: show;">
+		<div class="container">
+		  <div class="row toppanel_home">
+		    <div class="span5">
+		    	<div id="iphone_screenshot"></div>
+		      <!--Sidebar content-->
+		    </div>
+		    <div class="span7 rightpanel_home">
+		      <!--Body content-->
+		      	<div class="row" id="home_text">
+			      	<div class="span6"><span  id="home_green_small">CALCULATE</span></div>
+			      	<div class="span6 offset1"><span id="home_green_big">YOUR RISK</span></div>
+					<div class="span6"><span id="home_gray">FOR</span><span id="home_blue_top">HEART</span></div>
+					<div class="span6 offset2" id="home_blue_bottom">DISEASE</div>
+				</div>	
+				<div class="row" id="home_buttons">
+					<div class="span7">
+						<a id="getappBtn" href="#gettheapp" data-toggle="modal">Get App</a>
+						<a id="assessyourheartBtn" href="http://dev.knowyourheart.info/mobile/app.html">Assess Your Heart</a>
+					</div>
+				</div>
+		    </div>
+		  </div>
+		  <div class="row-fluid bottompanel_home">
+			<div class="row span12"><span id="howitworks">HOW IT WORKS</span></div>
+			<div class="row" id="stepbystep">
+				<ul>
+					<li>
+						<div class="step span4" >
+							<div id="step1"></div>
+							<div class="steptext"><span class="boldNum">1. </span><span>Survey</span></div>
+							<p class="steptext_sub">Answer 8 questions</p>
+						</div>
+					</li>
+					<li>
+						<div class="step span4">
+							<div id="step2"></div>
+							<div class="steptext"><span class="boldNum">2. </span><span class="steptext">Assess</span></div>
+							<p class="steptext_sub">We assess your risk for </br>heart disease</p>
+						</div>
+					</li>
+					<li>
+						<div class="step span4">
+							<div id="step3"></div>
+							<div class="steptext"><span class="boldNum">3. </span><span class="steptext">Get Screened</span></div>
+							<p class="steptext_sub">Follow our suggestions and </br>find a place to get screened</p>
+						</div>
+					</li>
+
+				</ul>
+			</div>
+			<div class="filler"></div>
+		  </div>					  
+		</div>   	
+    </div>
+    
+    <!-- ASSESSMENT PAGE -->
+    <div class="screen" id="assessment" style="display: none;">
+    	<div class="row">
+    		<div class="span11" style="text-align: center;">
+    			<h3>Answer 8 questions to calculate your risk for cardiovascular disease</h3>
+    		</div>
+    	</div>
+      <div class="row survey">
+      	        <div class="span3">
+          <ul id="carouselNav" class="nav nav-pills nav-stacked">
+            <li class="active">
+              <a href="javascript:void(0)">Age  <p class="age profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Gender <p class="gender profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Height <p class="height profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Weight <p class="weight profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Smoker? <p class="smoker profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Health History <span class="icon-warning"></span><p class="profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Blood Pressure <span class="icon-warning"></span><p class="profileData"></p></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Cholesterol <span class="icon-warning"></span><p class="profileData"></a>
+            </li>
+            <li>
+              <a href="javascript:void(0)">Your Heart</a>
+            </li>
+
+          </ul>
+        </div>
+      	
+      	
+        <div class="span9">
+          <form action="#" id="survey_form">
+            <div id="survey_carousel" class="carousel slide">
+              <div class="carousel-inner">
+
+                <div class="active item survey-page" id="age">
+                  <h3>1. How old are you?</h3>
+                  <div class="question-box">
+	                  <label for="age-field"></label>
+	                  <input name="age" id="age-field" placeholder="Enter your age here" value="" type="number" />
+                  </div>
+                </div>
+
+                <div class="item survey-page" id="gender">
+                  <h3>2. Are you male or female?</h3>
+<!--
+                  <input type="radio" id="gender-male-radio" name="" value="M" />
+                  <label for="gender-male-radio">Male</label>
+                  <input type="radio" id="gender-female-radio" name="gender" value="F" />
+                  <label for="gender-female-radio">Female</label>
+-->					
+					<div class="question-box">
+						<div class="btn-group" data-toggle="buttons-radio">
+						  <button type="button" class="btn custom-btn-large" value="M">Male</button>
+						  <button type="button" class="btn custom-btn-large" value="F">Female</button>
+						</div>
+					</div>
+                </div>
+
+                <div class="item survey-page" id="height">
+                  <h3>3. How tall are you?</h3>
+			      <div class="question-box">
+			      <!--<label for="height-ft-select"></label>-->
+			      <select name="height-feet" id="height-ft-select">
+                            <option value="">Feet</option>
+                            <option value="3"> 3 ft </option>
+                            <option value="4"> 4 ft </option>
+                            <option value="5"> 5 ft </option>
+                            <option value="6"> 6 ft </option>
+                            <option value="7"> 7 ft </option>
+                  </select>
+			      <!--<label for="height-in-select"></label>-->
+		 	      <select name="height-inches" id="height-in-select">
+                            <option>Inches</option>
+                            <option value="0"> 0 in </option>
+                            <option value="1"> 1 in </option>
+                            <option value="2"> 2 in </option>
+                            <option value="3"> 3 in </option>
+                            <option value="4"> 4 in </option>
+                            <option value="5"> 5 in </option>
+                            <option value="6"> 6 in </option>
+                            <option value="7"> 7 in </option>
+                            <option value="8"> 8 in </option>
+                            <option value="9"> 9 in </option>
+                            <option value="10"> 10 in </option>
+                            <option value="11"> 11 in </option>
+                  </select>
+                </div>
+				</div>
+                <div class="item survey-page" id="weight">
+				  <h3>4. How much do you weigh?</h3>
+                  <!--<label for="weight-field">Weight</label>-->
+                  <div class="question-box">
+        		  	<input name="weight" id="weight-field" placeholder="In pounds" value="" type="number">
+        		  </div>	
+                </div>
+
+                <div class="item survey-page" id="smoker">
+                  <h3>5. Do you currently smoke?</h3>
+                  <!--<label>Smoker</label>-->
+
+<!--                  <input type="radio" id="smoker-yes-radio" name="" value="true" />
+                  <label for="smoker-yes-radio">Yes</label>
+                  <input type="radio" id="smoker-no-radio" name="" value="false" />
+                  <label for="smoker-no-radio">No</label>
+-->                  
+					<div class="question-box">
+	                  <span class="help-block">Answer 'Yes' if you have smoked any cigarettes in the past month</span>
+<br>
+						<div class="btn-group" data-toggle="buttons-radio">
+						  <button type="button" class="btn custom-btn-large" value="true">Yes</button>
+						  <button type="button" class="btn custom-btn-large" value="false">No</button>
+						</div>
+					</div>
+                  
+                </div>
+
+                <div class="item survey-page" id="history">
+                  <h3>6. Has a doctor ever told you that you had any of the following?</h3>
+
+					<div class="question-check-box">
+
+
+
+					    <label class="checkbox">
+					      <input type="checkbox" id="mi-toggle" name="mi" value="T"> Heart Attack
+						</label>
+
+					    <label class="checkbox">
+					      <input type="checkbox" id="stroke-toggle" name="stroke" value="T"> Stroke
+						</label>
+						
+					    <label class="checkbox">
+					      <input type="checkbox" id="diabetes-toggle" name="diabetes" value="T"> Diabetes
+						</label>
+												
+                        <div class="hba1c" style="display:show;">
+                            <div data-role="fieldcontain">
+                                <fieldset data-role="controlgroup" data-mini="true">
+                                    <label for="hba1c_field"> </label>
+                                    <input name="hba1c" id="hba1c_field" placeholder="Enter %" value="" type="text" pattern="\d*">
+                                </fieldset>
+                            </div>
+                        </div>
+                  </div>
+                </div>
+
+                <div class="item survey-page" id="blood-pressure">
+                  <h3>7. What is your blood pressure?</h3>
+                  <label for="input_systolic"></label>
+                  <div class="question-box">
+                	<p>Knowing your blood pressure will improve the accuracy of your heart risk score.</br>
+					If you don't know it at this time, we can help you find a clinic that can assist you.
+					</p>
+					<br>
+					<div>
+						Systolic Blood Pressure
+                  		<input type="text" id="systolic-bp-slider" name="systolic" placeholder="Enter value here" />
+                  	</div>
+                  	<div>
+						Diastolic Blood Pressure
+                  		<input type="text" id="diastolic-bp-slider" name="diastolic" placeholder="Enter value here" />
+                  	</div>
+                </div>
+                </div>
+
+                <div class="item survey-page" id="cholesterol">
+                	<h3>8. What is your cholesterol level?</h3>
+                	<div class="question-box">               	
+                  <label for="input_cholesterol"></label>
+                	<p>Knowing your cholesterol will improve the accuracy of your heart risk score.</br>
+					If you don't know it at this time, we can help you find a clinic that can assist you.
+					</p> 
+					<br>
+					<div>
+						Total Cholesterol
+                  		<input type="text" id="total-chol-slider" name="total" placeholder="Enter value here" />
+                  	</div>
+                  	<div>
+						HDL Cholesterol
+                  		<input type="text" id="hdl-slider" name="hdl" placeholder="Enter HDL value here" />
+                  	</div>
+                  	<div>
+						LDL Cholesterol
+                  		<input type="text" id="ldl-slider" name="ldl" placeholder="Enter LDL value here" />
+                  	</div>
+				</div>
+                </div>
+
+				<div class="item" id="assessment">
+					<div class="tabbable"> <!-- Only required for left/right tabs -->
+					  <ul class="nav nav-tabs">
+					    <li class="active"><a href="#tab1" data-toggle="tab">Result</a></li>
+					    <li><a href="#tab2" data-toggle="tab">Find Screening Locations</a></li>
+					    <li><a href="#tab3" data-toggle="tab">Lower your risk</a></li>
+					    <li><a href="#tab4" data-toggle="tab">Improve your assessment</a></li>
+					    <li><a href="#tab5" data-toggle="tab">Get Rewards</a></li>
+
+					  </ul>
+					  <div class="tab-content">
+					    <div class="tab-pane active" id="tab1">
+					      <p>
+					      	<h3>Potentially Moderate Risk</h3>
+					      	<p>Your risk for a heart attack or stroke in the next 5 years is <span>5.5% - 7.6%</span></p>
+					      	<p>*Depending on your blood pressure and cholesterol</p>
+					      	<p>Your risk is 2.2 to 3.6 times what is healthy for your age</p>
+					      </p>
+					    </div>
+					    <div class="tab-pane" id="tab2">
+							<div class="ui-bar loc-search-bar">
+								<fieldset data-role="controlgroup">
+									<label for="loc-search-field" class="ui-hidden-accessible">Near</label>
+									<input id="loc-search-field-1" class="loc-search-field" name="address" placeholder="Current Location" value="Minneapolis" type="search">
+								</fieldset>
+								<a class="loc-search-btn rect-btn" href="#" data-role="button" data-mini="false"> Find </a>
+							</div>
+							<div id="locMap"></div>
+					    </div>
+					    <div class="tab-pane" id="tab3">
+							<button class="btn btn-info">Improve your risk estimate</button>
+
+							<h2> Your current risk is <span class="risk">&hellip;</span>% </h2>
+							<p>
+								These interventions can lower your risk of heart attack or stroke by up
+								to <span class="risk_reduction">&hellip;</span>%
+							</p>
+							<div data-role="collapsible-set" data-inset="false">
+								<div class="meds" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Take medication </h3>
+									<div class="action_accordion">
+										<p class="stop_meds">
+											It is important to be consistent about the medications you are
+											currently taking to reduce your blood pressure or cholesterol.
+											Based on the information you have entered, your current medications
+											(including aspirin if you take it) reduce your risk by about
+											<span class="stop_meds_increase">&hellip;</span>%.
+										</p>
+										<p class="take_meds">
+											A doctor may be able to reduce your risk by
+											<span class="take_meds_reduction">&hellip;</span>% by managing
+											your blood pressure and cholesterol with medication.
+										</p>
+									</div>
+								</div>
+								<div class="exercise" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Exercise more </h3>
+									<div class="action_accordion">
+										<p class="moderate_exercise">
+											Adding three hours of moderate exercise such as brisk walking to
+											your weekly routine will reduce your risk by
+											<span class="moderate_exercise_reduction">&hellip;</span>%.
+										</p>
+										<p class="vigorous_exercise">
+											Adding six hours of moderate exercise or three hours of vigorous
+											exercise such as running to your weekly routine will reduce your
+											risk by <span class="vigorous_exercise_reduction">&hellip;</span>%.
+										</p>
+									</div>
+								</div>
+								<div class="weight" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Lose weight </h3>
+									<div class="action_accordion">
+										<p class="lose_weight">
+											If you lose <span class="lose_pounds">&hellip;</span> pounds and
+											do not regain it, you will reduce your risk by
+											<span class="lose_weight_reduction">&hellip;</span>%. Try a
+											combination of a healthy diet and exercise.
+										</p>
+									</div>
+								</div>
+								<div class="smoking" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+									<h3> Quit smoking </h3>
+									<div class="action_accordion">
+										<p class="quit_smoking">
+											If you quit smoking, you will reduce your risk by
+											<span class="quit_smoking_reduction">&hellip;</span>%.
+										</p>
+									</div>
+								</div>
+			
+							</div>
+					    	
+						</div>
+					    <div class="tab-pane" id="tab4">
+		                	The following are additional inputs that can refine your risk estimate.
+
+<table class="table">
+	<tr>
+		<td>
+			<label>Are you currently on any medication to treat high blood pressure?</label>
+		</td>
+		<td>
+		                  <span class="help-block">If you are unsure, then answer no.</span>
+		                  <input type="radio" id="input_bpmeds" name="bpmeds" value="T" />
+		                  <label class="check_or_radio_label" for="input_bpmeds">yes</label>
+		                  <input type="radio" id="input_non_bpmeds" name="bpmeds" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_bpmeds">no</label>                	
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label for="input_height_feet">How many different medications do you take for your blood pressure?</label>
+		</td>
+		<td>
+		                <!-- TODO if answer to meds is TRUE -->
+		                  <select id="input_height_feet" name="height_feet">
+		                    <option>1</option>
+		                    <option>2</option>
+		                    <option>3</option>
+		                    <option>4+</option>
+		                  </select>			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label>Are you currently on medication to lower your cholesterol?</label>
+			
+		</td>
+		<td>
+		                  <span class="help-block">If you are unsure, then answer no.</span>
+		                  <input type="radio" id="input_cholmeds" name="cholmeds" value="T" />
+		                  <label class="check_or_radio_label" for="input_cholmeds">Yes</label>
+		                  <input type="radio" id="input_non_cholmeds" name="cholmeds" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_cholmeds">No</label>  
+			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label>Do you take aspirin daily for your heart?</label>
+			
+		</td>
+		<td>
+		                  <span class="help-block">Answer YES if you take either full strength or junior aspirin.</span>
+		                  <input type="radio" id="input_aspirin" name="aspirin" value="T" />
+		                  <label class="check_or_radio_label" for="input_aspirin">Yes</label>
+		                  <input type="radio" id="input_non_aspirin" name="aspirin" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_aspirin">No</label>  			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label for="input_moderate">How many hours do you spend doing moderate physical activities in a typical week?</label>
+		</td>
+		<td>
+                  			<span class="help-block">Moderate physical exercises are ones that cause a slight elevation in heart rate or breathing such as raking leaves, mowing the lawn, or heavy cleaning</span>
+		                  <input type="text" id="input_moderate" name="moderate" placeholder="moderate" />
+		
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label for="input_vigorous">How many hours do you spend doing vigorous physical activities in a typical week?</label>			
+		</td>
+		<td>
+		                  <span class="help-block">Vigoruos physical exercises are ones that cause heavy sweating or large increaeses in breathing or heart rate for at least 10 minutes at a time.  Some examples are running, lap swimming, aerobics classes or fast bicycling</span>
+		                  <input type="text" id="input_vigorous" name="vigorous" placeholder="vigorous" />			
+		</td>
+	</tr>
+	<tr>
+		<td>
+		                  <label>Have any of your first-degree relatives (parent, full-blooded brother or sister, or child) had a heart attack before the age of 55??</label>	
+		</td>
+		<td>
+		                  <span class="help-block">A heart attack is also called a myocardial infarction.</span>
+		                  <input type="radio" id="input_heartattack" name="heartattack" value="T" />
+		                  <label class="check_or_radio_label" for="input_heartattack">Yes</label>
+		                  <input type="radio" id="input_non_heartattack" name="heartattack" value="F" />
+		                  <label class="check_or_radio_label" for="input_non_heartattack">No</label>  
+			
+		</td>
+	</tr>
+</table>
+							
+						</div>											    
+					  </div>
+					</div>
+
+				</div>
+
+                <!-- TODO combine with diabetes question -->
+                <div class="item">
+
+
+                </div>
+
+
+
+              </div>
+              <a class="carousel-control right" href="#survey_carousel" data-slide="next">&rsaquo;</a>
+            </div>
+          </form>
+
+          <p id="result"></p>
+          <!-- <div class="hero-unit">
+          <h1>Output!</h1>
+          <p>
+          This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+          </p>
+          <p>
+          <a class="btn btn-primary btn-large">Learn more &raquo;</a>
+          </p>
+          </div> -->
+        </div>
+
+      </div>
+	</div> <!--close assessment div-->
+	
+      <hr>
+
+      <footer>
+      	<div class="">
+      		<div class="container">
+				<div id="footer_left">
+						        <p>
+						          <a href="about.html">About</a> // <a href="http://dev.knowyourheart.info/mobile/app.html">Assess Your Heart</a>  // <a href="#gettheapp" data-toggle="modal">Get the app</a> 
+						        </p>
+						        <div class="apple_appstore"></div><div class="android_googleplay"></div>					
+				</div>
+				        <div id="footer_right"><span id="facebook"></span><span id="twitter"></span><span id="email"></span>
+						</div>
+			</div>
+		</div>
+					<div class="modal fade" id="gettheapp">
+					  <div class="modal-header">
+					    <a class="close" data-dismiss="modal">&times;</a>
+					    <h3>Download Know Your Heart for free</br>on iPad, iPhone, and Android</h3>
+					    <p><em>Currently undergoing app store submission</em></p>
+					  </div>
+					  <div class="modal-body">
+						<div class="apple_appstore"></div><div class="android_googleplay"></div>
+					  </div>
+					</div>
+      </footer>
+
+    </div>
+    <!-- /container -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/vendor/jquery-1.8.0.js"><\/script>')
+    </script>
+
+    <script src="js/vendor/bootstrap.min.js"></script>
+
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36108990-1']);
+  _gaq.push(['_setDomainName', 'knowyourheart.info']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+  </body>
+</html>
