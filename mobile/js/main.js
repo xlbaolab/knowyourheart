@@ -101,7 +101,7 @@ var NEXT_STEPS_TEMPLATE = _.template('\
   <% var item = items[key]; %>\
   <% if (item.hide) { continue; } %>\
   <li class="<%= item.clazz %> <% if (item.lock) { print(\'locked\'); } %> next-step"\
-    data-theme="<%= added++ % 2 ? "e" : "f" %>">\
+    data-theme="<%= added++ % 2 ? "a" : "e" %>">\
     <a href="<%= item.href %>" <% if (item.popup) { print("data-rel=\'popup\'"); } else { print("data-transition=\'slide\'"); }%>>\
       <div class="li-primary">\
         <%= added + ". " + item.primary %>\
@@ -408,38 +408,46 @@ var REQUIRED_PAGES = {
   "knows-chol" : true,
   "cholesterol" : true
 };
+var EXTRA_PAGES = {
+  "bp-meds" : true,
+  "chol-meds" : true,
+  "aspirin" : true,
+  "moderate-exercise" : true,
+  "vigorous-exercise" : true,
+  "family-history" : true
+};
 var RISK_IMAGES = {
   1 : {
-    background : "url(images/heartmeter_sprite1.png) no-repeat 0 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat 0 0"
   },
   2 : {
-    background : "url(images/heartmeter_sprite1.png) no-repeat -231px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -94px 0"
   },
   3 : {
-    background : "url(images/heartmeter_sprite1.png) no-repeat -462px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -188px 0"
   },
   4 : {
-    background : "url(images/heartmeter_sprite1.png) no-repeat -693px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -282px 0"
   },
   5 : {
-    background : "url(images/heartmeter_sprite1.png) no-repeat -924px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -376px 0"
   }
 };
-var RISK_IMAGES_COMPLETE = {
+var CSS_RISK_METER = {
   1 : {
-    background : "url(images/heartmeter_sprite2.png) no-repeat 0 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat 0 0"
   },
   2 : {
-    background : "url(images/heartmeter_sprite2.png) no-repeat -231px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -94px 0"
   },
   3 : {
-    background : "url(images/heartmeter_sprite2.png) no-repeat -462px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -188px 0"
   },
   4 : {
-    background : "url(images/heartmeter_sprite2.png) no-repeat -693px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -282px 0"
   },
   5 : {
-    background : "url(images/heartmeter_sprite2.png) no-repeat -924px 0"
+    background : "url(images/heartmeter3_sprite1.png) no-repeat -376px 0"
   }
 };
 
@@ -585,7 +593,7 @@ function doFirstPageInit() {
   });
 
   new ProfileView({
-    el : $("#basic_profile"),
+    el : $("#basic-profile"),
     model : gCurrentUser
   });
 
@@ -926,7 +934,7 @@ var LocDetailsView = Backbone.View.extend({
 
 var LocListView = Backbone.View.extend({
   initialize : function(attrs) {
-    this.$list = this.$("#locList");
+    this.$list = this.$("#loc-list");
     this.model.on(LocationsModel.ERROR_EVENT, this.handleError, this);
     this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
@@ -934,6 +942,7 @@ var LocListView = Backbone.View.extend({
     "click" : "handleClick",
     "click .loc-search-btn" : "handleFind",
     "click .nav-map" : "handleNavMapClicked",
+    "keypress .loc-search-field" : "handleSearchEnter",
     "pageshow" : "refreshView"
   },
   handleClick : function(e) {
@@ -970,7 +979,7 @@ var LocListView = Backbone.View.extend({
       var provider = providers[i];
 
       this.$list.append(LOC_LI_TEMPLATE({
-        dataTheme : i % 2 ? "e" : "f",
+        dataTheme : i % 2 ? "a" : "e",
         index : i,
         name : provider.name,
         address : provider.address1,
@@ -979,6 +988,11 @@ var LocListView = Backbone.View.extend({
     }
 
     this.refreshView();
+  },
+  handleSearchEnter : function(e) {
+    if (e.keyCode == 13) {
+      this.handleFind();
+    }
   },
   refreshView : function() {
     this.$(".message").hide();
@@ -1012,6 +1026,7 @@ var LocMapView = Backbone.View.extend({
     "click" : "handleClick",
     "click .loc-search-btn" : "handleFind",
     "click .nav-list" : "handleNavListClicked",
+    "keypress .loc-search-field" : "handleSearchEnter",
     "pageshow" : "refreshView"
   },
   clearMarkers : function() {
@@ -1084,6 +1099,11 @@ var LocMapView = Backbone.View.extend({
       this.markers.push(marker);
     }
   },
+  handleSearchEnter : function(e) {
+    if (e.keyCode == 13) {
+      this.handleFind();
+    }
+  },
   refreshView : function() {    
     this.$(".message").hide();
     
@@ -1091,7 +1111,7 @@ var LocMapView = Backbone.View.extend({
     var headerHeight = this.$(".ui-header").height();
     var footerHeight = this.$(".ui-navbar").height();
     var contentHeight = windowHeight - headerHeight - footerHeight - 3;
-    var searchHeight = this.$(".ui-bar").outerHeight();
+    var searchHeight = this.$(".loc-search-bar").outerHeight();
     this.$(".ui-content").height(contentHeight);
     $(this.map.getDiv()).height(contentHeight - searchHeight);
 
@@ -1286,7 +1306,7 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#interventions";
       gNextStepsItems.interventions.popup = false;
       gNextStepsItems.interventions.lock = false;
-      gNextStepsItems.interventions.href = "#rewards";
+      gNextStepsItems.rewards.href = "#rewards";
       gNextStepsItems.rewards.popup = false;
       gNextStepsItems.rewards.lock = false;
     }
@@ -1380,7 +1400,7 @@ var ProfileView = Backbone.View.extend({
         this.$(".history .icon-warning").css("display", "inline-block");
       }
     }
-    this.$(".history .profileData").html(!text ? "&nbsp;" : text);
+    this.$(".history .li-secondary").html(!text ? "&nbsp;" : text);
 
     var result = user.archimedes_result;
     var systolic = user.get("systolic");
@@ -1397,7 +1417,7 @@ var ProfileView = Backbone.View.extend({
         this.$(".bp .icon-warning").hide();
       }
     }
-    this.$(".bp .profileData").html(text);
+    this.$(".bp .li-secondary").html(text);
 
     var chol = user.get("cholesterol");
     var hdl = user.get("hdl");
@@ -1414,7 +1434,7 @@ var ProfileView = Backbone.View.extend({
         this.$(".chol .icon-warning").hide();
       }
     }
-    this.$(".chol .profileData").html(text);
+    this.$(".chol .li-secondary").html(text);
   }
 });
 
@@ -1489,11 +1509,11 @@ var ResultView = Backbone.View.extend({
     }
   },
   updateImage : function(range, rating, $img) {
-    if (range) {
       $img.css(RISK_IMAGES[rating]);
-    } else {
-      $img.css(RISK_IMAGES_COMPLETE[rating]);
-    }
+  },
+  updateImage2 : function(rating, ratingForAge) {
+    this.$(".absolute .heart-meter").css(CSS_RISK_METER[rating]);
+    this.$(".relative .heart-meter").css(CSS_RISK_METER[ratingForAge]);
   },
   updateRiskView : function() {
     var user = this.model;
@@ -1554,6 +1574,12 @@ var ResultView = Backbone.View.extend({
         $img.show();
         this.updateImage(range, highestRating, $img);
       }
+      
+      this.$(".absolute .rating").html(RISK_RATING[rating].toUpperCase());
+      this.$(".absolute .rating").attr("risk-rating", rating);
+      this.$(".relative .rating").html(RISK_RATING[ratingForAge].toUpperCase());
+      this.$(".relative .rating").attr("risk-rating", ratingForAge)
+      this.updateImage2(rating, ratingForAge);
 
       var missingStr = "";
       if (user.needBp()) {
@@ -1641,7 +1667,7 @@ var SurveyView = Backbone.View.extend({
 
     this.$("form").validator({
       message: "<div><em/></div>", // em element is the arrow
-      offset: [-16, 0],
+      offset: [-16, -30],
       position: "top left",
       singleError: true
     });
@@ -1710,19 +1736,33 @@ var SurveyView = Backbone.View.extend({
     }
   },
   handlePageshow : function(e, data) {
+    this.prevPageId = data.prevPage.attr("id");
+    
     var $submit = this.$("button[type=submit]");
-    if ((this.model.hasCompletedRequired() && REQUIRED_PAGES[this.$el.attr("id")]) ||
-      (this.model.hasCompletedExtra() && !REQUIRED_PAGES[this.$el.attr("id")]))
+    if (this.manageSubmitTarget === false) {
+      // do nothing
+    } else if (
+      (this.model.hasCompletedRequired() && REQUIRED_PAGES[this.$el.attr("id")]) ||
+      (this.model.hasCompletedExtra() && EXTRA_PAGES[this.$el.attr("id")]))
     {
-      $submit.attr("href", data.prevPage.length === 0 ? "#basic_profile" : "#" + data.prevPage.attr("id"));
+      $submit.attr("href",
+        (data.prevPage.length === 0
+          || REQUIRED_PAGES[this.prevPageId]
+          || EXTRA_PAGES[this.prevPageId])
+        ? "#basic-profile"
+        : "#" + data.prevPage.attr("id"));
       $submit.attr("data-icon", "check");
       this.$(".ui-submit .ui-icon").addClass("ui-icon-check").removeClass("ui-icon-newarrow-r");
-      $submit.html("Save");
+      if ($.trim($submit.html()) === "Next") {
+        $submit.html("Save");
+      }
     } else {
       $submit.attr("href", this.nextPageHref);
       $submit.attr("data-icon", "newarrow-r");
       this.$(".ui-submit .ui-icon").addClass("ui-icon-newarrow-r").removeClass("ui-icon-check");
-      $submit.html("Next");
+      if ($.trim($submit.html()) === "Save") {
+        $submit.html("Next");
+      }
     }
     $submit.button("refresh");
     
@@ -1754,10 +1794,14 @@ var SurveyView = Backbone.View.extend({
     }
 
     var $submit = this.$("button[type=submit]");
-    $.mobile.changePage($submit.attr("href"), {
-      reverse : $submit.attr("data-icon") !== "newarrow-r",
-      transition : "slide"
-    });
+    var options = {};
+    if (REQUIRED_PAGES[this.prevPageId] || EXTRA_PAGES[this.prevPageId]) {
+      options.transition = "fade";
+    } else {
+      options.reverse = $submit.attr("data-icon") !== "newarrow-r";
+      options.transition = "slide";
+    }
+    $.mobile.changePage($submit.attr("href"), options);
   }
 });
 
@@ -1830,6 +1874,7 @@ var SurveyKnowsBpView = SurveyView.extend({
     var $checked = this.$("input[name='knows-bp']:checked");
     this.updateNextTarget($checked);
     this.updateLocationsVis($checked);
+    this.manageSubmitTarget = false;
   },
   events : _.extend({
     "change #knows-bp-radio-t" : "handleKnowsBpRadio",
@@ -1846,20 +1891,25 @@ var SurveyKnowsBpView = SurveyView.extend({
   updateLocationsVis : function($selectedRadio) {
     if ($selectedRadio.val() === "false") {
       if (this.$el.is(":visible")) {
-        this.$(".locations-pointer").slideDown();
+        this.$(".screening-note").slideDown();
       } else {
-        this.$(".locations-pointer").show();
+        this.$(".screening-note").show();
       }
     } else {
       if (!this.$el.is(":visible")) {
-        this.$(".locations-pointer").hide();
+        this.$(".screening-note").hide();
       } else {
-        this.$(".locations-pointer").slideUp();
+        this.$(".screening-note").slideUp();
       }
     }
   },
   updateNextTarget : function($selectedRadio) {
-    var page = $selectedRadio.val() === "true" ? "#blood-pressure" : "#knows-chol";
+    var page;
+    if ($selectedRadio.val() === "true") {
+      page = "#blood-pressure";
+    } else {
+      page = this.model.hasCompletedRequired() ? "#basic-profile" : "#knows-chol";
+    }
     this.$(".dynamic-next").attr("href", page);
   }
 });
@@ -1870,6 +1920,7 @@ var SurveyKnowsCholView = SurveyView.extend({
     var $checked = this.$("input[name='knows-chol']:checked");
     this.updateNextTarget($checked);
     this.updateLocationsVis($checked);
+    this.manageSubmitTarget = false;
   },
   events : _.extend({
     "change #knows-chol-radio-t" : "handleKnowsCholRadio",
@@ -1886,20 +1937,25 @@ var SurveyKnowsCholView = SurveyView.extend({
   updateLocationsVis : function($selectedRadio) {
     if ($selectedRadio.val() === "false") {
       if (this.$el.is(":visible")) {
-        this.$(".locations-pointer").slideDown();
+        this.$(".screening-note").slideDown();
       } else {
-        this.$(".locations-pointer").show();
+        this.$(".screening-note").show();
       }
     } else {
       if (!this.$el.is(":visible")) {
-        this.$(".locations-pointer").hide();
+        this.$(".screening-note").hide();
       } else {
-      	this.$(".locations-pointer").slideUp();
+      	this.$(".screening-note").slideUp();
       }
     }
   },
   updateNextTarget : function($selectedRadio) {
-    var page = $selectedRadio.val() === "true" ? "#cholesterol" : "#confirmation";
+    var page;
+    if ($selectedRadio.val() === "true") {
+      page = "#cholesterol";
+    } else {
+      page = this.model.hasCompletedRequired() ? "#basic-profile" : "#confirmation";
+    }
     this.$(".dynamic-next").attr("href", page);
   }
 });
@@ -1909,13 +1965,21 @@ var WelcomeView = SurveyView.extend({
     SurveyView.prototype.initialize.apply(this, arguments);
   },
   events : _.extend({
+    "click .terms" : "handleTermsClicked",
     "pagebeforeshow" : "updateView"
   }, SurveyView.prototype.events),
+  handleTermsClicked : function(e) {
+    window.open("http://www.knowyourheart.info/terms.html");
+  },
   updateView : function(e, data) {
     var progressPage = this.model.get("progress");
+    var $submit = this.$("button[type=submit]");
     if (progressPage && !this.model.hasCompletedRequired()) {
       this.$(".startbtn").attr("href", "#" + progressPage);
       this.$("#terms-check").prop("checked", true).checkboxradio("refresh");
+      $submit.html("Continue");
+    } else {
+      $submit.html("Get Started");
     }
   }
 });
@@ -1972,6 +2036,9 @@ $(document).on("pagecreate", function(e) {
 });
 $(document).on("pageinit", function(e) {
   console.debug("pageinit - " + e.target.id);
+  
+  $.support.cors = true;
+  $.mobile.allowCrossDomainPages = true;
 
   if (gIsFirstPageInit) {
     gIsFirstPageInit = false;

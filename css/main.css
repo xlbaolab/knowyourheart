@@ -23,6 +23,7 @@
 body {
 	font-family: "MuseoSlab500Regular", serif;
     font-weight: normal;
+	padding-top: 0px;
 }
 
 h3 {
@@ -58,6 +59,11 @@ margin-top: 1em;
 
 .navbar .nav > li {
 	margin-left: 3em;
+}
+@media screen and (max-width:979px) {
+	.navbar .nav > li {
+		margin-left: 0em;
+	}
 }
 
 .navbar .nav > li > a {
@@ -377,7 +383,7 @@ a.brand {
 
 @media screen and (min-width:480px) {
 footer {
-	display: none;
+	display: show;
 }
 }
 

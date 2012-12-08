@@ -11,7 +11,7 @@
       'fadeSpeed' : 200,
       'maxWidth' : 280,
       'minSideMargins' : 15,
-      'position' : 'autoUnder',
+      'position' : 'autoOver',
       'offset' : 15,
       'text' : 'title'
     }, useTitle

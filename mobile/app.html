@@ -8,13 +8,12 @@
   <meta http-equiv="Cache-control" content="no-cache">
 
   <title>Know Your Heart</title>
-  <!--
-  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
-  -->
-  <link href="css/jquery.mobile-1.2.0.min.css" rel="stylesheet" />
+
+  <link href="lib/jquerymobile/themes/kyh/kyh.css" rel="stylesheet" />
+  <link href="css/jquery.mobile.structure-1.2.0.css" rel="stylesheet" />
   <link href="tooltip/css/jqmTooltip.css" rel="stylesheet" />
   <link href="css/my.css" rel="stylesheet" />
-  <link href="css/codiqa-custom.css" rel="stylesheet" />
+  <!--   <link href="css/codiqa-custom.css" rel="stylesheet" /> -->
   <link href="css/knowyourheart.css" rel="stylesheet" />
 
   <!-- <style>
@@ -87,27 +86,25 @@
 
 <!-- welcome -->
 <div data-role="page" data-theme="a" id="welcome">
-  <div class="navbar-stripe"></div>
+  <!--   <div class="navbar-stripe"></div> -->
   <div data-role="content">
     <div class="top-shadow">
-      <div class="knh-logo"></div>
-      <div id="start_text">
-        <p>
-          Answer 8 questions to calculate your risk for cardiovascular disease.
-        </p>
-        <p id="archimedes">
-          Powered by the Archimedes IndiGO decision support tool used by physicians.
-          Receive personalized guidelines to help you make the best decision about your health.
-        </p>
-      </div>
+      <div class="logo"></div>
+      <p>
+        Answer 8 questions to calculate your risk for cardiovascular disease.
+      </p>
+      <p class="note">
+        Powered by the Archimedes IndiGO decision support tool used by physicians.
+        Receive personalized guidelines to help you make the best decisions about your health.
+      </p>
     </div>
     <form data-ajax="false">
-      <div id="checkboxes2">
-        <fieldset data-role="controlgroup" data-mini="true">
-          <input id="terms-check" name="terms" type="checkbox" required="required">
-          <label for="terms-check">Agree with<a href="http://www.knowyourheart.info/terms.html" data-transition="fade"> Terms and Conditions </a> </label>
-        </fieldset>
-      </div>
+      <fieldset data-role="controlgroup" data-mini="true">
+        <input id="terms-check" name="terms" type="checkbox"
+        required="required" data-theme="e">
+        <label for="terms-check">Agree with <a class="terms"
+          href="#"> Terms and Conditions</a></label>
+      </fieldset>
       <button type="submit" href="#age" data-theme="b"
       data-icon="newarrow-r" data-iconpos="right">
         Get Started
@@ -117,74 +114,57 @@
 </div>
 
 <!-- terms and conditions -->
-<div data-role="page" data-theme="a" id="terms">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Terms and Conditions </h2>
-    <a href="#welcome" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-  </div>
-  <div data-role="content">
-    <div>
-      <p>
-        <b> Link to a website that is launched through a mobile browser </b>
-      </p>
-    </div>
-  </div>
+<!-- <div data-role="page" data-theme="a" id="terms">
+<div data-role="header" data-theme="c" data-position="fixed">
+<h2> Terms and Conditions </h2>
+<a href="#welcome" class="ui-btn-left" data-role="button" data-rel="back"
+data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
 </div>
+<div data-role="content">
+<div>
+<p>
+<b> Link to a website that is launched through a mobile browser </b>
+</p>
+</div>
+</div>
+</div> -->
 
 <!-- home -->
 <div data-role="page" data-theme="a" id="home">
   <div data-role="content">
-    <div id="top-shadow-dash">
+    <div class="top-shadow">
       <div id="knh-logo-dash"></div>
     </div>
     <div class="dash-nav ui-grid-b">
       <div class="ui-block-a">
         <a id="dashboardAssessmentBtn" data-transition="fade" href="#assessment"> &nbsp; </a>
-        Your Heart
+        <label>Your Heart</label>
       </div>
       <div class="ui-block-b">
         <a id="dashboardLocationBtn" data-transition="fade" href="#screening-locations-map"> &nbsp; </a>
-        Find Clinic
+        <label>Find Clinic</label>
       </div>
       <div class="ui-block-c">
-        <a id="dashboardShareBtn" data-transition="slideup" href="#share"> &nbsp; </a>
-        Share
+        <a id="dashboardShareBtn" data-transition="fade" href="#share"> &nbsp; </a>
+        <label>Share</label>
       </div>
     </div>
-    <ul class="next-steps-list" data-role="listview" data-divider-theme="d" data-inset="false">
+    <ul class="next-steps-list" data-role="listview" data-divider-theme="a" data-inset="false">
       <li class="next-steps-header" data-role="list-divider" role="heading">
         Next Steps
       </li>
-      <li data-role="list-divider" role="heading">
-        <!-- divider -->
-      </li>
-      <li data-theme="f">
+      <li data-role="list-divider" role="heading"></li>
+      <li data-theme="e">
         <a href="#options" data-transition="slide"> Options </a>
       </li>
     </ul>
   </div>
-  <!-- <div data-role="footer" data-theme="b">
-  <div data-role="navbar">
-  <ul>
-  <li>
-  <a href="#">One</a>
-  </li>
-  <li>
-  <a href="#">Two</a>
-  </li>
-  <li>
-  <a href="#">Three</a>
-  </li>
-  </ul>
-  </div>
-  </div> -->
 </div>
 
 <!-- options -->
 <div data-role="page" data-theme="a" id="options">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Options </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Options </h1>
     <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
@@ -204,166 +184,468 @@
 
 <!-- share -->
 <div data-role="page" data-theme="a" id="share">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Share </h2>
-    <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-    href="#home" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Share </h1>
+    <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
+    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
   <div data-role="content">
     <p>
-      Share about cardiovascular disease risk with your friends and family.
+      Share about cardiovascular disease risk with your friends and family:
     </p>
-    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="b" target="_blank" class="sharebtn" href="mailto:?subject=Inviting you to learn about your risk for cardiovascular disease &body=Know Your Heart provided me with my cardiovascular risk score.  http%3A%2F%2Fknowyourheart.info"> Email </a>
-    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="d" target="_blank" class="sharebtn" href="http://m.facebook.com/sharer.php?u=knowyourheart.info&i=m.knowyourheart.info/image/logo.png&d=I just learned about my risk for cardiovascular disease.  Do you know yours?"> Share on Facebook </a>
-    <a rel="external" data-role="button" data-rel="dialog" data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn" href="http://twitter.com/share?text=I just learned about my risk for cardiovascular disease. Do you know yours? http://knowyourheart.info"> Share on Twitter </a>
+    <!-- I used an app called Know Your Heart to learn my risk for heart attack or stroke. Try it at http://www.knowyourheart.info -->
+    <a rel="external" data-role="button" data-rel="dialog"
+    data-transition="slidedown" data-theme="b" target="_blank" class="sharebtn"
+    href="mailto:?subject=Your%20Heart%20Disease%20Risk&body=I%20used%20an%20app%20called%20Know%20Your%20Heart%20to%20learn%20my%20risk%20for%20heart%20attack%20or%20stroke.%20Try%20it%20at%20http%3A%2F%2Fwww.knowyourheart.info"> Email </a>
+    <!-- http://www.knowyourheart.info/images/knh-logo.png -->
+    <a rel="external" data-role="button" data-rel="dialog"
+    data-transition="slidedown" data-theme="d" target="_blank"
+    class="sharebtn" href="http://www.facebook.com/sharer.php?s=100&p[title]=Know%20Your%20Heart&p[url]=http%3A%2F%2Fwww.knowyourheart.info&p[summary]=What%20is%20your%20risk%20for%20heart%20attack%20or%20stroke%3F%20Find%20out%20using%20Know%20Your%20Heart.&p[images][0]=http%3A%2F%2Fwww.knowyourheart.info%2Fimages%2Fknh-logo.png"> Share on Facebook </a>
+    <!-- What is your risk for heart attack or stroke? Find out using Know Your Heart: http://www.knowyourheart.info -->
+    <a rel="external" data-role="button" data-rel="dialog"
+    data-transition="slidedown" data-theme="c" target="_blank" class="sharebtn"
+    href="http://twitter.com/share?text=What%20is%20your%20risk%20for%20heart%20attack%20or%20stroke%3F%20Find%20out%20using%20Know%20Your%20Heart%3A%20http%3A%2F%2Fwww.knowyourheart.info"> Share on Twitter </a>
   </div>
 </div>
 
 <!-- profile -->
-<div data-role="page" data-theme="a" id="basic_profile">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext"
+<div data-role="page" data-theme="a" id="basic-profile">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"
     class="ui-btn-right"> </a>
-    <h2>About You</h2>
-    <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="left" class="ui-btn-left"> Your Heart </a>
+    <h1>You</h1>
+    <a href="#assessment" data-role="button" data-direction="reverse"
+    data-transition="fade" data-icon="assessment" data-iconpos="left"
+    class="ui-btn-left"> Your Heart </a>
   </div>
   <div data-role="content">
-    <ul data-role="listview" data-divider-theme="b" data-inset="false">
-      <li data-theme="f">
-        <a href="#age" data-transition="slide"> Age <p class="age profileData"></p> </a>
+    <ul data-role="listview" data-inset="false">
+      <li data-theme="a">
+        <a href="#age" data-transition="slide"> Age <div class="age li-secondary"></div> </a>
       </li>
       <li data-theme="e">
-        <a href="#gender" data-transition="slide"> Gender <p class="gender profileData"></p> </a>
+        <a href="#gender" data-transition="slide"> Gender <div class="gender li-secondary"></div> </a>
       </li>
-      <li data-theme="f">
-        <a href="#height" data-transition="slide"> Height <p class="height profileData"></p> </a>
+      <li data-theme="a">
+        <a href="#height" data-transition="slide"> Height <div class="height li-secondary"></div> </a>
       </li>
       <li data-theme="e">
-        <a href="#weight" data-transition="slide"> Weight <p class="weight profileData"></p> </a>
+        <a href="#weight" data-transition="slide"> Weight <div class="weight li-secondary"></div> </a>
       </li>
-      <li data-theme="f">
-        <a href="#smoker" data-transition="slide"> Smoker? <p class="smoker profileData"></p> </a>
+      <li data-theme="a">
+        <a href="#smoker" data-transition="slide"> Smoker? <div class="smoker li-secondary"></div> </a>
       </li>
       <li class="history" data-theme="e">
-        <a href="#history" data-transition="slide"> Health History <span class="icon-warning"></span><p class="profileData"></p> </a>
+        <a href="#history" data-transition="slide"> Health History <span class="icon-warning"></span><div class="li-secondary"></div> </a>
       </li>
-      <li class="bp" data-theme="f">
-        <a href="#knows-bp" data-transition="slide"> Blood Pressure <span class="icon-warning"></span><p class="profileData"></p> </a>
+      <li class="bp" data-theme="a">
+        <a href="#knows-bp" data-transition="slide"> Blood Pressure <span class="icon-warning"></span><div class="li-secondary"></div> </a>
       </li>
       <li class="chol" data-theme="e">
-        <a href="#knows-chol" data-transition="slide"> Cholesterol <span class="icon-warning"></span><p class="profileData"></p> </a>
+        <a href="#knows-chol" data-transition="slide"> Cholesterol <span class="icon-warning"></span><div class="li-secondary"></div> </a>
       </li>
     </ul>
     <div class="spacer"></div>
   </div>
-  <div data-role="tabbar" data-iconpos="top" data-theme="a">
+  <div data-role="tabbar" data-iconpos="left">
     <ul>
       <li>
-        <a href="#basic_profile" data-icon="info" data-transition="flip" data-direction="reverse"> Basic </a>
+        <a href="#basic-profile" data-icon="info" data-transition="flip"
+        data-direction="reverse"> Basic </a>
       </li>
       <li>
-        <a href="#extra_profile" data-icon="gear" data-transition="flip"> More </a>
+        <a href="#extra_profile" data-icon="gear" data-transition="flip"
+        > More </a>
       </li>
     </ul>
   </div>
 </div>
-<!-- Profile ADVANCED -->
+
+<!-- profile - more -->
 <div data-role="page" data-theme="a" id="extra_profile">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext" class="ui-btn-right"> </a>
-    <h2>More You</h2>
-    <a data-role="button" data-direction="reverse" data-transition="fade" data-theme="c" href="#assessment" data-icon="assessment" data-iconpos="left" class="ui-btn-left"> Your Heart </a>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"
+    class="ui-btn-right"> </a>
+    <h1>More You</h1>
+    <a href="#assessment" data-role="button" data-direction="reverse"
+    data-transition="fade" data-icon="assessment" data-iconpos="left"
+    class="ui-btn-left"> Your Heart </a>
   </div>
   <div data-role="content">
-    <ul data-role="listview" data-divider-theme="b" data-inset="false">
-      <li data-theme="e">
-        <a href="#bp-meds" data-transition="slide"> Taking blood pressure medication? <p class="bloodpressuremeds profileData"></p></a>
-      </li>
-      <li data-theme="f">
-        <a href="#chol-meds" data-transition="slide"> Taking cholesterol medication? <p class="cholesterolmeds profileData"></p> </a>
+    <ul data-role="listview" data-inset="false">
+      <li data-theme="a">
+        <a href="#bp-meds" data-transition="slide"> Taking blood pressure medication? <div class="bloodpressuremeds li-secondary"></div></a>
       </li>
       <li data-theme="e">
-        <a href="#aspirin" data-transition="slide"> Daily Aspirin? <p class="aspirin profileData"></p> </a>
+        <a href="#chol-meds" data-transition="slide"> Taking cholesterol medication? <div class="cholesterolmeds li-secondary"></div> </a>
       </li>
-      <li data-theme="f">
-        <a href="#moderate-exercise" data-transition="slide"> Weekly Moderate Activity <p class="moderateexercise profileData"></p> </a>
+      <li data-theme="a">
+        <a href="#aspirin" data-transition="slide"> Daily Aspirin? <div class="aspirin li-secondary"></div> </a>
       </li>
       <li data-theme="e">
-        <a href="#vigorous-exercise" data-transition="slide"> Weekly Vigorous Activity <p class="vigorousexercise profileData"></p> </a>
+        <a href="#moderate-exercise" data-transition="slide"> Weekly Moderate Activity <div class="moderateexercise li-secondary"></div> </a>
       </li>
-      <li data-theme="f">
-        <a href="#family-history" data-transition="slide"> Relatives with heart disease? <p class="familymihistory profileData"></p> </a>
+      <li data-theme="a">
+        <a href="#vigorous-exercise" data-transition="slide"> Weekly Vigorous Activity <div class="vigorousexercise li-secondary"></div> </a>
+      </li>
+      <li data-theme="e">
+        <a href="#family-history" data-transition="slide"> Relatives with heart disease? <div class="familymihistory li-secondary"></div> </a>
       </li>
     </ul>
   </div>
-  <div data-role="tabbar" data-iconpos="top" data-theme="a">
+  <div data-role="tabbar" data-iconpos="left">
     <ul>
       <li>
-        <a href="#basic_profile" data-icon="info" data-transition="flip" data-direction="reverse"> Basic </a>
+        <a href="#basic-profile" data-icon="info" data-transition="flip"
+        data-direction="reverse"> Basic </a>
       </li>
       <li>
-        <a href="#extra_profile" data-icon="gear" data-transition="flip"> More </a>
+        <a href="#extra_profile" data-icon="gear" data-transition="flip"
+        > More </a>
       </li>
     </ul>
   </div>
 </div>
 
-<!-- Heart Facts -->
-<div data-role="page" data-theme="a" id="heartfacts">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Did you know? </h2>
-
-    <a data-role="button" data-direction="reverse" data-rel="back"
-    data-theme="c" href="#quiz2" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+<!-- Results -->
+<div data-role="page" data-theme="a" id="assessment">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <a data-role="button" data-theme="c" href="#home" data-icon="home"
+    data-iconpos="notext" class="ui-btn-right"> </a>
+    <h1>Your Heart</h1>
+    <a data-role="button" data-theme="c" href="#basic-profile" data-icon="profile" data-iconpos="left"
+    class="ui-btn-left"> You </a>
   </div>
   <div data-role="content">
-    <div id="facts">
-      <p>
-        1 in 3 adults in the U.S. have some form of heart disease, stroke, or other blood vessel diseases
+    <div class="ui-grid-a">
+      <div class="ui-block-a absolute">
+        <div class="heart-meter"></div>
+      </div>
+      <div class="ui-block-b absolute">
+        <h3> Your Risk Today: </h3>
+        <p class="rating">
+          ?
+        </p>
+        <p>
+          Your risk for a heart attack or stroke in the next 5 years is 5.5% - 7.6%.
+        </p>
+      </div>
+      <div class="ui-block-a relative">
+        <div class="heart-meter"></div>
+      </div>
+      <div class="ui-block-b relative">
+        <h3> Your Risk vs Others: </h3>
+        <p class="rating">
+          ?
+        </p>
+        <p>
+          Your risk is 2.2 to 3.6 times what is healthy for your age.
+        </p>
+      </div>
+    </div>
+    <a data-role="button" data-theme="" href="#" > More Info </a>
+    <ul class="next-steps-list" data-role="listview" data-divider-theme="a" data-inset="false">
+      <li class="risk_score" data-theme="e">
+        <a href="#popupMoreInfo" data-rel="popup"> <div class="heart_meter"></div>
+          <div id="circularG">
+            <div id="circularG_1" class="circularG"></div>
+            <div id="circularG_2" class="circularG"></div>
+            <div id="circularG_3" class="circularG"></div>
+            <div id="circularG_4" class="circularG"></div>
+            <div id="circularG_5" class="circularG"></div>
+            <div id="circularG_6" class="circularG"></div>
+            <div id="circularG_7" class="circularG"></div>
+            <div id="circularG_8" class="circularG"></div>
+          </div>
+          <p class="risk_error">
+            An error occured during risk calculation, please check your values or refresh the page.
+          </p>
+          <p class="risk_message">
+            <!-- Your risk could be as high as &hellip; %, &hellip; times what is considered healthy for your age. -->
+          </p>
+          <p class="li-arrow-label">
+            More Info
+          </p></a>
+      </li>
+      <li class="archimedes-link" data-theme="e">
+        <p>
+          Calculated by <a target="_blank" href="http://archimedesmodel.com/indigo"> Archimedes IndiGO </a>
+        </p>
+      </li>
+      <li class="next-steps-header" data-role="list-divider" role="heading">
+        Next Steps
+      </li>
+    </ul>
+    <div data-role="popup" id="popupMoreInfo" class="ui-content">
+      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"> Close </a>
+      <h4>Your Cardiovascular Risk</h4>
+      <p class="accuracy">
+        <em>Note: To give you a more accurate risk assessment, we need to know your blood pressure and cholesterol</em>
       </p>
-      <p>
-        And that the top risk factors for heart disease and stroke are:
-      </p>
-      <ol id="riskfactors">
-        <li>
-          Inactivity
-        </li>
-        <li>
-          Obesity
-        </li>
-        <li>
-          High Blood Pressure
-        </li>
-        <li>
-          Cigarette Smoking
-        </li>
-        <li>
-          High Cholesterol
-        </li>
-        <li>
-          Diabetes
-        </li>
-      </ol>
-      <p>
-        Know Your Heart can help you take steps to lower that risk today!
+      <table>
+        <tr>
+          <td class="risk value">&hellip;</td><td>risk of having a heart attack or stroke within the next 5 years</td>
+        </tr>
+        <tr>
+          <td class="ratio value">&hellip;</td><td>times what is considered healthy for your age</td>
+        </tr>
+        <tr>
+          <td class="percentile value">&hellip;</td><td>percentile for your age (lower is better)</td>
+        </tr>
+      </table>
+      <h4>Recommendation</h4>
+      <p class="recommendation">
+        &hellip;
       </p>
     </div>
-    <a data-role="button" data-transition="slide" data-theme="b" href="#age"
-    data-icon="newarrow-r" data-iconpos="right" class="nextbtn"> Continue </a>
+  </div>
+</div>
+
+<!-- locations map -->
+<div data-role="page" data-theme="a" id="screening-locations-map">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1>Find a Clinic</h1>
+    <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
+    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+    <a href="#home" class="ui-btn-right" data-role="button" data-theme="c"
+    data-icon="home" data-iconpos="notext"> </a>
+  </div>
+  <div data-role="content">
+    <!--<img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false" width="288" height="200">-->
+    <div class="loc-search-bar">
+      <fieldset data-role="controlgroup">
+        <label for="loc-search-field-map" class="ui-hidden-accessible">Near</label>
+        <input id="loc-search-field-map" class="loc-search-field" name="address" placeholder="Current Location" type="search">
+      </fieldset>
+      <a class="loc-search-btn" href="#" data-role="button" data-mini="true"> Find </a>
+    </div>
+    <div class="map"></div>
+
+    <div class="message">
+      <p></p>
+    </div>
+  </div>
+
+  <div data-role="navbar" data-position="fixed" data-iconpos="left">
+    <ul>
+      <li>
+        <a class="ui-btn-active ui-state-persist" data-icon="search"> Map </a>
+      </li>
+      <li>
+        <a class="nav-list" href="#screening-locations-list"
+        data-icon="grid"> List </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- locations list -->
+<div data-role="page" data-theme="a" id="screening-locations-list">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1>Find a Clinic</h1>
+    <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
+    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+    <a href="#home" class="ui-btn-right" data-role="button" data-theme="c"
+    data-icon="home" data-iconpos="notext"> </a>
+  </div>
+  <div data-role="content">
+    <div class="loc-search-bar">
+      <fieldset data-role="controlgroup">
+        <label for="loc-search-field-list" class="ui-hidden-accessible">Near</label>
+        <input id="loc-search-field-list" class="loc-search-field" name="address" placeholder="Current Location" type="search">
+      </fieldset>
+      <a class="loc-search-btn" href="#" data-role="button" data-mini="true"> Find </a>
+    </div>
+    <ul id="loc-list" data-role="listview" data-divider-theme="a" data-inset="false">
+      <li data-role="list-divider" data-theme="e" role="heading">
+        Nearby Locations
+      </li>
+    </ul>
+
+    <div class="message">
+      <p></p>
+    </div>
+  </div>
+
+  <div data-role="navbar" data-position="fixed" data-iconpos="left">
+    <ul>
+      <li>
+        <a class="nav-map" href="#screening-locations-map"
+        data-icon="search"> Map </a>
+      </li>
+      <li>
+        <a data-icon="grid" class="ui-btn-active ui-state-persist"> List </a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- screening location -->
+<div data-role="page" id="screening-location">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Find a Clinic </h1>
+    <a href="#screening-locations-map" class="ui-btn-left" data-role="button"
+    data-rel="back" data-theme="c" data-icon="newarrow-l"
+    data-iconpos="left"> Back </a>
+  </div>
+
+  <div data-role="content">
+    <ul data-role="listview" data-divider-theme="a" data-inset="true">
+      <li class="name" data-role="list-divider" role="heading"></li>
+      <li class="address" data-theme="e">
+        <a href="" target="_blank"></a><span class="li-arrow-label">Map</span>
+      </li>
+      <li class="phone" data-theme="a">
+        <a href=""></a><span class="li-arrow-label">Call</span>
+      </li>
+      <li class="url" data-theme="e">
+        <a href="" target="_blank"></a>
+      </li>
+      <li class="description" data-theme="a"></li>
+    </ul>
+    <div class="tips">
+      <h2>Some things you should know before you go:</h2>
+      <ul>
+        <li>
+          Blood pressure tests are usually free.
+        </li>
+        <li>
+          Cholesterol tests usually cost about $35. Be sure to request a Full
+          Lipid Panel that includes: Total Cholesterol, HDL, and
+          LDL.
+        </li>
+        <li>
+          For best results, do not eat 9-12 hours before a cholesterol test.
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- interventions -->
+<div data-role="page" data-theme="a" id="interventions">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Interventions </h1>
+    <a href="#assessment" class="ui-btn-left" data-role="button" data-rel="back"
+    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+  </div>
+
+  <div data-role="content">
+    <h2> Your current risk is <span class="risk">&hellip;</span>% </h2>
+    <p>
+      These interventions can lower your risk of heart attack or stroke by up
+      to <span class="risk_reduction">&hellip;</span>%
+    </p>
+    <div data-role="collapsible-set" data-inset="false">
+      <div class="meds" data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+        <h3> Take medication </h3>
+        <p class="stop_meds">
+          It is important to be consistent about the medications you are
+          currently taking to reduce your blood pressure or cholesterol.
+          Based on the information you have entered, your current medications
+          (including aspirin if you take it) reduce your risk by about
+          <span class="stop_meds_increase">&hellip;</span>%.
+        </p>
+        <p class="take_meds">
+          A doctor may be able to reduce your risk by
+          <span class="take_meds_reduction">&hellip;</span>% by managing
+          your blood pressure and cholesterol with medication.
+        </p>
+      </div>
+      <div class="exercise" data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+        <h3> Exercise more </h3>
+        <p class="moderate_exercise">
+          Adding three hours of moderate exercise such as brisk walking to
+          your weekly routine will reduce your risk by
+          <span class="moderate_exercise_reduction">&hellip;</span>%.
+        </p>
+        <p class="vigorous_exercise">
+          Adding six hours of moderate exercise or three hours of vigorous
+          exercise such as running to your weekly routine will reduce your
+          risk by <span class="vigorous_exercise_reduction">&hellip;</span>%.
+        </p>
+      </div>
+      <div class="weight" data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+        <h3> Lose weight </h3>
+        <p class="lose_weight">
+          If you lose <span class="lose_pounds">&hellip;</span> pounds and
+          do not regain it, you will reduce your risk by
+          <span class="lose_weight_reduction">&hellip;</span>%. Try a
+          combination of a healthy diet and exercise.
+        </p>
+      </div>
+      <div class="smoking" data-role="collapsible" data-collapsed="true" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
+        <h3> Quit smoking </h3>
+        <p class="quit_smoking">
+          If you quit smoking, you will reduce your risk by
+          <span class="quit_smoking_reduction">&hellip;</span>%.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- rewards -->
+<div id="rewards" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Get Rewards </h1>
+    <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
+    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+  </div>
+  <div data-role="content">
+    <form data-ajax="false">
+      <p>
+        Thank you for completing the Know Your Heart assessment. Please
+        complete the entries below to be eligible for our giveaway.
+      </p>
+      <div class="rating">
+        <fieldset data-role="controlgroup" data-type="horizontal">
+          <legend>
+            How useful was the information you received from this app?
+          </legend>
+          <input id="rating1" name="rating" value="1" type="radio">
+          <label for="rating1"> 1 </label>
+          <input id="rating2" name="rating" value="2" type="radio">
+          <label for="rating2"> 2 </label>
+          <input id="rating3" name="rating" value="3" type="radio">
+          <label for="rating3"> 3 </label>
+          <input id="rating4" name="rating" value="4" type="radio">
+          <label for="rating4"> 4 </label>
+          <input id="rating5" name="rating" value="5" type="radio">
+          <label for="rating5"> 5 </label>
+        </fieldset>
+        <p class="note">
+          1 = "I already knew that", 5 = "You saved my life!"
+        </p>
+      </div>
+      <fieldset data-role="controlgroup">
+        <label for="reward-name" class="ui-hidden-accessible"> Name </label>
+        <input name="name" id="reward-name" type="text" placeholder="Name"
+        required="required">
+        <label for="reward-email" class="ui-hidden-accessible"> Email </label>
+        <input name="email" id="reward-email" type="email" placeholder="Email Address"
+        required="required">
+      </fieldset>
+      <button type="submit" href="#" data-theme="b"
+      data-icon="check" data-iconpos="right">
+        Submit
+      </button>
+    </form>
   </div>
 </div>
 
 <!-- basic - age -->
 <div id="age" class="survey-page" data-role="page" data-theme="a">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Age </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Age </h1>
     <a href="#welcome" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> How old are you? </h3>
+      <h2> How old are you? </h2>
       <fieldset data-role="controlgroup">
         <label for="age-field" class="ui-hidden-accessible"> Age </label>
         <input name="age" id="age-field" type="number" min="18" max="85"
@@ -392,15 +674,15 @@
 
 <!-- basic - gender -->
 <div id="gender" class="survey-page" data-role="page" data-theme="a">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Gender </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Gender </h1>
     <a href="#age" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> Are you male or female? </h3>
+      <h2> Are you male or female? </h2>
       <fieldset data-role="controlgroup" data-type="horizontal">
         <input id="gender-male-radio" name="gender" value="M" type="radio" required="required">
         <label for="gender-male-radio"> Male </label>
@@ -430,15 +712,15 @@
 
 <!-- basic - height -->
 <div id="height" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Height </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Height </h1>
     <a href="#gender" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> How tall are you? </h3>
+      <h2> How tall are you? </h2>
       <fieldset data-role="controlgroup" data-type="horizontal">
         <label for="height-ft-select">Feet</label>
         <select name="height-feet" id="height-ft-select" required="required">
@@ -489,15 +771,15 @@
 
 <!-- basic - weight -->
 <div id="weight" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Weight </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Weight </h1>
     <a href="#height" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> How much do you weigh? </h3>
+      <h2> How much do you weigh? </h2>
       <fieldset data-role="controlgroup">
         <label for="weight-field" class="ui-hidden-accessible">Weight</label>
         <input name="weight" id="weight-field" type="number" min="80"
@@ -526,20 +808,21 @@
 
 <!-- basic - smoke -->
 <div id="smoker" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Smoking Status </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Smoking Status </h1>
     <a href="#weight" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> Do you currently smoke? </h3>
+      <h2> Do you currently smoke? </h2>
       <p>
         Answer "Yes" if you have smoked any cigarettes in the past month
       </p>
       <fieldset data-role="controlgroup">
-        <select name="smoker" id="smoker-toggle" data-role="slider">
+        <select id="smoker-toggle" name="smoker" data-role="slider"
+        data-mini="true">
           <option value="false"> No </option>
           <option value="true"> Yes </option>
         </select>
@@ -567,45 +850,45 @@
 
 <!-- basic - history -->
 <div id="history" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Health History </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Health History </h1>
     <a href="#smoker" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h4> Has a doctor ever told you that you had any of the following? </h4>
+      <h2> Has a doctor ever told you that you had any of the following? </h2>
       <fieldset data-role="controlgroup">
         <div class="form-line">
           <label><a class="tooltip" href="javascript:void(0)" title="also known
-            as a myocardial infarction (MI)">Heart Attack<span
-              class="help-icon"></span></a></label>
-          <select name="mi" id="mi-toggle" data-role="slider">
+            as a myocardial infarction (MI)"><span class="help-icon"></span
+              >Heart Attack</a></label>
+          <select name="mi" id="mi-toggle" data-role="slider" data-mini="true">
             <option value="false"> No </option>
             <option value="true"> Yes </option>
           </select>
         </div>
         <div class="form-line">
-          <label for="stroke-toggle"> Stroke </label>
-          <select name="stroke" id="stroke-toggle" data-role="slider">
+          <label for="stroke-toggle"><span class="help-icon"></span>Stroke</label>
+          <select name="stroke" id="stroke-toggle" data-role="slider" data-mini="true">
             <option value="false"> No </option>
             <option value="true"> Yes </option>
           </select>
         </div>
         <div class="form-line">
           <label><a class="tooltip" href="javascript:void(0)" title="diabetes
-            mellitus type I or type II">Diabetes<span
-              class="help-icon"></span></a></label>
-          <select name="diabetes" id="diabetes-toggle" data-role="slider">
+            mellitus type I or type II"><span class="help-icon"></span
+              >Diabetes</a></label>
+          <select name="diabetes" id="diabetes-toggle" data-role="slider" data-mini="true">
             <option value="false"> No </option>
             <option value="true"> Yes </option>
           </select>
         </div>
         <div class="form-line hba1c">
           <label for="hba1c-field"><a class="tooltip" href="javascript:void(0)"
-            title="hemoglobin A1c: measures blood sugar">HbA1c<span
-              class="help-icon"></span></a></label>
+            title="hemoglobin A1c: measures blood sugar"><span
+              class="help-icon"></span>HbA1c</a></label>
           <input name="hba1c" id="hba1c-field" placeholder="Enter %"
           type="text" min="2" max="16">
         </div>
@@ -633,15 +916,15 @@
 
 <!-- basic - knows bp? -->
 <div id="knows-bp" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Blood Pressure </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Blood Pressure </h1>
     <a href="#history" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> Do you know your blood pressure? </h3>
+      <h2> Do you know your blood pressure? </h2>
       <fieldset data-role="controlgroup" data-type="horizontal">
         <input id="knows-bp-radio-t" name="knows-bp" value="true" type="radio"
         required="required">
@@ -650,9 +933,10 @@
         required="required">
         <label for="knows-bp-radio-f"> No </label>
       </fieldset>
-      <div class="locations-pointer">
+      <div class="screening-note">
         <p>
-          You can visit your doctor or a screening location to measure your blood pressure.
+          To measure your blood pressure, visit your doctor, or use this app to
+          search for a screening location.
         </p>
       </div>
       <button type="submit" class="dynamic-next" href="#blood-pressure"
@@ -677,30 +961,34 @@
 
 <!-- basic - blood pressure -->
 <div id="blood-pressure" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Blood Pressure </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Blood Pressure </h1>
     <a href="#knows-bp" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> What is your blood pressure? </h3>
+      <h2> What is your blood pressure? </h2>
       <p>
         If your blood pressure is 125/82 (for example), your systolic pressure is
         125 and your diastolic pressure is 82.
       </p>
       <fieldset data-role="controlgroup">
-        <label><a class="tooltip" href="javascript:void(0)" title="Measures
-          pressure during heartbeats">Systolic Blood Pressure<span
-            class="help-icon"></span></a></label>
-        <input id="systolic-bp-slider" type="range" name="systolic-bp"
-        value="120" min="80" max="220" data-highlight="true">
-        <label><a class="tooltip" href="javascript:void(0)" title="Measures
-          pressure between heartbeats">Diastolic Blood Pressure<span
-            class="help-icon"></span></a></label>
-        <input id="diastolic-bp-slider" type="range" name="diastolic-bp"
-        value="80" min="40" max="130" data-highlight="true">
+        <label for="systolic-bp-slider"><a class="tooltip"
+          href="javascript:void(0)" title="Measures pressure during heartbeats"
+          ><span class="help-icon"></span>Systolic Pressure</a></label>
+        <div class="slider-container">
+          <input id="systolic-bp-slider" type="range" name="systolic-bp"
+          value="120" min="80" max="220" data-highlight="true">
+        </div>
+        <label for="diastolic-bp-slider"><a class="tooltip"
+          href="javascript:void(0)" title="Measures pressure between heartbeats"
+          ><span class="help-icon"></span>Diastolic Pressure</a></label>
+        <div class="slider-container">
+          <input id="diastolic-bp-slider" type="range" name="diastolic-bp"
+          value="80" min="40" max="130" data-highlight="true">
+        </div>
       </fieldset>
       <button type="submit" href="#knows-chol" data-theme="b"
       data-icon="newarrow-r" data-iconpos="right">
@@ -725,8 +1013,8 @@
 
 <!-- basic - knows chol? -->
 <div id="knows-chol" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Cholesterol </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Cholesterol </h1>
     <a href="#blood-pressure" class="ui-btn-left" data-role="button"
     data-rel="back" data-theme="c" data-icon="newarrow-l"
     data-iconpos="left"> Back </a>
@@ -734,16 +1022,17 @@
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> Do you know your cholesterol levels? </h3>
+      <h2> Do you know your cholesterol levels? </h2>
       <fieldset data-role="controlgroup" data-type="horizontal">
         <input id="knows-chol-radio-t" name="knows-chol" value="true" type="radio" required="required">
         <label for="knows-chol-radio-t"> Yes </label>
         <input id="knows-chol-radio-f" name="knows-chol" value="false" type="radio" required="required">
         <label for="knows-chol-radio-f"> No </label>
       </fieldset>
-      <div class="locations-pointer">
+      <div class="screening-note">
         <p>
-          You can visit your doctor or a screening location to measure your cholesterol.
+          To measure your cholesterol, visit your doctor, or use this app to
+          search for a screening location.
         </p>
       </div>
       <button type="submit" class="dynamic-next" href="#cholesterol"
@@ -769,31 +1058,37 @@
 
 <!-- basic - cholesterol -->
 <div id="cholesterol" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Cholesterol </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Cholesterol </h1>
     <a href="#knows-chol" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
     <form data-ajax="false">
-      <h3> What are your cholesterol levels? </h3>
+      <h2> What are your cholesterol levels? </h2>
       <fieldset data-role="controlgroup">
-        <label><a class="tooltip" href="javascript:void(0)" title="A total of
-          LDL, HDL, and other lipids">Total Cholesterol<span
-            class="help-icon"></span></a></label>
-        <input id="total-chol-slider" type="range" name="cholesterol"
-        value="200" min="70" max="500" data-highlight="true" required="required">
-        <label><a class="tooltip" href="javascript:void(0)" title="Good
-          cholesterol that reduces LDL">HDL Cholesterol<span
-            class="help-icon"></span></a></label>
-        <input id="hdl-slider" type="range" name="hdl" value="40" min="20"
-        max="130" data-highlight="true" required="required">
-        <label><a class="tooltip" href="javascript:void(0)" title="Bad
-          cholesterol that can clog arteries">LDL Cholesterol<span
-            class="help-icon"></span></a></label>
-        <input id="ldl-slider" type="range" name="ldl" value="100" min="40"
-        max="400" data-highlight="true" required="required">
+        <label for="total-chol-slider"><a class="tooltip"
+          href="javascript:void(0)" title="A total of LDL, HDL, and other
+          lipids"><span class="help-icon"></span>Total Cholesterol</a></label>
+        <div class="slider-container">
+          <input id="total-chol-slider" type="range" name="cholesterol"
+          value="200" min="70" max="500" data-highlight="true">
+        </div>
+        <label for="hdl-slider"><a class="tooltip" href="javascript:void(0)"
+          title="Good cholesterol that reduces LDL"><span class="help-icon"
+            ></span>HDL Cholesterol</a></label>
+        <div class="slider-container">
+          <input id="hdl-slider" type="range" name="hdl" value="40" min="20"
+          max="130" data-highlight="true">
+        </div>
+        <label for="ldl-slider"><a class="tooltip" href="javascript:void(0)"
+          title="Bad cholesterol that can clog arteries"><span
+            class="help-icon"></span>LDL Cholesterol</a></label>
+        <div class="slider-container">
+          <input id="ldl-slider" type="range" name="ldl" value="100" min="40"
+          max="400" data-highlight="true">
+        </div>
       </fieldset>
       <button type="submit" href="#confirmation" data-theme="b"
       data-icon="newarrow-r" data-iconpos="right">
@@ -818,14 +1113,14 @@
 
 <!-- staging page -->
 <div id="confirmation" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Almost done! </h2>
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Done! </h1>
     <a href="#knows-chol" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
-    <h4> Ready to know your heart? </h4>
+    <h2> Ready to know your heart? </h2>
     <p>
       We will predict your possible risk for heart attack or stroke based on
       the information you already have given.
@@ -836,273 +1131,243 @@
       doctor's office or at a nearby screening location.
     </p>
 
-    <a href="#assessment" class="nextbtn" data-role="button"
-    data-transition="slide" data-theme="b" data-icon="newarrow-r"
-    data-iconpos="right"> View Your Heart Result </a>
+    <a href="#assessment" data-theme="b" data-role="button"
+    data-transition="slide" data-icon="newarrow-r" data-iconpos="right"> View Your Heart Result </a>
   </div>
 </div>
 
-<!-- Results -->
-<div data-role="page" data-theme="a" id="assessment">
-  <div data-role="header" data-position="fixed">
-    <a data-role="button" data-theme="c" href="#home" data-icon="home" data-iconpos="notext"
-    class="ui-btn-right"> </a>
-    <h2>Your Heart</h2>
-    <a data-role="button" data-theme="c" href="#basic_profile" data-icon="profile" data-iconpos="left"
-    class="ui-btn-left"> You </a>
+<!-- extra - blood pressure medication -->
+<div id="bp-meds" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Medication </h1>
+    <a href="#assessment" class="ui-btn-left" data-role="button" data-rel="back"
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
+
   <div data-role="content">
-    <ul class="next-steps-list" data-role="listview" data-divider-theme="d" data-inset="false">
-      <li class="risk_score" data-theme="f">
-        <a href="#popupMoreInfo" data-rel="popup"> <div class="heart_meter"></div>
-          <div id="circularG">
-            <div id="circularG_1" class="circularG"></div>
-            <div id="circularG_2" class="circularG"></div>
-            <div id="circularG_3" class="circularG"></div>
-            <div id="circularG_4" class="circularG"></div>
-            <div id="circularG_5" class="circularG"></div>
-            <div id="circularG_6" class="circularG"></div>
-            <div id="circularG_7" class="circularG"></div>
-            <div id="circularG_8" class="circularG"></div>
+    <form data-ajax="false">
+      <h2> Are you currently on any medication to treat high blood pressure? </h2>
+      <fieldset id="bp-meds-question" data-role="controlgroup">
+        <select id="bp-meds-toggle" name="bp-meds-toggle" data-role="slider"
+        data-mini="true">
+          <option value="false"> No </option>
+          <option value="true"> Yes </option>
+        </select>
+      </fieldset>
+      <div id="bp-meds-count">
+        <fieldset data-role="controlgroup">
+          <label for="bp-meds-slider"> How many different medications do you take
+            for your blood pressure?</label>
+          <div class="slider-container">
+            <input id="bp-meds-slider" type="range" name="slider" value="1"
+            min="1" max="4" data-highlight="true">
           </div>
-          <p class="risk_error">
-            An error occured during risk calculation, please check your values or refresh the page.
-          </p>
-          <p class="risk_message">
-            <!-- Your risk could be as high as &hellip; %, &hellip; times what is considered healthy for your age. -->
-          </p>
-          <p class="more-info">
-            More Info
-          </p></a>
-      </li>
-      <li class="archimedes-link" data-theme="f">
-        <p>
-          Calculated by <a target="_blank" href="http://archimedesmodel.com/indigo"> Archimedes IndiGO </a>
-        </p>
-      </li>
-      <li class="next-steps-header" data-role="list-divider" role="heading">
-        Next Steps
-      </li>
-    </ul>
-    <div data-role="popup" id="popupMoreInfo" class="ui-content">
-      <a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right"> Close </a>
-      <h4>Your Cardiovascular Risk</h4>
-      <p class="accuracy">
-        <em>Note: To give you a more accurate risk assessment, we need to know your blood pressure and cholesterol</em>
-      </p>
-      <table>
-        <tr>
-          <td class="risk value">&hellip;</td><td>risk of having a heart attack or stroke within the next 5 years</td>
-        </tr>
-        <tr>
-          <td class="ratio value">&hellip;</td><td>times what is considered healthy for your age</td>
-        </tr>
-        <tr>
-          <td class="percentile value">&hellip;</td><td>percentile for your age (lower is better)</td>
-        </tr>
-      </table>
-      <h4>Recommendation</h4>
-      <p class="recommendation">
-        &hellip;
-      </p>
-    </div>
+        </fieldset>
+      </div>
+      <button type="submit" href="#chol-meds" data-theme="b"
+      data-icon="newarrow-r" data-iconpos="right">
+        Next
+      </button>
+    </form>
   </div>
 </div>
 
-<!-- location -->
-<div data-role="page" data-theme="a" id="screening-locations-map">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2>Find a Clinic</h2>
-    <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-    <a href="#home" class="ui-btn-right" data-role="button" data-theme="c"
-    data-icon="home" data-iconpos="notext"> </a>
+<!-- extra - cholesterol medication -->
+<div id="chol-meds" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Medication </h1>
+    <a href="#bp-meds" class="ui-btn-left" data-role="button" data-rel="back"
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
+
   <div data-role="content">
-    <!--<img src="https://maps.googleapis.com/maps/api/staticmap?center=Madison, WI&amp;zoom=14&amp;size=288x200&amp;markers=Madison, WI&amp;sensor=false" width="288" height="200">-->
-    <div class="ui-bar loc-search-bar">
+    <form data-ajax="false">
+      <h2> Are you currently on medication to lower your cholesterol? </h2>
       <fieldset data-role="controlgroup">
-        <label for="loc-search-field" class="ui-hidden-accessible">Near</label>
-        <input id="loc-search-field-1" class="loc-search-field" name="address" placeholder="Current Location" type="search">
+        <select id="chol-meds-toggle" name="chol-meds-toggle"
+        data-role="slider" data-mini="true">
+          <option value="false"> No </option>
+          <option value="true"> Yes </option>
+        </select>
       </fieldset>
-      <a class="loc-search-btn rect-btn" href="#" data-role="button" data-mini="false"> Find </a>
-    </div>
-    <div class="map"></div>
-
-    <div class="message">
-      <p></p>
-    </div>
-  </div>
-
-  <div data-role="navbar" data-position="fixed" data-iconpos="left" data-theme="">
-    <ul>
-      <li>
-        <a class="ui-btn-active ui-state-persist" data-icon="search"> Map </a>
-      </li>
-      <li>
-        <a class="nav-list" href="#screening-locations-list"
-        data-icon="grid"> List </a>
-      </li>
-    </ul>
+      <button type="submit" href="#aspirin" data-theme="b"
+      data-icon="newarrow-r" data-iconpos="right">
+        Next
+      </button>
+    </form>
   </div>
 </div>
 
-<div data-role="page" data-theme="a" id="screening-locations-list">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2>Find a Clinic</h2>
-    <a href="#home" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-    <a href="#home" class="ui-btn-right" data-role="button" data-theme="c"
-    data-icon="home" data-iconpos="notext"> </a>
+<!-- extra - aspirin -->
+<div id="aspirin" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Aspirin </h1>
+    <a href="#chol-meds" class="ui-btn-left" data-role="button" data-rel="back"
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
+
   <div data-role="content">
-    <div class="ui-bar loc-search-bar">
+    <form data-ajax="false">
+      <h2> Do you take aspirin daily for your heart? </h2>
       <fieldset data-role="controlgroup">
-        <label for="loc-search-field" class="ui-hidden-accessible">Near</label>
-        <input id="loc-search-field-2" class="loc-search-field" name="address" placeholder="Current Location" type="search">
+        <select id="aspirin-toggle" name="aspirin-toggle" data-role="slider"
+        data-mini="true">
+          <option value="false"> No </option>
+          <option value="true"> Yes </option>
+        </select>
       </fieldset>
-      <a class="loc-search-btn rect-btn" href="#" data-role="button" data-mini="false"> Find </a>
-    </div>
-    <ul id="locList" data-role="listview" data-divider-theme="c" data-inset="false">
-      <li data-role="list-divider" data-theme="e" role="heading">
-        Nearby Locations
-      </li>
-    </ul>
-
-    <div class="message">
-      <p></p>
-    </div>
-  </div>
-
-  <div data-role="navbar" data-position="fixed" data-iconpos="left" data-theme="a">
-    <ul>
-      <li>
-        <a class="nav-map" href="#screening-locations-map"
-        data-icon="search"> Map </a>
-      </li>
-      <li>
-        <a data-icon="grid" class="ui-btn-active ui-state-persist"> List </a>
-      </li>
-    </ul>
+      <button type="submit" href="#moderate-exercise" data-theme="b"
+      data-icon="newarrow-r" data-iconpos="right">
+        Next
+      </button>
+    </form>
   </div>
 </div>
 
-<!-- screening location -->
-<div data-role="page" id="screening-location">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Find a Clinic </h2>
-    <a href="#screening-locations-map" class="ui-btn-left" data-role="button"
-    data-rel="back" data-theme="c" data-icon="newarrow-l"
-    data-iconpos="left"> Back </a>
+<!-- extra - moderate exercise -->
+<div id="moderate-exercise" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Moderate Activity </h1>
+    <a href="#aspirin" class="ui-btn-left" data-role="button" data-rel="back"
+    data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
   <div data-role="content">
-    <ul data-role="listview" data-divider-theme="c" data-inset="true">
-      <li class="name" data-role="list-divider" role="heading"></li>
-      <li class="address" data-theme="f">
-        <a href="" target="_blank"></a><span class="more-info">Go</span>
-      </li>
-      <li class="phone" data-theme="e">
-        <a href=""></a><span class="more-info">Call</span>
-      </li>
-      <li class="url" data-theme="f">
-        <a href="" target="_blank"></a>
-      </li>
-      <li class="description" data-theme="e"></li>
-    </ul>
-    <div class="tips">
-      <h4> Some things you should know before you go </h4>
-      <ul>
-        <li>
-          Blood pressure tests are usually free.
-        </li>
-        <li>
-          Cholesterol tests usually cost about $35. Be sure to request a Full
-          Lipid Panel that includes: Total Cholesterol, HDL, and
-          LDL.
-        </li>
-        <li>
-          For best results, do not eat 9-12 hours before a cholesterol test.
-        </li>
-      </ul>
-    </div>
+    <form data-ajax="false">
+      <h2> How many hours do you spend doing moderate physical activities in a
+      typical week? </h2>
+      <p>
+        Moderate physical activities are ones that cause a slight elevation in
+        heart rate or breathing.
+      </p>
+      <p>
+        e.g. raking leaves, mowing the lawn, or heavy cleaning
+      </p>
+      <fieldset data-role="controlgroup">
+        <label for="mod-ex-slider" class="ui-hidden-accessible"> Hours </label>
+        <div class="slider-container">
+          <input id="mod-ex-slider" type="range" name="mod-ex-slider" value="0"
+          min="0" max="60" data-highlight="true">
+        </div>
+      </fieldset>
+      <button type="submit" href="#vigorous-exercise" data-theme="b"
+      data-icon="newarrow-r" data-iconpos="right">
+        Next
+      </button>
+    </form>
   </div>
 </div>
 
-<!-- Action List -->
-<div data-role="page" data-theme="a" id="interventions">
-  <div data-theme="a" data-role="header" data-position="fixed">
-    <h2> Interventions </h2>
-    <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-    href="#assessment" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+<!-- extra - vigorous exercise -->
+<div id="vigorous-exercise" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Vigorous Activity </h1>
+    <a href="#moderate-exercise" class="ui-btn-left" data-role="button"
+    data-rel="back" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
+
   <div data-role="content">
-    <h2> Your current risk is <span class="risk">&hellip;</span>% </h2>
-    <p>
-      These interventions can lower your risk of heart attack or stroke by up
-      to <span class="risk_reduction">&hellip;</span>%
-    </p>
-    <div data-role="collapsible-set" data-inset="false">
-      <div class="meds" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-        <h3> Take medication </h3>
-        <div class="action_accordion">
-          <p class="stop_meds">
-            It is important to be consistent about the medications you are
-            currently taking to reduce your blood pressure or cholesterol.
-            Based on the information you have entered, your current medications
-            (including aspirin if you take it) reduce your risk by about
-            <span class="stop_meds_increase">&hellip;</span>%.
-          </p>
-          <p class="take_meds">
-            A doctor may be able to reduce your risk by
-            <span class="take_meds_reduction">&hellip;</span>% by managing
-            your blood pressure and cholesterol with medication.
-          </p>
+    <form data-ajax="false">
+      <h2> How many hours do you spend doing vigorous physical activities in a
+      typical week? </h2>
+      <p>
+        Vigorous activities are ones that cause heavy sweating or large increases
+        in breathing or heart rate for at least 10 minutes at a time.
+      </p>
+      <p>
+        e.g. running, lap swimming, aerobics classes, or fast bicycling
+      </p>
+      <fieldset data-role="controlgroup">
+        <label for="vig-ex-slider" class="ui-hidden-accessible"> Hours </label>
+        <div class="slider-container">
+          <input id="vig-ex-slider" type="range" name="vig-ex-slider" value="0"
+          min="0" max="30" data-highlight="true">
         </div>
-      </div>
-      <div class="exercise" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-        <h3> Exercise more </h3>
-        <div class="action_accordion">
-          <p class="moderate_exercise">
-            Adding three hours of moderate exercise such as brisk walking to
-            your weekly routine will reduce your risk by
-            <span class="moderate_exercise_reduction">&hellip;</span>%.
-          </p>
-          <p class="vigorous_exercise">
-            Adding six hours of moderate exercise or three hours of vigorous
-            exercise such as running to your weekly routine will reduce your
-            risk by <span class="vigorous_exercise_reduction">&hellip;</span>%.
-          </p>
-        </div>
-      </div>
-      <div class="weight" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-        <h3> Lose weight </h3>
-        <div class="action_accordion">
-          <p class="lose_weight">
-            If you lose <span class="lose_pounds">&hellip;</span> pounds and
-            do not regain it, you will reduce your risk by
-            <span class="lose_weight_reduction">&hellip;</span>%. Try a
-            combination of a healthy diet and exercise.
-          </p>
-        </div>
-      </div>
-      <div class="smoking" data-role="collapsible" data-collapsed="true" data-theme="a" data-iconpos="left" data-collapsed-icon="arrow-r" data-expanded-icon="arrow-d">
-        <h3> Quit smoking </h3>
-        <div class="action_accordion">
-          <p class="quit_smoking">
-            If you quit smoking, you will reduce your risk by
-            <span class="quit_smoking_reduction">&hellip;</span>%.
-          </p>
-        </div>
-      </div>
-
-    </div>
+      </fieldset>
+      <button type="submit" href="#family-history" data-theme="b"
+      data-icon="newarrow-r" data-iconpos="right">
+        Next
+      </button>
+    </form>
   </div>
 </div>
+
+<!-- extra - family history -->
+<div id="family-history" class="survey-page" data-role="page" data-theme="a">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <h1> Family History </h1>
+    <a href="#vigorous-exercise" class="ui-btn-left" data-role="button"
+    data-rel="back" data-icon="newarrow-l" data-iconpos="left"> Back </a>
+  </div>
+
+  <div data-role="content" >
+    <form data-ajax="false">
+      <h2> Have any of your parents, siblings, or children had a heart attack
+      before the age of 55? </h2>
+      <fieldset data-role="controlgroup">
+        <select id="family-toggle" name="family-toggle" data-role="slider"
+        data-mini="true">
+          <option value="false"> No </option>
+          <option value="true"> Yes </option>
+        </select>
+      </fieldset>
+      <button type="submit" href="#assessment" data-theme="b"
+      data-icon="newarrow-r" data-iconpos="right">
+        Next
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Heart Facts -->
+<!-- <div data-role="page" data-theme="a" id="heartfacts">
+<div data-role="header" data-theme="c" data-position="fixed">
+<h1> Did you know? </h1>
+<a data-role="button" data-direction="reverse" data-rel="back"
+data-theme="c" href="#quiz2" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
+</div>
+<div data-role="content">
+<div id="facts">
+<p>
+1 in 3 adults in the U.S. have some form of heart disease, stroke, or other blood vessel diseases
+</p>
+<p>
+And that the top risk factors for heart disease and stroke are:
+</p>
+<ol id="riskfactors">
+<li>
+Inactivity
+</li>
+<li>
+Obesity
+</li>
+<li>
+High Blood Pressure
+</li>
+<li>
+Cigarette Smoking
+</li>
+<li>
+High Cholesterol
+</li>
+<li>
+Diabetes
+</li>
+</ol>
+<p>
+Know Your Heart can help you take steps to lower that risk today!
+</p>
+</div>
+<button type="submit" href="#age" data-theme="b"
+data-icon="newarrow-r" data-iconpos="right">
+Next
+</button>
+</div>
+</div> -->
 
 <!-- [MOCK] interventions - suggestions -->
 <!-- <div data-role="page" data-theme="a" id="mock-suggestions">
-<div data-theme="a" data-role="header" data-position="fixed">
+<div data-role="header" data-theme="c" data-position="fixed">
 <h2> Exercising </h2>
 <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
 href="#mock-suggestions" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
@@ -1120,7 +1385,7 @@ class="ui-btn-right"> Suggest </a>
 </li>
 </ul>
 </div>
-<ul data-role="listview" data-divider-theme="b" data-inset="true">
+<ul data-role="listview" data-divider-theme="a" data-inset="true">
 <li data-theme="">
 <a href="#" data-transition="slide"> Running along the river <span class="ui-li-count"> 25 likes </span> </a>
 </li>
@@ -1133,235 +1398,6 @@ class="ui-btn-right"> Suggest </a>
 </ul>
 </div>
 </div> -->
-
-<!-- Get Reward -->
-<div data-role="page" data-theme="a" id="rewards">
-  <div data-role="header" data-position="fixed">
-    <h2> Get Rewards </h2>
-    <a data-role="button" data-direction="reverse" data-rel="back" data-theme="c"
-    href="#" data-icon="newarrow-l" data-iconpos="left" class="ui-btn-left"> Back </a>
-  </div>
-  <div data-role="content">
-    <div class="thankyou">
-      <p>
-        Thank you for completing the Know Your Heart assessment
-      </p>
-      <p>
-        Please complete the entries below to be eligible for our giveaway
-      </p>
-    </div>
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup" data-type="horizontal">
-        <div class="helper_text">
-          <p>
-            How would you rate the information you received from this app?
-          </p>
-          <p>
-            (1="I already knew that"; 5="You saved my life!")
-          </p>
-        </div>
-        <input id="rating1" name="" value="1" type="radio">
-        <label for="rating1"> 1 </label>
-        <input id="rating2" name="" value="2" type="radio">
-        <label for="rating2"> 2 </label>
-        <input id="rating3" name="" value="3" type="radio">
-        <label for="rating3"> 3 </label>
-        <input id="rating4" name="" value="4" type="radio">
-        <label for="rating4"> 4 </label>
-        <input id="rating5" name="" value="5" type="radio">
-        <label for="rating5"> 5 </label>
-      </fieldset>
-    </div>
-    <div data-role="fieldcontain">
-      <fieldset data-role="controlgroup">
-        <label for="reward_textinput_name" class="ui-hidden-accessible"> </label>
-        <input name="" id="reward_textinput_name" placeholder="Full name" value="" type="text">
-        <label for="reward_textinput_email" class="ui-hidden-accessible"> </label>
-        <input name="" id="reward_textinput_email" placeholder="Email address" value="" type="text">
-      </fieldset>
-    </div>
-    <a data-role="button" data-transition="slide" data-theme="b" data-icon="newarrow-r" data-iconpos="right" href="#" class="startbtn"> Submit </a>
-  </div>
-</div>
-
-<!-- extra - blood pressure medication -->
-<div id="bp-meds" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Medication </h2>
-    <a href="#assessment" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-  </div>
-
-  <div data-role="content">
-    <form data-ajax="false">
-      <h3> Are you currently on any medication to treat high blood pressure? </h3>
-      <fieldset id="bp-meds-question" data-role="controlgroup">
-        <select name="bp-meds-toggle" id="bp-meds-toggle" data-theme=""
-        data-role="slider" required="required">
-          <option value="false"> No </option>
-          <option value="true"> Yes </option>
-        </select>
-      </fieldset>
-      <div id="bp-meds-count">
-        <fieldset data-role="controlgroup">
-          <label for="bp-meds-slider"> How many different medications do you take
-            for your blood pressure?</label>
-          <input id="bp-meds-slider" type="range" name="slider" value="1"
-          min="1" max="4" data-highlight="false" pattern="\d*">
-        </fieldset>
-      </div>
-      <button type="submit" href="#chol-meds" data-theme="b"
-      data-icon="newarrow-r" data-iconpos="right">
-        Next
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- extra - cholesterol medication -->
-<div id="chol-meds" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Medication </h2>
-    <a href="#bp-meds" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-  </div>
-
-  <div data-role="content">
-    <form data-ajax="false">
-      <h3> Are you currently on medication to lower your cholesterol? </h3>
-      <fieldset data-role="controlgroup">
-        <select name="chol-meds-toggle" id="chol-meds-toggle" data-theme=""
-        data-role="slider" required="required">
-          <option value="false"> No </option>
-          <option value="true"> Yes </option>
-        </select>
-      </fieldset>
-      <button type="submit" href="#aspirin" data-theme="b"
-      data-icon="newarrow-r" data-iconpos="right">
-        Next
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- extra - aspirin -->
-<div id="aspirin" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Aspirin </h2>
-    <a href="#chol-meds" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-  </div>
-
-  <div data-role="content">
-    <form data-ajax="false">
-      <h3> Do you take aspirin daily for your heart? </h3>
-      <fieldset data-role="controlgroup">
-        <select name="aspirin-toggle" id="aspirin-toggle" data-theme=""
-        data-role="slider" required="required">
-          <option value="false"> No </option>
-          <option value="true"> Yes </option>
-        </select>
-      </fieldset>
-      <button type="submit" href="#moderate-exercise" data-theme="b"
-      data-icon="newarrow-r" data-iconpos="right">
-        Next
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- extra - moderate exercise -->
-<div id="moderate-exercise" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Moderate Activity </h2>
-    <a href="#aspirin" class="ui-btn-left" data-role="button" data-rel="back"
-    data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
-  </div>
-
-  <div data-role="content">
-    <form data-ajax="false">
-      <h3> How many hours do you spend doing moderate physical activities in a
-      typical week? </h3>
-      <p>
-        Moderate physical activities are ones that cause a slight elevation in
-        heart rate or breathing.
-      </p>
-      <p>
-        e.g. raking leaves, mowing the lawn, or heavy cleaning
-      </p>
-      <fieldset data-role="controlgroup">
-        <label for="mod-ex-slider" class="ui-hidden-accessible"> Hours </label>
-        <input id="mod-ex-slider" type="range" name="mod-ex-slider" value="0"
-        min="0" max="60" data-highlight="false">
-      </fieldset>
-      <button type="submit" href="#vigorous-exercise" data-theme="b"
-      data-icon="newarrow-r" data-iconpos="right">
-        Next
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- extra - vigorous exercise -->
-<div id="vigorous-exercise" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Vigorous Activity </h2>
-    <a href="#moderate-exercise" class="ui-btn-left" data-role="button"
-    data-rel="back" data-theme="c" data-icon="newarrow-l"
-    data-iconpos="left"> Back </a>
-  </div>
-
-  <div data-role="content">
-    <form data-ajax="false">
-      <h3> How many hours do you spend doing vigorous physical activities in a
-      typical week? </h3>
-      <p>
-        Vigorous activities are ones that cause heavy sweating or large increases
-        in breathing or heart rate for at least 10 minutes at a time.
-      </p>
-      <p>
-        e.g. running, lap swimming, aerobics classes, or fast bicycling
-      </p>
-      <fieldset data-role="controlgroup">
-        <label for="vig-ex-slider" class="ui-hidden-accessible"> Hours </label>
-        <input id="vig-ex-slider" type="range" name="vig-ex-slider" value="0"
-        min="0" max="30" data-highlight="false">
-      </fieldset>
-      <button type="submit" href="#family-history" data-theme="b"
-      data-icon="newarrow-r" data-iconpos="right">
-        Next
-      </button>
-    </form>
-  </div>
-</div>
-
-<!-- extra - family history -->
-<div id="family-history" class="survey-page" data-role="page" data-theme="a">
-  <div data-role="header" data-position="fixed">
-    <h2> Family History </h2>
-    <a href="#vigorous-exercise" class="ui-btn-left" data-role="button"
-    data-rel="back" data-theme="c" data-icon="newarrow-l"
-    data-iconpos="left"> Back </a>
-  </div>
-
-  <div data-role="content" >
-    <form data-ajax="false">
-      <h3> Have any of your parents, siblings, or children had a heart attack
-      before the age of 55? </h3>
-      <fieldset data-role="controlgroup">
-        <select name="family-toggle" id="family-toggle" data-theme=""
-        data-role="slider">
-          <option value="false"> No </option>
-          <option value="true"> Yes </option>
-        </select>
-      </fieldset>
-      <button type="submit" href="#assessment" data-theme="b"
-      data-icon="newarrow-r" data-iconpos="right">
-        Next
-      </button>
-    </form>
-  </div>
-</div>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
