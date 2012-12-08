@@ -6,10 +6,10 @@
 
     <!-- versionCode is optional and Android only -->
 
-    <name>Your Heart 1</name>
+    <name>Your Heart</name>
 
     <description>
-        Calculate your heart disease risk 
+        Calculate your cardiovascular disease risk.
     </description>
 
     <author href="https://knowyourheart.info" email="help@knowyourheart.info">
