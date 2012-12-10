@@ -9,22 +9,22 @@
       "ratingForAge": "",
       "rating": ""
     }, {
-      "risk": "0.44",
+      "risk": "",
       "riskType": "UpperBoundCVD",
-      "riskPercentile": "86",
-      "comparisonRisk": "2.11",
-      "ratingForAge": "4",
-      "rating": "1"
+      "riskPercentile": "",
+      "comparisonRisk": "",
+      "ratingForAge": "",
+      "rating": ""
     }, {
-      "risk": "0.28",
+      "risk": "",
       "riskType": "LowerBoundCVD",
-      "riskPercentile": "54",
-      "comparisonRisk": "1.34",
-      "ratingForAge": "3",
-      "rating": "1"
+      "riskPercentile": "",
+      "comparisonRisk": "",
+      "ratingForAge": "",
+      "rating": ""
     }
   ],
-  "Recommendation": "2",
+  "Recommendation": "0",
   "Interventions": {
     "IncreaseInRisk": "",
     "PercentReductionInRiskWithMedication": "",
@@ -37,6 +37,6 @@
   },
   "ElevatedBloodPressure": false,
   "ElevatedCholesterol": false,
-  "WarningCode": "0",
+  "WarningCode": "5",
   "DoctorRecommendation": ""
 }

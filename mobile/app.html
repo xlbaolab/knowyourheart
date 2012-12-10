@@ -137,7 +137,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
     </div>
     <div class="dash-nav ui-grid-b">
       <div class="ui-block-a">
-        <a id="dashboardAssessmentBtn" data-transition="fade" href="#assessment"> &nbsp; </a>
+        <a id="dashboardAssessmentBtn" data-transition="fade" href="#assessment2"> &nbsp; </a>
         <label>Your Heart</label>
       </div>
       <div class="ui-block-b">
@@ -214,7 +214,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
     <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"
     class="ui-btn-right"> </a>
     <h1>You</h1>
-    <a href="#assessment" data-role="button" data-direction="reverse"
+    <a href="#assessment2" data-role="button" data-direction="reverse"
     data-transition="fade" data-icon="assessment" data-iconpos="left"
     class="ui-btn-left"> Your Heart </a>
   </div>
@@ -267,7 +267,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
     <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"
     class="ui-btn-right"> </a>
     <h1>More You</h1>
-    <a href="#assessment" data-role="button" data-direction="reverse"
+    <a href="#assessment2" data-role="button" data-direction="reverse"
     data-transition="fade" data-icon="assessment" data-iconpos="left"
     class="ui-btn-left"> Your Heart </a>
   </div>
@@ -307,6 +307,41 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 </div>
 
+<!-- results -->
+<div data-role="page" data-theme="a" id="assessment2">
+  <div data-role="header" data-theme="c" data-position="fixed">
+    <a href="#basic-profile" data-role="button" data-icon="profile"
+    data-iconpos="left" class="ui-btn-left">You</a>
+    <h1>Your Heart</h1>
+    <a href="#home" data-role="button" data-icon="home" data-iconpos="notext"
+    class="ui-btn-right"></a>
+  </div>
+  <div data-role="content">
+    <div class="status-bar">
+      <div class="test">
+        <input class="retry-button" type="button" value="Retry"
+        data-inline="true" data-mini="true" data-theme="c"/>
+        <p>
+          &nbsp;
+        </p>
+      </div>
+    </div>
+    <div id="results-summary"></div>
+    <a class="full-report-btn" href="#popup-more-info" data-rel="popup"
+    data-role="button" data-inline="true" data-mini="true" data-theme="f"
+    >More Info</a>
+    <p class="archimedes-link note">
+      Calculated by <a target="_blank" href="http://archimedesmodel.com/indigo"> Archimedes IndiGO </a>
+    </p>
+    <ul class="next-steps-list" data-role="listview" data-divider-theme="a" data-inset="false">
+      <li class="next-steps-header" data-role="list-divider" role="heading">
+        Next Steps
+      </li>
+    </ul>
+    <div data-role="popup" id="popup-more-info" class="ui-content"></div>
+  </div>
+</div>
+
 <!-- Results -->
 <div data-role="page" data-theme="a" id="assessment">
   <div data-role="header" data-theme="c" data-position="fixed">
@@ -324,10 +359,10 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
       <div class="ui-block-b absolute">
         <h3> Your Risk Today: </h3>
         <p class="rating">
-          ?
+          UNKNOWN
         </p>
         <p>
-          Your risk for a heart attack or stroke in the next 5 years is 5.5% - 7.6%.
+          Your risk for a heart attack or stroke in the next 5 years is <strong>5.5% - 7.6%*</strong>.
         </p>
       </div>
       <div class="ui-block-a relative">
@@ -336,10 +371,10 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
       <div class="ui-block-b relative">
         <h3> Your Risk vs Others: </h3>
         <p class="rating">
-          ?
+          UNKNOWN
         </p>
         <p>
-          Your risk is 2.2 to 3.6 times what is healthy for your age.
+          Your risk is <strong>2.2 to 3.6*</strong> times what is healthy for your age.
         </p>
       </div>
     </div>
@@ -526,7 +561,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
 <div data-role="page" data-theme="a" id="interventions">
   <div data-role="header" data-theme="c" data-position="fixed">
     <h1> Interventions </h1>
-    <a href="#assessment" class="ui-btn-left" data-role="button" data-rel="back"
+    <a href="#assessment2" class="ui-btn-left" data-role="button" data-rel="back"
     data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
@@ -1131,7 +1166,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
       doctor's office or at a nearby screening location.
     </p>
 
-    <a href="#assessment" data-theme="b" data-role="button"
+    <a href="#assessment2" data-theme="b" data-role="button"
     data-transition="slide" data-icon="newarrow-r" data-iconpos="right"> View Your Heart Result </a>
   </div>
 </div>
@@ -1140,7 +1175,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
 <div id="bp-meds" class="survey-page" data-role="page" data-theme="a">
   <div data-role="header" data-theme="c" data-position="fixed">
     <h1> Medication </h1>
-    <a href="#assessment" class="ui-btn-left" data-role="button" data-rel="back"
+    <a href="#assessment2" class="ui-btn-left" data-role="button" data-rel="back"
     data-icon="newarrow-l" data-iconpos="left"> Back </a>
   </div>
 
@@ -1311,7 +1346,7 @@ data-theme="c" data-icon="newarrow-l" data-iconpos="left"> Back </a>
           <option value="true"> Yes </option>
         </select>
       </fieldset>
-      <button type="submit" href="#assessment" data-theme="b"
+      <button type="submit" href="#assessment2" data-theme="b"
       data-icon="newarrow-r" data-iconpos="right">
         Next
       </button>

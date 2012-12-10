@@ -185,24 +185,24 @@ var RISK_MESSAGE_RANGE = _.template("Your risk could be up to <%= \
 comparisonRisk %> times what is healthy for your age.");
 var RISK_REC = {
   0 : _.template(""),
-  1 : _.template("It is important for you to check your <%= missing %> \
+  1 : _.template("It is important for you to check your <%= missingInput %> \
   to understand your risk better, and keep track of it over time."),
   2 : _.template("You may be at high risk for your age. It is important for\
-  you to check your <%= missing %> to determine your risk, and take action \
+  you to check your <%= missingInput %> to determine your risk, and take action \
   if it is high."),
   3 : _.template("You are likely at very high risk for your age. It is urgent \
-  for you to check your <%= missing %> to determine your risk, because \
+  for you to check your <%= missingInput %> to determine your risk, because \
   treatment could be critical.")
 };
-var RISK_REC_SHORT = {
-  0 : _.template(""),
-  1 : _.template("Getting your <%= missing %> checked will help you understand \
-  your risk better."),
-  2 : _.template("It is important to check your <%= missing %> \
-  to understand your risk better."),
-  3 : _.template("It is urgent to check your <%= missing %> because \
-  treatment could be critical.")
-};
+// var RISK_REC_SHORT = {
+  // 0 : _.template(""),
+  // 1 : _.template("Getting your <%= missing %> checked will help you understand \
+  // your risk better."),
+  // 2 : _.template("It is important to check your <%= missing %> \
+  // to understand your risk better."),
+  // 3 : _.template("It is urgent to check your <%= missing %> because \
+  // treatment could be critical.")
+// };
 var RISK_DOC_REC = {
   0 : _.template('Your heart risk is <%= risk %>. Good job!'),
   1 : _.template('Your heart risk is <%= risk %>. Discuss steps you can take \
@@ -212,19 +212,80 @@ var RISK_DOC_REC = {
   3 : _.template('Your heart risk is <%= risk %>. It is urgent that you see \
   a doctor soon to determine how you can reduce your risk.')
 };
-var RISK_DOC_REC_SHORT = {
-  0 : "Good job! Keep doing what you are doing.",
-  1 : "Discuss your heart risk and how to reduce it with a doctor.",
-  2 : "It is important to see a doctor to discuss your heart risk.",
-  3 : "It is urgent to see a doctor soon to determine how to reduce your risk."
-};
+// var RISK_DOC_REC_SHORT = {
+  // 0 : "Good job! Keep doing what you are doing.",
+  // 1 : "Discuss your heart risk and how to reduce it with a doctor.",
+  // 2 : "It is important to see a doctor to discuss your heart risk.",
+  // 3 : "It is urgent to see a doctor soon to determine how to reduce your risk."
+// };
 var RISK_RATING = {
   1 : "low",
   2 : "moderately high",
   3 : "high",
   4 : "very high",
-  5 : "extremely high"
+  5 : "extremely high",
+  6 : "unknown"
 };
+
+var RESULTS_TEMPLATE = _.template('\
+  <div class="ui-grid-a">\
+    <div class="ui-block-a absolute">\
+      <div class="heart-meter"></div>\
+    </div>\
+    <div class="ui-block-b absolute">\
+      <h3>Your Risk Today:</h3>\
+      <p class="rating">\
+        <%= RISK_RATING[absRating].toUpperCase() %>\
+      </p>\
+      <p>\
+        Your risk for a heart attack or stroke in the next 5 years is \
+        <strong><%= absRisk %></strong>.\
+      </p>\
+    </div>\
+    <div class="ui-block-a divider"></div>\
+    <div class="ui-block-b divider"></div>\
+    <div class="ui-block-a relative">\
+      <div class="heart-meter"></div>\
+    </div>\
+    <div class="ui-block-b relative">\
+      <h3>Your Risk vs Age Group:</h3>\
+      <p class="rating">\
+        <%= RISK_RATING[relRating].toUpperCase() %>\
+      </p>\
+      <p>\
+        Your risk is <strong><%= relRisk %></strong> times what is healthy \
+        for your age.\
+      </p>\
+    </div>\
+  </div>\
+  <p class="note" <% if (!showScreeningReqNote) print(\'style="display:none;"\'); %>>\
+    * Without knowing your <%= missingInput %>, we can only calculate a range\
+  </p>\
+');
+
+var RESULTS_POPUP_TEMPLATE = _.template('\
+  <a href="#assessment2" data-rel="back" data-role="button" data-theme="a"\
+  data-icon="delete" data-iconpos="notext" class="ui-btn-right"> Close </a>\
+  <h3>Your Cardiovascular Risk</h3>\
+  <p class="note" <% if (!showScreeningReqNote) print(\'style="display:none;"\'); %>>\
+    <em>Note: To give you a more accurate risk assessment, we need to know \
+    your <%= missingInput %></em>\
+  </p>\
+  <table>\
+    <tr>\
+      <td class="value"><%= absRisk %></td><td>risk of having a heart attack or stroke within the next 5 years</td>\
+    </tr>\
+    <tr>\
+      <td class="value"><%= relRisk %></td><td>times what is considered healthy for your age</td>\
+    </tr>\
+    <tr>\
+      <td class="value"><%= perRisk %></td><td>percentile for your age (lower is better)</td>\
+    </tr>\
+  </table>\
+  <h3>Recommendation</h3>\
+  <p class="recommendation"><%= rec %></p>\
+');
+
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
@@ -433,23 +494,7 @@ var RISK_IMAGES = {
     background : "url(images/heartmeter3_sprite1.png) no-repeat -376px 0"
   }
 };
-var CSS_RISK_METER = {
-  1 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat 0 0"
-  },
-  2 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -94px 0"
-  },
-  3 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -188px 0"
-  },
-  4 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -282px 0"
-  },
-  5 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -376px 0"
-  }
-};
+
 
 /*
  * Globals
@@ -602,8 +647,13 @@ function doFirstPageInit() {
     model : gCurrentUser
   });
 
-  new ResultView({
-    el : $("#assessment"),
+  // new ResultView({
+    // el : $("#assessment"),
+    // model : gCurrentUser
+  // });
+  
+  new ResultView2({
+    el : $("#assessment2"),
     model : gCurrentUser
   });
 
@@ -638,26 +688,34 @@ StackMob.init({
 // };
 // }
 
-function wrapError(fn, storageLocation) {
+function wrapRemoteError(fn) {
   return function(onError, originalModel, options) {
-    if (storageLocation === "local") {
-      originalModel.isFetchingLocal = false;
-    } else {
-      originalModel.isFetchingRemote = false;
-    }
+    // console.debug("wrapRemoteError");
+    originalModel.isFetchingRemote = false;
     fn.apply(null, arguments);
   }
 }
 
-function wrapSuccess(fn, storageLocation) {
+function wrapRemoteSuccess(fn) {
   return function(resp, status, xhr) {
-    if (gCurrentUser) {
-      if (storageLocation === "local") {
-        gCurrentUser.isFetchingLocal = false;
-      } else {
-        gCurrentUser.isFetchingRemote = false;
-      }
-    }
+    // console.debug("wrapRemoteSuccess");
+    gCurrentUser.isFetchingRemote = false;
+    fn.apply(null, arguments);
+  }
+}
+
+function wrapLocalError(fn) {
+  return function(onError, originalModel, options) {
+    // console.debug("wrapLocalError");
+    originalModel.isFetchingLocal = false;
+    fn.apply(null, arguments);
+  }
+}
+
+function wrapLocalSuccess(fn) {
+  return function(resp, status, xhr) {
+    // console.debug("wrapLocalSuccess");
+    gCurrentUser.isFetchingLocal = false;
     fn.apply(null, arguments);
   }
 }
@@ -669,12 +727,12 @@ StackMob.Model.prototype.sync = function(method, model, options) {
   var successFn = options.success;
   var errorFn = options.error;
 
-  arguments[2].success = wrapSuccess(successFn, "local");
-  arguments[2].error = wrapError(errorFn, "local");
-  Backbone.localSync.apply(this, arguments);
+  arguments[2].success = wrapLocalSuccess(successFn);
+  arguments[2].error = wrapLocalError(errorFn);
+  Backbone.LocalStorage.sync.apply(this, arguments);
 
-  arguments[2].success = wrapSuccess(successFn, "remote");
-  arguments[2].error = wrapError(errorFn, "remote");
+  arguments[2].success = wrapRemoteSuccess(successFn);
+  arguments[2].error = wrapRemoteError(errorFn);
   StackMob.sync.apply(this, arguments);
 };
 
@@ -695,24 +753,31 @@ var User = StackMob.User.extend({
     this.on("change", this.handleChange, this);
   },
   calculateRisk : function() {
+    console.debug("calculateRisk");
+    
+    // cases to not calculate
     switch(this.get("risk_state")) {
     case User.RISK_STATE.CALCULATING:
+      console.debug("already calculating");
       return;
     case User.RISK_STATE.UP_TO_DATE:
       if (this.archimedes_result) {
+        console.debug("found up-to-date result");
         return;
       }
+      console.debug("up-to-date, but no result found");
       break;
     }
 
+    // wait until later to calculate if we're still fetching
+    // TODO replace with better solution
     if (this.isFetching()) {
-      // TODO replace with better solution
-      this.calculateLater = true;
+      console.debug("still fetching")
       return;
     }
-    this.calculateLater = false;
-
+    
     this.set("risk_state", User.RISK_STATE.CALCULATING);
+    this.archimedes_error = "";
 
     // build request
     var request = {};
@@ -740,23 +805,44 @@ var User = StackMob.User.extend({
       }
     }
 
-    console.debug("Requesting risk calculations from Archimedes...");
-    $.post(ARCHIMEDES_URL, request, _.bind(this.calculateRiskSuccess, this), "text").fail(_.bind(this.calculateRiskError, this));
+    console.debug("querying Archimedes...");
+    $.post(
+      ARCHIMEDES_URL,
+      request,
+      _.bind(this.calculateRiskSuccess, this),
+      "text"
+    ).fail(_.bind(this.calculateRiskError, this));
   },
   calculateRiskError : function(data) {
+    console.dir(data);
     console.error("Error calling Archimedes API: " + data.statusText + " (code " + data.status + ")");
-    this.set("risk_state", User.RISK_STATE.ERROR);
+    this.archimedes_error = data.statusText + " (code " + data.status + ")";
+    this.set("risk_state", User.RISK_STATE.CHANGED);
   },
   calculateRiskSuccess : function(data) {
     console.dir(data);
-    this.archimedes_result = $.parseJSON(data);
-    this.set("archimedes_result", data);
-    if (!this.archimedes_result.Risk) {
-      this.set("risk_state", User.RISK_STATE.ERROR);
-    } else {
-      this.set("risk_state", User.RISK_STATE.UP_TO_DATE);  
+    var res = null;
+    try {
+      res = $.parseJSON(data);
+    } catch (e) {
+      console.dir(e);
+      this.archimedes_error = "Bad response from Archimedes";
     }
-    this.save();
+    if (res.WarningCode && res.WarningCode !== "0") {
+      this.archimedes_error = "Warning code " + res.WarningCode + " from Archimedes";
+      res = null;
+    } else if (!res.Risk) {
+      this.archimedes_error = "Bad response from Archimedes";
+      res = null;
+    }
+    if (!res) {
+      this.set("risk_state", User.RISK_STATE.CHANGED);
+    } else {
+      this.archimedes_result = res; 
+      this.set("archimedes_result", data);
+      this.set("risk_state", User.RISK_STATE.UP_TO_DATE);
+      this.save();  
+    }
   },
   fetch : function() {
     // TODO use events:
@@ -765,25 +851,68 @@ var User = StackMob.User.extend({
     this.isFetchingRemote = true;
     StackMob.User.prototype.fetch.apply(this, arguments);
   },
+  getMissingInputStr : function() {
+    var needBp = this.needBp();
+    var needChol = this.needChol();
+    var needHba1c = this.needHba1c();
+    var s = "";
+    
+    if (needBp || needChol || needHba1c) {
+      if (needHba1c) {
+        if (needBp && needChol) {
+          s = "HbA1c, blood pressure, and cholesterol";
+        } else if (needBp) {
+          s = "HbA1c and blood pressure";
+        } else if (needChol) {
+          s = "HbA1c and cholesterol";
+        } else {
+          s = "HbA1c";
+        }
+      } else if (needBp) {
+        if (needChol) {
+          s = "blood pressure and cholesterol";
+        } else {
+          s = "blood pressure";
+        }
+      } else if (needChol) {
+        s = "cholesterol";
+      }
+    }
+    return s;
+  },
   handleChange : function(obj, data) {
     for (var attr in data.changes) {
-      // console.debug(attr);
-      if (_.has(USER_ATTRS, attr)) {
-        if (!this.isFetching()) {
-          console.debug("User's " + attr + " changed to " + this.get(attr));
-          this.set("risk_state", User.RISK_STATE.CHANGED);
+      var val = this.get(attr);
+      if (this.isFetching()) {
+        if (attr === "archimedes_result") {
+          var res = $.parseJSON(val);
+          if (res && res.Risk) {
+            this.archimedes_result = res;            
+          }
         }
+        console.debug("user's " + attr + " changed to " + val + " - still fetching");
+        continue; 
+      } else if (_.has(USER_ATTRS, attr)) {
+        console.debug("user's " + attr + " changed to " + val);
+        this.set("risk_state", User.RISK_STATE.CHANGED);
       } else if (attr === "risk_state") {
-        console.debug("User triggering " + User.RISK_STATE_CHANGE_EVENT + ": " + this.get("risk_state"));
-        this.trigger(User.RISK_STATE_CHANGE_EVENT, this.get("risk_state"), this);
-      } else if (attr === "archimedes_result") {
-        this.archimedes_result = $.parseJSON(this.get("archimedes_result"));
+        console.debug("user's " + attr + " changed to " + val + " - triggering " + User.RISK_STATE_CHANGE_EVENT);
+        this.trigger(User.RISK_STATE_CHANGE_EVENT, val, this);
+      } else if (attr !== "lastmoddate"){
+        console.debug("user's " + attr + " changed to " + val);
       }
     }
   },
   hasCompletedExtra : function() {
-    // TODO
-    return false;
+    for (var page in EXTRA_PAGES) {
+      var map = UI_MAP[page];
+      for (var id in map) {
+        if (this.get(map[id]) === "") {
+          return false;
+        }
+      }
+    }
+    return true;
   },
   hasCompletedRequired : function() {
     return this.get("progress") === "confirmation";
@@ -820,7 +949,6 @@ var User = StackMob.User.extend({
   RISK_STATE : {
     CALCULATING : "calculating",
     CHANGED : "changed", // needs to be updated
-    ERROR : "error",
     UP_TO_DATE : "up-to-date"
   }
 });
@@ -1480,6 +1608,138 @@ var ExtraProfileView = Backbone.View.extend({
   }
 });
 
+var ResultView2 = Backbone.View.extend({
+  initialize : function() {
+    this.listView = new NextStepListView({
+      el : this.$(".next-steps-list"),
+      model : this.model,
+      page : this
+    });
+    
+    this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskStateChanged, this);
+    
+    this.render();
+  },
+  events : {
+    "click .retry-button" : "handleRetry",
+    "pagebeforeshow" : "handlePageBeforeShow",
+  },
+  handlePageBeforeShow : function(e, data) {
+    this.model.calculateRisk();
+    
+    this.listView.updateList();
+    
+    // might need to init popup since we inserted it (jqm generates this id)
+    if (this.$("#popupLocked-popup").length === 0) {
+      this.$el.trigger("create");
+    }
+  },
+  handleRetry : function() {
+    this.model.calculateRisk();
+  },
+  handleRiskStateChanged : function() {
+    this.renderStatus();
+    if (this.model.get("risk_state") === User.RISK_STATE.UP_TO_DATE) {
+      this.render();
+    }
+  },
+  render : function() {
+    var user = this.model;
+    var result = user.archimedes_result;
+    
+    /*
+     * risk summary
+     * 
+     * 3 states - no results, range, results with bp/chol
+     */
+    var templateArgs = {
+      absRating : 6,
+      absRisk: "?%",
+      highestRating : 6,
+      missingInput: user.getMissingInputStr(),
+      perRisk: "?",
+      rec: "?",
+      relRating : 6,
+      relRisk: "?",
+      showScreeningReqNote: false      
+    }
+    if (result) {
+      var isRange = result.Risk[0].risk == "";
+      var riskUpper = result.Risk[ isRange ? 1 : 0];
+      var riskLower = result.Risk[ isRange ? 2 : 0];
+      templateArgs.absRating = parseInt(riskUpper.rating);
+      templateArgs.relRating = parseInt(riskUpper.ratingForAge);
+      templateArgs.highestRating = templateArgs.absRating > templateArgs.relRating
+        ? templateArgs.absRating : templateArgs.relRating;
+      
+      if (isRange) {
+        templateArgs.absRisk = riskLower.risk + "% to " + riskUpper.risk + "%";
+        templateArgs.relRisk = riskLower.comparisonRisk + " to " + riskUpper.comparisonRisk;
+        templateArgs.perRisk = riskLower.riskPercentile + " to " + riskUpper.riskPercentile;
+        templateArgs.rec = RISK_REC[result.Recommendation](templateArgs);
+        templateArgs.showScreeningReqNote = true;
+      } else {
+        templateArgs.absRisk = riskUpper.risk + "%";
+        templateArgs.relRisk = riskUpper.comparisonRisk;
+        templateArgs.perRisk = riskUpper.riskPercentile;
+        templateArgs.rec = RISK_DOC_REC[result.DoctorRecommendation]({
+          risk : RISK_RATING[templateArgs.highestRating]
+        });
+        templateArgs.showScreeningReqNote = false;
+      }
+    }
+    this.$("#results-summary").html(RESULTS_TEMPLATE(templateArgs));
+    this.$(".absolute .rating").attr("risk-rating", templateArgs.absRating);
+    this.$(".relative .rating").attr("risk-rating", templateArgs.relRating);
+    this.$(".absolute .heart-meter").attr("risk-rating", templateArgs.absRating);
+    this.$(".relative .heart-meter").attr("risk-rating", templateArgs.relRating);
+    
+    this.$("#popup-more-info").html(RESULTS_POPUP_TEMPLATE(templateArgs));
+  },
+  renderStatus : function() {
+    var user = this.model;
+    var $statusBar = this.$(".status-bar");
+    var $retryBtn = $statusBar.find("input[type=button]");
+    var message;
+    
+    switch(user.get("risk_state")) {
+    case User.RISK_STATE.CALCULATING:
+      this.showStatus(true);
+      message = "Calculating&hellip;";
+      $retryBtn.button("disable");
+      break;
+    case User.RISK_STATE.CHANGED:
+      this.showStatus(true);
+      message = user.archimedes_error ? "Calculation failed: " + user.archimedes_error : "";
+      $retryBtn.button("enable");
+      break;
+    case User.RISK_STATE.UP_TO_DATE:
+      this.showStatus(false, "");
+      message = "&nbsp;";
+      $retryBtn.button("enable");
+      break;
+    }
+    $statusBar.find("p").html(message);
+  },
+  showStatus : function(show) {
+    var $statusBar = this.$(".status-bar");
+    var isVisible = this.$el.is(":visible"); 
+    if (show) {
+      if (isVisible) {
+        $statusBar.slideDown("slow");
+      } else {
+        $statusBar.show();
+      }
+    } else {
+      if (isVisible) {
+        $statusBar.slideUp("slow");
+      } else {
+        $statusBar.hide();
+      }      
+    }
+  }
+});
+  
 var ResultView = Backbone.View.extend({
   initialize : function(attrs) {
     this.listView = new NextStepListView({
@@ -1503,7 +1763,7 @@ var ResultView = Backbone.View.extend({
       this.updateRiskView();
     }
     this.listView.updateList();
-    // might need to init popup since we inserted it (jqm generates the id)
+    // might need to init popup since we inserted it (jqm generates this id)
     if (this.$("#popupLocked-popup").length === 0) {
       this.$el.trigger("create");
     }
@@ -1512,8 +1772,8 @@ var ResultView = Backbone.View.extend({
       $img.css(RISK_IMAGES[rating]);
   },
   updateImage2 : function(rating, ratingForAge) {
-    this.$(".absolute .heart-meter").css(CSS_RISK_METER[rating]);
-    this.$(".relative .heart-meter").css(CSS_RISK_METER[ratingForAge]);
+    // this.$(".absolute .heart-meter").css(CSS_RISK_METER[rating]);
+    // this.$(".relative .heart-meter").css(CSS_RISK_METER[ratingForAge]);
   },
   updateRiskView : function() {
     var user = this.model;
@@ -1528,21 +1788,22 @@ var ResultView = Backbone.View.extend({
       $img.hide();
       $loader.show();
       break;
-    case User.RISK_STATE.ERROR:
-      $img.hide();
-      if (this.$el.is(":visible")) {
-        $loader.fadeOut("slow", function() {
-          $error.fadeIn("slow");
-        });
-      } else {
-        $loader.hide();
-        $error.show();
-      }
-      break;
+    // case User.RISK_STATE.ERROR:
+      // $img.hide();
+      // if (this.$el.is(":visible")) {
+        // $loader.fadeOut("slow", function() {
+          // $error.fadeIn("slow");
+        // });
+      // } else {
+        // $loader.hide();
+        // $error.show();
+      // }
+      // break;
     case User.RISK_STATE.CHANGED:
     case User.RISK_STATE.UP_TO_DATE:
       if (!result || !result.Risk) {
-        user.set("risk_state", User.RISK_STATE.ERROR);
+        // TODO handle bad result
+        user.set("risk_state", User.RISK_STATE.CHANGED);
         user.save();
         break;
       }
@@ -1557,7 +1818,7 @@ var ResultView = Backbone.View.extend({
       var highestRating = rating > ratingForAge ? rating : ratingForAge;
       
       if (isNaN(rating)) {
-        user.set("risk_state", User.RISK_STATE.ERROR);
+        user.set("risk_state", User.RISK_STATE.CHANGED);
         user.save();
         break; 
       }
@@ -1638,7 +1899,7 @@ var SurveyView = Backbone.View.extend({
       }  
       var $input = this.$("#" + input);
 
-      console.debug("loading " + userFieldName + "=" + val);
+      console.debug("loading input " + userFieldName + "=" + val);
 
       // remember what we loaded so we know if it changes
       $input.data("loadedValue", val);
@@ -1652,9 +1913,9 @@ var SurveyView = Backbone.View.extend({
           // type = text, number
           if (val == "") {
             // set the user with the value from the field
-            if ($input.attr("value")) {
-              this.model.set(userFieldName, $input.attr("value"));
-            }
+            // if ($input.attr("value")) {
+            // this.model.set(userFieldName, $input.attr("value"));
+            // }
           } else {
             $input.attr("value", val); 
           }
@@ -1685,15 +1946,15 @@ var SurveyView = Backbone.View.extend({
     "submit form" : "handleSubmit"    
   },
   handleChange : function(e, data) {
-    var $input = $(e.currentTarget);
+    // var $input = $(e.currentTarget);
     // console.log($input.prop("nodeName") + " " + e.currentTarget.id);
-    if ($input.prop("type") === "radio" && !$input.prop("checked")) {
-      return;
-    }
-    var userField = this.options.inputMap[$input.attr("id")];
-    var o = {};
-    o[userField] = $input.val();
-    this.model.set(o);
+    // if (this.isLoading || $input.prop("type") === "radio" && !$input.prop("checked")) {
+      // return;
+    // }
+    // var userField = this.options.inputMap[$input.attr("id")];
+    // var o = {};
+    // o[userField] = $input.val();
+    // this.model.set(o);
   },
   handlePagebeforehide : function(e, data) {
     var validator = this.$("form").data("validator");
@@ -1705,18 +1966,25 @@ var SurveyView = Backbone.View.extend({
     var changed = false;
     for (var input in this.options.inputMap) {
       var $input = this.$("#" + input);
+      if ($input.prop("type") === "radio" && !$input.prop("checked")) {
+        continue;
+      }
       var attr = this.options.inputMap[input];
-      var inputVal = this.model.get(attr);
+      // var val = this.model.get(attr);
+      var val = $input.val();
       var lastVal = $input.data("loadedValue");
-      if (inputVal !== lastVal) {
+      if (val !== lastVal) {
         if ($input.hasClass("invalid")) {
           $input.val(lastVal);
-          var o = {};
-          o[attr] = lastVal;
-          this.model.set(o);
+          // var o = {};
+          // o[attr] = lastVal;
+          // this.model.set(o);
         } else {
           changed = true;
-          $input.data("loadedValue", inputVal);
+          $input.data("loadedValue", val);
+          var o = {};
+          o[attr] = val;
+          this.model.set(o);
         }
       }
     }
@@ -1737,6 +2005,7 @@ var SurveyView = Backbone.View.extend({
   },
   handlePageshow : function(e, data) {
     this.prevPageId = data.prevPage.attr("id");
+    this.isLoading = true;
     
     var $submit = this.$("button[type=submit]");
     if (this.manageSubmitTarget === false) {
@@ -1770,6 +2039,7 @@ var SurveyView = Backbone.View.extend({
     this.$("input.ui-slider-input").slider("refresh");
     this.$("select[data-role=slider]").slider("refresh");
     this.$("select[data-role!=slider]").selectmenu("refresh");
+    this.isLoading = false;
   },
   handleSubmit : function(e) {
     e.preventDefault();
@@ -2079,19 +2349,17 @@ if (!localStorage["currentUsername"]) {
   gCurrentUser.fetch({
     success : function(model, resp) {
       // this gets called twice (once for local and once for StackMob)
-      console.info("fetched user " + model.get("username") + (model.isFetching() ? " (still fetching)" : " (done fetching)"));
+      console.info("fetched user " + model.get("username") +
+        (model.isFetching() ? " (still fetching)" : " (done fetching)"));
 
-      if (!model.isFetching()) {
-        if (model.get("risk_state") !== User.RISK_STATE.UP_TO_DATE) {
-          model.set("risk_state", User.RISK_STATE.CHANGED);
-        }
-        if (model.calculateLater) {
-          model.calculateRisk();
-        }
+      if (model.get("risk_state") !== User.RISK_STATE.UP_TO_DATE) {
+        model.set("risk_state", User.RISK_STATE.CHANGED);
       }
+      model.calculateRisk();
     },
     error : function(model, resp, options) {
-      console.error("failed to fetch user: " + resp.error + (model.isFetching() ? " (still fetching)" : " (done fetching)"));
+      console.error("failed to fetch user: " + resp.error +
+        (model.isFetching() ? " (still fetching)" : " (done fetching)"));
 
       // TODO - this is a bit iffy, since it could be a local or remoteerror,
       // and uncertain order (though likely local first); assume remote error for
@@ -2100,11 +2368,7 @@ if (!localStorage["currentUsername"]) {
         createUser(model);
       }
 
-      if (!model.isFetching()) {
-        if (model.calculateLater) {
-          model.calculateRisk();
-        }
-      }
+      model.calculateRisk();
     }
   });
 }

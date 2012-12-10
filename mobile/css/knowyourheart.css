@@ -1,4 +1,4 @@
-/******************************************************************************
+  /******************************************************************************
  * text
  *****************************************************************************/
 @font-face {
@@ -14,7 +14,7 @@
 body {
   font-family: "MuseoSans500Regular", serif;
 }
-input.ui-input-text {
+p, input.ui-input-text {
   font-family: "MuseoSans500Regular", sans-serif;
 }
 
@@ -26,6 +26,9 @@ p, li, .ui-controlgroup-label {
 }
 p.note {
   font-size: 1.2em;
+}
+.ui-footer li {
+  font-size: inherit;
 }
 
 p, label, li, .ui-controlgroup-label {
@@ -59,6 +62,14 @@ input.ui-mini, .ui-mini input, textarea.ui-mini
 .ui-header .ui-title {
   font-size: 1.5em;
   margin: 0.7em 30%;
+}
+
+/******************************************************************************
+ * page content
+ *****************************************************************************/
+/* remove gap between header and content */
+.ui-content {
+  margin-top: -1px;
 }
 
 /******************************************************************************
@@ -287,7 +298,7 @@ input.ui-mini, .ui-mini input, textarea.ui-mini
 .ui-btn-inner {
   font-size: 1.5em;
 }
-.ui-header .ui-btn-inner {
+.ui-header .ui-btn-inner, .ui-footer .ui-btn-inner, .ui-mini .ui-btn-inner {
   font-size: 1.2em;
 }
 .ui-bar {
@@ -406,7 +417,8 @@ span.ui-slider-label,
 
 @media only screen and (-webkit-min-device-pixel-ratio: 1.5),
   only screen and (min--moz-device-pixel-ratio: 1.5),
-  only screen and (min-resolution: 240dpi)
+  only screen and (min-resolution: 192dpi),
+  only screen and (-o-min-device-pixel-ratio: 3/2)
 {
   .ui-icon-profile {
     background-image: url('../images/icon-profile-36x36.png');
@@ -477,8 +489,10 @@ span.ui-slider-label,
   position: absolute;
   margin: -5px 0px 0px 0.5em;
 }
-@media screen and (-webkit-min-device-pixel-ratio: 2), 
-screen and (max-moz-device-pixel-ratio: 2)
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (min--moz-device-pixel-ratio: 1.5),
+  only screen and (min-resolution: 192dpi),
+  only screen and (-o-min-device-pixel-ratio: 3/2)
 {
   .icon-warning {
     background: url('../images/hires/icon-warning@2x.png');
@@ -563,8 +577,11 @@ screen and (max-moz-device-pixel-ratio: 2)
   margin: 0 auto 3em auto;
   width: 250px;
 }
-@media screen and (-webkit-min-device-pixel-ratio: 2), 
-screen and (max-moz-device-pixel-ratio: 2) {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (min--moz-device-pixel-ratio: 1.5),
+  only screen and (min-resolution: 192dpi),
+  only screen and (-o-min-device-pixel-ratio: 3/2)
+{
   .logo {
     background: url('../images/hires/knh-logo@2x.png');
   }
@@ -702,8 +719,11 @@ screen and (max-moz-device-pixel-ratio: 2) {
   width: 250px;
   margin: 10px auto;
 }
-@media screen and (-webkit-min-device-pixel-ratio: 2), 
-screen and (max-moz-device-pixel-ratio: 2) {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (min--moz-device-pixel-ratio: 1.5),
+  only screen and (min-resolution: 192dpi),
+  only screen and (-o-min-device-pixel-ratio: 3/2)
+{
 	#knh-logo-dash {
     background: url('../images/hires/knh-logo@2x.png');
     background-size: 250px auto;
@@ -780,8 +800,11 @@ a#dashboardShareBtn:active {
 }
 
 /* High Res images */
-@media screen and (-webkit-min-device-pixel-ratio: 2), 
-screen and (max-moz-device-pixel-ratio: 2) {
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (min--moz-device-pixel-ratio: 1.5),
+  only screen and (min-resolution: 192dpi),
+  only screen and (-o-min-device-pixel-ratio: 3/2)
+{
   #dashboardAssessmentBtn {
     display: block;
     background: url('../images/hires/assessmentbtn_sprite@2x.png');
@@ -1064,92 +1087,164 @@ div#facts {
 [risk-rating="5"] {
   color: #D70A17;
 }
-
-#assessment .ui-block-a {
-  width: 33%;
-}
-#assessment .ui-block-b {
-  width: 67%;
+[risk-rating="6"] {
+  color: #807b7b;
 }
 
 .heart-meter {
+  background-image: url(../images/heartmeter3_sprite1.png);
+  background-repeat: no-repeat;
+  -moz-background-size: 564px auto;
+  -o-background-size: 564px auto;
+  -webkit-background-size: 564px auto;
+  background-size: 564px auto;
   float: right;
   height: 94px;
-  width: 104px;
-}
-
-#assessment .ui-grid-a h3 {
-  font-size: 1.4em;
-  margin: 0;
-}
-#assessment .ui-grid-a .rating {
-  font-size: 200%;
-}
-#assessment .ui-grid-a p {
-  margin: 0.2em 0 0.4em 0;
-}
-
-
-#assessment .risk_score p.risk_message {
-  font-size: 95%;
-  text-align: left;
-  white-space: normal;
-  margin: 1em 0 1.5em 0;
-}
-
-#assessment .risk_score a {
-  padding: 15px;
-}
-
-.heart_meter {
-  text-align: center;
-  height: 94px;
   width: 94px;
-  margin: 0 auto;
-  display: none;
+}
+.heart-meter[risk-rating="1"] {
+  background-position: 0 0;
+}
+.heart-meter[risk-rating="2"] {
+  background-position: -94px 0;
+}
+.heart-meter[risk-rating="3"] {
+  background-position: -188px 0;
+}
+.heart-meter[risk-rating="4"] {
+  background-position: -282px 0;
+}
+.heart-meter[risk-rating="5"] {
+  background-position: -376px 0;
+}
+.heart-meter[risk-rating="6"] {
+  background-position: -470px 0;
+}
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5),
+  only screen and (min--moz-device-pixel-ratio: 1.5),
+  only screen and (min-resolution: 192dpi),
+  only screen and (-o-min-device-pixel-ratio: 3/2)
+{
+  .heart-meter {
+    background-image: url(../images/hires/heartmeter3-sprite@2x.png);
+  }
 }
 
-#assessment .risk_error {
-  white-space: normal; 
-}
-
-#assessment .risk_score .more-info {
-  margin: 0 0 0 0;
-  bottom: 0%;
-}
-
-#assessment .risk_score .ui-icon-arrow-r {
-  bottom: 0%;
-  margin: 0 0 2px 0;
-  top: auto;
-}
-
-.archimedes-link.ui-li-static.ui-li {
+#assessment2 .ui-content {
+  text-align: center;
   padding-top: 0;
 }
 
-.archimedes-link p {
-  font-size: x-small;
-  font-style: italic;
-  margin: 0;
+#assessment2 .status-bar {
+  background-color: rgba(0,0,0,0.7);
+  display: none;
+  margin-left: -15px;
+  position: absolute;
+  width: 100%;
+}
+#assessment2 .status-bar .test {
+  overflow: auto;
+  padding: 0.5em 0.5em 0.5em 7em;
+  text-align: left;
+}
+#assessment2 .status-bar p {
+  color: #eeeeee;
+  margin: 0.5em auto;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-shadow: 0 1px 0 #3A3B3C;
+  white-space: nowrap;
+}
+#assessment2 .status-bar .ui-btn {
+  margin: 0 0 0 -6.5em;
+  float: left;
 }
 
-.archimedes-link p a {
+#assessment2 #results-summary {
+  margin: 2em auto 0 auto;
+  min-width: 270px;
+  text-align: left;
+  width: 80%;
+}
+#assessment2 .ui-grid-a {
+  padding-left: 94px; 
+}
+#assessment2 .ui-block-a {
+  margin-left: -94px;
+  width: 94px;
+}
+#assessment2 .ui-block-b {
+  width: 100%;
+}
+
+#assessment2 .ui-block-a.absolute,
+#assessment2 .ui-block-b.absolute
+{
+  padding-bottom: 2em;
+}
+#assessment2 .ui-block-a.divider,
+#assessment2 .ui-block-b.divider
+{
+  background-color: rgba(0, 0, 0, 0.15);
+  height: 1px;
+}
+#assessment2 .ui-block-a.relative,
+#assessment2 .ui-block-b.relative
+{
+  padding-top: 2em;
+}
+
+#assessment2 .ui-grid-a h3 {
+  font-size: 1.4em;
+  font-weight: normal;
+  margin: 0.3em 0 0 0;
+}
+#assessment2 .ui-grid-a p {
+  margin: 0.1em;
+}
+#assessment2 .ui-grid-a p.rating {
+  font-size: 170%;
+  margin-bottom: 0.4em;
+}
+#assessment2 strong {
+  color: #474849;
+}
+#assessment2 #results-summary .note {
+  margin: 2em 0 0 0;
+}
+
+#assessment2 .full-report-btn {
+  margin: 2em auto;
+}
+
+#assessment2 .archimedes-link {
+  font-style: italic;
+  margin: 0;
+  text-align: right;
+}
+#assessment2 .archimedes-link a {
   text-decoration: none;
 }
 
-#popupMoreInfo {
-  text-align: left;
-  font-size: smaller;
+#assessment2 .next-steps-list {
+  margin-top: 1em;
 }
 
-#popupMoreInfo td {
+#popup-more-info.ui-content {
+  padding: 1em;
+  text-align: left;
+}
+#popup-more-info h3 {
+  font-size: 1.4em;
+}
+#popup-more-info td {
+  color: #807b7b;
+  font-family: "MuseoSans500Regular", sans-serif;
+  font-size: 1.4em;
   padding: 0.5em 0;
 }
-
-#popupMoreInfo td.value {
-  color: #2F3E46;
-  font-size: larger;
+#popup-more-info td.value {
+  color: #474849;
   padding-right: 0.5em;
   text-align: right;
   vertical-align: top;
@@ -1226,7 +1321,7 @@ div#facts {
 }
 #screening-location .name {
   border-width: 0 0 1px 0;
-  text-align: center;  
+  text-align: center;
 }
 #screening-location .address a, #screening-location .phone a, #screening-location .url a {
   color: #32a7da;
