@@ -1,0 +1,12 @@
+{
+  "ErrorMessageHashMap": {
+    "1": ["Invalid/Unsupported Format: Invalid Systolic and Diastolic values"]
+  },
+  "Risk": null,
+  "Recommendation": null,
+  "Interventions": null,
+  "ElevatedBloodPressure": false,
+  "ElevatedCholesterol": false,
+  "WarningCode": null,
+  "DoctorRecommendation": null
+}
