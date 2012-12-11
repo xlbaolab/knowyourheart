@@ -1,23 +1,24 @@
 /**
- * Protect console logging calls, e.g. F12 dev tools must be open on IE for
- * console to be defined.
+ * Protect window.console method calls, e.g. console is not defined on IE
+ * unless dev tools are open, and IE doesn't define console.debug
  */
-if ( typeof console === "undefined" || !console.log) {
-  window.console = {
-    debug : function() {
-    },
-    trace : function() {
-    },
-    log : function() {
-    },
-    info : function() {
-    },
-    warn : function() {
-    },
-    error : function() {
-    }
-  };
-}
+(function() {
+  if (!window.console) {
+    window.console = {};
+  }
+  // union of Chrome, FF, IE, and Safari console methods
+  var m = [
+    "log", "info", "warn", "error", "debug", "trace", "dir", "group",
+    "groupCollapsed", "groupEnd", "time", "timeEnd", "profile", "profileEnd",
+    "dirxml", "assert", "count", "markTimeline", "timeStamp", "clear"
+  ];
+  // define undefined methods as noops to prevent errors
+  for (var i = 0; i < m.length; i++) {
+    if (!window.console[m[i]]) {
+      window.console[m[i]] = function() {};
+    }    
+  } 
+})();
 
 console.debug("loading main.js")
 
@@ -161,7 +162,7 @@ var gNextStepsItems = {
     clazz : "share",
     href : "#share",
     primary : "Share",
-    secondary : "Your friends and family need to know their risk",
+    secondary : "Your friends and family need to know their risk"
   }
 };
 
@@ -751,7 +752,7 @@ var User = StackMob.User.extend({
     if (_.isUndefined(attrs)) {
       attrs = {
         username : generateRandomString(),
-        password : generateRandomString(),
+        password : generateRandomString()
       };
       this.set(attrs);
       
@@ -1640,7 +1641,7 @@ var ResultView2 = Backbone.View.extend({
   },
   events : {
     "click .retry-button" : "handleRetry",
-    "pagebeforeshow" : "handlePageBeforeShow",
+    "pagebeforeshow" : "handlePageBeforeShow"
   },
   handlePageBeforeShow : function(e, data) {
     this.model.calculateRisk();
@@ -1772,7 +1773,7 @@ var ResultView = Backbone.View.extend({
     this.riskViewRendered = false;
   },
   events : {
-    "pagebeforeshow" : "handlePageBeforeShow",
+    "pagebeforeshow" : "handlePageBeforeShow"
   },
   handlePageBeforeShow : function(e, data) {
     this.model.calculateRisk();
