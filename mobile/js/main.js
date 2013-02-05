@@ -27,10 +27,11 @@ console.debug("loading main.js")
  */
 var IS_IOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/i) ? true : false;
 var MAPS_URL = IS_IOS ? "http://maps.apple.com/maps?q=" : "http://maps.google.com/maps?q=";
+var ARCHIMEDES_KEY = 424242424;
 var ARCHIMEDES_URL = "https://demo-indigo4health.archimedesmodel.com/IndiGO4Health/IndiGO4Health";
 // callback indicates JSONP, which seems necessary
-var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/test/Provider/Find?callback=?";
-var SURESCRIPTS_API_KEY = "3a0a572b-4f5d-47a2-9a75-819888576454";
+var SURESCRIPTS_URL = "https://millionhearts.surescripts.net/Provider/Find?callback=?";
+var SURESCRIPTS_API_KEY = "d2722865-2f1f-4111-b63f-cdb533783f8e";
 
 /*
  * Text
@@ -789,7 +790,9 @@ var User = StackMob.User.extend({
     this.archimedes_error = "";
 
     // build request
-    var request = {};
+    var request = {
+      apikey : ARCHIMEDES_KEY
+    };
     for (attr in ARCHIMEDES_ATTRS) {
       var userAttr = ARCHIMEDES_ATTRS[attr];
       var val = userAttr === null ? null : this.get(userAttr);
