@@ -2,7 +2,7 @@
  * Protect window.console method calls, e.g. console is not defined on IE
  * unless dev tools are open, and IE doesn't define console.debug
  */
-(function() {
+(function () {
   if (!window.console) {
     window.console = {};
   }
@@ -15,9 +15,10 @@
   // define undefined methods as noops to prevent errors
   for (var i = 0; i < m.length; i++) {
     if (!window.console[m[i]]) {
-      window.console[m[i]] = function() {};
-    }    
-  } 
+      window.console[m[i]] = function () {
+      };
+    }
+  }
 })();
 
 console.debug("loading main.js")
@@ -119,51 +120,51 @@ var NEXT_STEPS_TEMPLATE = _.template('\
 ');
 
 var gNextStepsItems = {
-  locations : {
-    clazz : "screening-locations-map",
-    href : "#screening-locations-map",
-    primary : "Find a health screening clinic",
+  locations: {
+    clazz: "screening-locations-map",
+    href: "#screening-locations-map",
+    primary: "Find a health screening clinic",
     // Your [hba1c/bp/chol] levels are needed for a more accurate risk assessment
-    secondary : "",
-    hide : false,
-    warning : true
+    secondary: "",
+    hide: false,
+    warning: true
   },
-  enterMissing : {
-    clazz : "missing",
-    href : "", // history, bp, or chol
-    primary : "", // Enter your [hba1c/bp/chol]
-    secondary : TXT_INCOMPLETE,
-    hide : false,
-    warning : true
+  enterMissing: {
+    clazz: "missing",
+    href: "", // history, bp, or chol
+    primary: "", // Enter your [hba1c/bp/chol]
+    secondary: TXT_INCOMPLETE,
+    hide: false,
+    warning: true
   },
-  interventions : {
-    clazz : "interventions",
-    href : "#interventions",
-    primary : "Take action to lower your risk",
-    secondary : "By up to <span class='reduction'>?</span>%",
-    popup : false,
-    lock : false
+  interventions: {
+    clazz: "interventions",
+    href: "#interventions",
+    primary: "Take action to lower your risk",
+    secondary: "By up to <span class='reduction'>?</span>%",
+    popup: false,
+    lock: false
   },
-  extra : {
-    clazz : "extra",
-    href : "#bp-meds",
-    primary : "Improve your risk estimate",
-    secondary : "Answer a few more questions for a more accurate assessment",
-    hide : false
+  extra: {
+    clazz: "extra",
+    href: "#bp-meds",
+    primary: "Improve your risk estimate",
+    secondary: "Answer a few more questions for a more accurate assessment",
+    hide: false
   },
-  rewards : {
-    clazz : "rewards",
-    href : "#rewards",
-    primary : "Get Rewards",
-    secondary : "Enter to win a $20 Target gift card",
-    popup : false,
-    lock : false
-  },
-  share : {
-    clazz : "share",
-    href : "#share",
-    primary : "Share",
-    secondary : "Your friends and family need to know their risk"
+  /*rewards: {
+   clazz: "rewards",
+   href: "#rewards",
+   primary: "Get Rewards",
+   secondary: "Enter to win a $20 Target gift card",
+   popup: false,
+   lock: false
+   },*/
+  share: {
+    clazz: "share",
+    href: "#share",
+    primary: "Share",
+    secondary: "Your friends and family need to know their risk"
   }
 };
 
@@ -174,8 +175,8 @@ function compileNextStepsItems(nextStepsItemsState) {
   if (nextStepsItemsState !== gNextStepsItemsState) {
     gNextStepsItemsState = nextStepsItemsState;
     gNextStepsItemsCompiled = NEXT_STEPS_TEMPLATE({
-      items : gNextStepsItems,
-      limit : 4
+      items: gNextStepsItems,
+      limit: 4
     });
   }
   return gNextStepsItemsCompiled;
@@ -186,47 +187,47 @@ is healthy for your age.");
 var RISK_MESSAGE_RANGE = _.template("Your risk could be up to <%= \
 comparisonRisk %> times what is healthy for your age.");
 var RISK_REC = {
-  0 : _.template(""),
-  1 : _.template("It is important for you to check your <%= missingInput %> \
+  0: _.template(""),
+  1: _.template("It is important for you to check your <%= missingInput %> \
   to understand your risk better, and keep track of it over time."),
-  2 : _.template("You may be at high risk for your age. It is important for\
+  2: _.template("You may be at high risk for your age. It is important for\
   you to check your <%= missingInput %> to determine your risk, and take action \
   if it is high."),
-  3 : _.template("You are likely at very high risk for your age. It is urgent \
+  3: _.template("You are likely at very high risk for your age. It is urgent \
   for you to check your <%= missingInput %> to determine your risk, because \
   treatment could be critical.")
 };
 // var RISK_REC_SHORT = {
-  // 0 : _.template(""),
-  // 1 : _.template("Getting your <%= missing %> checked will help you understand \
-  // your risk better."),
-  // 2 : _.template("It is important to check your <%= missing %> \
-  // to understand your risk better."),
-  // 3 : _.template("It is urgent to check your <%= missing %> because \
-  // treatment could be critical.")
+// 0 : _.template(""),
+// 1 : _.template("Getting your <%= missing %> checked will help you understand \
+// your risk better."),
+// 2 : _.template("It is important to check your <%= missing %> \
+// to understand your risk better."),
+// 3 : _.template("It is urgent to check your <%= missing %> because \
+// treatment could be critical.")
 // };
 var RISK_DOC_REC = {
-  0 : _.template('Your heart risk is <%= risk %>. Good job!'),
-  1 : _.template('Your heart risk is <%= risk %>. Discuss steps you can take \
+  0: _.template('Your heart risk is <%= risk %>. Good job!'),
+  1: _.template('Your heart risk is <%= risk %>. Discuss steps you can take \
   to reduce it with a doctor.'),
-  2 : _.template('Your heart risk is <%= risk %>. It is important that you \
+  2: _.template('Your heart risk is <%= risk %>. It is important that you \
   see a doctor to discuss it.'),
-  3 : _.template('Your heart risk is <%= risk %>. It is urgent that you see \
+  3: _.template('Your heart risk is <%= risk %>. It is urgent that you see \
   a doctor soon to determine how you can reduce your risk.')
 };
 // var RISK_DOC_REC_SHORT = {
-  // 0 : "Good job! Keep doing what you are doing.",
-  // 1 : "Discuss your heart risk and how to reduce it with a doctor.",
-  // 2 : "It is important to see a doctor to discuss your heart risk.",
-  // 3 : "It is urgent to see a doctor soon to determine how to reduce your risk."
+// 0 : "Good job! Keep doing what you are doing.",
+// 1 : "Discuss your heart risk and how to reduce it with a doctor.",
+// 2 : "It is important to see a doctor to discuss your heart risk.",
+// 3 : "It is urgent to see a doctor soon to determine how to reduce your risk."
 // };
 var RISK_RATING = {
-  1 : "low",
-  2 : "moderate",
-  3 : "high",
-  4 : "very high",
-  5 : "extremely high",
-  6 : "unknown"
+  1: "low",
+  2: "moderate",
+  3: "high",
+  4: "very high",
+  5: "extremely high",
+  6: "unknown"
 };
 
 var RESULTS_TEMPLATE = _.template('\
@@ -291,209 +292,209 @@ var RESULTS_POPUP_TEMPLATE = _.template('\
 
 // survey pages and their inputs, mapped to user attrs
 var UI_MAP = {
-  "age" : {
-    "age-field" : "age"
+  "age": {
+    "age-field": "age"
   },
-  "gender" : {
-    "gender-male-radio" : "gender",
-    "gender-female-radio" : "gender"
+  "gender": {
+    "gender-male-radio": "gender",
+    "gender-female-radio": "gender"
   },
-  "height" : {
-    "height-ft-select" : "height_ft",
-    "height-in-select" : "height_in"
+  "height": {
+    "height-ft-select": "height_ft",
+    "height-in-select": "height_in"
   },
-  "weight" : {
-    "weight-field" : "weight"
+  "weight": {
+    "weight-field": "weight"
   },
-  "smoker" : {
-    "smoker-toggle" : "smoker"
+  "smoker": {
+    "smoker-toggle": "smoker"
   },
-  "history" : {
-    "mi-toggle" : "ami",
-    "stroke-toggle" : "stroke",
-    "diabetes-toggle" : "diabetes",
-    "hba1c-field" : "hba1c"
+  "history": {
+    "mi-toggle": "ami",
+    "stroke-toggle": "stroke",
+    "diabetes-toggle": "diabetes",
+    "hba1c-field": "hba1c"
   },
-  "knows-bp" : {
-    "knows-bp-radio-t" : "knows_bp",
-    "knows-bp-radio-f" : "knows_bp"
+  "knows-bp": {
+    "knows-bp-radio-t": "knows_bp",
+    "knows-bp-radio-f": "knows_bp"
   },
-  "blood-pressure" : {
-    "systolic-bp-slider" : "systolic",
-    "diastolic-bp-slider" : "diastolic"
+  "blood-pressure": {
+    "systolic-bp-slider": "systolic",
+    "diastolic-bp-slider": "diastolic"
   },
-  "knows-chol" : {
-    "knows-chol-radio-t" : "knows_chol",
-    "knows-chol-radio-f" : "knows_chol"
+  "knows-chol": {
+    "knows-chol-radio-t": "knows_chol",
+    "knows-chol-radio-f": "knows_chol"
   },
-  "cholesterol" : {
-    "total-chol-slider" : "cholesterol",
-    "hdl-slider" : "hdl",
-    "ldl-slider" : "ldl"
+  "cholesterol": {
+    "total-chol-slider": "cholesterol",
+    "hdl-slider": "hdl",
+    "ldl-slider": "ldl"
   },
-  "bp-meds" : {
-    "bp-meds-toggle" : "bloodpressuremeds",
-    "bp-meds-slider" : "bloodpressuremedcount"
+  "bp-meds": {
+    "bp-meds-toggle": "bloodpressuremeds",
+    "bp-meds-slider": "bloodpressuremedcount"
   },
-  "chol-meds" : {
-    "chol-meds-toggle" : "cholesterolmeds"
+  "chol-meds": {
+    "chol-meds-toggle": "cholesterolmeds"
   },
-  "aspirin" : {
-    "aspirin-toggle" : "aspirin"
+  "aspirin": {
+    "aspirin-toggle": "aspirin"
   },
-  "moderate-exercise" : {
-    "mod-ex-slider" : "moderateexercise"
+  "moderate-exercise": {
+    "mod-ex-slider": "moderateexercise"
   },
-  "vigorous-exercise" : {
-    "vig-ex-slider" : "vigorousexercise"
+  "vigorous-exercise": {
+    "vig-ex-slider": "vigorousexercise"
   },
-  "family-history" : {
-    "family-toggle" : "familymihistory"
+  "family-history": {
+    "family-toggle": "familymihistory"
   }
 };
 
 // archimedes attrs mapped to user attrs
 var ARCHIMEDES_ATTRS = {
-  "age" : "age",
-  "gender" : "gender",
-  "height" : null,
-  "weight" : "weight",
-  "smoker" : "smoker",
-  "mi" : "ami",
-  "stroke" : "stroke",
-  "diabetes" : "diabetes",
-  "systolic" : "systolic",
-  "diastolic" : "diastolic",
-  "cholesterol" : "cholesterol",
-  "hdl" : "hdl",
-  "ldl" : "ldl",
-  "hba1c" : "hba1c",
-  "cholesterolmeds" : "cholesterolmeds",
-  "bloodpressuremeds" : "bloodpressuremeds",
-  "bloodpressuremedcount" : "bloodpressuremedcount",
-  "aspirin" : "aspirin",
-  "moderateexercise" : "moderateexercise",
-  "vigorousexercise" : "vigorousexercise",
-  "familymihistory" : "familymihistory"
+  "age": "age",
+  "gender": "gender",
+  "height": null,
+  "weight": "weight",
+  "smoker": "smoker",
+  "mi": "ami",
+  "stroke": "stroke",
+  "diabetes": "diabetes",
+  "systolic": "systolic",
+  "diastolic": "diastolic",
+  "cholesterol": "cholesterol",
+  "hdl": "hdl",
+  "ldl": "ldl",
+  "hba1c": "hba1c",
+  "cholesterolmeds": "cholesterolmeds",
+  "bloodpressuremeds": "bloodpressuremeds",
+  "bloodpressuremedcount": "bloodpressuremedcount",
+  "aspirin": "aspirin",
+  "moderateexercise": "moderateexercise",
+  "vigorousexercise": "vigorousexercise",
+  "familymihistory": "familymihistory"
 };
 // user attrs mapped to archimedes attrs
 var USER_ATTRS = {
-  "age" : "age",
-  "gender" : "gender",
-  "height_ft" : null,
-  "height_in" : null,
-  "weight" : "weight",
-  "smoker" : "smoker",
-  "ami" : "mi",
-  "stroke" : "stroke",
-  "diabetes" : "diabetes",
-  "knows_bp" : null,
-  "systolic" : "systolic",
-  "diastolic" : "diastolic",
-  "knows_chol" : null,
-  "cholesterol" : "cholesterol",
-  "hdl" : "hdl",
-  "ldl" : "ldl",
-  "hba1c" : "hba1c",
-  "cholesterolmeds" : "cholesterolmeds",
-  "bloodpressuremeds" : "bloodpressuremeds",
-  "bloodpressuremedcount" : "bloodpressuremedcount",
-  "aspirin" : "aspirin",
-  "moderateexercise" : "moderateexercise",
-  "vigorousexercise" : "vigorousexercise",
-  "familymihistory" : "familymihistory"
+  "age": "age",
+  "gender": "gender",
+  "height_ft": null,
+  "height_in": null,
+  "weight": "weight",
+  "smoker": "smoker",
+  "ami": "mi",
+  "stroke": "stroke",
+  "diabetes": "diabetes",
+  "knows_bp": null,
+  "systolic": "systolic",
+  "diastolic": "diastolic",
+  "knows_chol": null,
+  "cholesterol": "cholesterol",
+  "hdl": "hdl",
+  "ldl": "ldl",
+  "hba1c": "hba1c",
+  "cholesterolmeds": "cholesterolmeds",
+  "bloodpressuremeds": "bloodpressuremeds",
+  "bloodpressuremedcount": "bloodpressuremedcount",
+  "aspirin": "aspirin",
+  "moderateexercise": "moderateexercise",
+  "vigorousexercise": "vigorousexercise",
+  "familymihistory": "familymihistory"
 };
 var ARCHIMEDES_DEFAULTS = {
-  age : 18, // 18 to 85 years
-  gender : "M", // M/F
-  height : 70, // 44 to 87 inches
-  weight : 160, // 80 to 600 pounds
-  smoker : false,
-  mi : false,
-  stroke : false,
-  diabetes : false,
-  systolic : 120, // 80 to 220 mm/Hg
-  diastolic : 80, // 40 to 130 mm/Hg
-  cholesterol : 200, // 70 to 500 mg/dL
-  hdl : 60, // 20 to 130 mg/dL
-  ldl : 100, // 40 to 400 mg/dL
-  hba1c : 4.8, // 2 to 16 % (typically 1 digit after decimal)
-  cholesterolmeds : false,
-  bloodpressuremeds : false,
-  bloodpressuremedcount : 0, // 1, 2, 3, 4+
-  aspirin : false,
-  moderateexercise : 4, // 0 to 60 hours
-  vigorousexercise : 2, // 0 to 30 hours
-  familymihistory : false
+  age: 18, // 18 to 85 years
+  gender: "M", // M/F
+  height: 70, // 44 to 87 inches
+  weight: 160, // 80 to 600 pounds
+  smoker: false,
+  mi: false,
+  stroke: false,
+  diabetes: false,
+  systolic: 120, // 80 to 220 mm/Hg
+  diastolic: 80, // 40 to 130 mm/Hg
+  cholesterol: 200, // 70 to 500 mg/dL
+  hdl: 60, // 20 to 130 mg/dL
+  ldl: 100, // 40 to 400 mg/dL
+  hba1c: 4.8, // 2 to 16 % (typically 1 digit after decimal)
+  cholesterolmeds: false,
+  bloodpressuremeds: false,
+  bloodpressuremedcount: 0, // 1, 2, 3, 4+
+  aspirin: false,
+  moderateexercise: 4, // 0 to 60 hours
+  vigorousexercise: 2, // 0 to 30 hours
+  familymihistory: false
 };
 var ARCHIMEDES_REQUIRED = {
-  age : true,
-  gender : true,
-  height : true,
-  weight : true,
-  smoker : true,
-  mi : true,
-  stroke : true,
-  diabetes : true,
-  systolic : false,
-  diastolic : false,
-  cholesterol : false,
-  hdl : false,
-  ldl : false,
-  hba1c : false,
-  cholesterolmeds : false,
-  bloodpressuremeds : false,
-  bloodpressuremedcount : false,
-  aspirin : false,
-  moderateexercise : false,
-  vigorousexercise : false,
-  familymihistory : false
+  age: true,
+  gender: true,
+  height: true,
+  weight: true,
+  smoker: true,
+  mi: true,
+  stroke: true,
+  diabetes: true,
+  systolic: false,
+  diastolic: false,
+  cholesterol: false,
+  hdl: false,
+  ldl: false,
+  hba1c: false,
+  cholesterolmeds: false,
+  bloodpressuremeds: false,
+  bloodpressuremedcount: false,
+  aspirin: false,
+  moderateexercise: false,
+  vigorousexercise: false,
+  familymihistory: false
 };
 var USER_DEFAULTS = {
-  smoker : "false",
-  ami : "false",
-  stroke : "false",
-  diabetes : "false",
-  cholesterolmeds : "false",
-  bloodpressuremeds : "false",
-  aspirin : "false",
-  familymihistory : "false"
+  smoker: "false",
+  ami: "false",
+  stroke: "false",
+  diabetes: "false",
+  cholesterolmeds: "false",
+  bloodpressuremeds: "false",
+  aspirin: "false",
+  familymihistory: "false"
 };
 var REQUIRED_PAGES = {
-  "age" : true,
-  "gender" : true,
-  "height" : true,
-  "weight" : true,
-  "smoker" : true,
-  "history" : true,
-  "knows-bp" : true,
-  "blood-pressure" : true,
-  "knows-chol" : true,
-  "cholesterol" : true
+  "age": true,
+  "gender": true,
+  "height": true,
+  "weight": true,
+  "smoker": true,
+  "history": true,
+  "knows-bp": true,
+  "blood-pressure": true,
+  "knows-chol": true,
+  "cholesterol": true
 };
 var EXTRA_PAGES = {
-  "bp-meds" : true,
-  "chol-meds" : true,
-  "aspirin" : true,
-  "moderate-exercise" : true,
-  "vigorous-exercise" : true,
-  "family-history" : true
+  "bp-meds": true,
+  "chol-meds": true,
+  "aspirin": true,
+  "moderate-exercise": true,
+  "vigorous-exercise": true,
+  "family-history": true
 };
 var RISK_IMAGES = {
-  1 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat 0 0"
+  1: {
+    background: "url(images/heartmeter3_sprite1.png) no-repeat 0 0"
   },
-  2 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -94px 0"
+  2: {
+    background: "url(images/heartmeter3_sprite1.png) no-repeat -94px 0"
   },
-  3 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -188px 0"
+  3: {
+    background: "url(images/heartmeter3_sprite1.png) no-repeat -188px 0"
   },
-  4 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -282px 0"
+  4: {
+    background: "url(images/heartmeter3_sprite1.png) no-repeat -282px 0"
   },
-  5 : {
-    background : "url(images/heartmeter3_sprite1.png) no-repeat -376px 0"
+  5: {
+    background: "url(images/heartmeter3_sprite1.png) no-repeat -376px 0"
   }
 };
 
@@ -505,12 +506,12 @@ var gCurrentUser = null;
 var gIsFirstPageInit = true;
 
 /*
-* Custom Validators
-*/
+ * Custom Validators
+ */
 $.tools.validator.fn(
   "#height-ft-select, #height-in-select",
   "Height must be between 3'8\" and 7'3\"",
-  function(el, v) {
+  function (el, v) {
     var feet = parseInt($("#height-ft-select").val());
     var inches = parseInt($("#height-in-select").val());
     if (isNaN(feet) || isNaN(inches)) {
@@ -524,7 +525,7 @@ $.tools.validator.fn(
 $.tools.validator.fn(
   "#systolic-bp-slider, #diastolic-bp-slider",
   "Systolic must be greater than diastolic blood pressure",
-  function(el, v) {
+  function (el, v) {
     var systolic = parseInt($("#systolic-bp-slider").val());
     var diastolic = parseInt($("#diastolic-bp-slider").val());
     if (isNaN(systolic) || isNaN(diastolic)) {
@@ -537,7 +538,7 @@ $.tools.validator.fn(
 $.tools.validator.fn(
   "#hdl-slider, #ldl-slider, #total-chol-slider",
   "Total cholesterol must be greater than HDL + LDL",
-  function(el, v) {
+  function (el, v) {
     var hdl = parseInt($("#hdl-slider").val());
     var ldl = parseInt($("#ldl-slider").val());
     var total = parseInt($("#total-chol-slider").val());
@@ -565,13 +566,13 @@ function isBlank(str) {
 function createUser(user, callbacks) {
   if (_.isUndefined(callbacks)) {
     callbacks = {
-      success : function(model) {
+      success: function (model) {
         // this gets called twice (once for local and once for StackMob)
         console.info("created user " + model.get("username"));
         gCurrentUser = model;
         localStorage["currentUsername"] = model.get("username");
       },
-      error : function(model, response) {
+      error: function (model, response) {
         console.error("failed to create user: " + response.error);
         gCurrentUser = model;
         localStorage["currentUsername"] = model.get("username");
@@ -590,9 +591,9 @@ function doFirstPageInit() {
   // create a view for each survey page to handle user input
   for (var pageId in UI_MAP) {
     var viewArgs = {
-      el : $("#" + pageId),
-      inputMap : UI_MAP[pageId],
-      model : gCurrentUser
+      el: $("#" + pageId),
+      inputMap: UI_MAP[pageId],
+      model: gCurrentUser
     };
     if (pageId === "bp-meds") {
       new SurveyBpMedsView(viewArgs);
@@ -608,61 +609,61 @@ function doFirstPageInit() {
   }
 
   new HomeView({
-    el : $("#home"),
-    model : gCurrentUser
+    el: $("#home"),
+    model: gCurrentUser
   });
 
   new OptionsView({
-    el : $("#options"),
-    model : gCurrentUser
+    el: $("#options"),
+    model: gCurrentUser
   });
 
   new InterventionsView({
-    el : $("#interventions"),
-    model : gCurrentUser
+    el: $("#interventions"),
+    model: gCurrentUser
   });
 
   var locationsModel = new LocationsModel();
 
   new LocDetailsView({
-    el : $("#screening-location"),
-    model : locationsModel
+    el: $("#screening-location"),
+    model: locationsModel
   });
 
   new LocListView({
-    el : $("#screening-locations-list"),
-    model : locationsModel
+    el: $("#screening-locations-list"),
+    model: locationsModel
   });
 
   new LocMapView({
-    el : $("#screening-locations-map"),
-    model : locationsModel
+    el: $("#screening-locations-map"),
+    model: locationsModel
   });
 
   new ProfileView({
-    el : $("#basic-profile"),
-    model : gCurrentUser
+    el: $("#basic-profile"),
+    model: gCurrentUser
   });
 
   new ExtraProfileView({
-    el : $("#extra_profile"),
-    model : gCurrentUser
+    el: $("#extra_profile"),
+    model: gCurrentUser
   });
 
   // new ResultView({
-    // el : $("#assessment"),
-    // model : gCurrentUser
+  // el : $("#assessment"),
+  // model : gCurrentUser
   // });
-  
+
   new ResultView2({
-    el : $("#assessment2"),
-    model : gCurrentUser
+    el: $("#assessment2"),
+    model: gCurrentUser
   });
 
   new WelcomeView({
-    el : $("#welcome"),
-    inputMap : {},
-    model : gCurrentUser
+    el: $("#welcome"),
+    inputMap: {},
+    model: gCurrentUser
   });
 }
 
@@ -670,10 +671,10 @@ function doFirstPageInit() {
  * StackMob
  */
 StackMob.init({
-  appName : "knowyourheart",
-  clientSubdomain : "peterttsenggmailcom",
-  publicKey : "ad81cf6c-4523-411c-a326-f63717789c07",
-  apiVersion : 0
+  appName: "knowyourheart",
+  clientSubdomain: "peterttsenggmailcom",
+  publicKey: "ad81cf6c-4523-411c-a326-f63717789c07",
+  apiVersion: 0
 });
 
 // addArgs(fn, arg1, arg2, ...)
@@ -691,7 +692,7 @@ StackMob.init({
 // }
 
 function wrapRemoteError(fn) {
-  return function(onError, originalModel, options) {
+  return function (onError, originalModel, options) {
     // console.debug("wrapRemoteError");
     if (originalModel) {
       originalModel.isFetchingRemote = false;
@@ -701,7 +702,7 @@ function wrapRemoteError(fn) {
 }
 
 function wrapRemoteSuccess(fn) {
-  return function(resp, status, xhr) {
+  return function (resp, status, xhr) {
     // console.debug("wrapRemoteSuccess");
     if (gCurrentUser) {
       gCurrentUser.isFetchingRemote = false;
@@ -711,7 +712,7 @@ function wrapRemoteSuccess(fn) {
 }
 
 function wrapLocalError(fn) {
-  return function(onError, originalModel, options) {
+  return function (onError, originalModel, options) {
     // console.debug("wrapLocalError");
     if (originalModel) {
       originalModel.isFetchingRemote = false;
@@ -721,7 +722,7 @@ function wrapLocalError(fn) {
 }
 
 function wrapLocalSuccess(fn) {
-  return function(resp, status, xhr) {
+  return function (resp, status, xhr) {
     // console.debug("wrapLocalSuccess");
     if (gCurrentUser) {
       gCurrentUser.isFetchingLocal = false;
@@ -733,7 +734,7 @@ function wrapLocalSuccess(fn) {
 // hack - add localStorage support to StackMob's user model
 // note that a significant side effect is that callbacks get called twice
 StackMob.Model.prototype.localStorage = new Backbone.LocalStorage("user");
-StackMob.Model.prototype.sync = function(method, model, options) {
+StackMob.Model.prototype.sync = function (method, model, options) {
   var successFn = options.success;
   var errorFn = options.error;
 
@@ -747,36 +748,36 @@ StackMob.Model.prototype.sync = function(method, model, options) {
 };
 
 var User = StackMob.User.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     StackMob.User.prototype.initialize.apply(this, arguments);
 
     if (_.isUndefined(attrs)) {
       attrs = {
-        username : generateRandomString(),
-        password : generateRandomString()
+        username: generateRandomString(),
+        password: generateRandomString()
       };
       this.set(attrs);
-      
+
       this.reset();
     }
 
     this.on("change", this.handleChange, this);
   },
-  calculateRisk : function() {
+  calculateRisk: function () {
     console.debug("calculateRisk");
-    
+
     // cases to not calculate
-    switch(this.get("risk_state")) {
-    case User.RISK_STATE.CALCULATING:
-      console.debug("already calculating");
-      return;
-    case User.RISK_STATE.UP_TO_DATE:
-      if (this.archimedes_result) {
-        console.debug("found up-to-date result");
+    switch (this.get("risk_state")) {
+      case User.RISK_STATE.CALCULATING:
+        console.debug("already calculating");
         return;
-      }
-      console.debug("up-to-date, but no result found");
-      break;
+      case User.RISK_STATE.UP_TO_DATE:
+        if (this.archimedes_result) {
+          console.debug("found up-to-date result");
+          return;
+        }
+        console.debug("up-to-date, but no result found");
+        break;
     }
 
     // wait until later to calculate if we're still fetching
@@ -785,23 +786,22 @@ var User = StackMob.User.extend({
       console.debug("still fetching")
       return;
     }
-    
+
     this.set("risk_state", User.RISK_STATE.CALCULATING);
     this.archimedes_error = "";
 
     // build request
     var request = {
-      apikey : ARCHIMEDES_KEY
+      apikey: ARCHIMEDES_KEY
     };
     for (attr in ARCHIMEDES_ATTRS) {
       var userAttr = ARCHIMEDES_ATTRS[attr];
       var val = userAttr === null ? null : this.get(userAttr);
       if (val) {
-        if (((attr === "systolic" || attr === "diastolic") && this.needBp()) || 
+        if (((attr === "systolic" || attr === "diastolic") && this.needBp()) ||
           ((attr === "cholesterol" || attr === "hdl" || attr === "ldl") && this.needChol()) ||
           ((attr === "hba1c") && (this.get("diabetes") === "false")) ||
-          (attr === "bloodpressuremedcount" && this.get("bloodpressuremeds") === "false"))
-        {
+          (attr === "bloodpressuremedcount" && this.get("bloodpressuremeds") === "false")) {
           continue;
         }
         request[attr] = val;
@@ -812,7 +812,8 @@ var User = StackMob.User.extend({
           var inches = parseInt(this.get("height_in"));
           if (!isNaN(feet) && !isNaN(inches)) {
             request[attr] = feet * 12 + inches;
-          };
+          }
+          ;
         }
       }
     }
@@ -826,13 +827,13 @@ var User = StackMob.User.extend({
       "text"
     ).fail(_.bind(this.calculateRiskError, this));
   },
-  calculateRiskError : function(data) {
+  calculateRiskError: function (data) {
     console.dir(data);
     console.error("Error calling Archimedes API: " + data.statusText + " (code " + data.status + ")");
     this.archimedes_error = data.statusText + " (code " + data.status + ")";
     this.set("risk_state", User.RISK_STATE.CHANGED);
   },
-  calculateRiskSuccess : function(data) {
+  calculateRiskSuccess: function (data) {
     console.dir(data);
     var res = null;
     try {
@@ -857,25 +858,25 @@ var User = StackMob.User.extend({
     if (!res) {
       this.set("risk_state", User.RISK_STATE.CHANGED);
     } else {
-      this.archimedes_result = res; 
+      this.archimedes_result = res;
       this.set("archimedes_result", data);
       this.set("risk_state", User.RISK_STATE.UP_TO_DATE);
-      this.save();  
+      this.save();
     }
   },
-  fetch : function() {
+  fetch: function () {
     // TODO use events:
     // http://tbranyen.com/post/how-to-indicate-backbone-fetch-progress
     this.isFetchingLocal = true;
     this.isFetchingRemote = true;
     StackMob.User.prototype.fetch.apply(this, arguments);
   },
-  getMissingInputStr : function() {
+  getMissingInputStr: function () {
     var needBp = this.needBp();
     var needChol = this.needChol();
     var needHba1c = this.needHba1c();
     var s = "";
-    
+
     if (needBp || needChol || needHba1c) {
       if (needHba1c) {
         if (needBp && needChol) {
@@ -899,18 +900,18 @@ var User = StackMob.User.extend({
     }
     return s;
   },
-  handleChange : function(obj, data) {
+  handleChange: function (obj, data) {
     for (var attr in data.changes) {
       var val = this.get(attr);
       if (this.isFetching()) {
         if (attr === "archimedes_result") {
           var res = $.parseJSON(val);
           if (res && res.Risk) {
-            this.archimedes_result = res;            
+            this.archimedes_result = res;
           }
         }
         console.debug("user's " + attr + " changed to " + val + " - still fetching");
-        continue; 
+        continue;
       } else if (_.has(USER_ATTRS, attr)) {
         console.debug("user's " + attr + " changed to " + val);
         this.set("risk_state", User.RISK_STATE.CHANGED);
@@ -918,12 +919,12 @@ var User = StackMob.User.extend({
         console.debug("user's " + attr + " changed to " + val + " - triggering " + User.RISK_STATE_CHANGE_EVENT);
         // console.trace();
         this.trigger(User.RISK_STATE_CHANGE_EVENT, val, this);
-      } else if (attr !== "lastmoddate"){
+      } else if (attr !== "lastmoddate") {
         console.debug("user's " + attr + " changed to " + val);
       }
     }
   },
-  hasCompletedExtra : function() {
+  hasCompletedExtra: function () {
     for (var page in EXTRA_PAGES) {
       var map = UI_MAP[page];
       for (var id in map) {
@@ -934,22 +935,22 @@ var User = StackMob.User.extend({
     }
     return true;
   },
-  hasCompletedRequired : function() {
+  hasCompletedRequired: function () {
     return this.get("progress") === "confirmation";
   },
-  isFetching : function() {
+  isFetching: function () {
     return this.isFetchingLocal || this.isFetchingRemote;
   },
-  needBp : function() {
+  needBp: function () {
     return (this.get("knows_bp") === "false") || !$.isNumeric(this.get("systolic")) || !$.isNumeric(this.get("diastolic"));
   },
-  needChol : function() {
+  needChol: function () {
     return (this.get("knows_chol") === "false") || !$.isNumeric(this.get("hdl")) || !$.isNumeric(this.get("ldl")) || !$.isNumeric(this.get("cholesterol"));
   },
-  needHba1c : function() {
+  needHba1c: function () {
     return (this.get("diabetes") === "true") && !$.isNumeric(this.get("hba1c"));
   },
-  reset : function() {
+  reset: function () {
     var attrs = {};
     var attr;
     for (attr in USER_ATTRS) {
@@ -961,27 +962,27 @@ var User = StackMob.User.extend({
     attrs.archimedes_result = "";
     attrs.progress = "";
     attrs.state = User.RISK_STATE.CHANGED;
-    
+
     this.set(attrs);
   }
 }, {
-  RISK_STATE_CHANGE_EVENT : "risk-state:change",
-  RISK_STATE : {
-    CALCULATING : "calculating",
-    CHANGED : "changed", // needs to be updated
-    UP_TO_DATE : "up-to-date"
+  RISK_STATE_CHANGE_EVENT: "risk-state:change",
+  RISK_STATE: {
+    CALCULATING: "calculating",
+    CHANGED: "changed", // needs to be updated
+    UP_TO_DATE: "up-to-date"
   }
 });
 
 var ScreeningLoc = StackMob.Model.extend({
-  schemaName : "screening_location"
+  schemaName: "screening_location"
 });
 var ScreeningLocs = StackMob.Collection.extend({
-  model : ScreeningLoc
+  model: ScreeningLoc
 });
 
 var LocationsModel = Backbone.Model.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.geocoder = new google.maps.Geocoder();
     this.providers = null;
     this.location = null;
@@ -990,20 +991,20 @@ var LocationsModel = Backbone.Model.extend({
 
     _.extend(this, Backbone.Events);
   },
-  geocode : function(address) {
+  geocode: function (address) {
     if (address.length === 0 || $.trim(address.toLowerCase()) === "current location") {
       this.geolocate();
       return;
     }
-    
+
     this.geocoder.geocode({
-      "address" : address
+      "address": address
     }, _.bind(this.handleGeocode, this));
   },
-  geolocate : function() {
+  geolocate: function () {
     // Try HTML5 geolocation
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(_.bind(this.handleGeolocate, this), function(error) {
+      navigator.geolocation.getCurrentPosition(_.bind(this.handleGeolocate, this), function (error) {
         // interface PositionError {
         // const unsigned short PERMISSION_DENIED = 1;
         // const unsigned short POSITION_UNAVAILABLE = 2;
@@ -1018,7 +1019,7 @@ var LocationsModel = Backbone.Model.extend({
       // Browser doesn't support Geolocation
     }
   },
-  handleGeocode : function(result, status) {
+  handleGeocode: function (result, status) {
     console.debug("geocode returned with status " + status);
     console.dir(result);
 
@@ -1032,35 +1033,35 @@ var LocationsModel = Backbone.Model.extend({
     this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
     this.queryForLocations();
   },
-  handleGeolocate : function(position) {
+  handleGeolocate: function (position) {
     this.location = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     this.trigger(LocationsModel.LOCATION_CHANGE_EVENT, this.location);
     this.queryForLocations();
   },
-  handleDatabase : function(result) {
+  handleDatabase: function (result) {
     this.queryingDatabase = false;
     // convert to json
     var locs = result.models;
     var providers = new Array(locs.length);
-    for (var i=0; i<locs.length; i++) {
+    for (var i = 0; i < locs.length; i++) {
       var p = locs[i];
       providers[i] = {
-        "address1" : p.get("address1"),
-        "address2" : p.get("address2"),
-        "city" : p.get("city"),
-        "crossStreet" : p.get("cross_street"),
-        "description" : p.get("description"),
-        "distance" : p.get("location").distance * 3959,
-        "lat" : p.get("location").lat,
-        "lon" : p.get("location").lon,
-        "name" : p.get("name"),
-        "phone" : p.get("phone"),
-        "precise" : true,
-        "state" : p.get("state"),
-        "url" : p.get("url"),
-        "urlCaption" : p.get("url_caption"),
-        "zip" : p.get("zip")
-      }; 
+        "address1": p.get("address1"),
+        "address2": p.get("address2"),
+        "city": p.get("city"),
+        "crossStreet": p.get("cross_street"),
+        "description": p.get("description"),
+        "distance": p.get("location").distance * 3959,
+        "lat": p.get("location").lat,
+        "lon": p.get("location").lon,
+        "name": p.get("name"),
+        "phone": p.get("phone"),
+        "precise": true,
+        "state": p.get("state"),
+        "url": p.get("url"),
+        "urlCaption": p.get("url_caption"),
+        "zip": p.get("zip")
+      };
     }
     this.mergeProviders(providers);
     if (!this.queryingSurescripts) {
@@ -1068,7 +1069,7 @@ var LocationsModel = Backbone.Model.extend({
       this.trigger(LocationsModel.PROVIDERS_CHANGE_EVENT, this.providers);
     }
   },
-  handleSurescripts : function(result) {
+  handleSurescripts: function (result) {
     this.queryingSurescripts = false;
     this.mergeProviders(result.providers);
     if (!this.queryingDatabase) {
@@ -1076,7 +1077,7 @@ var LocationsModel = Backbone.Model.extend({
       this.trigger(LocationsModel.PROVIDERS_CHANGE_EVENT, this.providers);
     }
   },
-  mergeProviders : function(providers) {
+  mergeProviders: function (providers) {
     if (!this.newProviders) {
       this.newProviders = providers;
       return;
@@ -1088,7 +1089,7 @@ var LocationsModel = Backbone.Model.extend({
     }
     this.newProviders = new Array(size);
     var x = 0, x2 = 0;
-    for ( i = 0; i < size; i++) {
+    for (i = 0; i < size; i++) {
       if (x2 >= providers2.length || (x < providers.length && providers[x].distance < providers2[x2].distance)) {
         this.newProviders[i] = providers[x];
         x++;
@@ -1099,11 +1100,11 @@ var LocationsModel = Backbone.Model.extend({
     }
 
   },
-  queryForLocations : function() {
+  queryForLocations: function () {
     this.queryingDatabase = true;
     this.queryingSurescripts = true;
     this.newProviders = null;
-    
+
     // flatfile
     // GeoPoint(lat, lon) has some constraints:
     //  lat: -90,90 (both inclusive)
@@ -1113,8 +1114,8 @@ var LocationsModel = Backbone.Model.extend({
     q.mustBeNearMi("location", geopoint, 20); // TODO
     var locs = new ScreeningLocs();
     locs.query(q, {
-      success : _.bind(this.handleDatabase, this),
-      error : function(model, response) {
+      success: _.bind(this.handleDatabase, this),
+      error: function (model, response) {
         // TODO display error
         console.error("Error querying database: " + response);
         console.debug(model);
@@ -1123,32 +1124,32 @@ var LocationsModel = Backbone.Model.extend({
 
     // surescripts    
     $.getJSON(SURESCRIPTS_URL, {
-      apikey : SURESCRIPTS_API_KEY,
-      lat : this.location.lat(),
-      lon : this.location.lng(),
-      radius : 20, // TODO - options
-      maxResults : 20
-    }, _.bind(this.handleSurescripts, this)).fail(function(data) {
-      // TODO display error
-      console.error("Error calling Surescripts API: " + data.statusText + " (code " + data.status + ")");
-    });
+      apikey: SURESCRIPTS_API_KEY,
+      lat: this.location.lat(),
+      lon: this.location.lng(),
+      radius: 20, // TODO - options
+      maxResults: 20
+    }, _.bind(this.handleSurescripts, this)).fail(function (data) {
+        // TODO display error
+        console.error("Error calling Surescripts API: " + data.statusText + " (code " + data.status + ")");
+      });
   }
 }, {
-  ERROR_EVENT : "error",
-  LOCATION_CHANGE_EVENT : "location:change",
-  PROVIDERS_CHANGE_EVENT : "providers:change"
+  ERROR_EVENT: "error",
+  LOCATION_CHANGE_EVENT: "location:change",
+  PROVIDERS_CHANGE_EVENT: "providers:change"
 });
 
 /*
  * Views
  */
 var LocDetailsView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
   },
-  events : {
-    "pagebeforeshow" : "updateView"
+  events: {
+    "pagebeforeshow": "updateView"
   },
-  updateView : function(e, data) {
+  updateView: function (e, data) {
     if (this.model.providers === null) {
       return;
     }
@@ -1168,38 +1169,38 @@ var LocDetailsView = Backbone.View.extend({
 });
 
 var LocListView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.$list = this.$("#loc-list");
     this.model.on(LocationsModel.ERROR_EVENT, this.handleError, this);
     this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
-  events : {
-    "click" : "handleClick",
-    "click .loc-search-btn" : "handleFind",
-    "click .nav-map" : "handleNavMapClicked",
-    "keypress .loc-search-field" : "handleSearchEnter",
-    "pageshow" : "refreshView"
+  events: {
+    "click": "handleClick",
+    "click .loc-search-btn": "handleFind",
+    "click .nav-map": "handleNavMapClicked",
+    "keypress .loc-search-field": "handleSearchEnter",
+    "pageshow": "refreshView"
   },
-  handleClick : function(e) {
+  handleClick: function (e) {
     this.$(".message").fadeOut();
   },
-  handleError : function(e) {
+  handleError: function (e) {
     this.$(".message p").html(e);
     this.$(".message").fadeIn();
   },
-  handleFind : function() {
+  handleFind: function () {
     this.$(".message").fadeOut();
     this.model.geocode(this.$(".loc-search-field").val());
   },
-  handleNavMapClicked : function(e) {
+  handleNavMapClicked: function (e) {
     e.preventDefault();
     $.mobile.changePage(e.currentTarget.hash, {
-      changeHash : false,
-      reverse : true,
-      transition : "flip"
+      changeHash: false,
+      reverse: true,
+      transition: "flip"
     });
   },
-  handleProvidersChange : function(providers) {
+  handleProvidersChange: function (providers) {
     // clear list
     $("li.provider", this.$list).remove();
 
@@ -1214,24 +1215,24 @@ var LocListView = Backbone.View.extend({
       var provider = providers[i];
 
       this.$list.append(LOC_LI_TEMPLATE({
-        dataTheme : i % 2 ? "a" : "e",
-        index : i,
-        name : provider.name,
-        address : provider.address1,
-        distance : provider.distance.toPrecision(1)
+        dataTheme: i % 2 ? "a" : "e",
+        index: i,
+        name: provider.name,
+        address: provider.address1,
+        distance: provider.distance.toPrecision(1)
       }));
     }
 
     this.refreshView();
   },
-  handleSearchEnter : function(e) {
+  handleSearchEnter: function (e) {
     if (e.keyCode == 13) {
       this.handleFind();
     }
   },
-  refreshView : function() {
+  refreshView: function () {
     this.$(".message").hide();
-    
+
     if ($.mobile.activePage.attr("id") === this.el.id) {
       this.$list.listview("refresh");
     }
@@ -1243,105 +1244,105 @@ var LocListView = Backbone.View.extend({
 });
 
 var LocMapView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     var options = {
-      center : new google.maps.LatLng(37.7652065, -122.24163550000003),
-      mapTypeId : google.maps.MapTypeId.ROADMAP,
-      zoom : 13
+      center: new google.maps.LatLng(37.7652065, -122.24163550000003),
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      zoom: 13
     };
     this.map = new google.maps.Map(this.$(".map")[0], options);
     this.markers = [];
     google.maps.event.addListener(this.map, "click", _.bind(this.handleMapClick, this));
-  
+
     this.model.on(LocationsModel.ERROR_EVENT, this.handleError, this);
     this.model.on(LocationsModel.LOCATION_CHANGE_EVENT, this.handleLocationChange, this);
     this.model.on(LocationsModel.PROVIDERS_CHANGE_EVENT, this.handleProvidersChange, this);
   },
-  events : {
-    "click" : "handleClick",
-    "click .loc-search-btn" : "handleFind",
-    "click .nav-list" : "handleNavListClicked",
-    "keypress .loc-search-field" : "handleSearchEnter",
-    "pageshow" : "refreshView"
+  events: {
+    "click": "handleClick",
+    "click .loc-search-btn": "handleFind",
+    "click .nav-list": "handleNavListClicked",
+    "keypress .loc-search-field": "handleSearchEnter",
+    "pageshow": "refreshView"
   },
-  clearMarkers : function() {
+  clearMarkers: function () {
     for (var i = 0; i < this.markers.length; i++) {
       this.markers[i].setMap(null);
     }
     this.markers = [];
   },
-  handleClick : function(e) {
+  handleClick: function (e) {
     this.$(".message").fadeOut();
   },
-  handleError : function(e) {
+  handleError: function (e) {
     this.$(".message p").html(e);
     this.$(".message").fadeIn();
   },
-  handleFind : function() {
+  handleFind: function () {
     this.$(".message").fadeOut();
     this.model.geocode(this.$(".loc-search-field").val());
   },
-  handleLocationChange : function(location) {
+  handleLocationChange: function (location) {
     this.map.panTo(location);
   },
-  handleMapClick : function() {
+  handleMapClick: function () {
     if (this.infoWindow) {
       this.infoWindow.close();
     }
   },
-  handleMarkerClick : function(marker, provider, index) {
+  handleMarkerClick: function (marker, provider, index) {
     if (this.infoWindow) {
       this.infoWindow.close();
     }
     var content = LOC_MARKER_TEMPLATE({
-      address : provider.address1 + "<br>" + provider.city + ", " + provider.state + " " + provider.zip.substring(0, 5),
+      address: provider.address1 + "<br>" + provider.city + ", " + provider.state + " " + provider.zip.substring(0, 5),
       // address : provider.crossStreet
-      index : index,
-      name : provider.name 
+      index: index,
+      name: provider.name
     });
     this.infoWindow = new google.maps.InfoWindow({
-      map : this.map,
-      position : marker.position,
-      content : content
+      map: this.map,
+      position: marker.position,
+      content: content
     });
   },
-  handleNavListClicked : function(e) {
+  handleNavListClicked: function (e) {
     e.preventDefault();
     $.mobile.changePage(e.currentTarget.hash, {
-      changeHash : false,
-      transition : "flip"
+      changeHash: false,
+      transition: "flip"
     });
   },
-  handleProvidersChange : function(providers) {
+  handleProvidersChange: function (providers) {
     this.clearMarkers();
-    
+
     if (providers.length === 0) {
       if ($.mobile.activePage.attr("id") === this.el.id) {
         this.handleError(TXT.CLINICS_NOT_FOUND);
       }
-      return;  
+      return;
     }
-    
+
     for (var i = 0; i < providers.length; i++) {
       var provider = providers[i];
       var marker = new google.maps.Marker({
         animation: google.maps.Animation.DROP,
-        position : new google.maps.LatLng(provider.lat, provider.lon),
-        map : this.map,
-        title : provider.name
+        position: new google.maps.LatLng(provider.lat, provider.lon),
+        map: this.map,
+        title: provider.name
       });
       google.maps.event.addListener(marker, "click", _.bind(this.handleMarkerClick, this, marker, provider, i));
       this.markers.push(marker);
     }
   },
-  handleSearchEnter : function(e) {
+  handleSearchEnter: function (e) {
     if (e.keyCode == 13) {
       this.handleFind();
     }
   },
-  refreshView : function() {    
+  refreshView: function () {
     this.$(".message").hide();
-    
+
     var windowHeight = $(window).height();
     var headerHeight = this.$(".ui-header").height();
     var footerHeight = this.$(".ui-navbar").height();
@@ -1362,17 +1363,17 @@ var LocMapView = Backbone.View.extend({
 });
 
 var HomeView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.listView = new NextStepListView({
-      el : this.$(".next-steps-list"),
-      model : this.model,
-      page : this
+      el: this.$(".next-steps-list"),
+      model: this.model,
+      page: this
     });
   },
-  events : {
-    "pagebeforeshow" : "updateView"
+  events: {
+    "pagebeforeshow": "updateView"
   },
-  updateView : function(e, data) {
+  updateView: function (e, data) {
     this.model.calculateRisk();
     this.listView.updateList();
     // might need to init popup since we inserted it (jqm generates the id)
@@ -1383,18 +1384,18 @@ var HomeView = Backbone.View.extend({
 });
 
 var InterventionsView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
-  events : {
-    "pagebeforeshow" : "updateView"
+  events: {
+    "pagebeforeshow": "updateView"
   },
-  handleRiskChange : function(state, user) {
+  handleRiskChange: function (state, user) {
     if (state === User.RISK_STATE.UP_TO_DATE) {
       this.updateView();
     }
   },
-  updateView : function() {
+  updateView: function () {
     var result = this.model.archimedes_result;
     if (!result || !result.Risk) {
       return;
@@ -1445,43 +1446,43 @@ var InterventionsView = Backbone.View.extend({
 });
 
 var NextStepListView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
     this.options.page.$el.append(POPUP_LOCKED_HTML);
   },
-  events : {
-    "click li.interventions" : "handleInterventionsClicked",
-    "click li.rewards" : "handleRewardsClicked"
+  events: {
+    "click li.interventions": "handleInterventionsClicked",
+    "click li.rewards": "handleRewardsClicked"
   },
-  getRiskReduction : function() {
+  getRiskReduction: function () {
     var result = this.model.archimedes_result;
     if (!result || !result.Risk || !result.Interventions.PercentReductionWithAllInterventions) {
       return "?";
     } else {
-      return Math.round(result.Interventions.PercentReductionWithAllInterventions); 
+      return Math.round(result.Interventions.PercentReductionWithAllInterventions);
     }
   },
-  handleInterventionsClicked : function(e) {
+  handleInterventionsClicked: function (e) {
     this.options.page.$(".explanation").html(TXT.INTERVENTIONS_LOCKED_EXPLANATION);
   },
-  handleRewardsClicked : function(e) {
+  handleRewardsClicked: function (e) {
     this.options.page.$(".explanation").html(TXT.REWARDS_LOCKED_EXPLANATION);
   },
-  handleRiskChange : function(state, user) {
+  handleRiskChange: function (state, user) {
     var $risk = this.$("li .reduction");
 
-    switch(state) {
-    case User.RISK_STATE.UP_TO_DATE:
-      $risk.html(this.getRiskReduction());
-      break;
+    switch (state) {
+      case User.RISK_STATE.UP_TO_DATE:
+        $risk.html(this.getRiskReduction());
+        break;
     }
   },
-  refreshView : function() {
+  refreshView: function () {
     if (this.options.page.el.id === $.mobile.activePage.attr("id")) {
       this.$el.listview("refresh");
     }
   },
-  updateList : function() {
+  updateList: function () {
     var i = 0;
 
     var needBp = this.model.needBp();
@@ -1522,7 +1523,7 @@ var NextStepListView = Backbone.View.extend({
       }
 
       gNextStepsItems.locations.secondary = "<span>Your " + missingText +
-      " levels are needed for a more accurate risk assessment</span>";
+        " levels are needed for a more accurate risk assessment</span>";
       gNextStepsItems.locations.hide = false;
       gNextStepsItems.enterMissing.primary = "Enter your missing values";
       gNextStepsItems.enterMissing.secondary = "INCOMPLETE - " + missingText;
@@ -1531,9 +1532,9 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#popupLocked";
       gNextStepsItems.interventions.popup = true;
       gNextStepsItems.interventions.lock = true;
-      gNextStepsItems.rewards.href = "#popupLocked";
-      gNextStepsItems.rewards.popup = true;
-      gNextStepsItems.rewards.lock = true;
+      //gNextStepsItems.rewards.href = "#popupLocked";
+      //gNextStepsItems.rewards.popup = true;
+      //gNextStepsItems.rewards.lock = true;
     } else {
       gNextStepsItems.locations.hide = true;
       gNextStepsItems.enterMissing.hide = true;
@@ -1541,62 +1542,62 @@ var NextStepListView = Backbone.View.extend({
       gNextStepsItems.interventions.href = "#interventions";
       gNextStepsItems.interventions.popup = false;
       gNextStepsItems.interventions.lock = false;
-      gNextStepsItems.rewards.href = "#rewards";
-      gNextStepsItems.rewards.popup = false;
-      gNextStepsItems.rewards.lock = false;
+      //gNextStepsItems.rewards.href = "#rewards";
+      //gNextStepsItems.rewards.popup = false;
+      //gNextStepsItems.rewards.lock = false;
     }
 
     this.$("li.next-step").remove();
     this.$("li.next-steps-header").after(compileNextStepsItems(state));
-    this.$("li .reduction").html(this.getRiskReduction());  
+    this.$("li .reduction").html(this.getRiskReduction());
     this.refreshView();
     this.$("li.locked .ui-icon-arrow-r").removeClass("ui-icon-arrow-r").addClass("icon-lock");
   },
-  updateListContent : function() {
+  updateListContent: function () {
     // TODO: when we need to update the list item contents, e.g. risk
     // value, but not add/remove list items  
   }
 });
 
 var OptionsView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
   },
-  events : {
-    "click #reset-btn" : "handleReset",
-    "click #cancel-reset-btn" : "handleCancel"
+  events: {
+    "click #reset-btn": "handleReset",
+    "click #cancel-reset-btn": "handleCancel"
   },
-  handleCancel : function(evt) {
+  handleCancel: function (evt) {
     this.$("#popup-confirm-reset").popup("close");
   },
-  handleReset : function(evt) {
+  handleReset: function (evt) {
     // this.model.reset();
     // this.model.save();
     window.localStorage.clear();
     $.mobile.changePage("app.html", {
-      transition : "fade"
+      transition: "fade"
     });
     window.location.reload();
   }
 });
 
 var ProfileView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.render();
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskChange, this);
   },
-  events : {
-    "pagebeforeshow" : "handlePageBeforeShow"
+  events: {
+    "pagebeforeshow": "handlePageBeforeShow"
   },
-  handlePageBeforeShow : function(e, data) {
+  handlePageBeforeShow: function (e, data) {
     this.model.calculateRisk();
     this.render();
   },
-  handleRiskChange : function(state, user) {
+  handleRiskChange: function (state, user) {
     if (this.model.get("risk_state") === User.RISK_STATE.UP_TO_DATE) {
       this.render();
     }
   },
-  render : function() {
+  render: function () {
     var text;
     var user = this.model;
 
@@ -1676,15 +1677,15 @@ var ProfileView = Backbone.View.extend({
 });
 
 var ExtraProfileView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
   },
-  events : {
-    "pagebeforeshow" : "updateView"
+  events: {
+    "pagebeforeshow": "updateView"
   },
-  updateView : function(e, data) {
+  updateView: function (e, data) {
     var text;
     var user = this.model;
-    
+
     text = user.get("bloodpressuremeds");
     if (!text) {
       text = "&nbsp;";
@@ -1718,59 +1719,59 @@ var ExtraProfileView = Backbone.View.extend({
 });
 
 var ResultView2 = Backbone.View.extend({
-  initialize : function() {
+  initialize: function () {
     this.listView = new NextStepListView({
-      el : this.$(".next-steps-list"),
-      model : this.model,
-      page : this
+      el: this.$(".next-steps-list"),
+      model: this.model,
+      page: this
     });
-    
+
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.handleRiskStateChanged, this);
-    
+
     this.render();
   },
-  events : {
-    "click .retry-button" : "handleRetry",
-    "pagebeforeshow" : "handlePageBeforeShow"
+  events: {
+    "click .retry-button": "handleRetry",
+    "pagebeforeshow": "handlePageBeforeShow"
   },
-  handlePageBeforeShow : function(e, data) {
+  handlePageBeforeShow: function (e, data) {
     this.model.calculateRisk();
-    
+
     this.listView.updateList();
-    
+
     // might need to init popup since we inserted it (jqm generates this id)
     if (this.$("#popupLocked-popup").length === 0) {
       this.$el.trigger("create");
     }
   },
-  handleRetry : function() {
+  handleRetry: function () {
     this.model.calculateRisk();
   },
-  handleRiskStateChanged : function() {
+  handleRiskStateChanged: function () {
     this.renderStatus();
     if (this.model.get("risk_state") === User.RISK_STATE.UP_TO_DATE) {
       this.render();
     }
   },
-  render : function() {
+  render: function () {
     var user = this.model;
     var result = user.archimedes_result;
-    
+
     /*
      * risk summary
      * 
      * 3 states - no results, range, results with bp/chol
      */
     var templateArgs = {
-      absRating : 6,
+      absRating: 6,
       absRisk: "?%",
-      highestRating : 6,
+      highestRating: 6,
       missingInput: user.getMissingInputStr(),
       perRisk: "?",
       rec: "?",
-      relRating : 6,
+      relRating: 6,
       relRisk: "?",
-      showScreeningReqNote: false      
+      showScreeningReqNote: false
     }
     if (result) {
       var isRange = result.Risk[0].risk == "";
@@ -1780,7 +1781,7 @@ var ResultView2 = Backbone.View.extend({
       templateArgs.relRating = parseInt(riskUpper.ratingForAge);
       templateArgs.highestRating = templateArgs.absRating > templateArgs.relRating
         ? templateArgs.absRating : templateArgs.relRating;
-      
+
       if (isRange) {
         templateArgs.absRisk = riskLower.risk + "% to " + riskUpper.risk + "%";
         templateArgs.relRisk = riskLower.comparisonRisk + " to " + riskUpper.comparisonRisk;
@@ -1792,7 +1793,7 @@ var ResultView2 = Backbone.View.extend({
         templateArgs.relRisk = riskUpper.comparisonRisk;
         templateArgs.perRisk = riskUpper.riskPercentile;
         templateArgs.rec = RISK_DOC_REC[result.DoctorRecommendation]({
-          risk : RISK_RATING[templateArgs.highestRating]
+          risk: RISK_RATING[templateArgs.highestRating]
         });
         templateArgs.showScreeningReqNote = false;
       }
@@ -1802,34 +1803,34 @@ var ResultView2 = Backbone.View.extend({
     this.$(".relative .rating").attr("risk-rating", templateArgs.relRating);
     this.$(".absolute .heart-meter").attr("risk-rating", templateArgs.absRating);
     this.$(".relative .heart-meter").attr("risk-rating", templateArgs.relRating);
-    
+
     this.$("#popup-more-info").html(RESULTS_POPUP_TEMPLATE(templateArgs));
   },
-  renderStatus : function() {
+  renderStatus: function () {
     var user = this.model;
     var $statusBar = this.$(".status-bar");
     var message;
-    
-    switch(user.get("risk_state")) {
-    case User.RISK_STATE.CALCULATING:
-      this.showStatus(true, false);
-      message = "Calculating&hellip;";
-      break;
-    case User.RISK_STATE.CHANGED:
-      this.showStatus(true, true);
-      message = user.archimedes_error ? "Calculation failed: " + user.archimedes_error : "";
-      break;
-    case User.RISK_STATE.UP_TO_DATE:
-      this.showStatus(false, true);
-      message = "&nbsp;";
-      break;
+
+    switch (user.get("risk_state")) {
+      case User.RISK_STATE.CALCULATING:
+        this.showStatus(true, false);
+        message = "Calculating&hellip;";
+        break;
+      case User.RISK_STATE.CHANGED:
+        this.showStatus(true, true);
+        message = user.archimedes_error ? "Calculation failed: " + user.archimedes_error : "";
+        break;
+      case User.RISK_STATE.UP_TO_DATE:
+        this.showStatus(false, true);
+        message = "&nbsp;";
+        break;
     }
     $statusBar.find("p").html(message);
   },
-  showStatus : function(show, enabled) {
+  showStatus: function (show, enabled) {
     var $statusBar = this.$(".status-bar");
     var $retryBtn = $statusBar.find("input[type=button]");
-    var isVisible = this.$el.is(":visible"); 
+    var isVisible = this.$el.is(":visible");
     if (show) {
       if (isVisible) {
         $statusBar.slideDown("slow");
@@ -1841,20 +1842,20 @@ var ResultView2 = Backbone.View.extend({
         $statusBar.slideUp("slow");
       } else {
         $statusBar.hide();
-      }      
+      }
     }
     if (isVisible) {
       $retryBtn.button(enabled ? "enable" : "disable");
     }
   }
 });
-  
+
 var ResultView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     this.listView = new NextStepListView({
-      el : this.$(".next-steps-list"),
-      model : this.model,
-      page : this
+      el: this.$(".next-steps-list"),
+      model: this.model,
+      page: this
     });
 
     this.model.on(User.RISK_STATE_CHANGE_EVENT, this.updateRiskView, this);
@@ -1862,10 +1863,10 @@ var ResultView = Backbone.View.extend({
     // do it at least once; pageinit doesn't work if this is the initial page
     this.riskViewRendered = false;
   },
-  events : {
-    "pagebeforeshow" : "handlePageBeforeShow"
+  events: {
+    "pagebeforeshow": "handlePageBeforeShow"
   },
-  handlePageBeforeShow : function(e, data) {
+  handlePageBeforeShow: function (e, data) {
     this.model.calculateRisk();
     if (!this.riskViewRendered) {
       this.riskViewRendered = true;
@@ -1877,135 +1878,135 @@ var ResultView = Backbone.View.extend({
       this.$el.trigger("create");
     }
   },
-  updateImage : function(range, rating, $img) {
-      $img.css(RISK_IMAGES[rating]);
+  updateImage: function (range, rating, $img) {
+    $img.css(RISK_IMAGES[rating]);
   },
-  updateImage2 : function(rating, ratingForAge) {
+  updateImage2: function (rating, ratingForAge) {
     // this.$(".absolute .heart-meter").css(CSS_RISK_METER[rating]);
     // this.$(".relative .heart-meter").css(CSS_RISK_METER[ratingForAge]);
   },
-  updateRiskView : function() {
+  updateRiskView: function () {
     var user = this.model;
     var result = user.archimedes_result;
     var $error = this.$(".risk_error");
     var $loader = this.$("#circularG");
     var $img = this.$(".heart_meter");
 
-    switch(user.get("risk_state")) {
-    case User.RISK_STATE.CALCULATING:
-      $error.hide();
-      $img.hide();
-      $loader.show();
-      break;
-    // case User.RISK_STATE.ERROR:
+    switch (user.get("risk_state")) {
+      case User.RISK_STATE.CALCULATING:
+        $error.hide();
+        $img.hide();
+        $loader.show();
+        break;
+      // case User.RISK_STATE.ERROR:
       // $img.hide();
       // if (this.$el.is(":visible")) {
-        // $loader.fadeOut("slow", function() {
-          // $error.fadeIn("slow");
-        // });
+      // $loader.fadeOut("slow", function() {
+      // $error.fadeIn("slow");
+      // });
       // } else {
-        // $loader.hide();
-        // $error.show();
+      // $loader.hide();
+      // $error.show();
       // }
       // break;
-    case User.RISK_STATE.CHANGED:
-    case User.RISK_STATE.UP_TO_DATE:
-      if (!result || !result.Risk) {
-        // TODO handle bad result
-        user.set("risk_state", User.RISK_STATE.CHANGED);
-        user.save();
-        break;
-      }
-      
-      // update risk image and message
-      var range = result.Recommendation !== "";
-      var risk = result.Risk[ range ? 1 : 0];
-      var risk2 = result.Risk[ range ? 2 : 0];
-
-      var rating = parseInt(risk.rating);
-      var ratingForAge = parseInt(risk.ratingForAge);
-      var highestRating = rating > ratingForAge ? rating : ratingForAge;
-      
-      if (isNaN(rating)) {
-        user.set("risk_state", User.RISK_STATE.CHANGED);
-        user.save();
-        break; 
-      }
-      
-      $error.hide();
-      if (this.$el.is(":visible")) {
-        $error.hide();
-        $loader.fadeOut("slow", _.bind(function() {
-          $img.fadeIn("slow");
-          this.updateImage(range, highestRating, $img);
-        }, this));
-      } else {
-        $loader.hide();
-        $img.show();
-        this.updateImage(range, highestRating, $img);
-      }
-      
-      this.$(".absolute .rating").html(RISK_RATING[rating].toUpperCase());
-      this.$(".absolute .rating").attr("risk-rating", rating);
-      this.$(".relative .rating").html(RISK_RATING[ratingForAge].toUpperCase());
-      this.$(".relative .rating").attr("risk-rating", ratingForAge)
-      this.updateImage2(rating, ratingForAge);
-
-      var missingStr = "";
-      if (user.needBp()) {
-        missingStr = "blood pressure";
-      }
-      if (user.needChol()) {
-        if (missingStr) {
-          missingStr += " and ";  
+      case User.RISK_STATE.CHANGED:
+      case User.RISK_STATE.UP_TO_DATE:
+        if (!result || !result.Risk) {
+          // TODO handle bad result
+          user.set("risk_state", User.RISK_STATE.CHANGED);
+          user.save();
+          break;
         }
-        missingStr += "cholesterol";
-      }
-      var msgArgs = {
-        comparisonRisk : risk.comparisonRisk,
-        missing : missingStr
-      };
-      var riskMsg;
-      if (range) {
-        riskMsg = RISK_MESSAGE_RANGE(msgArgs) + "<br><br>Recommendation: " + 
-          RISK_REC_SHORT[result.Recommendation](msgArgs);
-      } else {
-        riskMsg = RISK_MESSAGE(msgArgs) + "<br><br>Recommendation: " +
-          RISK_DOC_REC_SHORT[result.DoctorRecommendation];
-      }
-      this.$(".risk_message").html(riskMsg);
 
-      // popup
-      var riskStr = range ? (risk2.risk + "% to " + risk.risk + "%") : (risk.risk + "%");
-      var ratioStr = range ? (risk2.comparisonRisk + " to " + risk.comparisonRisk) : risk.comparisonRisk;
-      var percentileStr = range ? (risk2.riskPercentile + " to " + risk.riskPercentile) : risk.riskPercentile;
-      this.$(".risk").html(riskStr);
-      this.$(".ratio").html(ratioStr);
-      this.$(".percentile").html(percentileStr);
+        // update risk image and message
+        var range = result.Recommendation !== "";
+        var risk = result.Risk[ range ? 1 : 0];
+        var risk2 = result.Risk[ range ? 2 : 0];
 
-      var rec = range ? RISK_REC[result.Recommendation](msgArgs) : RISK_DOC_REC[result.DoctorRecommendation]({
-        risk : RISK_RATING[highestRating]
-      });
-      this.$(".recommendation").html(rec);
+        var rating = parseInt(risk.rating);
+        var ratingForAge = parseInt(risk.ratingForAge);
+        var highestRating = rating > ratingForAge ? rating : ratingForAge;
 
-      if (range) {
-        this.$(".accuracy").show();
-      } else {
-        this.$(".accuracy").hide();
-      }
-      break;
+        if (isNaN(rating)) {
+          user.set("risk_state", User.RISK_STATE.CHANGED);
+          user.save();
+          break;
+        }
+
+        $error.hide();
+        if (this.$el.is(":visible")) {
+          $error.hide();
+          $loader.fadeOut("slow", _.bind(function () {
+            $img.fadeIn("slow");
+            this.updateImage(range, highestRating, $img);
+          }, this));
+        } else {
+          $loader.hide();
+          $img.show();
+          this.updateImage(range, highestRating, $img);
+        }
+
+        this.$(".absolute .rating").html(RISK_RATING[rating].toUpperCase());
+        this.$(".absolute .rating").attr("risk-rating", rating);
+        this.$(".relative .rating").html(RISK_RATING[ratingForAge].toUpperCase());
+        this.$(".relative .rating").attr("risk-rating", ratingForAge)
+        this.updateImage2(rating, ratingForAge);
+
+        var missingStr = "";
+        if (user.needBp()) {
+          missingStr = "blood pressure";
+        }
+        if (user.needChol()) {
+          if (missingStr) {
+            missingStr += " and ";
+          }
+          missingStr += "cholesterol";
+        }
+        var msgArgs = {
+          comparisonRisk: risk.comparisonRisk,
+          missing: missingStr
+        };
+        var riskMsg;
+        if (range) {
+          riskMsg = RISK_MESSAGE_RANGE(msgArgs) + "<br><br>Recommendation: " +
+            RISK_REC_SHORT[result.Recommendation](msgArgs);
+        } else {
+          riskMsg = RISK_MESSAGE(msgArgs) + "<br><br>Recommendation: " +
+            RISK_DOC_REC_SHORT[result.DoctorRecommendation];
+        }
+        this.$(".risk_message").html(riskMsg);
+
+        // popup
+        var riskStr = range ? (risk2.risk + "% to " + risk.risk + "%") : (risk.risk + "%");
+        var ratioStr = range ? (risk2.comparisonRisk + " to " + risk.comparisonRisk) : risk.comparisonRisk;
+        var percentileStr = range ? (risk2.riskPercentile + " to " + risk.riskPercentile) : risk.riskPercentile;
+        this.$(".risk").html(riskStr);
+        this.$(".ratio").html(ratioStr);
+        this.$(".percentile").html(percentileStr);
+
+        var rec = range ? RISK_REC[result.Recommendation](msgArgs) : RISK_DOC_REC[result.DoctorRecommendation]({
+          risk: RISK_RATING[highestRating]
+        });
+        this.$(".recommendation").html(rec);
+
+        if (range) {
+          this.$(".accuracy").show();
+        } else {
+          this.$(".accuracy").hide();
+        }
+        break;
     }
   }
 });
 
 var SurveyView = Backbone.View.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     for (var input in this.options.inputMap) {
       var userFieldName = this.options.inputMap[input];
       var val = this.model.get(userFieldName);
       if (isBlank(val)) {
         val = "";
-      }  
+      }
       var $input = this.$("#" + input);
 
       console.debug("loading input " + userFieldName + "=" + val);
@@ -2026,7 +2027,7 @@ var SurveyView = Backbone.View.extend({
             // this.model.set(userFieldName, $input.attr("value"));
             // }
           } else {
-            $input.attr("value", val); 
+            $input.attr("value", val);
           }
         }
       } else {
@@ -2037,32 +2038,32 @@ var SurveyView = Backbone.View.extend({
 
     this.nextPageHref = this.$("button[type=submit]").attr("href");
   },
-  events : {
-    "change input[type=radio]" : "handleChange",
-    "change input[type=number]" : "handleChange",
-    "change select" : "handleChange",
-    "keyup input[type=text]" : "handleChange",
-    "keyup input[type=number]" : "handleChange",
-    "pagebeforehide" : "handlePagebeforehide",
-    "pageshow" : "handlePageshow",
-    "submit form" : "handleSubmit"    
+  events: {
+    "change input[type=radio]": "handleChange",
+    "change input[type=number]": "handleChange",
+    "change select": "handleChange",
+    "keyup input[type=text]": "handleChange",
+    "keyup input[type=number]": "handleChange",
+    "pagebeforehide": "handlePagebeforehide",
+    "pageshow": "handlePageshow",
+    "submit form": "handleSubmit"
   },
-  handleChange : function(e, data) {
+  handleChange: function (e, data) {
     // var $input = $(e.currentTarget);
     // console.log($input.prop("nodeName") + " " + e.currentTarget.id);
     // if (this.isLoading || $input.prop("type") === "radio" && !$input.prop("checked")) {
-      // return;
+    // return;
     // }
     // var userField = this.options.inputMap[$input.attr("id")];
     // var o = {};
     // o[userField] = $input.val();
     // this.model.set(o);
   },
-  handlePagebeforehide : function(e, data) {
+  handlePagebeforehide: function (e, data) {
     // check when user clicks our/browser's back button (unnecessarily called
     // twice for submit but seems harmless)
     this.validator.checkValidity();
-    
+
     // save if input changed
     var changed = false;
     for (var input in this.options.inputMap) {
@@ -2089,7 +2090,7 @@ var SurveyView = Backbone.View.extend({
         }
       }
     }
-    
+
     // clear error tooltips
     this.validator.reset();
 
@@ -2104,23 +2105,22 @@ var SurveyView = Backbone.View.extend({
       this.model.save();
     }
   },
-  handlePageshow : function(e, data) {
+  handlePageshow: function (e, data) {
     this.prevPageId = data.prevPage.attr("id");
     this.isLoading = true;
-    
+
     var $submit = this.$("button[type=submit]");
     if (this.manageSubmitTarget === false) {
       // do nothing
     } else if (
       (this.model.hasCompletedRequired() && REQUIRED_PAGES[this.$el.attr("id")]) ||
-      (this.model.hasCompletedExtra() && EXTRA_PAGES[this.$el.attr("id")]))
-    {
+        (this.model.hasCompletedExtra() && EXTRA_PAGES[this.$el.attr("id")])) {
       $submit.attr("href",
         (data.prevPage.length === 0
           || REQUIRED_PAGES[this.prevPageId]
           || EXTRA_PAGES[this.prevPageId])
-        ? "#basic-profile"
-        : "#" + data.prevPage.attr("id"));
+          ? "#basic-profile"
+          : "#" + data.prevPage.attr("id"));
       $submit.attr("data-icon", "check");
       this.$(".ui-submit .ui-icon").addClass("ui-icon-check").removeClass("ui-icon-newarrow-r");
       if ($.trim($submit.html()) === "Next") {
@@ -2135,26 +2135,26 @@ var SurveyView = Backbone.View.extend({
       }
     }
     $submit.button("refresh");
-    
+
     this.$("input[type=radio]").checkboxradio("refresh");
     this.$("input.ui-slider-input").slider("refresh");
     this.$("select[data-role=slider]").slider("refresh");
     this.$("select[data-role!=slider]").selectmenu("refresh");
-    
+
     // must initialize after jqm controls
     if (!this.validator) {
       this.$("form").validator({
-        message : "<div><em/></div>", // em element is the arrow
-        offset : [-16, -30],
-        position : "top left",
-        singleError : true
+        message: "<div><em/></div>", // em element is the arrow
+        offset: [-16, -30],
+        position: "top left",
+        singleError: true
       });
       this.validator = this.$("form").data("validator");
     }
-    
+
     this.isLoading = false;
   },
-  handleSubmit : function(e) {
+  handleSubmit: function (e) {
     e.preventDefault();
 
     // don't continue if validation failed
@@ -2163,7 +2163,7 @@ var SurveyView = Backbone.View.extend({
     // receives "invalid" class)
     var $invalids = this.$(".invalid");
     if ($invalids.length > 0) {
-      for (var i=0; i<$invalids.length; i++) {
+      for (var i = 0; i < $invalids.length; i++) {
         var $node = $($invalids[0]);
         var name = $node.prop("nodeName").toLowerCase();
         if (name === "input" || name === "select") {
@@ -2189,20 +2189,20 @@ var SurveyView = Backbone.View.extend({
 });
 
 var SurveyBpMedsView = SurveyView.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
     this.updateMedCountVis(this.getToggleButton());
   },
-  events : _.extend({
-    "change #bp-meds-toggle" : "handleMedCountToggle"
+  events: _.extend({
+    "change #bp-meds-toggle": "handleMedCountToggle"
   }, SurveyView.prototype.events),
-  getToggleButton : function() {
+  getToggleButton: function () {
     return this.$("#bp-meds-toggle");
   },
-  handleMedCountToggle : function(e, data) {
+  handleMedCountToggle: function (e, data) {
     this.updateMedCountVis($(e.currentTarget));
   },
-  updateMedCountVis : function($toggle) {
+  updateMedCountVis: function ($toggle) {
     var $div = this.$("#bp-meds-count");
     if ($toggle.val() === "true") {
       if (this.$el.is(":visible")) {
@@ -2221,20 +2221,20 @@ var SurveyBpMedsView = SurveyView.extend({
 });
 
 var SurveyHistoryView = SurveyView.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
     this.updateDiabetesVis(this.getToggleButton());
   },
-  events : _.extend({
-    "change #diabetes-toggle" : "handleDiabetesToggle"
+  events: _.extend({
+    "change #diabetes-toggle": "handleDiabetesToggle"
   }, SurveyView.prototype.events),
-  getToggleButton : function() {
+  getToggleButton: function () {
     return this.$("#diabetes-toggle");
   },
-  handleDiabetesToggle : function(e, data) {
+  handleDiabetesToggle: function (e, data) {
     this.updateDiabetesVis($(e.currentTarget));
   },
-  updateDiabetesVis : function($toggle) {
+  updateDiabetesVis: function ($toggle) {
     if ($toggle.val() === "true") {
       if (this.$el.is(":visible")) {
         this.$(".hba1c").slideDown();
@@ -2252,18 +2252,18 @@ var SurveyHistoryView = SurveyView.extend({
 });
 
 var SurveyKnowsBpView = SurveyView.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
     var $checked = this.$("input[name='knows-bp']:checked");
     this.updateNextTarget($checked);
     this.updateLocationsVis($checked);
     this.manageSubmitTarget = false;
   },
-  events : _.extend({
-    "change #knows-bp-radio-t" : "handleKnowsBpRadio",
-    "change #knows-bp-radio-f" : "handleKnowsBpRadio"
+  events: _.extend({
+    "change #knows-bp-radio-t": "handleKnowsBpRadio",
+    "change #knows-bp-radio-f": "handleKnowsBpRadio"
   }, SurveyView.prototype.events),
-  handleKnowsBpRadio : function(e, data) {
+  handleKnowsBpRadio: function (e, data) {
     var $input = $(e.currentTarget);
     if (!$input.prop("checked")) {
       return;
@@ -2271,7 +2271,7 @@ var SurveyKnowsBpView = SurveyView.extend({
     this.updateNextTarget($input);
     this.updateLocationsVis($input);
   },
-  updateLocationsVis : function($selectedRadio) {
+  updateLocationsVis: function ($selectedRadio) {
     if ($selectedRadio.val() === "false") {
       if (this.$el.is(":visible")) {
         this.$(".screening-note").slideDown();
@@ -2286,7 +2286,7 @@ var SurveyKnowsBpView = SurveyView.extend({
       }
     }
   },
-  updateNextTarget : function($selectedRadio) {
+  updateNextTarget: function ($selectedRadio) {
     var page;
     if ($selectedRadio.val() === "true") {
       page = "#blood-pressure";
@@ -2298,18 +2298,18 @@ var SurveyKnowsBpView = SurveyView.extend({
 });
 
 var SurveyKnowsCholView = SurveyView.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
     var $checked = this.$("input[name='knows-chol']:checked");
     this.updateNextTarget($checked);
     this.updateLocationsVis($checked);
     this.manageSubmitTarget = false;
   },
-  events : _.extend({
-    "change #knows-chol-radio-t" : "handleKnowsCholRadio",
-    "change #knows-chol-radio-f" : "handleKnowsCholRadio"
+  events: _.extend({
+    "change #knows-chol-radio-t": "handleKnowsCholRadio",
+    "change #knows-chol-radio-f": "handleKnowsCholRadio"
   }, SurveyView.prototype.events),
-  handleKnowsCholRadio : function(e, data) {
+  handleKnowsCholRadio: function (e, data) {
     var $input = $(e.currentTarget);
     if (!$input.prop("checked")) {
       return;
@@ -2317,7 +2317,7 @@ var SurveyKnowsCholView = SurveyView.extend({
     this.updateNextTarget($input);
     this.updateLocationsVis($input);
   },
-  updateLocationsVis : function($selectedRadio) {
+  updateLocationsVis: function ($selectedRadio) {
     if ($selectedRadio.val() === "false") {
       if (this.$el.is(":visible")) {
         this.$(".screening-note").slideDown();
@@ -2328,11 +2328,11 @@ var SurveyKnowsCholView = SurveyView.extend({
       if (!this.$el.is(":visible")) {
         this.$(".screening-note").hide();
       } else {
-      	this.$(".screening-note").slideUp();
+        this.$(".screening-note").slideUp();
       }
     }
   },
-  updateNextTarget : function($selectedRadio) {
+  updateNextTarget: function ($selectedRadio) {
     var page;
     if ($selectedRadio.val() === "true") {
       page = "#cholesterol";
@@ -2344,17 +2344,17 @@ var SurveyKnowsCholView = SurveyView.extend({
 });
 
 var WelcomeView = SurveyView.extend({
-  initialize : function(attrs) {
+  initialize: function (attrs) {
     SurveyView.prototype.initialize.apply(this, arguments);
   },
-  events : _.extend({
-    "click .terms" : "handleTermsClicked",
-    "pagebeforeshow" : "updateView"
+  events: _.extend({
+    "click .terms": "handleTermsClicked",
+    "pagebeforeshow": "updateView"
   }, SurveyView.prototype.events),
-  handleTermsClicked : function(e) {
+  handleTermsClicked: function (e) {
     window.open("http://www.knowyourheart.info/terms.html");
   },
-  updateView : function(e, data) {
+  updateView: function (e, data) {
     var progressPage = this.model.get("progress");
     var $submit = this.$("button[type=submit]");
     if (progressPage && !this.model.hasCompletedRequired()) {
@@ -2369,57 +2369,57 @@ var WelcomeView = SurveyView.extend({
 
 /*
  * Events
-*/
-$(document).ready(function() {
+ */
+$(document).ready(function () {
   console.debug("ready");
 });
-$(document).on("pagebeforeload", function(e, data) {
+$(document).on("pagebeforeload", function (e, data) {
   console.debug("pagebeforeload");
 });
-$(document).on("pageload", function(e, data) {
+$(document).on("pageload", function (e, data) {
   console.debug("pageload");
 });
-$(document).on("pageloadfailed", function(e, data) {
+$(document).on("pageloadfailed", function (e, data) {
   console.debug("pageloadfailed");
 });
 
-$(document).on("pagebeforechange", function(e, data) {
+$(document).on("pagebeforechange", function (e, data) {
   var page = data.toPage;
   console.debug((_.isString(page) ? "\n\n" : "") + "pagebeforechange - " + (_.isString(page) ? page : page.attr("id")));
 });
-$(document).on("pagechange", function(e, data) {
+$(document).on("pagechange", function (e, data) {
   var page = data.toPage;
   console.debug("pagechange - " + (_.isString(page) ? page : page.attr("id")));
 });
-$(document).on("pagechangefailed", function(e, data) {
+$(document).on("pagechangefailed", function (e, data) {
   var page = data.toPage;
   console.debug("pagechangefailed - " + (_.isString(page) ? page : page.attr("id")));
 });
 
-$(document).on("pagebeforeshow", function(e, data) {
+$(document).on("pagebeforeshow", function (e, data) {
   var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
   console.debug("pagebeforeshow - " + prevPage + " to " + e.target.id);
 });
-$(document).on("pagebeforehide", function(e, data) {
+$(document).on("pagebeforehide", function (e, data) {
   console.debug("pagebeforehide - " + e.target.id + " to " + data.nextPage.attr("id"));
 });
-$(document).on("pageshow", function(e, data) {
+$(document).on("pageshow", function (e, data) {
   var prevPage = data.prevPage.length === 0 ? "none" : data.prevPage.attr("id");
   console.debug("pageshow - " + prevPage + " to " + e.target.id);
 });
-$(document).on("pagehide", function(e, data) {
+$(document).on("pagehide", function (e, data) {
   console.debug("pagehide - " + e.target.id + " to " + data.nextPage.attr("id"));
 });
 
-$(document).on("pagebeforecreate", function(e) {
+$(document).on("pagebeforecreate", function (e) {
   console.debug("pagebeforecreate - " + e.target.id);
 });
-$(document).on("pagecreate", function(e) {
+$(document).on("pagecreate", function (e) {
   console.debug("pagecreate - " + e.target.id);
 });
-$(document).on("pageinit", function(e) {
+$(document).on("pageinit", function (e) {
   console.debug("pageinit - " + e.target.id);
-  
+
   $.support.cors = true;
   $.mobile.allowCrossDomainPages = true;
 
@@ -2431,22 +2431,22 @@ $(document).on("pageinit", function(e) {
   if (e.target.id === "loading") {
     if (gCurrentUser.hasCompletedRequired()) {
       $.mobile.changePage("#home", {
-        transition : "none"
+        transition: "none"
       });
     } else {
       $.mobile.changePage("#welcome", {
-        transition : "none"
+        transition: "none"
       });
     }
   }
 });
-$(document).on("pageremove", function(e) {
+$(document).on("pageremove", function (e) {
   console.debug("pageremove - " + e.target.id);
 });
 
 /*
-* Initialization
-*/
+ * Initialization
+ */
 
 // init user
 if (!localStorage["currentUsername"]) {
@@ -2457,10 +2457,10 @@ if (!localStorage["currentUsername"]) {
   console.info("found user in localStorage: " + localStorage["currentUsername"]);
 
   gCurrentUser = new User({
-    username : localStorage["currentUsername"]
+    username: localStorage["currentUsername"]
   });
   gCurrentUser.fetch({
-    success : function(model, resp) {
+    success: function (model, resp) {
       // this gets called twice (once for local and once for StackMob)
       console.info("fetched user " + model.get("username") +
         (model.isFetching() ? " (still fetching)" : " (done fetching)"));
@@ -2470,7 +2470,7 @@ if (!localStorage["currentUsername"]) {
       }
       model.calculateRisk();
     },
-    error : function(model, resp, options) {
+    error: function (model, resp, options) {
       console.error("failed to fetch user: " + resp.error +
         (model.isFetching() ? " (still fetching)" : " (done fetching)"));
 
